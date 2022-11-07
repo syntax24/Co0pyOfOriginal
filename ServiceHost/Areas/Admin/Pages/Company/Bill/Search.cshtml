@@ -1,0 +1,172 @@
+﻿@model CompanyManagment.App.Contracts.Bill.ViewSearchTextManager
+@{
+}
+@{
+    <style>
+
+        .ui-autocomplete-input {
+            border: none;
+            font-size: 14px;
+            width: 100%;
+            /*   height: 24px;*/
+            margin-bottom: 5px;
+            padding-top: 2px;
+            /*  border: 1px solid #DDD !important;*/
+            padding-top: 0px !important;
+            z-index: 1511;
+            position: relative;
+        }
+
+        .ui-autocomplete {
+            position: absolute;
+            top: 100%;
+            /*       top: 341.617px !important;*/
+            left: 0;
+            z-index: 1051 !important;
+            float: left;
+            display: none;
+            min-width: 160px;
+            _width: 160px;
+            padding: 4px 0;
+            margin: 2px 0 0 0;
+            list-style: none;
+            background-color: #ffffff;
+            border-color: #ccc;
+            border-color: rgba(0, 0, 0, 0.2);
+            border-style: solid;
+            border-width: 1px;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+            -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            -webkit-background-clip: padding-box;
+            -moz-background-clip: padding;
+            background-clip: padding-box;
+            *border-right-width: 2px;
+            *border-bottom-width: 2px;
+        }
+    </style>
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <div class="modal-body">
+        <div class="row">
+            <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> جستجو  </legend>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">انتخاب عنوان: </label>
+                            <select class="form-control select-city " id="originalTitle" asp-items="@Model. SelectListOriginalTitle">
+                                <option value="1"> انتخاب عنوان : </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6" >
+                        <label class="control-label" > انتخاب بخش :</label>
+                        <div class="input-group">
+
+                            <select class="form-control select-city " id="subtitle" style="width: 186px;" >
+                                <option value="1"> انتخاب بخش : </option>
+                            </select>
+                            <span class="input-group-btn" >
+                                <button class="btn btn-success  " style="border-radius: 50px 0px 0px 50px;position: absolute;margin: -18px -8px;height: 36px;width: 80px;" onclick="showbtnMsg()">انتخاب</button>                            </span>
+                            <input type="hidden" id="resultsubtitle" />
+                        </div>
+                    </div>
+                    <div class="col-md-12" dir="ltr" style="text-align:right;margin-bottom:10px">
+                        <label class="control-label"> : جستجو متن لایحه</label>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success btn-rounded " onclick="showMsg()">انتخاب</button>
+                            </span>
+                              <input id="DescriptionModal_Id" type="text" name="DescriptionModal_Id" style="text-align:right" placeholder="... عبارت مورد نظر را تایپ کنید " class="form-control" />
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group ">
+                            <textarea type="text" class="form-control" placeholder=" نتایج جستجو از بانک اطلاعاتی لایحه" style=" height: 400px;" id="des"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="modal-footer ">
+        <button type="button" id="btnmodal" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#btnmodal').click(function () {
+            var result = $('#des').val();
+            CKEDITOR.instances["Description"].setData("<h1>" + result + "</h1>");
+            $("#des").val("");
+            $('#MainModal').modal('hide');
+        });
+        $('#DescriptionModal_Id').autocomplete({
+            source: '/Admin/TextManagerViews/TextManager?handler=DescriptionAll'
+        });
+    });
+    function showMsg() {
+        $("#des").empty();
+        var descriptionModalInput = document.getElementById('DescriptionModal_Id').value;
+        document.getElementById('des').value = descriptionModalInput;
+    }
+    function showbtnMsg() {
+        $("#des").empty();
+        var descriptionModalInput = document.getElementById('resultsubtitle').value;
+        document.getElementById('des').value = descriptionModalInput;
+    }
+
+</script>
+<script>
+    $(document).ready(function () {
+        $("#originalTitle").change(function () {
+            $("#subtitle").empty();
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/TextManagerViews/TextManager?handler=SubtitleList',
+                dataType: 'json',
+                data: { OriginalTitle_Id: $("#originalTitle").val() },
+                success: function (result) {
+                    $("#subtitle").append(' <option value="' + -1 + '">' +
+                        "نام بخش را انتخاب کنید" + '</option>');
+                    $.each(result, function (i, result) {
+                        $("#subtitle").append(' <option value="' + result.id + '">' +
+                            result.subtitle + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Error');
+                }
+            });
+            return false;
+        });
+    });
+
+    $(document).ready(function () {
+        $("#subtitle").change(function () {
+            $("#DescriptionModal").empty();
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/TextManagerViews/TextManager?handler=Description',
+                dataType: 'json',
+                data: { subtitleList_Id: $("#subtitle").val() },
+                success: function (result) {
+                    document.getElementById('resultsubtitle').value = result;
+                },
+                error: function (ex) {
+                    alert('Error');
+                }
+            });
+            return false;
+        });
+
+    });
+
+</script>

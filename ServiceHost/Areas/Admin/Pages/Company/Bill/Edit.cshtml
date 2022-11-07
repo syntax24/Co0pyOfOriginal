@@ -1,0 +1,211 @@
+﻿@page
+@model ServiceHost.Areas.Admin.Pages.Company.Bill.EditModel
+@{
+}
+
+<div class="container" style="width:90%">
+    <div style="text-align:center">
+        <h3> ویرایش لایحه </h3>
+    </div>
+    <br />
+    <form asp-page="./Edit" asp-page-handler="Edit"
+          method="post">
+        @*<form method="post">*@
+        <div class="row">
+            <div class="row">
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="EditBill.Appointed"> انتخاب موکل</label>
+                                <input id="Appointed_Id" asp-for="EditBill.Appointed" class="form-control" style="z-index: 0;" />
+                                <span class="alert-danger" asp-validation-for="EditBill.Appointed"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="EditBill.ProcessingStage">مرحله رسیدگی:</label>
+                                <input id="ProcessingStage_Id" asp-for="EditBill.ProcessingStage" class="form-control" style="z-index: 0;" />
+                                <span class="alert-danger" asp-validation-for="EditBill.ProcessingStage"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="EditBill.Contact">انتخاب مخاطب:</label>
+                                <input id="Contact_Id" asp-for="EditBill.Contact" class="form-control" style="z-index: 0;" />
+                                <span class="alert-danger" asp-validation-for="EditBill.Contact"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="EditBill.SubjectBill"> موضوع:</label>
+                                <input asp-for="EditBill.SubjectBill" class="form-control" />
+                                <span class="alert-danger" asp-validation-for="EditBill.SubjectBill"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 m-4" style="margin-top: 10px;">
+                            <div class="form-group">
+                                <label asp-for="EditBill.Status" class="control-label col-md-5 col-sm-5 col-xs-12"> وضعیت : </label>
+                                <div class="col-md-7 col-sm-7 col-xs-12">
+                                    <select class="form-control" asp-for="EditBill.Status" placeholder="وضعیت">
+
+                                        <option value="1"> فعال </option>
+                                        <option value="2">غیر فعال </option>
+                                    </select>
+                                    <span asp-validation-for="EditBill.Status" class="error"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+
+                        <div class="form-group">
+                            <label asp-for="EditBill.Description" class="control-label">متن لایحه</label>
+                            <div>
+                                <a id="btnPopModal" href="#showmodal=/Admin/Company/Bill/Edit?handler=Search" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" float: inline-end; position: absolute; left: 17px; margin-top: 80px;"> جستجوی درج متن &nbsp;<i class="fa  fa-search" style="padding-left: 3px; font-size: 14px; color: white !important "></i> </a>
+                                <textarea id="Description" name="EditBill.Description" asp-for="EditBill.Description" class="form-control textarea1"></textarea>
+                                <span asp-validation-for="EditBill.Description" class="text-danger"></span>
+                            </div>
+
+                            <style>
+                                #cke_376_bottom {
+                                    display: none !important
+                                }
+                            </style>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <br />
+
+
+
+        <input type="hidden" asp-for="EditBill.Id" value="@Model.EditBill.Id" />
+        <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+        <a type="button" href="/Admin/TextManagerViews/Bill" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">برگشت به لیست</a>
+    </form>
+</div>
+<link href="~/js/PTextManager/jquery-ui/jquery-ui.css" rel="stylesheet" />
+
+@section PanelScripts{
+    <script src="~/js/PTextManager/jquery-ui/jquery-ui.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#Appointed_Id').autocomplete({
+                source: '@Url.Page("CreateBill", "Appointed")'
+              });
+            $('#ProcessingStage_Id').autocomplete({
+                source: '@Url.Page("CreateBill", "ProcessingStage")'
+              });
+            $('#Contact_Id').autocomplete({
+                source: '@Url.Page("CreateBill", "Contact")'
+            });
+
+
+        });
+    </script>
+    <script src="~/AdminTheme/assets/js/site.js"></script>
+    <script src="~/js/PTextManager/ckeditor/ckeditor.js"></script>
+
+    <script>
+        const config = {
+            height: '800px',
+        };
+        //config.removeButtons = 'Source,Save,Templates,NewPage,Preview,PasteText,Paste,Cut,Undo,PasteFromWord,Replace,Find,About,Image,Flash,Smiley,SpecialChar,Iframe,RemoveFormat,CopyFormatting,Strike,Subscript,Superscript,Checkbox,TextField,Textarea,Select,Button,HiddenField,Scayt,SelectAll,Redo,Copy,Radio,Form,ImageButton,Link,Unlink,HorizontalRule,Anchor,ShowBlocks,PageBreak';
+        const editor = document.getElementById("Description");
+
+   
+
+    let ed = CKEDITOR.replace(editor, config);
+
+    ed.addCommand('docImageCommand', {
+    exec: function (event) {
+    var iframe = document.querySelector('#cke_1_contents iframe');
+    var cke_doc = iframe.contentDocument || iframe.contentWindow.document;
+    cke_doc.body.style = `height: 25cm;border: 3px solid #626262;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 14px;`
+
+    }
+
+    });
+    ed.ui.addButton('addDocImage', {
+    label: 'ad text',
+    command: 'docImageCommand',
+    toolbar: 'insert',
+    icon: '/AdminTheme/LogoAndProfile/logo.png',
+    });
+    ed.addCommand('docImageCommand1', {
+    exec: function (event) {
+    var iframe = document.querySelector('#cke_1_contents iframe');
+    var cke_doc = iframe.contentDocument || iframe.contentWindow.document;
+    cke_doc.body.style = `height: 25cm;border: 3px solid #626262;
+    margin: 0px;
+    padding: 0px;
+    border-radius: 14px;`
+    }
+
+    });
+
+    ed.ui.addButton('addDocImage1', {
+    label: 'ad textoio',
+    command: 'docImageCommand1',
+    toolbar: 'insert',
+    icon: '/AdminTheme/LogoAndProfile/logo.png',
+    });
+
+
+
+        ed.addCommand('docImageCommand2', {
+            exec: function (event) {
+                var iframe = document.querySelector('#cke_1_contents iframe');
+                var cke_doc = iframe.contentDocument || iframe.contentWindow.document;
+                cke_doc.body.style = `height: 25cm;border: 3px solid #626262;
+    margin: 0px;
+    padding: 0px;
+    border-radius: 14px;`
+            }
+
+        });
+
+        ed.ui.addButton('addDocImage2', {
+            label: 'جستجو',
+            command: 'docImageCommand2',
+            toolbar: 'insert',
+          
+            icon: '/AdminTheme/LogoAndProfile/logo.png',
+        });
+
+        CKEDITOR.plugins.add('wordpagebreak', {
+            icons: 'wordpagebreak',
+            init: function (editor) {
+
+                var pluginName = 'wordpagebreak';
+
+                editor.addCommand(pluginName, {
+                    exec: function (editor) {
+                        var html = '<br class="wordpagebreak" clear="all" ' +
+                            'style="mso-special-character: line-break; ' +
+                            'page-break-before: always">';
+                        var element = CKEDITOR.dom.element.createFromHtml(html);
+                        editor.insertElement(element);
+                    }
+                });
+
+                editor.ui.addButton(pluginName, {
+                    label: 'Word Page Break',
+                    icon: 'wordpagebreak',
+                    command: pluginName,
+                    toolbar: 'insert'
+                });
+            }
+        });
+    </script>
+
+
+
+
+}

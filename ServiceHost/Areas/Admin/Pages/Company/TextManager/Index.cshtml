@@ -1,0 +1,259 @@
+﻿@page
+@model ServiceHost.Areas.Admin.Pages.Company.TextManager.IndexModel
+
+@{
+    //string colaps = "in";
+    //string act = "active";
+    int i = 1;
+}
+@{
+    //Layout = "~/Pages/Shared/_Layout.cshtml";
+    Layout = "Shared/_AdminLayout";
+    ViewData["title"] = "مدیریت متن";
+    <style>
+        .thh0 {
+            width: 8px !important;
+        }
+
+        .thh {
+            width: 40px !important;
+        }
+
+        .thh2 {
+            width: 130px !important;
+        }
+
+        .thhNastionalId {
+            width: 30px !important;
+        }
+
+        .inpt {
+            width: 100%;
+            border: 1px solid #c7c7c7;
+        }
+
+        .searchpanel {
+            background-color: #747272;
+        }
+    </style>
+}
+<div class="row">
+    <div class="row">
+        <div class="col-sm-12 m-r-10">
+            <p class="pull-right">
+                <a id="btnPopModal" href="#showmodal=@Url.Page("/Company/TextManager/Index", "Create")" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-right: 10px "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> ایجاد متن جدید </a>
+            </p>
+        </div>
+    </div>
+
+
+    <div class="col-sm-12">
+        <div class="panel-group panel-group-joined" id="accordion-test">
+            <div class="panel panel-default" style="border-radius: 15px !important;">
+                <div class="panel-heading" style="background-color: #545353 !important">
+                    <h4 class="panel-title" style="color: #edebeb !important; display: inline;">
+                        <a data-toggle="collapse" data-parent="#accordion-test" href="#collapseOne" class="collapsed" style="display: inline;">
+                            جستجوی عناوین
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in ">
+                    <div class="panel-body" style="padding-top: 15px; padding-bottom: 15px;">
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form class="form-inline" role="form" method="get" name="search-theme-form" id="search-theme-form" autocomplete="off">
+
+                                    <div class="form-group col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-3 pull-right">
+                                                <label> عنوان:</label>
+                                                <select class=" form-control inpt" asp-for="searchModel.OriginalTitle_Id" asp-items="Model.SelectListOriginalTitle" placeholder="عنوان" id="originalTitle" style="width: 100%">
+                                                    <option value="0" selected="selected" disabled>همه موارد </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-3 pull-right">
+                                                <label> بخش:</label>
+                                                <select class=" form-control inpt" asp-for="searchModel.Subtitles_Id" asp-items="Model.SelectListSubtitle" placeholder="بخش" id="subtitle" style="width: 100%">
+                                                    <option value="-1" selected="selected" disabled>همه موارد </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-3 pull-right">
+                                                <label> موضوع:</label>
+                                            
+                                                <input class="form-control inpt" asp-for="searchModel.SubjectTextManager" placeholder="موضوع" style="width: 100%">
+                                            </div>
+
+                                            <div class="col-sm-3 pull-right">
+                                                <label> شماره:</label>
+                                              
+                                                <input value="0" class="form-control inpt" asp-for="searchModel.NoteNumber" placeholder="شماره" style="width: 100%">
+                                            </div>
+                                         
+
+
+                                        </div>
+                                        <div class="row" style="margin-top: 15px">
+
+                                            <div class="col-lg-6" style="margin-top: 15px">
+                                            </div>
+                                            <div class="col-lg-3" style="margin-top: 15px">
+                                                <label asp-for="searchModel.Status" class="control-label col-md-5 col-sm-5 col-xs-12"> وضعیت : </label>
+                                                <select class="form-control" asp-for="searchModel.Status" placeholder="وضعیت">
+                                                    <option value="1"> فعال </option>
+                                                    <option value="2">غیر فعال </option>
+                                                    <option value="0">هردو </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-3" style="margin-top: 15px">
+                                                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; background-color: #950000; border-color: #950000; font-family: 'Web_Yekan' !important; margin-left: -3px"> <i class="fa fa-search" style="padding-left: 3px; font-size: 14px;"></i> جستجو</button>
+                                                <a class="btn btn-info btn-rounded waves-effect waves-light m-b-5" style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; background-color: #545353; border-color: #545353; font-family: 'Web_Yekan' !important;" asp-page="./Index">مشاهده همه</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست بخش</h3>
+            </div>
+            <div class="panel-body">
+
+
+
+                <table id="datatable" class="table table-striped table-bordered" width="100%">
+                    <thead>
+                        <tr>
+                            <th style="font-size: 16px !important; width: 3% !important">#</th>
+                            <th style="font-size: 16px !important; width: 5% !important ; text-align:center">بخش</th>
+                            <th style="font-size: 16px !important; width: 5% !important ; text-align:center">عنوان</th>
+                            <th style="font-size: 16px !important; width: 2% !important ; text-align:center"> ماده </th>
+                            <th style="font-size: 16px !important; width: 2% !important ; text-align:center"> شماره </th>
+                            <th style="font-size: 16px !important; width: 15% !important; text-align:center">موضوع </th>
+
+                            @foreach (var module in Model.ListModule)
+                            {
+                                <th style="font-size: 16px !important; writing-mode:sideways-lr; width: 2% !important">@module</th>
+                            }
+                            <th style="font-size: 16px !important; width: 15% !important;text-align: center">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.TextManagers)
+                        {
+                        <tr>
+                            <td style="font-size: 14px !important; text-align: right">@i </td>
+                            <td style="font-size: 14px !important; text-align: right">@item.OriginalTitle</td>
+                            <td style="font-size: 14px !important; text-align: right">@item.Subtitle </td>
+                            <td style="font-size: 14px !important; text-align: right">@item.NoteNumber</td>
+                            <td style="font-size: 14px !important; text-align: right">@item.NumberTextManager</td>
+                            <td style="font-size: 14px !important; text-align: right">@item.SubjectTextManager</td>
+
+                            @{
+                                var result = string.Join(",", item.ListUseModule.ToArray());
+                                for (int c = 0; c < Model.ListModule.Count(); c++)
+                                {
+
+                                    if (result.Contains((Model.ListModule)[c]))
+                                    {
+                                        <td style="font-size: 14px !important; text-align: center">
+                                            <label style="width: 20px; height: 20px; border-radius: 50%; border: 1px solid cadetblue; background: #67B55D; "></label>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="font-size: 14px !important; text-align: center">
+                                            <label style="width: 20px; height: 20px; border-radius: 50%; border: 1px solid cadetblue;"></label>
+                                        </td>
+                                    }
+                                }
+                            }
+                            @{
+                                i++;
+                            }
+                            <td>
+                                <a class="btn btn-warning pull-left m-rl-5"
+                                   href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
+                                    <i class="fa fa-edit"></i> ویرایش
+                                </a>
+                                @*<a class="btn btn-danger pull-left m-rl-5"
+               href="#showmodal=@Url.Page("./Index", "Delete", new {Id = item.Id})">
+                <i class="fa fa-remove"></i> حذف
+            </a>*@
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section PanelScripts{
+    <script src="~/AdminTheme/assets/js/site.js"></script>
+    <script src="~/adminTheme/assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/adminTheme/assets/datatables/dataTables.bootstrap.js"></script>
+    <script src="~/AdminTheme/assets/js/jquery-ui-1.10.1.custom.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $('#search').on('keyup', function () {
+                    var pattern = $(this).val();
+                    $('.searchable-container .items').hide();
+                    $('.searchable-container .items').filter(function () {
+
+                        /*      $('#hhh').val() = $(this).text().match(new RegExp(pattern, 'i'));*/
+                        return $(this).text().match(new RegExp(pattern, 'i'));
+                    }).show();
+                });
+            });
+            $('#datatable').dataTable(
+                {
+                    //"scrollY": 400,
+                    /*    "scrollX": true,*/
+                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]
+                });
+            $('#datatable2').dataTable(
+                {
+                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]
+                });
+            $("#originalTitle").change(function () {
+                $("#subtitle").empty();
+                $.ajax({
+                    type: 'GET',
+                    url: '/Admin/Company/TextManager?handler=SubtitleList',
+                    dataType: 'json',
+                    data: { OriginalTitle_Id: $("#originalTitle").val() },
+                    success: function (result) {
+                        $("#subtitle").append(' <option value="' + -1 + '">' +
+                            "نام بخش را انتخاب کنید" + '</option>');
+                        $.each(result, function (i, result) {
+                            $("#subtitle").append(' <option value="' + result.id + '">' +
+                                result.subtitle + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Error');
+                    }
+                });
+                return false;
+            });
+
+        });
+    </script>
+
+
+}

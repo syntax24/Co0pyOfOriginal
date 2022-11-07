@@ -1,0 +1,399 @@
+﻿@page
+@model ServiceHost.Areas.Admin.Pages.Company.FilePage.IndexModel
+@{
+    //string colaps = "in";
+    //string act = "active";
+    int i = 1;
+    
+    string[] turns = {"اول", "دوم", "سوم", "چهارم", "پنجم", "ششم", "هفتم", "هشتم", "نهم", "دهم"};
+    
+}
+
+@{
+    //Layout = "~/Pages/Shared/_Layout.cshtml";
+    Layout = "Shared/_AdminLayout";
+    ViewData["title"] = "پرونده ها";
+    <style>
+        .thh0 {
+            width: 8px !important;
+        }
+
+        .thh {
+            width: 40px !important;
+        }
+
+        .thh2 {
+            width: 130px !important;
+        }
+
+        .thhNastionalId {
+            width: 30px !important;
+        }
+
+        .inpt {
+            width: 100%;
+            border: 1px solid #c7c7c7;
+        }
+
+        .searchpanel {
+            background-color: #747272;
+        }
+       /* .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+            background-color: #fff;
+            opacity: 1;
+        }*/
+        .sizeSet {
+           /* padding: 8px !important;*/
+            text-align: center !important;
+            font-size: 12px;
+        }
+        table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after {
+           /* display: none;*/
+        }
+        #datatable_wrapper {
+            overflow-x: scroll;
+            overflow-x: -moz-scrollbars-horizontal;
+             
+        }
+
+    </style>
+}
+
+
+
+<div class="row">
+
+
+    <div class="row">
+        <div class="col-sm-12 m-r-10">
+
+            <p class="pull-right">
+                <a id="btnPopModal" href="#showmodal=@Url.Page("./Index",  "CreateFile")" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-right: 10px "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> ایجاد پرونده جدید </a>
+                @*<a id="btnPopModal1" href="#showmodal=@Url.Page("./Index",  "EditFile")" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-right: 10px "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> ویرایش پرونده جدید </a>*@
+            </p>
+
+        </div>
+    </div>
+
+
+    <div class="col-sm-12">
+        <div class="panel-group panel-group-joined" id="accordion-test">
+
+            <div class="panel panel-default" style="border-radius: 15px !important;">
+                <div class="panel-heading" style="background-color: #545353 !important">
+                    <h4 class="panel-title" style="color: #edebeb !important; display: inline;">
+                        <a data-toggle="collapse" data-parent="#accordion-test" href="#collapseOne" class="collapsed" style="display: inline;">
+                            جستجوی پرونده ها
+                        </a>
+                    </h4>
+
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in ">
+                    <div class="panel-body" style="padding-top: 15px; padding-bottom: 15px;">
+                        @*===================================================================================================================*@
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form class="form-inline" role="form" method="get" name="search-theme-form" id="search-theme-form" autocomplete="off">
+                                    <div class="form-group col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-2 pull-right m-b-15">
+                                                @*<div class="form-group">*@
+                                                <label class="control-label" asp-for="fileSearchModel.ArchiveNo">شماره بایگانی</label>
+                                                <input class="form-control inpt" asp-for="fileSearchModel.ArchiveNo" style="width: 100%">
+                                                @*</div>*@
+                                            </div>
+                                            <div class="col-sm-2 pull-right m-b-15">
+                                                @*<div class="form-group">*@
+                                                <label class="control-label" asp-for="fileSearchModel.FileClass">کلاسه پرونده</label>
+                                                <input class="form-control inpt" asp-for="fileSearchModel.FileClass" style="width: 100%">
+                                                @*</div>*@
+                                            </div>
+                                            @*<div class="col-sm-2 pull-right m-b-15">
+                                            <div class="form-group">
+                                            <label class="control-label" asp-for="fileSearchModel.HasMandate">درج وکالت نامه</label>
+                                            <select class="form-control select-city" asp-for="fileSearchModel.HasMandate" style="width: 100%">
+                                            <option value="-1">همه</option>
+                                            <option value="0">ندارد</option>
+                                            <option value="1">دارد</option>
+                                            </select>
+                                            </div>
+                                            </div>*@
+                                            <div class="col-sm-2 pull-right m-b-15">
+                                                @*<div class="form-group">*@
+                                                <label class="control-label" asp-for="fileSearchModel.UserId">اصیل دعوی</label>
+                                                <select class="form-control" asp-for="fileSearchModel.UserId" style="width: 100%">
+                                                    <option value="-1">همه</option>
+                                                    <option value="1">اکبر اکبرزاده</option>
+                                                </select>
+                                                @*</div>*@
+                                            </div>
+                                            <div class="col-sm-3 pull-right m-b-15">
+                                                <div class="form-group">
+                                                    <label class="control-label" asp-for="fileSearchModel.diagnosisBoard.Branch">  شعبه رسیدگی هیات تشخیص </label>
+                                                    <input class="form-control inpt" asp-for="fileSearchModel.diagnosisBoard.Branch" style="width: 100%">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 pull-right m-b-15">
+                                                <div class="form-group">
+                                                    <label class="control-label" asp-for="fileSearchModel.disputeResolutionBoard.Branch">  شعبه رسیدگی هیات حل اختلاف </label>
+                                                    <input class="form-control inpt" asp-for="fileSearchModel.disputeResolutionBoard.Branch" style="width: 100%">
+                                                </div>
+                                            </div>
+                                            @*<div class="col-sm-2 pull-right m-b-15">
+                                            <div class="form-group">
+                                            <label class="control-label" asp-for="fileSearchModel.Reqester"> خواهان </label>
+                                            <select class="form-control select-city" asp-for="fileSearchModel.Reqester" style="width: 100%">
+                                            <option value="-1">همه</option>
+                                            <option value="1">اکبر اکبرزاده</option>
+                                            </select>
+                                            </div>
+                                            </div>
+                                            <div class="col-sm-2 pull-right m-b-15">
+                                            <div class="form-group">
+                                            <label class="control-label" asp-for="fileSearchModel.Summoned"> خوانده </label>
+                                            <select class="form-control select-city" asp-for="fileSearchModel.Summoned" style="width: 100%">
+                                            <option value="-1">همه</option>
+                                            <option value="1">اکبر اکبرزاده</option>
+                                            </select>
+                                            </div>
+                                            </div>*@
+                                            <div class="col-sm-3 pull-right m-b-15">
+                                                @*<div class="form-group">*@
+                                                <label class="control-label" asp-for="fileSearchModel.diagnosisProceedingSession.FromDate">تاریخ رسیدگی هیات تشخیص (از)</label>
+                                                <input class="form-control inpt" asp-for="fileSearchModel.diagnosisProceedingSession.FromDate" style="width: 100%">
+                                                @*</div>*@
+                                            </div>
+                                            <div class="col-sm-3 pull-right m-b-15">
+                                                @*<div class="form-group">*@
+                                                <label class="control-label" asp-for="fileSearchModel.diagnosisProceedingSession.ToDate">تاریخ رسیدگی هیات تشخیص (تا)</label>
+                                                <input class="form-control inpt" asp-for="fileSearchModel.diagnosisProceedingSession.ToDate" style="width: 100%">
+                                                @*</div>*@
+                                            </div>
+                                            <div class="col-sm-3 pull-right m-b-15">
+                                                @*<div class="form-group">*@
+                                                <label class="control-label" asp-for="fileSearchModel.disputeResolutionProceedingSession.FromDate">تاریخ رسیدگی هیات حل اختلاف (از)</label>
+                                                <input class="form-control inpt" asp-for="fileSearchModel.disputeResolutionProceedingSession.FromDate" style="width: 100%">
+                                                @*</div>*@
+                                            </div>
+                                            <div class="col-sm-3 pull-right m-b-15">
+                                                <div class="form-group">
+                                                    <label class="control-label" asp-for="fileSearchModel.disputeResolutionProceedingSession.ToDate">تاریخ رسیدگی هیات حل اختلاف (تا)</label>
+                                                    <input class="form-control inpt" asp-for="fileSearchModel.disputeResolutionProceedingSession.ToDate" style="width: 100%">
+                                                </div>
+                                            </div>
+
+                                            @*<div class="col-sm-2 pull-right m-b-15">
+                                            <div class="form-group">
+                                            <label class="control-label" asp-for="fileSearchModel.ProceederReference"> مرجع رسیدگی کننده </label>
+                                            <input class="form-control inpt" asp-for="fileSearchModel.ProceederReference" placeholder="مرجع رسیدگی کننده" style="width: 100%">
+                                            </div>
+                                            </div>*@
+                                        </div>
+
+                                        <div class="row" style="margin-top: 15px">
+
+
+                                            <div class="col-lg-9">
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; background-color: #950000; border-color: #950000; font-family: 'Web_Yekan' !important; margin-left: -3px"> <i class="fa fa-search" style="padding-left: 3px; font-size: 14px;"></i> جستجو</button>
+                                                <a class="btn btn-info btn-rounded waves-effect waves-light m-b-5" style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; background-color: #545353; border-color: #545353; font-family: 'Web_Yekan' !important;" asp-page="./Index">مشاهده همه</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست پرونده ها</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12 col-sm-12 col-xs-12">
+                        <table id="datatable" class="table table-striped table-bordered" style="overflow-x: scroll">
+                            <thead>
+                                <tr>
+                                    <th style="font-size: 10px !important; width: 5% !important">#</th>
+
+                                    <th class="sizeSet"> بایگانی </th>
+                                    <th class="sizeSet"> کلاسه پرونده </th>
+                                    <th class="sizeSet"> حقیقی / حقوقی </th>
+                                    <th class="sizeSet"> تاریخ ثبت دادخواست </th>
+                                    <th class="sizeSet"> نوبت رسیدگی </th>
+                                    <th class="sizeSet"> مدارک </th>
+                                    <th class="sizeSet"> تحقیق </th>
+                                    <th class="sizeSet"> نوبت رسیدگی </th>
+                                    <th class="sizeSet"> دادنامه تشخیص </th>
+                                    <th class="sizeSet"> تاریخ ثبت دادخواست </th>
+                                    <th class="sizeSet"> نوبت رسیدگی </th>
+                                    <th class="sizeSet">  </th>
+                                    <th class="sizeSet">  </th>
+                                    <th class="sizeSet"> نوبت رسیدگی </th>
+                                    <th class="sizeSet"> دادنامه حل اختلاف </th>
+
+                                    <th style="font-size: 10px !important;">عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model.viewModels)
+                                {
+                                    var background = "";
+                                    if (item.HasMandate == 1)
+                                    {
+                                        background = "background-color : #eb7070;";
+                                    }
+
+                                    <tr>
+
+                                        <td style="font-size: 12px !important; text-align: center;"> @i </td>
+                                        <td style="font-size: 12px !important; text-align: center; @background"> @item.ArchiveNo </td>
+                                        <td style="font-family: 'IranText' !important; font-size: 12px !important; text-align: center; @background">
+                                            @item.FileClass
+                                        </td>
+
+                                        @if (@item.Client == 1)
+                                        {
+                                            <td style="@background">
+                                                <p style="font-size: 12px !important; text-align: center; border-bottom: solid 1px #ddd; padding-bottom: 15px"> @item.ReqesterFullname</p>
+                                                <p style="font-size: 12px !important; text-align: center"> @item.SummonedFullname</p>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td style="@background">
+                                                <p style="font-size: 12px !important; text-align: center; border-bottom: solid 1px #ddd; padding-bottom: 15px"> @item.SummonedFullname</p>
+                                                <p style="font-size: 12px !important; text-align: center"> @item.ReqesterFullname</p>
+                                            </td>
+                                        }
+
+                                        <td style="font-size: 12px !important; text-align: center"> @item.DiagnosisBoard.DisputeResolutionPetitionDate </td>
+                                        @*<td style="font-size: 14px !important; text-align: center"> @item.DiagnosisSessions[0] </td>*@
+                                        <td>
+                                            @if (item.DiagnosisBoard.Id != 0)
+                                            {
+
+                                                <p style="font-size: 12px !important; text-align: center; border-bottom: solid 1px #ddd; padding-bottom: 15px"> @item.FirstDiagnosisPS.Date</p>
+                                                <p style="font-size: 12px !important; text-align: center; border-bottom: solid 1px #ddd; padding-bottom: 15px">  نوبت اول </p>
+                                                <p style="font-size: 12px !important; text-align: center"> @item.DiagnosisBoard.Branch - @item.DiagnosisBoard.BoardChairman </p>
+
+                                            }
+                                        </td>
+
+                                        <td style="font-size: 12px !important; text-align: center"> </td>
+                                        <td style="font-size: 12px !important; text-align: center">  </td>
+                                        @*<td style="font-size: 14px !important; text-align: center"> @item.DiagnosisSessions[1] </td>*@
+                                        <td>
+                                            @if (item.DiagnosisBoard.Id != 0)
+                                            {
+
+                                                <p style="font-size: 12px !important; text-align: center; border-bottom: solid 1px #ddd; padding-bottom: 15px"> @item.LastDiagnosisPS.Date</p>
+                                                <p style="font-size: 12px !important; text-align: center; border-bottom: solid 1px #ddd; padding-bottom: 15px">  نوبت  @turns[item.DiagnosisPsCount] </p>
+                                                <p style="font-size: 12px !important; text-align: center"> @item.DiagnosisBoard.Branch - @item.DiagnosisBoard.BoardChairman </p>
+
+                                            }
+                                        </td>
+                                        <td>
+                                            <p style="font-size: 12px !important; text-align: center; border-bottom: solid 1px #ddd; padding-bottom: 15px"> @item.DiagnosisPetition.PetitionIssuanceDate </p>
+                                            <p style="font-size: 12px !important; text-align: center; border-bottom: solid 1px #ddd; padding-bottom: 15px"> @item.DiagnosisPetition.TotalPenalty </p>
+                                            <p style="font-size: 12px !important; text-align: center;">  </p>
+                                        </td>
+                                        <td style="font-size: 12px !important; text-align: center"> @item.DisputeResolutionBoard.DisputeResolutionPetitionDate </td>
+                                        @*<td style="font-size: 14px !important; text-align: center"> @item.DisputeResolutionSessions[0] </td>*@
+                                        <td>
+                                            @if (item.DisputeResolutionBoard.Id != 0)
+                                            {
+
+                                                <p style="font-size: 12px !important; text-align: center; border-bottom: solid 1px #ddd; padding-bottom: 15px"> @item.FirstDisputeResolutionPS.Date</p>
+                                                <p style="font-size: 12px !important; text-align: center; border-bottom: solid 1px #ddd; padding-bottom: 15px">  نوبت اول </p>
+                                                <p style="font-size: 12px !important; text-align: center"> @item.DisputeResolutionBoard.Branch - @item.DisputeResolutionBoard.BoardChairman </p>
+
+                                            }
+                                        </td>
+                                        <td style="font-size: 12px !important; text-align: center"> </td>
+                                        <td style="font-size: 12px !important; text-align: center">  </td>
+                                        @*<td style="font-size: 14px !important; text-align: center"> @item.DisputeResolutionSessions[1] </td>*@
+                                        <td>
+                                            @if (item.DisputeResolutionBoard.Id != 0)
+                                            {
+
+                                                <p style="font-size: 12px !important; text-align: center; border-bottom: solid 1px #ddd; padding-bottom: 15px"> @item.LastDisputeResolutionPS.Date</p>
+                                                <p style="font-size: 12px !important; text-align: center; border-bottom: solid 1px #ddd; padding-bottom: 15px">  نوبت @turns[item.DisputeResolutionPsCount] </p>
+                                                <p style="font-size: 12px !important; text-align: center"> @item.DisputeResolutionBoard.Branch - @item.DisputeResolutionBoard.BoardChairman </p>
+
+                                            }
+                                        </td>
+                                        <td>
+                                            <p style="font-size: 12px !important; text-align: center; border-bottom: solid 1px #ddd; padding-bottom: 15px"> @item.DisputeResolutionPetition.PetitionIssuanceDate </p>
+                                            <p style="font-size: 12px !important; text-align: center; border-bottom: solid 1px #ddd; padding-bottom: 15px"> @item.DisputeResolutionPetition.TotalPenalty </p>
+                                            <p style="font-size: 12px !important; text-align: center">  </p>
+                                        </td>
+
+                                        @{
+                                            i++;
+                                        }
+
+                                        <td>
+
+                                            <a class="btn btn-warning pull-right m-b-15 m-rl-5"
+                                           href="#showmodal=@Url.Page("./Index", "EditFile", new { Id = item.Id })">
+                                                <i class="fa fa-edit"></i> ویرایش
+                                            </a>
+
+                                        </td>
+
+                                    </tr>
+
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@section Script {
+    <script src="~/AdminTheme/assets/js/site4.js"></script>
+    <script src="~/adminTheme/assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/adminTheme/assets/datatables/dataTables.bootstrap.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('#datatable').dataTable({
+                "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
+            });
+
+            $('#datatable2').dataTable({
+                "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
+            });
+        });
+
+        CreateDatePicker('#fileSearchModel_diagnosisProceedingSession_FromDate');
+        CreateDatePicker('#fileSearchModel_diagnosisProceedingSession_ToDate');
+        CreateDatePicker('#fileSearchModel_disputeResolutionProceedingSession_FromDate');
+        CreateDatePicker('#fileSearchModel_disputeResolutionProceedingSession_ToDate');
+
+
+
+
+
+    </script>
+}

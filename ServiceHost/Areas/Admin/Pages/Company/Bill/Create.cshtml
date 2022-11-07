@@ -1,0 +1,157 @@
+﻿@model CompanyManagment.App.Contracts.Bill.CreateBill
+@{
+}
+@{
+
+        <style>
+
+            .ui-autocomplete-input {
+                border: none;
+                font-size: 14px;
+                width: 100%;
+                /*   height: 24px;*/
+                margin-bottom: 5px;
+                padding-top: 2px;
+                /*  border: 1px solid #DDD !important;*/
+                padding-top: 0px !important;
+                z-index: 1511;
+                position: relative;
+            }
+
+            .ui-autocomplete {
+                position: absolute;
+                top: 100%;
+                /*       top: 341.617px !important;*/
+                left: 0;
+                z-index: 1051 !important;
+                float: left;
+                display: none;
+                min-width: 160px;
+                _width: 160px;
+                padding: 4px 0;
+                margin: 2px 0 0 0;
+                list-style: none;
+                background-color: #ffffff;
+                border-color: #ccc;
+                border-color: rgba(0, 0, 0, 0.2);
+                border-style: solid;
+                border-width: 1px;
+                -webkit-border-radius: 2px;
+                -moz-border-radius: 2px;
+                border-radius: 2px;
+                -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                -webkit-background-clip: padding-box;
+                -moz-background-clip: padding;
+                background-clip: padding-box;
+                *border-right-width: 2px;
+                *border-bottom-width: 2px;
+            }
+        </style>
+    }
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+
+    <form asp-page="./Index" asp-page-handler="Create" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="Refresh"
+          enctype="multipart/form-data">
+
+        <div class="modal-body">
+
+
+            <div class="row">
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">انتخاب موکل: </label>
+                                @*<select class="form-control select-city" asp-for="Appointed" asp-items='new SelectList(Model.drpAppointed,"Value","Text")' id="Appointed_Id">
+                                    </select>*@
+                                <span asp-validation-for="Appointed" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label"> مرحله رسیدگی :</label>
+
+                                <!--<select class="form-control select-city" asp-for="ProcessingStage" asp-items='new SelectList(Model.drProcessingStage,"Value","Text")' id="ProcessingStage_Id">-->
+                                @*<option value="0"> انتخاب موکل:</option>*@
+                                <!--</select>-->
+
+                                <span asp-validation-for="ProcessingStage" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label"> انتخاب مخاطب :</label>
+                                @*<select class="form-control select-city" asp-for="Contact" asp-items='new SelectList(Model.drContact,"Value","Text")' id="Contact_Id">
+                                    </select>*@
+                                <span asp-validation-for="Contact" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label"> موضوع : </label>
+                                <input type="text" class="form-control" asp-for="SubjectBill">
+                                <span asp-validation-for="SubjectBill" class="error"></span>
+
+                            </div>
+                        </div>
+                        <style>
+                        </style>
+                        <div class="col-md-12">
+
+                            <div class="form-group">
+
+
+                                <script src="~/js/PTextManager/ckeditor/ckeditor.js"></script>
+                                <label asp-for="Description" class="control-label"></label>
+                                <div>
+                                    <button class="btn btn-info" style="float: inline-end;position: absolute;left: 17px;margin-top: 9px;">جستجوی درج متن<i class="fa fa-search"></i></button>
+                                    <textarea id="Description" name="Description" asp-for="Description" class="form-control textarea1"></textarea>
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+
+                                <script>
+
+                                    const config = {
+                                        filebrowserImageBrowseUrl: "/imagebrowser",
+                                        filebrowserImageWindowWidth: 780,
+                                        filebrowserImageWindowHeight: 720,
+                                        filebrowserBrowseUrl: "/linkbrowser",
+                                        filebrowserWindowWidth: 350,
+                                        filebrowserWindowHeight: 500
+                                    };
+
+                                    config.removeButtons = 'Source,Templates,Cut,Scayt,SelectAll,Find,Form,Replace,Copy,Paste,PasteText,PasteFromWord,HiddenField,Button,Select,Textarea,TextField,Radio,Checkbox,CopyFormatting,Blockquote,Link,Image,RemoveFormat,Strike,Subscript,Superscript,CreateDiv,BidiRtl,Unlink,Flash,Anchor,Language,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,About,ShowBlocks,BGColor,BidiLtr,ImageButton,Print,NewPage,Save,Preview,BulletedList,NumberedList,Indent,Outdent,Undo,Redo';
+                                    const editor = document.getElementById("Description");
+                                    CKEDITOR.replace(editor, config);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       /* CKEDITOR.instances["Description"].setData("<h1> data to render</h1>")*/
+                                </script>
+                                <style>
+                                    #cke_376_bottom {
+                                        display: none !important
+                                    }
+                                </style>
+
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+            <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+        </div>
+    </form>
+</div>
+
