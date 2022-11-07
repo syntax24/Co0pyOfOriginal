@@ -109,7 +109,7 @@
             $('#MainModal').modal('hide');
         });
         $('#DescriptionModal_Id').autocomplete({
-            source: '/Admin/TextManagerViews/TextManager?handler=DescriptionAll'
+            source: '/Admin/Company/TextManager?handler=DescriptionAll'
         });
     });
     function showMsg() {
@@ -130,7 +130,7 @@
             $("#subtitle").empty();
             $.ajax({
                 type: 'GET',
-                url: '/Admin/TextManagerViews/TextManager?handler=SubtitleList',
+                url: '/Admin/Company/TextManager?handler=SubtitleList',
                 dataType: 'json',
                 data: { OriginalTitle_Id: $("#originalTitle").val() },
                 success: function (result) {
@@ -154,7 +154,7 @@
             $("#DescriptionModal").empty();
             $.ajax({
                 type: 'GET',
-                url: '/Admin/TextManagerViews/TextManager?handler=Description',
+                url: '/Admin/Company/TextManager?handler=Description',
                 dataType: 'json',
                 data: { subtitleList_Id: $("#subtitle").val() },
                 success: function (result) {
