@@ -30,6 +30,7 @@ namespace CompanyManagment.Application
                 command.Paragraph,
                 command.OriginalTitle_Id,
                 command.Subtitles_Id,
+                 command.Chapter_Id,
                  command.Status
                );
             _TextManagerRepozitory.Create(textManager);
@@ -61,6 +62,7 @@ namespace CompanyManagment.Application
                                 command.Paragraph,
                                 command.OriginalTitle_Id,
                                 command.Subtitles_Id,
+                                  command.Chapter_Id,
                                 command.Status
                                 );
                

@@ -25,6 +25,8 @@ namespace CompanyManagment.App.Contracts.TextManager
         public long OriginalTitle_Id { get;  set; }
         [Required(ErrorMessage = " انتخاب بخش الزامیست")]
         public long Subtitles_Id { get;  set; }
+        [Required(ErrorMessage = " انتخاب فصل الزامیست")]
+        public long Chapter_Id { get; set; }
         public byte Status { get; set; }
 
         [Required(ErrorMessage = " انتخاب حداقل یک ماژول الزامیست")]
@@ -32,6 +34,7 @@ namespace CompanyManagment.App.Contracts.TextManager
         public List<SelectListItem> drpModule { get; set; }
         public List<SelectListItem> OriginalTitleViewModels { get; set; }
         public List<SelectListItem> SubtitleViewModels { get; set; }
+        public List<SelectListItem> ChapterViewModels { get; set; }
         public List<ModuleTextManagerViewModel>  ModuleTextManagerViewModels { get; set; }
       
 

@@ -10,6 +10,7 @@ using CompanyManagment.App.Contracts.Module;
 using CompanyManagment.App.Contracts.OriginalTitle;
 using CompanyManagment.App.Contracts.Subtitle;
 using CompanyManagment.App.Contracts.TextManager;
+using CompanyManagment.App.Contracts.Chapter;
 
 namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
 {
@@ -21,18 +22,21 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
         public List<TextManagerViewModel> TextManagers;
         public SelectList SelectListOriginalTitle;
         public SelectList SelectListSubtitle;
+        private SelectList SelectListChapter;
         public string[] ListModule;
         public List<OriginalTitleViewModel> OriginalTitleViewModels;
         public SelectList categoryListItems;
         private readonly ISubtitleApplication _subtitleApplication;
+        private readonly IChapterApplication _chapterApplication;
         private readonly IOriginalTitleApplication _originalTitleApplication;
         private readonly ITextManagerApplication _textManagerApplication;
         private readonly IModuleApplication _moduleApplication;
         private readonly ITextManagerRepozitory _textManagerRepozitory;
-        public IndexModel(ISubtitleApplication subtitleApplication, IOriginalTitleApplication originalTitleApplication, ITextManagerApplication textManagerApplication, IModuleApplication moduleApplication, ITextManagerRepozitory textManagerRepozitory)
+        public IndexModel(ISubtitleApplication subtitleApplication, IChapterApplication chapterApplication, IOriginalTitleApplication originalTitleApplication, ITextManagerApplication textManagerApplication, IModuleApplication moduleApplication, ITextManagerRepozitory textManagerRepozitory)
         {
             _textManagerRepozitory = textManagerRepozitory;
             _subtitleApplication = subtitleApplication;
+            _chapterApplication = chapterApplication;
             _originalTitleApplication = originalTitleApplication;
             _textManagerApplication = textManagerApplication;
             _moduleApplication = moduleApplication;
@@ -44,6 +48,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
             TextManagers = _textManagerApplication.Search(searchModel);
             SelectListOriginalTitle = new SelectList(_originalTitleApplication.GetAllOriginalTitle(), "Id", "Title");
             SelectListSubtitle = new SelectList(_subtitleApplication.GetAllSubtitle(), "Id", "Subtitle");
+            SelectListChapter = new SelectList(_chapterApplication.GetAllChapter(), "Id", "Chapter");
             ListModule = _moduleApplication.GetAllModule().Select(x => x.NameSubModule).ToArray();
         }
         public IActionResult OnGetCreate()
@@ -52,6 +57,8 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
             {
                 OriginalTitleViewModels = _originalTitleApplication.GetAllOriginalTitle().ToList().Select(x => new SelectListItem { Text = x.Title, Value = x.Id.ToString() }).ToList(),
                 SubtitleViewModels = _subtitleApplication.GetAllSubtitle().ToList().Select(x => new SelectListItem { Text = x.Subtitle, Value = x.Id.ToString() }).ToList(),
+                ChapterViewModels = _chapterApplication.GetAllChapter().ToList().Select(x => new SelectListItem { Text = x.Chapter, Value = x.Id.ToString() }).ToList(),
+
                 drpModule = _moduleApplication.GetAllModule().ToList().Select(x => new SelectListItem { Text = x.NameSubModule, Value = x.Id.ToString() }).ToList()
 
             };
@@ -78,9 +85,11 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
                 Paragraph = textManager.Paragraph,
                 OriginalTitle_Id = textManager.OriginalTitle_Id,
                 Subtitles_Id = textManager.Subtitles_Id,
+                Chapter_Id = textManager.Chapter_Id,
                 ModuleIds = ModuleIds.ToArray(),
                 OriginalTitleViewModels = _originalTitleApplication.GetAllOriginalTitle().ToList().Select(x => new SelectListItem { Text = x.Title, Value = x.Id.ToString() }).ToList(),
                 SubtitleViewModels = _subtitleApplication.GetAllSubtitle().ToList().Select(x => new SelectListItem { Text = x.Subtitle, Value = x.Id.ToString() }).ToList(),
+                ChapterViewModels = _chapterApplication.GetAllChapter().ToList().Select(x => new SelectListItem { Text = x.Chapter, Value = x.Id.ToString() }).ToList(),
                 drpModule = _moduleApplication.GetAllModule().ToList().Select(x => new SelectListItem { Text = x.NameSubModule, Value = x.Id.ToString() }).ToList()
             };
             return Partial("Edit", textManagereEdit);

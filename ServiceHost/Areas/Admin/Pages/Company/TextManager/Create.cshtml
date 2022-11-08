@@ -74,7 +74,7 @@
                     <div class="row">
                         <div class="row">
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="control-label">انتخاب عنوان: </label>
                                     <select class="form-control select-city" asp-for="OriginalTitle_Id" asp-items='@Model.OriginalTitleViewModels' id="originalTitle1">
@@ -84,7 +84,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="control-label"> انتخاب بخش :</label>
                                     <select class="form-control select-city" asp-for="Subtitles_Id" asp-items='@Model.SubtitleViewModels' id="subtitle1">
@@ -93,7 +93,15 @@
                                     <span asp-validation-for="Subtitles_Id" class="error"></span>
                                 </div>
                             </div>
-
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label"> انتخاب فصل :</label>
+                                    <select class="form-control select-city" asp-for="Chapter_Id" asp-items='@Model.ChapterViewModels' id="subtitle1">
+                                        <option value="0"> فصل</option>
+                                    </select>
+                                    <span asp-validation-for="Chapter_Id" class="error"></span>
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label asp-for="NoteNumber" class="control-label col-md-3 col-sm-3 col-xs-12">ماده : </label>

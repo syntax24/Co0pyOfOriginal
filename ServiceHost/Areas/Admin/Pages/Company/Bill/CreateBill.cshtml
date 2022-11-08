@@ -19,8 +19,8 @@
     <form asp-page="./CreateBill" asp-page-handler="Create"
           method="post">
         @*<form method="post">*@
-        <div class="row">
-            <div class="row">
+    
+            <div class="row" onkeydown="checkKeyPress(event);">
                 <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
                     <div class="row">
                         <div class="col-md-4">
@@ -48,7 +48,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="CreateBill.SubjectBill"> موضوع:</label>
-                                <input asp-for="CreateBill.SubjectBill" class="form-control" />
+                                <input  asp-for="CreateBill.SubjectBill" class="form-control" />
                                 <span class="alert-danger" asp-validation-for="CreateBill.SubjectBill"></span>
                             </div>
                         </div>
@@ -67,11 +67,11 @@
                     </div>
                     <div class="col-md-12">
 
-                        <div class="form-group">
+                        <div class="form-group"  >
                             <label asp-for="CreateBill.Description" class="control-label">متن لایحه</label>
                             <div>
                                 <a id="btnPopModal" href="#showmodal=/Admin/Company/Bill/Edit?handler=Search" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" float: inline-end; position: absolute; left: 17px; margin-top: 80px;"> جستجوی درج متن &nbsp;<i class="fa  fa-search" style="padding-left: 3px; font-size: 14px; color: white !important "></i> </a>
-                                <textarea id="Description" name="CreateBill.Description" asp-for="CreateBill.Description" class="form-control textarea1"></textarea>
+                                <textarea  id="Description" name="CreateBill.Description" asp-for="CreateBill.Description" class="form-control textarea1"></textarea>
                                 <span asp-validation-for="CreateBill.Description" class="text-danger"></span>
                             </div>
 
@@ -84,15 +84,29 @@
                     </div>
                 </fieldset>
             </div>
-        </div>
+     
         <br />
 
-
+        <textarea onkeydown=" 
+    var code = (document.all) ? event.keyCode : e.which;
+    var ctrl = (document.all) ? event.ctrlKey : e.modifiers & Event.CONTROL_MASK;
+    if (document.all) {
+        if (ctrl && code == 83) { window.event.returnValue = false; }
+        else if (ctrl && code == 67) {
+            window.event.returnValue = false;
+        }
+    } else {
+        if (ctrl == 2) {
+            return false;
+        }
+        "
+     ></textarea>
 
 
         <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
         <a type="button" asp-page="./Index" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">برگشت به لیست</a>
     </form>
+  
 </div>
 <link href="~/js/PTextManager/jquery-ui/jquery-ui.css" rel="stylesheet" />
 
@@ -113,8 +127,18 @@
                 source: '@Url.Page("CreateBill", "Contact")'
             });
 
-
+          
         });
+
+        function checkKeyPress(e) {
+
+            if (e.which == 83 && e.ctrlKey) {
+                event.preventDefault();
+                alert(
+                    "CTRL key pressed: " + e.ctrlKey + "\n"
+                );
+            }
+        }
     </script>
     <script src="~/AdminTheme/assets/js/site.js"></script>
     <script src="~/js/PTextManager/ckeditor/ckeditor.js"></script>
