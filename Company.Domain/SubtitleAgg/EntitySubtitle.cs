@@ -1,5 +1,7 @@
 ﻿using _0_Framework.Domain;
+using Company.Domain.ChapterAgg;
 using Company.Domain.OriginalTitleAgg;
+using System.Collections.Generic;
 
 namespace Company.Domain.SubtitleAgg
 {
@@ -13,6 +15,17 @@ namespace Company.Domain.SubtitleAgg
         public string Subtitle { get; private set; }
         public long OriginalTitle_Id { get; private set; }
         public EntityOriginalTitle EntityOriginalTitle { get; set; }
+
+        public List<EntityChapter> Chapters { get; private set; }
+
+        public EntitySubtitle()
+        {
+            Chapters = new List<EntityChapter>();
+        }
+
+        public List<EntitySubtitle> Subtitles { get; private set; }
+
+        
         public void Edit(string subtitle, long originalTitle_Id)
         {
             Subtitle = subtitle;
