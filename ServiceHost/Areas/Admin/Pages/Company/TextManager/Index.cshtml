@@ -73,23 +73,17 @@
                                                 </select>
                                             </div>
                                             <div class="col-sm-3 pull-right">
-                                        
+                                     
                                                 <select class=" form-control inpt" asp-for="searchModel.Subtitles_Id" asp-items="Model.SelectListSubtitle" placeholder="بخش" id="subtitle" style="width: 100%">
                                                     <option value="-1" selected="selected" disabled>بخش </option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-3 pull-right">
-                                           
-                                            
                                                 <input class="form-control inpt" asp-for="searchModel.SubjectTextManager" placeholder="موضوع" style="width: 100%">
                                             </div>
-
                                             <div class="col-sm-3 pull-right">
                                                 <input  class="form-control inpt" asp-for="searchModel.NoteNumber" placeholder="شماره" style="width: 100%">
                                             </div>
-                                         
-
-
                                         </div>
                                         <div class="row" style="margin-top: 15px">
 
@@ -118,17 +112,12 @@
             </div>
         </div>
     </div>
-
-
     <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست بخش</h3>
             </div>
             <div class="panel-body">
-
-
-
                 <table id="datatable" class="table table-striped table-bordered" width="100%">
                     <thead>
                         <tr>
@@ -138,7 +127,6 @@
                             <th style="font-size: 16px !important; width: 2% !important ; text-align:center"> ماده </th>
                             <th style="font-size: 16px !important; width: 2% !important ; text-align:center"> شماره </th>
                             <th style="font-size: 16px !important; width: 15% !important; text-align:center">موضوع </th>
-
                             @foreach (var module in Model.ListModule)
                             {
                                 <th style="font-size: 16px !important; writing-mode:sideways-lr; width: 2% !important">@module</th>
@@ -249,7 +237,27 @@
                 });
                 return false;
             });
-
+            //$("#StateList").change(function () {
+            //    $("#CityList").empty();
+            //    $.ajax({
+            //        type: 'GET',
+            //        url: '/AdminPanel/Cascade/LoadCity/',
+            //        dataType: 'json',
+            //        data: { StateId: $("#StateList").val() },
+            //        success: function (states) {
+            //            $("#CityList").append(' <option value="' + -1 + '">' +
+            //                "شهر را انتخاب کنید" + '</option>');
+            //            $.each(states, function (i, state) {
+            //                $("#CityList").append(' <option value="' + state.value + '">' +
+            //                    state.text + '</option>');
+            //            });
+            //        },
+            //        error: function (ex) {
+            //            alert('ffff');
+            //        }
+            //    });
+            //    return false;
+            //});
         });
     </script>
 

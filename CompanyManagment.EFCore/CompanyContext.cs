@@ -1,6 +1,7 @@
 ﻿using Company.Domain.BillAgg;
 using Company.Domain.Board;
 using Company.Domain.BoardType;
+using Company.Domain.ChapterAgg;
 using Company.Domain.Contact2Agg;
 using Company.Domain.ContarctingPartyAgg;
 using Company.Domain.ContractAgg;
@@ -37,6 +38,7 @@ namespace CompanyManagment.EFCore
     {
         //-----Text-Manager--------------------------------------
         public DbSet<EntitySubtitle> EntitySubtitles { get; set; }
+        public DbSet<EntityChapter> EntityChapters { get; set; }
         public DbSet<EntityOriginalTitle> EntityOriginalTitles { get; set; }
         public DbSet<EntityTextManager> EntityTextManagers { get; set; }
         public DbSet<EntityModule> EntityModules { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Company.Domain.BillAgg;
 using Company.Domain.Board;
+using Company.Domain.ChapterAgg;
 using Company.Domain.Contact2Agg;
 using Company.Domain.File1;
 using Company.Domain.ModuleAgg;
@@ -10,7 +11,9 @@ using Company.Domain.ProceedingSession;
 using Company.Domain.SubtitleAgg;
 using Company.Domain.WorkHistory;
 using CompanyManagment.App.Contracts.Board;
+using CompanyManagment.App.Contracts.Chapter;
 using CompanyManagment.App.Contracts.Contact2;
+using CompanyManagment.App.Contracts.Contract;
 using CompanyManagment.App.Contracts.File1;
 using CompanyManagment.App.Contracts.Module;
 using CompanyManagment.App.Contracts.OriginalTitle;
@@ -73,7 +76,8 @@ namespace PersonalContractingParty.Config
             services.AddTransient<IBillRepozitory, BillRepository>();
             services.AddTransient<IContactApplication2, Contact2Appliction>();
             services.AddTransient<IContactRepozitory2, ContactRepository2>();
-
+            services.AddTransient<IChapterApplication, ChapterAppliction>();
+            services.AddTransient<IChapterRepozitory, ChapterRepository>();
             services.AddDbContext<CompanyContext>(x => x.UseSqlServer(connectionString));
         }
     }
