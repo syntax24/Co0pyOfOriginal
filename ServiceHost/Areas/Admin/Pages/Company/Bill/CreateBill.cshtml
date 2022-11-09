@@ -1,16 +1,5 @@
 ﻿@page
 @model ServiceHost.Areas.Admin.Pages.Company.Bill.CreateBillModel
-@*<select id="country">
-        <option value="">Choice one</option>
-        <option value="1">US</option>
-        <option value="2">UK</option>
-        <option value="3">GR</option>
-        <option value="4">IT</option>
-    </select>
-    <form>
-        Search City:
-        <input type="text" id="city" class="form-control">
-    </form>*@
 <div class="container" style="width:90%">
     <div style="text-align:center">
         <h3> لایحه جدید</h3>
@@ -19,80 +8,83 @@
     <form asp-page="./CreateBill" asp-page-handler="Create"
           method="post">
         @*<form method="post">*@
-        <div class="row">
-            <div class="row">
-                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="CreateBill.Appointed"> انتخاب موکل</label>
-                                <input id="Appointed_Id" asp-for="CreateBill.Appointed" class="form-control" style="z-index: 0;" />
-                                <span class="alert-danger" asp-validation-for="CreateBill.Appointed"></span>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="CreateBill.ProcessingStage">مرحله رسیدگی:</label>
-                                <input id="ProcessingStage_Id" asp-for="CreateBill.ProcessingStage" class="form-control" style="z-index: 0;" />
-                                <span class="alert-danger" asp-validation-for="CreateBill.ProcessingStage"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="CreateBill.Contact">انتخاب مخاطب:</label>
-                                <input id="Contact_Id" asp-for="CreateBill.Contact" class="form-control" style="z-index: 0;" />
-                                <span class="alert-danger" asp-validation-for="CreateBill.Contact"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="CreateBill.SubjectBill"> موضوع:</label>
-                                <input asp-for="CreateBill.SubjectBill" class="form-control" />
-                                <span class="alert-danger" asp-validation-for="CreateBill.SubjectBill"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-4 m-4" style="margin-top: 10px;">
-                            <div class="form-group">
-                                <label asp-for="CreateBill.Status" class="control-label col-md-5 col-sm-5 col-xs-12"> وضعیت : </label>
-                                <div class="col-md-7 col-sm-7 col-xs-12">
-                                    <select class="form-control" asp-for="CreateBill.Status" placeholder="وضعیت">
-                                        <option value="1"> فعال </option>
-                                        <option value="2">غیر فعال </option>
-                                    </select>
-                                    <span asp-validation-for="CreateBill.Status" class="error"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-
+      
+        <div class="row" onkeydown="checkKeyPress(event);">
+            <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                <div class="row">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label asp-for="CreateBill.Description" class="control-label">متن لایحه</label>
-                            <div>
-                                <a id="btnPopModal" href="#showmodal=/Admin/Company/Bill/Edit?handler=Search" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" float: inline-end; position: absolute; left: 17px; margin-top: 80px;"> جستجوی درج متن &nbsp;<i class="fa  fa-search" style="padding-left: 3px; font-size: 14px; color: white !important "></i> </a>
-                                <textarea id="Description" name="CreateBill.Description" asp-for="CreateBill.Description" class="form-control textarea1"></textarea>
-                                <span asp-validation-for="CreateBill.Description" class="text-danger"></span>
-                            </div>
-
-                            <style>
-                                #cke_376_bottom {
-                                    display: none !important
-                                }
-                            </style>
+                            <label asp-for="CreateBill.Appointed"> انتخاب موکل</label>
+                            <input id="Appointed_Id" asp-for="CreateBill.Appointed" class="form-control" style="z-index: 0;" />
+                            <span class="alert-danger" asp-validation-for="CreateBill.Appointed"></span>
                         </div>
                     </div>
-                </fieldset>
-            </div>
-        </div>
-        <br />
 
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="CreateBill.ProcessingStage">مرحله رسیدگی:</label>
+                            <input id="ProcessingStage_Id" asp-for="CreateBill.ProcessingStage" class="form-control" style="z-index: 0;" />
+                            <span class="alert-danger" asp-validation-for="CreateBill.ProcessingStage"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="CreateBill.Contact">انتخاب مخاطب:</label>
+                            <input id="Contact_Id" asp-for="CreateBill.Contact" class="form-control" style="z-index: 0;" />
+                            <span class="alert-danger" asp-validation-for="CreateBill.Contact"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="CreateBill.SubjectBill"> موضوع:</label>
+                            <input asp-for="CreateBill.SubjectBill" class="form-control" />
+                            <span class="alert-danger" asp-validation-for="CreateBill.SubjectBill"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 m-4" style="margin-top: 10px;">
+                        <div class="form-group">
+                            <label asp-for="CreateBill.Status" class="control-label col-md-5 col-sm-5 col-xs-12"> وضعیت : </label>
+                            <div class="col-md-7 col-sm-7 col-xs-12">
+                                <select class="form-control" asp-for="CreateBill.Status" placeholder="وضعیت">
+                                    <option value="1"> فعال </option>
+                                    <option value="2">غیر فعال </option>
+                                </select>
+                                <span asp-validation-for="CreateBill.Status" class="error"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+
+
+          
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+                        <a type="button" asp-page="./Index" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">برگشت به لیست</a>
+                        <div>
+                            <a id="btnPopModal" href="#showmodal=/Admin/Company/Bill/Edit?handler=Search" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" float: inline-end; position: absolute; left: 17px; margin-top: 80px;"> جستجوی درج متن &nbsp;<i class="fa  fa-search" style="padding-left: 3px; font-size: 14px; color: white !important "></i> </a>
+                            <textarea id="Description" name="CreateBill.Description" asp-for="CreateBill.Description" class="form-control textarea1"></textarea>
+                            <span asp-validation-for="CreateBill.Description" class="text-danger"></span>
+                        </div>
+
+                        <style>
+                            #cke_376_bottom {
+                                display: none !important
+                            }
+                        </style>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <br />
 
 
 
         <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
         <a type="button" asp-page="./Index" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">برگشت به لیست</a>
     </form>
+  
 </div>
 <link href="~/js/PTextManager/jquery-ui/jquery-ui.css" rel="stylesheet" />
 
@@ -113,8 +105,18 @@
                 source: '@Url.Page("CreateBill", "Contact")'
             });
 
-
+          
         });
+
+        function checkKeyPress(e) {
+
+            if (e.which == 83 && e.ctrlKey) {
+                event.preventDefault();
+                alert(
+                    "CTRL key pressed: " + e.ctrlKey + "\n"
+                );
+            }
+        }
     </script>
     <script src="~/AdminTheme/assets/js/site.js"></script>
     <script src="~/js/PTextManager/ckeditor/ckeditor.js"></script>

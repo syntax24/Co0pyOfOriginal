@@ -1,0 +1,76 @@
+@font-face {
+    font-family: "IranianSans";
+    src: url("/AdminTheme/fonts/IranianSans.ttf") format("truetype");
+}
+@font-face {
+    font-family: 'YekanLight';
+    src: url('/AdminTheme/fonts/iranyekanweblightfanum.eot') format('embedded-opentype'), url('/AdminTheme/fonts/iranyekanweblightfanum.woff') format('woff'), url('/AdminTheme/fonts/iranyekanweblightfanum.ttf') format('truetype'), url('/AdminTheme/fonts/iranyekanweblightfanum.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IranSans';
+    src: url('/AdminTheme/fonts/iranyekanwebboldfanum.eot') format('embedded-opentype'), url('/AdminTheme/fonts/iranyekanwebboldfanum.woff') format('woff'), url('/AdminTheme/fonts/iranyekanwebboldfanum.ttf') format('truetype'), url('/AdminTheme/fonts/iranyekanwebboldfanum.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'IranYekanEXBold';
+    src: url('/AdminTheme/fonts/IRANYekanWebExtraBold.eot') format('embedded-opentype'), url('/AdminTheme/fonts/IRANYekanWebExtraBold.woff') format('woff'), url('/AdminTheme/fonts/IRANYekanWebExtraBold.ttf') format('truetype'), url('/AdminTheme/fonts/IRANYekanWebExtraBold.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'IranText' !important;
+    src: url('/AdminTheme/fonts/IRANYekanBoldMsn.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'YekanLight';
+    src: url('/AdminTheme/fonts/iranyekanweblightfanum.eot') format('embedded-opentype'), url('/AdminTheme/fonts/iranyekanweblightfanum.woff') format('woff'), url('/AdminTheme/fonts/iranyekanweblightfanum.ttf') format('truetype'), url('/AdminTheme/fonts/iranyekanweblightfanum.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IranSans';
+    src: url('/AdminTheme/fonts/iranyekanwebboldfanum.eot') format('embedded-opentype'), url('/AdminTheme/fonts/iranyekanwebboldfanum.woff') format('woff'), url('/AdminTheme/fonts/iranyekanwebboldfanum.ttf') format('truetype'), url('/AdminTheme/fonts/iranyekanwebboldfanum.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IranYekanEXBold';
+    src: url('/AdminTheme/fonts/IRANYekanWebExtraBold.eot') format('embedded-opentype'), url('/AdminTheme/fonts/IRANYekanWebExtraBold.woff') format('woff'), url('/AdminTheme/fonts/IRANYekanWebExtraBold.ttf') format('truetype'), url('/AdminTheme/fonts/IRANYekanWebExtraBold.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IranText';
+    src: url('/AdminTheme/fonts/IRANYekanBoldMsn.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Vazir';
+    src: url('/AdminTheme/fonts/Vazir.eot') format('embedded-opentype'), url('/AdminTheme/fonts/Vazir.woff') format('woff'), url('/AdminTheme/fonts/Vazir.ttf') format('truetype'), url('/AdminTheme/fonts/Vazir.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Web_Yekan';
+    src: url('/AdminTheme/fonts/web_Yekan.eot') format('embedded-opentype'), url('/AdminTheme/fonts/web_Yekan.woff') format('woff'), url('/AdminTheme/fonts/web_Yekan.ttf') format('truetype'), url('/AdminTheme/fonts/web_Yekan.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'IranNastaliq';
+    src: url('/AdminTheme/fonts/IranNastaliq.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

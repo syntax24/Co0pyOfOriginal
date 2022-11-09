@@ -8,7 +8,7 @@ namespace Company.Domain.TextManagerAgg
     public class EntityTextManager : EntityBase
     {
         public EntityTextManager(int noteNumber, string subjectTextManager,
-            int numberTextManager, DateTime dateTextManager, string description, string paragraph, long originalTitle_Id, long subtitles_Id, byte status)
+            int numberTextManager, DateTime dateTextManager, string description, string paragraph, long originalTitle_Id, long subtitle_Id, long chapter_Id, byte status)
         {
             NoteNumber = noteNumber;
             SubjectTextManager = subjectTextManager;
@@ -17,7 +17,8 @@ namespace Company.Domain.TextManagerAgg
             Description = description;
             Paragraph = paragraph;
             OriginalTitle_Id = originalTitle_Id;
-            Subtitles_Id = subtitles_Id;
+            Subtitle_Id = subtitle_Id;
+            Chapter_Id = chapter_Id;
             Status = status;
         }
         public int NoteNumber { get; private set; }
@@ -29,13 +30,13 @@ namespace Company.Domain.TextManagerAgg
         public string Paragraph { get; private set; }
         public byte Status { get; private set; }
         public long OriginalTitle_Id { get; private set; }
-        public long Subtitles_Id { get; private set; }
-
+        public long Subtitle_Id { get; private set; }
+        public long Chapter_Id { get; private set; }
         public List<EntityModuleTextManager> EntityModuleTextManagers { get; private set; }
 
 
         public void Edit(int noteNumber, string subjectTextManager,
-            int numberTextManager, DateTime dateTextManager, string description, string paragraph, long originalTitle_Id, long subtitles_Id, byte status)
+            int numberTextManager, DateTime dateTextManager, string description, string paragraph, long originalTitle_Id, long subtitle_Id, long chapter_Id, byte status)
         {
             NoteNumber = noteNumber;
             SubjectTextManager = subjectTextManager;
@@ -44,7 +45,8 @@ namespace Company.Domain.TextManagerAgg
             Description = description;
             Paragraph = paragraph;
             OriginalTitle_Id = originalTitle_Id;
-            Subtitles_Id = subtitles_Id;
+            Subtitle_Id = subtitle_Id;
+            Chapter_Id = chapter_Id;
             Status = status;
         }
     }

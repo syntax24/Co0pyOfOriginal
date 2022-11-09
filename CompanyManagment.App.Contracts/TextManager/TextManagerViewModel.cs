@@ -15,9 +15,11 @@ namespace CompanyManagment.App.Contracts.TextManager
         public string Description { get; set; }
         public string Paragraph { get; set; }
         public long OriginalTitle_Id { get; set; }
-        public long Subtitles_Id { get; set; }
+        public long Subtitle_Id { get; set; }
+        public long Chapter_Id { get; set; }
         public byte Status { get;  set; }
         public string Subtitle { get; set; }
+        public string Chapter { get; set; }
         public string OriginalTitle { get; set; }
         public List<string> ListUseModule { get; set; }
         //public List<string> ListAllModule { get; set; }

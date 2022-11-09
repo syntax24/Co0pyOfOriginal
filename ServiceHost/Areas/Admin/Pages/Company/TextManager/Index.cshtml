@@ -74,7 +74,7 @@
                                             </div>
                                             <div class="col-sm-3 pull-right">
                                      
-                                                <select class=" form-control inpt" asp-for="searchModel.Subtitles_Id" asp-items="Model.SelectListSubtitle" placeholder="بخش" id="subtitle" style="width: 100%">
+                                                <select class=" form-control inpt" asp-for="searchModel.Subtitle_Id" asp-items="Model.SelectListSubtitle" placeholder="بخش" id="subtitle" style="width: 100%">
                                                     <option value="-1" selected="selected" disabled>بخش </option>
                                                 </select>
                                             </div>
@@ -124,9 +124,11 @@
                             <th style="font-size: 16px !important; width: 3% !important">#</th>
                             <th style="font-size: 16px !important; width: 5% !important ; text-align:center">بخش</th>
                             <th style="font-size: 16px !important; width: 5% !important ; text-align:center">عنوان</th>
+                            <th style="font-size: 16px !important; width: 5% !important; text-align:center">فصل </th>
                             <th style="font-size: 16px !important; width: 2% !important ; text-align:center"> ماده </th>
                             <th style="font-size: 16px !important; width: 2% !important ; text-align:center"> شماره </th>
                             <th style="font-size: 16px !important; width: 15% !important; text-align:center">موضوع </th>
+
                             @foreach (var module in Model.ListModule)
                             {
                                 <th style="font-size: 16px !important; writing-mode:sideways-lr; width: 2% !important">@module</th>
@@ -141,6 +143,7 @@
                             <td style="font-size: 14px !important; text-align: right">@i </td>
                             <td style="font-size: 14px !important; text-align: right">@item.OriginalTitle</td>
                             <td style="font-size: 14px !important; text-align: right">@item.Subtitle </td>
+                            <td style="font-size: 14px !important; text-align: right">@item.Chapter </td>
                             <td style="font-size: 14px !important; text-align: right">@item.NoteNumber</td>
                             <td style="font-size: 14px !important; text-align: right">@item.NumberTextManager</td>
                             <td style="font-size: 14px !important; text-align: right">@item.SubjectTextManager</td>

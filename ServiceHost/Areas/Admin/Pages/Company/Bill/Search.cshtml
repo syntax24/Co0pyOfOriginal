@@ -83,7 +83,6 @@
                                 <button class="btn btn-success btn-rounded " onclick="showMsg()">انتخاب</button>
                             </span>
                               <input id="DescriptionModal_Id" type="text" name="DescriptionModal_Id" style="text-align:right" placeholder="... عبارت مورد نظر را تایپ کنید " class="form-control" />
-
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -156,7 +155,7 @@
                 type: 'GET',
                 url: '/Admin/Company/TextManager?handler=Description',
                 dataType: 'json',
-                data: { subtitleList_Id: $("#subtitle").val() },
+                data: { subtitle_Id: $("#subtitle").val() },
                 success: function (result) {
                     document.getElementById('resultsubtitle').value = result;
                 },
