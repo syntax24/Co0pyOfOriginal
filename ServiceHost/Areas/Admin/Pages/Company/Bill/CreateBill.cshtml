@@ -15,7 +15,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label asp-for="CreateBill.Appointed"> انتخاب موکل</label>
-                            <input id="Appointed_Id" asp-for="CreateBill.Appointed" class="form-control" style="z-index: 0;" />
+                            <input id="Appointed_Id1" asp-for="CreateBill.Appointed" class="form-control" style="z-index: 0;" />
                             <span class="alert-danger" asp-validation-for="CreateBill.Appointed"></span>
                         </div>
                     </div>
@@ -23,14 +23,14 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label asp-for="CreateBill.ProcessingStage">مرحله رسیدگی:</label>
-                            <input id="ProcessingStage_Id" asp-for="CreateBill.ProcessingStage" class="form-control" style="z-index: 0;" />
+                            <input id="ProcessingStage_Id1" asp-for="CreateBill.ProcessingStage" class="form-control" style="z-index: 0;" />
                             <span class="alert-danger" asp-validation-for="CreateBill.ProcessingStage"></span>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label asp-for="CreateBill.Contact">انتخاب مخاطب:</label>
-                            <input id="Contact_Id" asp-for="CreateBill.Contact" class="form-control" style="z-index: 0;" />
+                            <input id="Contact_Id1" asp-for="CreateBill.Contact" class="form-control" style="z-index: 0;" />
                             <span class="alert-danger" asp-validation-for="CreateBill.Contact"></span>
                         </div>
                     </div>
@@ -87,21 +87,17 @@
   
 </div>
 <link href="~/js/PTextManager/jquery-ui/jquery-ui.css" rel="stylesheet" />
-
-
-
-
 @section PanelScripts{
     <script src="~/js/PTextManager/jquery-ui/jquery-ui.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#Appointed_Id').autocomplete({
+            $('#Appointed_Id1').autocomplete({
                 source: '@Url.Page("CreateBill", "Appointed")'
               });
-            $('#ProcessingStage_Id').autocomplete({
+            $('#ProcessingStage_Id1').autocomplete({
                 source: '@Url.Page("CreateBill", "ProcessingStage")'
               });
-            $('#Contact_Id').autocomplete({
+            $('#Contact_Id1').autocomplete({
                 source: '@Url.Page("CreateBill", "Contact")'
             });
 

@@ -44,7 +44,9 @@ namespace CompanyManagment.EFCore.Repository
                 Id = x.id,
                 Chapter = x.Chapter,
                 Subtitle_Id = x.Subtitle_Id,
-                Subtitle =x.EntitySubtitle.Subtitle
+                Subtitle =x.EntitySubtitle.Subtitle,
+                OriginalTitle=x.EntitySubtitle.EntityOriginalTitle.Title
+
             });
 
        

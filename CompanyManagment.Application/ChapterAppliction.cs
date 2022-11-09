@@ -18,13 +18,11 @@ namespace CompanyManagment.Application
         public OperationResult Create(CreateChapter command)
         {
             var oprtaion = new OperationResult();
-            if (_ChapterRepozitory.Exists(x => x.Chapter == command.Chapter ))
-                return oprtaion.Failed("  این متن برای بخش قبلا ثبت شده است");
-
+         
             if (string.IsNullOrWhiteSpace(command.Chapter))
-                return oprtaion.Failed("ثبت  بخش الزامیست");
+                return oprtaion.Failed("ثبت  فصل الزامیست");
             if (command.Subtitle_Id<=0)
-                return oprtaion.Failed("انتخاب  عنوان الزامیست");
+                return oprtaion.Failed("انتخاب  بخش الزامیست");
 
             var Chapter = new EntityChapter(command.Chapter, command.Subtitle_Id);
 
@@ -39,13 +37,11 @@ namespace CompanyManagment.Application
 
             var ChapterEdit = _ChapterRepozitory.Get(command.Id);
 
-            if (_ChapterRepozitory.Exists(x => x.Chapter == command.Chapter))
-                return oprtaion.Failed("  این متن برای بخش قبلا ثبت شده است");
-            if (string.IsNullOrWhiteSpace(command.Chapter))
-                return oprtaion.Failed("ثبت  بخش الزامیست");
 
-            if (string.IsNullOrWhiteSpace(command.Subtitle_Id.ToString()))
-                return oprtaion.Failed("انتخاب  عنوان الزامیست");
+            if (string.IsNullOrWhiteSpace(command.Chapter))
+                return oprtaion.Failed("ثبت  فصل الزامیست");
+            if (command.Subtitle_Id <= 0)
+                return oprtaion.Failed("انتخاب  بخش الزامیست");
 
             ChapterEdit.Edit( command.Chapter,  command.Subtitle_Id);
 

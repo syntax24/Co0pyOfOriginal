@@ -7,7 +7,7 @@
     int i = 1;
 }
 @{
-   
+
     Layout = "Shared/_AdminLayout";
     ViewData["title"] = "فصل";
     <style>
@@ -41,7 +41,7 @@
     <div class="row">
         <div class="col-sm-12 m-r-10">
             <p class="pull-right">
-                <a id="btnPopModal" href="#showmodal=@Url.Page("/Company/Chapter/Index", "Create" )" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-right: 10px "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> تعریف بخش جدید </a>
+                <a id="btnPopModal" href="#showmodal=@Url.Page("/Company/Chapter/Index", "Create" )" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-right: 10px "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> تعریف فصل جدید </a>
             </p>
         </div>
     </div>
@@ -51,7 +51,7 @@
                 <div class="panel-heading" style="background-color: #545353 !important">
                     <h4 class="panel-title" style="color: #edebeb !important; display: inline;">
                         <a data-toggle="collapse" data-parent="#accordion-test" href="#collapseOne" class="collapsed" style="display: inline;">
-                            جستجوی بخش
+                            جستجوی فصل
                         </a>
                     </h4>
                 </div>
@@ -64,13 +64,13 @@
                                         <div class="row">
 
                                             <div class="col-sm-3 pull-right">
-                                                <select class=" form-control inpt" asp-for="searchModel.OriginalTitle_Id" asp-items="@Model.SelectListOriginalTitle" placeholder="عنوان" id="originalTitle" style="width: 100%">
-                                                    <option value="0" selected="selected" disabled>همه موارد </option>
+                                                <select class=" form-control inpt" asp-for="searchModel.OriginalTitle_Id" asp-items="@Model.SelectListOriginalTitle" placeholder="عنوان" id="OriginalTitle_Id" style="width: 100%">
+                                                    <option value="0" selected="selected" disabled>عنوان </option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-3 pull-right">
-                                                <select class=" form-control inpt" asp-for="searchModel.OriginalTitle_Id" asp-items="@Model.SelectListOriginalTitle" placeholder="بخش" id="originalTitle" style="width: 100%">
-                                                    <option value="0" selected="selected" disabled>همه موارد </option>
+                                                <select class=" form-control inpt" asp-for="searchModel.Subtitle_Id" asp-items="@Model.SelectListSubtitles" placeholder="بخش" id="Subtitle_Id" style="width: 100%">
+                                                    <option value="0" selected="selected" disabled>بخش  </option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-4 pull-right">
@@ -99,7 +99,7 @@
     <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست بخش</h3>
+                <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست فصل</h3>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -110,27 +110,29 @@
                                     <th style="font-size: 16px !important; width: 5% !important">#</th>
                                     <th style="font-size: 16px !important; text-align: center">عنوان</th>
                                     <th style="font-size: 16px !important; text-align: center"> بخش </th>
+                                    <th style="font-size: 16px !important; text-align: center"> فسل </th>
                                     <th style="font-size: 16px !important; width: 5% !important">عملیات</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model.Chapters)
                                 {
-                                <tr>
-                                    <td style="font-size: 14px !important; text-align: center">@i </td>
-                                    <td style="font-size: 14px !important; text-align: center">@item.Subtitle </td>
-                                    <td style="font-size: 14px !important; text-align: center">@item.Chapter </td>
-                                    @{
-                                        i++;
-                                    }
-                                    <td>
-                                        <a class="btn btn-warning pull-right m-rl-5"
-                                           href="#showmodal=@Url.Page("./Index", "Edit" , new {Id=item.Id})">
-                                            <i class="fa fa-edit"></i> ویرایش
-                                        </a>
-                                    
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td style="font-size: 14px !important; text-align: center">@i </td>
+                                        <td style="font-size: 14px !important; text-align: center">@item.OriginalTitle </td>
+                                        <td style="font-size: 14px !important; text-align: center">@item.Subtitle </td>
+                                        <td style="font-size: 14px !important; text-align: center">@item.Chapter </td>
+                                        @{
+                                            i++;
+                                        }
+                                        <td>
+                                            <a class="btn btn-warning pull-right m-rl-5"
+                                               href="#showmodal=@Url.Page("./Index", "Edit" , new {Id=item.Id})">
+                                                <i class="fa fa-edit"></i> ویرایش
+                                            </a>
+
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -156,13 +158,40 @@
     <script src="~/AdminTheme/assets/datatables/dataTables.bootstrap.js"></script>
     <script>
         $(document).ready(function () {
-                    $('#datatable').dataTable({
+            $('#datatable').dataTable({
+                "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
+            });
+            $('#datatable2').dataTable(
+                {
                     "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
                 });
-                    $('#datatable2').dataTable(
-                        {
-                            "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
-                        });
-         });
+        });
     </script>
+    <script>
+        $(document).ready(function () {
+            $("#OriginalTitle_Id").change(function () {
+                $("#Subtitle_Id").empty();
+                $.ajax({
+                    type: 'GET',
+                    url: '/Admin/Company/TextManager?handler=SubtitleList',
+                    dataType: 'json',
+                    data: { OriginalTitle_Id: $("#OriginalTitle_Id").val() },
+                    success: function (result) {
+                        $("#Subtitle_Id").append(' <option value="' + -1 + '">' +
+                            "نام بخش را انتخاب کنید" + '</option>');
+                        $.each(result, function (i, result) {
+                            $("#Subtitle_Id").append(' <option value="' + result.id + '">' +
+                                result.subtitle + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Error');
+                    }
+                });
+                return false;
+            });
+
+        });
+    </script>
+
 }
