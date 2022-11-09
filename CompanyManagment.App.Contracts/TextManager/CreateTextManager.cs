@@ -24,7 +24,7 @@ namespace CompanyManagment.App.Contracts.TextManager
         public string Paragraph { get;  set; }
         public long OriginalTitle_Id { get;  set; }
         [Required(ErrorMessage = " انتخاب بخش الزامیست")]
-        public long Subtitles_Id { get;  set; }
+        public long Subtitle_Id { get;  set; }
         [Required(ErrorMessage = " انتخاب فصل الزامیست")]
         public long Chapter_Id { get; set; }
         public byte Status { get; set; }

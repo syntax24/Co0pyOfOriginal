@@ -87,16 +87,16 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="control-label"> انتخاب بخش :</label>
-                                    <select class="form-control select-city" asp-for="Subtitles_Id" asp-items='@Model.SubtitleViewModels' id="subtitle1">
+                                    <select class="form-control select-city" asp-for="Subtitle_Id" asp-items='@Model.SubtitleViewModels' id="subtitle1">
                                         <option value="0"> بخش</option>
                                     </select>
-                                    <span asp-validation-for="Subtitles_Id" class="error"></span>
+                                    <span asp-validation-for="Subtitle_Id" class="error"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="control-label"> انتخاب فصل :</label>
-                                    <select class="form-control select-city" asp-for="Chapter_Id" asp-items='@Model.ChapterViewModels' id="subtitle1">
+                                    <select class="form-control select-city" asp-for="Chapter_Id" asp-items='@Model.ChapterViewModels' id="chapter1">
                                         <option value="0"> فصل</option>
                                     </select>
                                     <span asp-validation-for="Chapter_Id" class="error"></span>
@@ -201,6 +201,7 @@
     $(document).ready(function () {
         $("#originalTitle1").change(function () {
             $("#subtitle1").empty();
+            $("#chapter1").empty();
             $.ajax({
                 type: 'GET',
                 url: '/Admin/Company/TextManager?handler=SubtitleList',
@@ -216,6 +217,27 @@
                 },
                 error: function (ex) {
                     alert('Error');
+                }
+            });
+            return false;
+        });
+        $("#subtitle1").change(function () {
+            $("#chapter1").empty();
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/Company/TextManager?handler=ChptereList',
+                dataType: 'json',
+                data: { Subtitle_Id: $("#subtitle1").val() },
+                success: function (states) {
+                    $("#chapter1").append(' <option value="' + -1 + '">' +
+                        "فصل را انتخاب کنید" + '</option>');
+                    $.each(states, function (i, state) {
+                        $("#chapter1").append(' <option value="' + state.value + '">' +
+                            state.text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('ffff');
                 }
             });
             return false;

@@ -84,7 +84,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
                 SubjectTextManager = textManager.SubjectTextManager,
                 Paragraph = textManager.Paragraph,
                 OriginalTitle_Id = textManager.OriginalTitle_Id,
-                Subtitles_Id = textManager.Subtitles_Id,
+                Subtitle_Id = textManager.Subtitle_Id,
                 Chapter_Id = textManager.Chapter_Id,
                 ModuleIds = ModuleIds.ToArray(),
                 OriginalTitleViewModels = _originalTitleApplication.GetAllOriginalTitle().ToList().Select(x => new SelectListItem { Text = x.Title, Value = x.Id.ToString() }).ToList(),
@@ -109,9 +109,15 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
             var subtitleList = _subtitleApplication.GetAllSubtitle().Where(d => d.OriginalTitle_Id == OriginalTitle_Id).ToList();
             return new JsonResult(subtitleList);
         }
-        public IActionResult OnGetDescription(long subtitleList_Id)
+        public IActionResult OnGetChptereList(long Subtitle_Id)
         {
-            var descriptions = _textManagerApplication.GetAllTextManager().Where(d => d.Subtitles_Id == subtitleList_Id).Select(x => x.Description).ToList();
+            var chapterleList = _chapterApplication.GetAllChapter().Where(d => d.Subtitle_Id == Subtitle_Id).ToList();
+            return new JsonResult(chapterleList);
+        }
+
+        public IActionResult OnGetDescription(long subtitle_Id)
+        {
+            var descriptions = _textManagerApplication.GetAllTextManager().Where(d => d.Subtitle_Id == subtitle_Id).Select(x => x.Description).ToList();
             return new JsonResult(descriptions);
         }
         public IActionResult OnGetDescriptionAll(string term)

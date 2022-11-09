@@ -29,7 +29,7 @@ namespace CompanyManagment.Application
                 command.Description,
                 command.Paragraph,
                 command.OriginalTitle_Id,
-                command.Subtitles_Id,
+                command.Subtitle_Id,
                  command.Chapter_Id,
                  command.Status
                );
@@ -61,7 +61,7 @@ namespace CompanyManagment.Application
                                 command.Description,
                                 command.Paragraph,
                                 command.OriginalTitle_Id,
-                                command.Subtitles_Id,
+                                command.Subtitle_Id,
                                   command.Chapter_Id,
                                 command.Status
                                 );

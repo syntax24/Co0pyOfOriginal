@@ -29,9 +29,11 @@ namespace CompanyManagment.EFCore.Repository
                 Paragraph = x.Paragraph,
                 Status=x.Status,
                 OriginalTitle_Id = x.OriginalTitle_Id,
-                Subtitles_Id = x.Subtitles_Id,
-                OriginalTitle= _context.EntityOriginalTitles .Where(i=>i.id== x.OriginalTitle_Id).Select(t=>t.Title).FirstOrDefault(),
-                Subtitle = _context.EntitySubtitles.Where(i => i.id == x.Subtitles_Id).Select(t => t.Subtitle).FirstOrDefault(),
+                Subtitle_Id = x.Subtitle_Id,
+                Chapter_Id = x.Chapter_Id,
+                OriginalTitle = _context.EntityOriginalTitles .Where(i=>i.id== x.OriginalTitle_Id).Select(t=>t.Title).FirstOrDefault(),
+                Subtitle = _context.EntitySubtitles.Where(i => i.id == x.Subtitle_Id).Select(t => t.Subtitle).FirstOrDefault(),
+                Chapter= _context.EntityChapters.Where(i => i.id == x.Chapter_Id).Select(t => t.Chapter).FirstOrDefault(),
             }).ToList();
         }
         public EditTextManager GetDetails(long id)
@@ -47,8 +49,8 @@ namespace CompanyManagment.EFCore.Repository
                 Paragraph = x.Paragraph,
                 Status = x.Status,
                 OriginalTitle_Id = x.OriginalTitle_Id,
-                Subtitles_Id = x.Subtitles_Id,
-
+                Subtitle_Id = x.Subtitle_Id,
+                Chapter_Id = x.Chapter_Id,
             }).FirstOrDefault(x => x.Id == id);
         }
 
@@ -66,9 +68,12 @@ namespace CompanyManagment.EFCore.Repository
                 Paragraph = x.Paragraph,
                 Status = x.Status,
                 OriginalTitle_Id = x.OriginalTitle_Id,
-                Subtitles_Id = x.Subtitles_Id,
+                Subtitle_Id = x.Subtitle_Id,
+                Chapter_Id = x.Chapter_Id,
                 OriginalTitle = _context.EntityOriginalTitles.Where(i => i.id == x.OriginalTitle_Id).Select(t => t.Title).FirstOrDefault(),
-                Subtitle = _context.EntitySubtitles.Where(i => i.id == x.Subtitles_Id).Select(t => t.Subtitle).FirstOrDefault(),
+                Subtitle = _context.EntitySubtitles.Where(i => i.id == x.Subtitle_Id).Select(t => t.Subtitle).FirstOrDefault(),
+                Chapter = _context.EntityChapters.Where(i => i.id == x.Chapter_Id).Select(t => t.Chapter).FirstOrDefault(),
+
                 ListUseModule = _context.EntityModuleTextManagers.Where(xi => xi.TextManagerId == x.id) .Select(xi => xi.Module.NameSubModule).ToList(),
 
             });
@@ -76,14 +81,13 @@ namespace CompanyManagment.EFCore.Repository
 
             if (searchModel.OriginalTitle_Id!=0)
                 query = query.Where(x => x.OriginalTitle_Id==searchModel.OriginalTitle_Id);
-            if (searchModel.Subtitles_Id != 0)
-                query = query.Where(x => x.Subtitles_Id == searchModel.Subtitles_Id); ;
+            if (searchModel.Subtitle_Id != 0)
+                query = query.Where(x => x.Subtitle_Id == searchModel.Subtitle_Id);
+            if (searchModel.Chapter_Id != 0)
+                query = query.Where(x => x.Chapter_Id == searchModel.Chapter_Id); ;
             if (searchModel.Status != 0)
                 query = query.Where(x => x.Status == searchModel.Status); 
-            //if (!string.IsNullOrWhiteSpace(searchModel.SubjectTextManager))
-            //    query = query.Where(x => x.SubjectTextManager.Contains(searchModel.SubjectTextManager));
-            //if (searchModel.NoteNumber != 0)
-            //    query = query.Where(x => x.NoteNumber == searchModel.NoteNumber); ;
+
             return query.OrderByDescending(x => x.Id).ToList();
         }
 
