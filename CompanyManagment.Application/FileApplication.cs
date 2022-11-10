@@ -18,9 +18,9 @@ namespace CompanyManagment.Application
             _fileRepository = fileRepository;
         }
 
-        public OperationResult2 Create(CreateFile command)
+        public OperationResult Create(CreateFile command)
         {
-            var operation = new OperationResult2();
+            var operation = new OperationResult();
             var clientVisitDate = new DateTime();
 
             clientVisitDate = command.ClientVisitDate.ToGeorgianDateTime();
@@ -38,9 +38,9 @@ namespace CompanyManagment.Application
             return operation.Succcedded();
         }
 
-        public OperationResult2 Edit(EditFile command)
+        public OperationResult Edit(EditFile command)
         {
-            var operation = new OperationResult2();
+            var operation = new OperationResult();
             var file = _fileRepository.Get(command.Id);
             var clientVisitDate = new DateTime();
 

@@ -38,9 +38,9 @@ namespace CompanyManagment.Application
             return operation.Succcedded();
         }
 
-        public OperationResult2 CreateProceedingSessions(List<EditProceedingSession> proceedingSessions, long boardId)
+        public OperationResult CreateProceedingSessions(List<EditProceedingSession> proceedingSessions, long boardId)
         {
-            var operation = new OperationResult2();
+            var operation = new OperationResult();
 
             RemoveProceedingSessions(boardId);
 

@@ -26,7 +26,9 @@ namespace CompanyManagment.App.Contracts.File1
         [Required(ErrorMessage = "فیلد الزامی است")]
         public int Client { get; set; }
 
-      
+        public string ClientFullName { get; set; }
+
+
         public string FileClass { get; set; }
 
         [Required(ErrorMessage = "فیلد الزامی است")]

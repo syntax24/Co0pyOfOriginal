@@ -9,7 +9,7 @@ namespace CompanyManagment.App.Contracts.ProceedingSession
         OperationResult Create(CreateProceedingSession command);
         OperationResult Edit(EditProceedingSession command);
         List<EditProceedingSession> Search(ProceedingSessionSearchModel searchModel);
-        OperationResult2 CreateProceedingSessions(List<EditProceedingSession> proceedingSessions, long boardId);
+        OperationResult CreateProceedingSessions(List<EditProceedingSession> proceedingSessions, long boardId);
         void RemoveProceedingSessions(long boardId);
     }
 }

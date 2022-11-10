@@ -62,22 +62,68 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
                 fileSearchModel.disputeResolutionProceedingSession =
                     new ProceedingSessionSearchModel();
 
+            //var files = _fileApplication.Search(fileSearchModel);
+           
+            //viewModels = files;
+
+            //var i = 0; 
+
+            //foreach (var file in files.ToList())
+            //{
+            //    var tempViewModel = new FileViewModel();
+            //    tempViewModel = GetFileDetails(file);
+
+            //    if(FilterFileDetails(tempViewModel, fileSearchModel))
+            //    {
+            //        viewModels[i] = tempViewModel;
+            //        i++;
+            //    }
+            //    else
+            //        viewModels.RemoveAt(i);
+            //}
+
+            var allFiles = _fileApplication.Search(new FileSearchModel());
+
+            if (this.fileSearchModel == null)
+            {
+                this.fileSearchModel = new FileSearchModel
+                {
+                    //ArchiveNoList = allFiles.Count != 0 ? allFiles.Select(x => x.ArchiveNo.ToString()).ToList() : null,
+                    //ArchiveNo_FileClassList.ArchiveNo = allFiles.Select(x => x.ArchiveNo.ToString()).ToList(),
+                    ArchiveNo_FileClass_UserIdList = allFiles.Select(x => new ArchiveNo_FileClass_UserIdList { ArchiveNo = x.ArchiveNo.ToString(), FileClass = x.FileClass,  UserId = x.Client == 1 ? x.Reqester : x.Summoned }).ToList(),
+                    UsersList = _fileApplication.GetAllEmploees().Select(x => new Users { Id = x.Id, FullName = x.EmployeeFullName }).ToList(),
+                };
+
+                this.fileSearchModel.UsersList.AddRange(_fileApplication.GetAllEmployers().Select(x => new Users { Id = x.Id, FullName = x.FullName }).ToList());
+            }
+            else
+            {
+                //this.fileSearchModel.ArchiveNoList = allFiles.Select(x => x.ArchiveNo.ToString()).ToList();
+                //this.fileSearchModel.FileClassList = allFiles.Select(x => x.FileClass).ToList();
+
+                this.fileSearchModel.ArchiveNo_FileClass_UserIdList = allFiles.Select(x => new ArchiveNo_FileClass_UserIdList { ArchiveNo = x.ArchiveNo.ToString(), FileClass = x.FileClass, UserId = x.Client == 1 ? x.Reqester : x.Summoned }).ToList();
+                this.fileSearchModel.UsersList = _fileApplication.GetAllEmploees().Select(x => new Users { Id = x.Id, FullName = x.EmployeeFullName }).ToList();
+                this.fileSearchModel.UsersList.AddRange(_fileApplication.GetAllEmployers().Select(x => new Users { Id = x.Id, FullName = x.FullName }).ToList());
+            }
+
+
             var files = _fileApplication.Search(fileSearchModel);
+
             foreach (var item in files)
             {
                 item.ReqesterFullname = _fileApplication.GetEmployeeFullNameById(item.Reqester);
                 item.SummonedFullname = _fileApplication.GetEmployerFullNameById(item.Summoned);
             }
+
             viewModels = files;
 
-            var i = 0; 
-
+            var i = 0;
             foreach (var file in files.ToList())
             {
                 var tempViewModel = new FileViewModel();
                 tempViewModel = GetFileDetails(file);
 
-                if(FilterFileDetails(tempViewModel, fileSearchModel))
+                if (FilterFileDetails(tempViewModel, fileSearchModel))
                 {
                     viewModels[i] = tempViewModel;
                     i++;
@@ -229,6 +275,13 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
         public IActionResult OnGetCreateOrEditPetition(long fileId, int boardTypeId)
         {
             var file = _fileApplication.GetDetails(fileId);
+
+            if (file.Client == 1)
+                file.ClientFullName = _fileApplication.GetEmployeeFullNameById(file.Reqester);
+
+            else
+                file.ClientFullName = _fileApplication.GetEmployerFullNameById(file.Summoned);
+
             var petition =
                 _petitionApplication.GetDetails(fileId, boardTypeId) ?? new EditPetition();
             var workHistories = _workHistoryApplication.Search(petition.Id);
@@ -254,46 +307,47 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
 
         public IActionResult OnPostCreateOrEditPetition(EditPetition command)
         {
+            var petitionResult = new OperationResult();
             //if (!ModelState.IsValid)
             //{
             //    return BadRequest();
 
             //}
 
-            var result = _fileApplication.Edit(command.FileData);
+            //var result = _fileApplication.Edit(command.FileData);
 
-            if (!result.IsSuccedded)
-                return new JsonResult(result);
+            //if (!result.IsSuccedded)
+            //    return new JsonResult(result);
 
             if (command.Id == 0)
             {
-                result = _petitionApplication.Create(command);
+                petitionResult = _petitionApplication.Create(command);
             }
             else
             {
-                result = _petitionApplication.Edit(command);
+                petitionResult = _petitionApplication.Edit(command);
             }
 
-            if (!result.IsSuccedded)
-                return new JsonResult(result);
+            if (!petitionResult.IsSuccedded)
+                return new JsonResult(petitionResult);
 
-            result = _workHistoryApplication.CreateWorkHistories(
+            var workResult = _workHistoryApplication.CreateWorkHistories(
                 command.CreateWorkHistory,
-                result.EntityId
+                petitionResult.EntityId
             );
 
-            if (!result.IsSuccedded)
-                return new JsonResult(result);
+            if (!workResult.IsSuccedded)
+                return new JsonResult(workResult);
 
-            result = _penaltyTitleApplication.CreatePenaltyTitles(
+            var penaltyResult = _penaltyTitleApplication.CreatePenaltyTitles(
                 command.CreatePenaltyTitle,
-                result.EntityId
+                petitionResult.EntityId
             );
 
-            if (!result.IsSuccedded)
-                return new JsonResult(result);
+            if (!penaltyResult.IsSuccedded)
+                return new JsonResult(penaltyResult);
 
-            return new JsonResult(result);
+            return new JsonResult(penaltyResult);
         }
 
         public IActionResult OnGetDetails(long id)
@@ -425,6 +479,9 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
                 return false;
 
             if (fileSearchModel.FileClass != null && !CheckValue(tempViewModel.FileClass, fileSearchModel.FileClass))
+                return false;
+
+            if (fileSearchModel.UserId != 0 && !(fileSearchModel.UserId == tempViewModel.Summoned || fileSearchModel.UserId == tempViewModel.Reqester))
                 return false;
 
             if (fileSearchModel.diagnosisBoard.Branch != null && !CheckValue(tempViewModel.DiagnosisBoard.Branch, fileSearchModel.diagnosisBoard.Branch))

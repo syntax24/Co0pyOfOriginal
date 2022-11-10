@@ -300,9 +300,7 @@ function CallBackHandler(data, action, form) {
 
                 $.Notification.autoHideNotify('success', 'top center', 'پیام سیستم ', data.message);
                 setTimeout(function () {
-                    window.location.href = "#showmodal=/Admin/File/FilePage?handler=EditFile";
-
-
+                    window.location.href = "#showmodal=/Admin/Company/FilePage?handler=EditFile";
 
                 }, 1000);
 

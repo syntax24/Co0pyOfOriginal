@@ -16,9 +16,9 @@ namespace CompanyManagment.Application
             _boardRepository = boardRepository;
         }
 
-        public OperationResult2 Create(CreateBoard command)
+        public OperationResult Create(CreateBoard command)
         {
-            var operation = new OperationResult2();
+            var operation = new OperationResult();
 
             var disputeResolutionPetitionDate = new DateTime();
 
@@ -32,12 +32,12 @@ namespace CompanyManagment.Application
             _boardRepository.Create(board);
             _boardRepository.SaveChanges();
 
-            return operation.Succcedded(board.id);
+            return operation.Succcedded(entityId: board.id);
         }
 
-        public OperationResult2 Edit(EditBoard command)
+        public OperationResult Edit(EditBoard command)
         {
-            var operation = new OperationResult2();
+            var operation = new OperationResult();
             var board = _boardRepository.Get(command.Id);
 
             var disputeResolutionPetitionDate = new DateTime();
@@ -51,7 +51,7 @@ namespace CompanyManagment.Application
                 command.ExpertReport,command.File_Id,command.BoardType_Id);
             _boardRepository.SaveChanges();
 
-            return operation.Succcedded(board.id);
+            return operation.Succcedded(entityId: board.id);
         }
 
         public EditBoard GetDetails(long id)

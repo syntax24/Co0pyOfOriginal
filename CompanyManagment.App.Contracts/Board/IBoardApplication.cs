@@ -5,8 +5,8 @@ namespace CompanyManagment.App.Contracts.Board
 {
     public interface IBoardApplication
     {
-        OperationResult2 Create(CreateBoard command);
-        OperationResult2 Edit(EditBoard command);
+        OperationResult Create(CreateBoard command);
+        OperationResult Edit(EditBoard command);
         EditBoard GetDetails(long id); 
         EditBoard GetDetails(long fileId, int boardTypeId);
         List<EditBoard> Search(BoardSearchModel searchModel);
