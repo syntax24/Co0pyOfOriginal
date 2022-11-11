@@ -17,7 +17,9 @@ namespace CompanyManagment.App.Contracts.TextManager
         public long OriginalTitle_Id { get; set; }
         public long Subtitle_Id { get; set; }
         public long Chapter_Id { get; set; }
-        public byte Status { get;  set; }
+        public string IsActiveString { get; set; }
+        public string Signature { get; set; }
+
         public string Subtitle { get; set; }
         public string Chapter { get; set; }
         public string OriginalTitle { get; set; }

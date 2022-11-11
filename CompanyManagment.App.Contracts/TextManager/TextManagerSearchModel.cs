@@ -13,7 +13,8 @@
         public long OriginalTitle_Id { get; set; }
         public long Subtitle_Id { get; set; }
         public long Chapter_Id { get; set; }
-
+        public string IsActiveString { get; set; }
+        public string Signature { get; set; }
     }
  
 }

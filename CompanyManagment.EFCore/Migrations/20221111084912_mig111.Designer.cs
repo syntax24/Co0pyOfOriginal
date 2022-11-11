@@ -4,14 +4,16 @@ using CompanyManagment.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CompanyManagment.EFCore.Migrations
 {
     [DbContext(typeof(CompanyContext))]
-    partial class CompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20221111084912_mig111")]
+    partial class mig111
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -876,9 +878,6 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IsActiveString")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("NoteNumber")
                         .HasColumnType("int");
 
@@ -891,8 +890,8 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Property<string>("Paragraph")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Signature")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("SubjectTextManager")
                         .HasColumnType("nvarchar(max)");

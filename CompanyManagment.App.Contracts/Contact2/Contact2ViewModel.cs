@@ -5,7 +5,7 @@
         public long Id { get; set; }
         public string NameContact { get; set; }
 
-
-
+        public string IsActiveString { get;  set; }
+        public string Signature { get;  set; }
     }
 }

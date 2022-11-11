@@ -27,7 +27,7 @@ namespace CompanyManagment.App.Contracts.TextManager
         public long Subtitle_Id { get;  set; }
         [Required(ErrorMessage = " انتخاب فصل الزامیست")]
         public long Chapter_Id { get; set; }
-        public byte Status { get; set; }
+       
 
         [Required(ErrorMessage = " انتخاب حداقل یک ماژول الزامیست")]
         public long[] ModuleIds { get; set; }

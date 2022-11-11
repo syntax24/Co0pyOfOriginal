@@ -10,6 +10,11 @@ namespace CompanyManagment.App.Contracts.TextManager
         EditTextManager GetDetails( long id);
         List<TextManagerViewModel> Search(TextManagerSearchModel SearchModel);
         List<TextManagerViewModel> GetAllTextManager();
-   
+        List<TextManagerViewModel> PrintAll(List<long> ids);
+
+        OperationResult Active(long id);
+        OperationResult DeActive(long id);
+        OperationResult Sign(long id);
+        OperationResult UnSign(long id);
     }
 }

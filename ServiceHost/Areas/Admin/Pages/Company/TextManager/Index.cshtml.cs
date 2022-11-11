@@ -16,7 +16,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
 {
     public class IndexModel : PageModel
     {
-
+        public string Message { get; set; }
         public TextManagerViewModel searchModel;
         public List<SubtitleViewModel> SubtitlesViewModels;
         public List<TextManagerViewModel> TextManagers;
@@ -111,7 +111,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
         }
         public IActionResult OnGetChptereList(long Subtitle_Id)
         {
-            var chapterleList = _chapterApplication.GetAllChapter().Where(d => d.Subtitle_Id == Subtitle_Id).ToList();
+            var chapterleList = _chapterApplication.GetAllChapter().Where(x => x.Subtitle_Id == Subtitle_Id).ToList().Select(x => new SelectListItem { Text = x.Chapter, Value = x.Id.ToString() }).ToList();
             return new JsonResult(chapterleList);
         }
 
@@ -156,6 +156,95 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
             {
                 return BadRequest();
             }
+        }
+
+        public IActionResult OnGetDeActive(long id)
+        {
+
+
+            var result = _textManagerApplication.DeActive(id);
+
+            if (result.IsSuccedded)
+                return RedirectToPage("./Index");
+            Message = result.Message;
+            return RedirectToPage("./Index");
+        }
+
+        public IActionResult OnGetIsActive(long id)
+        {
+
+
+            var result = _textManagerApplication.Active(id);
+            if (result.IsSuccedded)
+                return RedirectToPage("./Index");
+            Message = result.Message;
+            return RedirectToPage("./Index");
+        }
+
+        public IActionResult OnGetSign(long id)
+        {
+
+
+            var result = _textManagerApplication.Sign(id);
+            return RedirectToPage("./Index");
+
+
+        }
+        public IActionResult OnGetUnSign(long id)
+        {
+
+
+            var result = _textManagerApplication.UnSign(id);
+            return RedirectToPage("./Index");
+
+        }
+        public IActionResult OnGetGroupDeActive(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _textManagerApplication.DeActive(item);
+            }
+            return RedirectToPage("./Index");
+
+        }
+
+
+        public IActionResult OnGetGroupReActive(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _textManagerApplication.Active(item);
+            }
+
+
+            //if (result.IsSuccedded)
+            //    return RedirectToPage("./Index");
+
+            return RedirectToPage("./Index");
+        }
+
+
+        public IActionResult OnGetGroupSign(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _textManagerApplication.Sign(item);
+            }
+            return RedirectToPage("./Index");
+
+        }
+        public IActionResult OnGetGroupUnSign(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _textManagerApplication.UnSign(item);
+            }
+            return RedirectToPage("./Index");
+
         }
         private class Parvandeh
         {

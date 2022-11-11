@@ -38,7 +38,7 @@ namespace CompanyManagment.Application
                 return oprtaion.Failed("  این عنوان قبلا ثبت شده است");
 
             if (string.IsNullOrWhiteSpace(command.NameContact))
-                return oprtaion.Failed("ثبت  عوان الزامیست");
+                return oprtaion.Failed("ثبت  عنوان الزامیست");
 
 
             ContactEdit.Edit(command.NameContact); ;
@@ -59,6 +59,67 @@ namespace CompanyManagment.Application
         public List<Contact2ViewModel> Search(Contact2SearchModel SearchModel)
         {
             return _contactRepozitory2.Search(SearchModel);
+        }
+        public OperationResult Active(long id)
+        {
+            var opration = new OperationResult();
+            var contract = _contactRepozitory2.Get(id);
+            if (contract == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
+
+            contract.Active();
+
+            _contactRepozitory2.SaveChanges();
+            return opration.Succcedded();
+        }
+
+        public OperationResult DeActive(long id)
+        {
+            var opration = new OperationResult();
+            var contract = _contactRepozitory2.Get(id);
+            if (contract == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
+
+            contract.DeActive();
+
+
+            _contactRepozitory2.SaveChanges();
+            return opration.Succcedded();
+        }
+
+        public OperationResult Sign(long id)
+        {
+            var opration = new OperationResult();
+            var contract = _contactRepozitory2.Get(id);
+            if (contract == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
+
+            contract.Sign();
+
+
+            _contactRepozitory2.SaveChanges();
+            return opration.Succcedded();
+
+
+        }
+
+        public OperationResult UnSign(long id)
+        {
+            var opration = new OperationResult();
+            var contract = _contactRepozitory2.Get(id);
+            if (contract == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
+
+            contract.UnSign();
+
+
+            _contactRepozitory2.SaveChanges();
+            return opration.Succcedded();
+        }
+
+        public List<Contact2ViewModel> PrintAll(List<long> ids)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

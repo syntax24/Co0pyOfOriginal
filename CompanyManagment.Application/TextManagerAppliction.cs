@@ -30,8 +30,8 @@ namespace CompanyManagment.Application
                 command.Paragraph,
                 command.OriginalTitle_Id,
                 command.Subtitle_Id,
-                 command.Chapter_Id,
-                 command.Status
+                 command.Chapter_Id
+                 
                );
             _TextManagerRepozitory.Create(textManager);
             _TextManagerRepozitory.SaveChanges();
@@ -62,8 +62,8 @@ namespace CompanyManagment.Application
                                 command.Paragraph,
                                 command.OriginalTitle_Id,
                                 command.Subtitle_Id,
-                                  command.Chapter_Id,
-                                command.Status
+                                command.Chapter_Id
+                           
                                 );
                
             _TextManagerRepozitory.SaveChanges();
@@ -89,6 +89,69 @@ namespace CompanyManagment.Application
         public List<TextManagerViewModel> Search(TextManagerSearchModel SearchModel)
         {
             return _TextManagerRepozitory.Search(SearchModel);
+        }
+
+
+        public OperationResult Active(long id)
+        {
+            var opration = new OperationResult();
+            var contract = _TextManagerRepozitory.Get(id);
+            if (contract == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
+
+            contract.Active();
+
+            _TextManagerRepozitory.SaveChanges();
+            return opration.Succcedded();
+        }
+
+        public OperationResult DeActive(long id)
+        {
+            var opration = new OperationResult();
+            var contract = _TextManagerRepozitory.Get(id);
+            if (contract == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
+
+            contract.DeActive();
+
+
+            _TextManagerRepozitory.SaveChanges();
+            return opration.Succcedded();
+        }
+
+        public OperationResult Sign(long id)
+        {
+            var opration = new OperationResult();
+            var contract = _TextManagerRepozitory.Get(id);
+            if (contract == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
+
+            contract.Sign();
+
+
+            _TextManagerRepozitory.SaveChanges();
+            return opration.Succcedded();
+
+
+        }
+
+        public OperationResult UnSign(long id)
+        {
+            var opration = new OperationResult();
+            var contract = _TextManagerRepozitory.Get(id);
+            if (contract == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
+
+            contract.UnSign();
+
+
+            _TextManagerRepozitory.SaveChanges();
+            return opration.Succcedded();
+        }
+
+        public List<TextManagerViewModel> PrintAll(List<long> ids)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

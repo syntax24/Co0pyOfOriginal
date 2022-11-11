@@ -151,18 +151,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4 m-4" style="margin-top: 10px;">
-                            <div class="form-group">
-                                <label asp-for="NumberTextManager" class="control-label col-md-5 col-sm-5 col-xs-12"> وضعیت : </label>
-                                <div class="col-md-7 col-sm-7 col-xs-12">
-                                    <select class="form-control" asp-for="Status" placeholder="وضعیت">
-                                        <option value="1">فعال </option>
-                                        <option value="2">غیر فعال </option>
-                                    </select>
-                                    <span asp-validation-for="Status" class="error"></span>
-                                </div>
-                            </div>
-                        </div>
+                    
                         <div class="col-md-12">
                             <div class="form-group">
 
@@ -251,12 +240,12 @@
         url: '/Admin/Company/TextManager?handler=ChptereList',
         dataType: 'json',
         data: {Subtitle_Id: $("#subtitle1").val() },
-        success: function (states) {
+            success: function (results) {
             $("#chapter1").append(' <option value="' + -1 + '">' +
                 "فصل را انتخاب کنید" + '</option>');
-        $.each(states, function (i, state) {
-            $("#chapter1").append(' <option value="' + state.value + '">' +
-                state.text + '</option>');
+                $.each(results, function (i, result) {
+                $("#chapter1").append(' <option value="' + result.value + '">' +
+                result.text + '</option>');
                     });
                 },
         error: function (ex) {

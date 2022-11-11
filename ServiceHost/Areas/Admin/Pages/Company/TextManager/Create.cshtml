@@ -228,12 +228,12 @@
                 url: '/Admin/Company/TextManager?handler=ChptereList',
                 dataType: 'json',
                 data: { Subtitle_Id: $("#subtitle1").val() },
-                success: function (states) {
+                success: function (results) {
                     $("#chapter1").append(' <option value="' + -1 + '">' +
                         "فصل را انتخاب کنید" + '</option>');
-                    $.each(states, function (i, state) {
-                        $("#chapter1").append(' <option value="' + state.value + '">' +
-                            state.text + '</option>');
+                    $.each(results, function (i, result) {
+                        $("#chapter1").append(' <option value="' + result.value + '">' +
+                            result.text + '</option>');
                     });
                 },
                 error: function (ex) {
