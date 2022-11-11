@@ -11,7 +11,8 @@
         public string Paragraph { get; set; }
         public byte Status { get; set; }
         public long OriginalTitle_Id { get; set; }
-        public long Subtitles_Id { get; set; }
+        public long Subtitle_Id { get; set; }
+        public long Chapter_Id { get; set; }
 
     }
  
