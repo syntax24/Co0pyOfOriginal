@@ -7,8 +7,8 @@ namespace CompanyManagment.App.Contracts.File1
 {
     public interface IFileApplication
     {
-        OperationResult2 Create(CreateFile command);
-        OperationResult2 Edit(EditFile command);
+        OperationResult Create(CreateFile command);
+        OperationResult Edit(EditFile command);
         EditFile GetDetails(long id);
         List<FileViewModel> Search(FileSearchModel searchModel);
 

@@ -37,7 +37,7 @@ namespace CompanyManagment.EFCore.Repository
                 Day = x.Day,
                 PaidAmount = x.PaidAmount,
                 RemainingAmount = x.RemainingAmount,
-                Petition_Id = petitionId
+                Petition_Id = x.Petition_Id
             }).Where(x => x.Petition_Id == petitionId);
 
             //TODO if

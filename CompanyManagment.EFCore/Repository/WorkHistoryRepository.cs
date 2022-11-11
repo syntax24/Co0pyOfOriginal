@@ -27,7 +27,7 @@ namespace File.EfCore.Repository
                 WorkingHoursPerDay = x.WorkingHoursPerDay.ToString(),
                 WorkingHoursPerWeek = x.WorkingHoursPerWeek.ToString(),
                 Description = x.Description,
-                Petition_Id = petitionId
+                Petition_Id = x.Petition_Id
             }).Where(x => x.Petition_Id == petitionId);
 
             //TODO if

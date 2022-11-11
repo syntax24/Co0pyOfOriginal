@@ -75,7 +75,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="ClientVisitDate" class="control-label">  تاریخ مراجعه موکل </label>
-                                <input type="text" class="form-control" asp-for="ClientVisitDate" readonly>
+                                <input type="text" class="form-control" asp-for="ClientVisitDate" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                 <span asp-validation-for="ClientVisitDate" class="error"></span>
                             </div>
                         </div>
@@ -304,19 +304,19 @@
         dir: "rtl"
     });
     
-    $('#ClientVisitDate').persianDatepicker({
-        format: 'YYYY/MM/DD',
-        initialValueType: 'persian',
-        initialValue: false,
-        //'position': [-270, 25],
-        autoClose: true,
+    //$('#ClientVisitDate').persianDatepicker({
+    //    format: 'YYYY/MM/DD',
+    //    initialValueType: 'persian',
+    //    initialValue: false,
+    //    //'position': [-270, 25],
+    //    autoClose: true,
 
-        calendar: {
-            persian: {
-                leapYearMode: 'astronomical'
-            }
-        }
-    });
+    //    calendar: {
+    //        persian: {
+    //            leapYearMode: 'astronomical'
+    //        }
+    //    }
+    //});
     
     function CheckArchiveNo(){
 
@@ -329,7 +329,7 @@
             //contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             type: 'POST',
-            url: '@Url.Page("/File/FilePage/Index", "CheckUniqueArchiveNo")',
+            url: '@Url.Page("./Index", "CheckUniqueArchiveNo")',
             headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
             data: { "archiveNo" : archiveNo },
 
@@ -338,13 +338,15 @@
                 if (response.stat == false) {
 
                     $("button[type=submit]").attr('disabled', true)
-                    swal("", response.message, "error");
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', response.message);
+                    //swal("", response.message, "error");
                 }
                 else {
                     $("button[type=submit]").attr('disabled', false)
                 }
             },
             failure: function (response) {
+                console.log(5, response)
                 alert("خطایی رخ داده است. لطفا با مدیر سیستم تماس بگیرید");
             }
         });

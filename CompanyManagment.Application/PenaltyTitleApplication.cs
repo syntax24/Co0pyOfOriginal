@@ -36,9 +36,9 @@ namespace CompanyManagment.Application
             return operation.Succcedded();
         }
 
-        public OperationResult2 CreatePenaltyTitles(List<EditPenaltyTitle> penaltyTitles, long petitionId)
+        public OperationResult CreatePenaltyTitles(List<EditPenaltyTitle> penaltyTitles, long petitionId)
         {
-            var operation = new OperationResult2();
+            var operation = new OperationResult();
 
             RemovePenaltyTitles(petitionId);
 

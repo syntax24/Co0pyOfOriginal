@@ -17,9 +17,9 @@ namespace CompanyManagment.Application
             _petitionRepository = petitionRepository;
         }
 
-        public OperationResult2 Create(CreatePetition command)
+        public OperationResult Create(CreatePetition command)
         {
-            var operation = new OperationResult2();
+            var operation = new OperationResult();
             var petitionIssuanceDate = new DateTime();
             var notificationPetitionDate = new DateTime();
 
@@ -37,12 +37,12 @@ namespace CompanyManagment.Application
 
             
 
-            return operation.Succcedded(petition.id);
+            return operation.Succcedded(entityId: petition.id);
         }
 
-        public OperationResult2 Edit(EditPetition command)
+        public OperationResult Edit(EditPetition command)
         {
-            var operation = new OperationResult2();
+            var operation = new OperationResult();
             var petition = _petitionRepository.Get(command.Id);
             var petitionIssuanceDate = new DateTime();
             var notificationPetitionDate = new DateTime();
@@ -58,7 +58,7 @@ namespace CompanyManagment.Application
                 command.TotalPenalty, command.TotalPenaltyTitles, command.Description, command.BoardType_Id, command.File_Id);
             _petitionRepository.SaveChanges();
 
-            return operation.Succcedded(petition.id);
+            return operation.Succcedded(entityId: petition.id);
         }
 
         public EditPetition GetDetails(long id)

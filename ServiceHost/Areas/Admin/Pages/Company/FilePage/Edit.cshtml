@@ -65,7 +65,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="ClientVisitDate" class="control-label">  تاریخ مراجعه موکل </label>
-                                <input type="text" class="form-control" asp-for="ClientVisitDate" readonly>
+                                <input type="text" class="form-control" asp-for="ClientVisitDate"  dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                 <span asp-validation-for="ClientVisitDate" class="error"></span>
                             </div>
                         </div>
@@ -136,7 +136,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label asp-for="createDiagnosisBoard.DisputeResolutionPetitionDate" class="control-label"> تاریخ ثبت دادخواست تشخیص </label>
-                                <input type="text" class="form-control" asp-for="createDiagnosisBoard.DisputeResolutionPetitionDate" readonly>
+                                <input type="text" class="form-control" asp-for="createDiagnosisBoard.DisputeResolutionPetitionDate" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                 <span asp-validation-for="createDiagnosisBoard.DisputeResolutionPetitionDate" class="error"></span>
                             </div>
                         </div>
@@ -163,14 +163,14 @@
                             <div class="col-md-6 proceedingSession">
                                 <div class="form-group">
                                     <label asp-for="createDiagnosisPS[i].Date" class="control-label"> تاریخ نوبت @turns[i] رسیدگی </label>
-                                    <input type="text" class="form-control" asp-for="createDiagnosisPS[i].Date" readonly>
+                                    <input type="text" class="form-control" asp-for="createDiagnosisPS[i].Date"  dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                     <span asp-validation-for="createDiagnosisPS[i].Date" class="error"></span>
                                 </div>
                             </div>
                             <div class="col-md-6 proceedingSession">
                                 <div class="form-group">
                                     <label asp-for="createDiagnosisPS[i].Time" class="control-label"> ساعت برگزاری جلسه </label>
-                                    <input type="text" class="form-control" asp-for="createDiagnosisPS[i].Time" onclick="checkTime(@id)" readonly>
+                                    <input type="text" class="form-control" asp-for="createDiagnosisPS[i].Time">
                                     <span asp-validation-for="createDiagnosisPS[i].Time" class="error"></span>
                                 </div>
                             </div>
@@ -191,7 +191,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="createDiagnosisPetition.PetitionIssuanceDate" class="control-label"> تاریخ دادنامه </label>
-                                <input type="text" class="form-control" asp-for="createDiagnosisPetition.PetitionIssuanceDate" readonly>
+                                <input type="text" class="form-control" asp-for="createDiagnosisPetition.PetitionIssuanceDate" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                 <span asp-validation-for="createDiagnosisPetition.PetitionIssuanceDate" class="error"></span>
                             </div>
                         </div>
@@ -218,7 +218,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label asp-for="createDisputeResolutionBoard.DisputeResolutionPetitionDate" class="control-label"> تاریخ ثبت دادخواست حل اختلاف </label>
-                                <input type="text" class="form-control" asp-for="createDisputeResolutionBoard.DisputeResolutionPetitionDate" readonly>
+                                <input type="text" class="form-control" asp-for="createDisputeResolutionBoard.DisputeResolutionPetitionDate"  dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                 <span asp-validation-for="createDisputeResolutionBoard.DisputeResolutionPetitionDate" class="error"></span>
                             </div>
                         </div>
@@ -244,14 +244,14 @@
                             <div class="col-md-6 proceedingSession">
                                 <div class="form-group">
                                     <label asp-for="createDisputeResolutionPS[i].Date" class="control-label"> تاریخ نوبت اول رسیدگی </label>
-                                    <input type="text" class="form-control" asp-for="createDisputeResolutionPS[i].Date" readonly>
+                                    <input type="text" class="form-control" asp-for="createDisputeResolutionPS[i].Date"  dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                     <span asp-validation-for="createDisputeResolutionPS[i].Date" class="error"></span>
                                 </div>
                             </div>
                             <div class="col-md-6 proceedingSession">
                                 <div class="form-group">
                                     <label asp-for="createDisputeResolutionPS[i].Time" class="control-label"> ساعت برگزاری جلسه </label>
-                                    <input type="text" class="form-control" asp-for="createDisputeResolutionPS[i].Time" onclick="checkTime(@id)" readonly>
+                                    <input type="text" class="form-control" asp-for="createDisputeResolutionPS[i].Time">
                                     <span asp-validation-for="createDisputeResolutionPS[i].Time" class="error"></span>
                                 </div>
                             </div>
@@ -271,7 +271,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="createDisputeResolutionPetition.PetitionIssuanceDate" class="control-label"> تاریخ دادنامه </label>
-                                <input type="text" class="form-control" asp-for="createDisputeResolutionPetition.PetitionIssuanceDate" readonly>
+                                <input type="text" class="form-control" asp-for="createDisputeResolutionPetition.PetitionIssuanceDate"  dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                 <span asp-validation-for="createDisputeResolutionPetition.PetitionIssuanceDate" class="error"></span>
                             </div>
                         </div>
@@ -302,40 +302,40 @@
     
     $(document).ready(function()  {
         
-        CreateDatePicker('#ClientVisitDate', null);
-        CreateDatePicker('#createDiagnosisBoard_DisputeResolutionPetitionDate', null);
+        //CreateDatePicker('#ClientVisitDate', null);
+        //CreateDatePicker('#createDiagnosisBoard_DisputeResolutionPetitionDate', null);
 
-        var i = 0;
-        $(".proceedingSession").each(function() {
-            var minDate = false;
+        //var i = 0;
+        //$(".proceedingSession").each(function() {
+        //    var minDate = false;
             
-            if(i != 0){
-                const prevId = i - 1;
-                minDate = $(`#createDiagnosisPS_${prevId}__Date`).val();
-            }
+        //    if(i != 0){
+        //        const prevId = i - 1;
+        //        minDate = $(`#createDiagnosisPS_${prevId}__Date`).val();
+        //    }
 
-            CreateDatePicker(`#createDiagnosisPS_${i}__Date`, null, minDate)
-            CreateTimePicker(`#createDiagnosisPS_${i}__Time`,false)
+        //    CreateDatePicker(`#createDiagnosisPS_${i}__Date`, null, minDate)
+        //    CreateTimePicker(`#createDiagnosisPS_${i}__Time`,false)
 
-            i++;
-        })
+        //    i++;
+        //})
         
-        CreateDatePicker('#createDisputeResolutionBoard_DisputeResolutionPetitionDate', null);
+        //CreateDatePicker('#createDisputeResolutionBoard_DisputeResolutionPetitionDate', null);
         
-        i = 0;
-        $(".proceedingSession").each(function() {
-            var minDate = false;
+        //i = 0;
+        //$(".proceedingSession").each(function() {
+        //    var minDate = false;
             
-            if(i != 0){
-                const prevId = i - 1;
-                minDate = $(`#createDisputeResolutionPS_${prevId}__Date`).val();
-            }
+        //    if(i != 0){
+        //        const prevId = i - 1;
+        //        minDate = $(`#createDisputeResolutionPS_${prevId}__Date`).val();
+        //    }
 
-            CreateDatePicker(`#createDisputeResolutionPS_${i}__Date`, null, minDate)
-            CreateTimePicker(`#createDisputeResolutionPS_${i}__Time`,false)
+        //    CreateDatePicker(`#createDisputeResolutionPS_${i}__Date`, null, minDate)
+        //    CreateTimePicker(`#createDisputeResolutionPS_${i}__Time`,false)
 
-            i++;
-        })
+        //    i++;
+        //})
     })
 
     $(".select2-tag").select2({
@@ -485,7 +485,7 @@
                             <div class="form-group">
                                 <label class="control-label" for="createDiagnosisPS_${DiagnosisPSCounter}__Date"> ${label} </label>
                                 <input type="text" class="form-control createDiagnosisPS_Date" data-val="true" data-val-required="فیلد الزامی است" 
-                                id="createDiagnosisPS_${DiagnosisPSCounter}__Date" name="createDiagnosisPS[${DiagnosisPSCounter}].Date" value="" readonly>
+                                id="createDiagnosisPS_${DiagnosisPSCounter}__Date" name="createDiagnosisPS[${DiagnosisPSCounter}].Date" value=""  dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                 <span class="error field-validation-valid" data-valmsg-for="createDiagnosisPS[${DiagnosisPSCounter}].Date" 
                                 data-valmsg-replace="true"></span>
                             </div>
@@ -494,8 +494,7 @@
                             <div class="form-group">
                                 <label class="control-label" for="createDiagnosisPS_${DiagnosisPSCounter}__Time"> ساعت برگزاری جلسه </label>
                                 <input type="text" class="form-control" data-val="true" data-val-required="فیلد الزامی است" 
-                                id="createDiagnosisPS_${DiagnosisPSCounter}__Time" name="createDiagnosisPS[${DiagnosisPSCounter}].Time" 
-                                onclick="checkTime(createDiagnosisPS_${DiagnosisPSCounter}__Time)" readonly>
+                                id="createDiagnosisPS_${DiagnosisPSCounter}__Time" name="createDiagnosisPS[${DiagnosisPSCounter}].Time">
                                 <span class="error field-validation-valid" data-valmsg-for="createDiagnosisPS[${DiagnosisPSCounter}].Time" 
                                 data-valmsg-replace="true"></span>
                             </div>
@@ -504,10 +503,10 @@
         $(html).insertBefore("#" + boardType + " .addProceedingSessionFormButton");
         
         const prevId = DiagnosisPSCounter - 1;
-        const minDate = $(`#createDiagnosisPS_${prevId}__Date`).val();
+        //const minDate = $(`#createDiagnosisPS_${prevId}__Date`).val();
         
-        CreateDatePicker(`#createDiagnosisPS_${DiagnosisPSCounter}__Date`, null, minDate)
-        CreateTimePicker(`#createDiagnosisPS_${DiagnosisPSCounter}__Time`,false);
+        //CreateDatePicker(`#createDiagnosisPS_${DiagnosisPSCounter}__Date`, null, minDate)
+        //CreateTimePicker(`#createDiagnosisPS_${DiagnosisPSCounter}__Time`,false);
 
         //$(`#createDiagnosisPS_${DiagnosisPSCounter}__Time`).persianDatepicker({
         //    initialValue: false,
@@ -553,7 +552,7 @@
                                 <label class="control-label" for="createDisputeResolutionPS_${DisputeResolutionPSCounter}__Date"> ${label} </label>
                                 <input type="text" class="form-control" data-val="true" data-val-required="فیلد الزامی است" 
                                 id="createDisputeResolutionPS_${DisputeResolutionPSCounter}__Date" 
-                                name="createDisputeResolutionPS[${DisputeResolutionPSCounter}].Date" value="" readonly>
+                                name="createDisputeResolutionPS[${DisputeResolutionPSCounter}].Date" value=""  dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                 <span class="error field-validation-valid" data-valmsg-for="createDisputeResolutionPS[${DisputeResolutionPSCounter}].Date" 
                                 data-valmsg-replace="true"></span>
                             </div>
@@ -563,8 +562,7 @@
                                 <label class="control-label" for="createDisputeResolutionPS_${DisputeResolutionPSCounter}__Time"> ساعت برگزاری جلسه </label>
                                 <input type="text" class="form-control" data-val="true" data-val-required="فیلد الزامی است" 
                                 id="createDisputeResolutionPS_${DisputeResolutionPSCounter}__Time" 
-                                name="createDisputeResolutionPS[${DisputeResolutionPSCounter}].Time" 
-                                onclick="checkTime(createDisputeResolutionPS_${DisputeResolutionPSCounter}__Time)" readonly>
+                                name="createDisputeResolutionPS[${DisputeResolutionPSCounter}].Time">
                                 <span class="error field-validation-valid" data-valmsg-for="createDisputeResolutionPS[${DisputeResolutionPSCounter}].Time" 
                                 data-valmsg-replace="true"></span>
                             </div>
@@ -573,10 +571,10 @@
         $(html).insertBefore("#" + boardType + " .addProceedingSessionFormButton");
         
         const prevId = DisputeResolutionPSCounter - 1;
-        const minDate = $(`#createDisputeResolutionPS_${prevId}__Date`).val();
+        //const minDate = $(`#createDisputeResolutionPS_${prevId}__Date`).val();
         
-        CreateDatePicker(`#createDisputeResolutionPS_${DisputeResolutionPSCounter}__Date`, null, minDate)
-        CreateTimePicker(`#createDisputeResolutionPS_${DisputeResolutionPSCounter}__Time`,false);
+        //CreateDatePicker(`#createDisputeResolutionPS_${DisputeResolutionPSCounter}__Date`, null, minDate)
+        //CreateTimePicker(`#createDisputeResolutionPS_${DisputeResolutionPSCounter}__Time`,false);
         
         //$(`#createDisputeResolutionPS_${DisputeResolutionPSCounter}__Date`).persianDatepicker({
         //    format: 'YYYY/MM/DD',
@@ -623,7 +621,7 @@
     
     function CheckArchiveNo(){
         const archiveNo = document.getElementById("ArchiveNo").value;
-        console.log(archiveNo);
+        //console.log(archiveNo);
         
         $.ajax({
             type: "GET",
@@ -648,11 +646,11 @@
 
     }
     
-    function checkTime(element){
+    //function checkTime(element){
     
-        if(!element.value)
-            InsertTime("#" + element.id);
+    //    if(!element.value)
+    //        InsertTime("#" + element.id);
 
-    }
+    //}
 </Script>
 

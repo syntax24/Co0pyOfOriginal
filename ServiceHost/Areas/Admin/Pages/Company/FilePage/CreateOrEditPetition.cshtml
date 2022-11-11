@@ -67,8 +67,8 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label asp-for="FileData.Reqester" class="control-label"> موکل </label>
-                                <select class="form-control select2-tag" asp-for="FileData.Reqester" readonly>
-                                    <option value="1">اکبر اکبرزاده</option>
+                                <select class="form-control select2-tag" asp-for="FileData.Client" readonly>
+                                    <option value="-1">@Model.FileData.ClientFullName</option>
                                 </select>
                             </div>
                         </div>
@@ -87,17 +87,17 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                       <div class="col-md-3">
                             <div class="form-group">
                                 <label asp-for="PetitionIssuanceDate" class="control-label persianDateInput"> تاریخ صدور دادنامه </label>
-                                <input type="text" class="form-control" asp-for="PetitionIssuanceDate" readonly>
+                                <input type="text" class="form-control" asp-for="PetitionIssuanceDate" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                 <span asp-validation-for="PetitionIssuanceDate" class="error"></span>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label asp-for="NotificationPetitionDate" class="control-label persianDateInput"> تاریخ ابلاغ دادنامه </label>
-                                <input type="text" class="form-control" asp-for="NotificationPetitionDate" readonly>
+                                <input type="text" class="form-control" asp-for="NotificationPetitionDate" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                 <span asp-validation-for="NotificationPetitionDate" class="error"></span>
                             </div>
                         </div>
@@ -124,14 +124,14 @@
                            <div class="col-md-3 recordVerification">
                                 <div class="form-group">
                                     <label asp-for="CreateWorkHistory[i].FromDate" class="control-label"> از تاریخ </label>
-                                    <input type="text" class="form-control" asp-for="CreateWorkHistory[i].FromDate" readonly>
+                                    <input type="text" class="form-control" asp-for="CreateWorkHistory[i].FromDate" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                     <span asp-validation-for="CreateWorkHistory[i].FromDate" class="error"></span>
                                 </div>
                             </div>
                             <div class="col-md-3 recordVerification">
                                 <div class="form-group">
                                     <label asp-for="CreateWorkHistory[i].ToDate" class="control-label"> تا تاریخ </label>
-                                    <input type="text" class="form-control" asp-for="CreateWorkHistory[i].ToDate" readonly>
+                                    <input type="text" class="form-control" asp-for="CreateWorkHistory[i].ToDate" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                     <span asp-validation-for="CreateWorkHistory[i].ToDate" class="error"></span>
                                 </div>
                             </div>
@@ -187,14 +187,14 @@
                             </div><div class="col-md-4 penaltyTitles">
                                 <div class="form-group">
                                     <label asp-for="CreatePenaltyTitle[i].FromDate" class="control-label"> از تاریخ </label>
-                                    <input type="text" class="form-control" asp-for="CreatePenaltyTitle[i].FromDate" readonly>
+                                    <input type="text" class="form-control" asp-for="CreatePenaltyTitle[i].FromDate" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                     <span asp-validation-for="CreatePenaltyTitle[i].FromDate" class="error"></span>
                                 </div>
                             </div>
                             <div class="col-md-4 penaltyTitles">
                                 <div class="form-group">
                                     <label asp-for="CreatePenaltyTitle[i].ToDate" class="control-label"> تا تاریخ </label>
-                                    <input type="text" class="form-control" asp-for="CreatePenaltyTitle[i].ToDate" readonly>
+                                    <input type="text" class="form-control" asp-for="CreatePenaltyTitle[i].ToDate" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                     <span asp-validation-for="CreatePenaltyTitle[i].ToDate" class="error"></span>
                                 </div>
                             </div>
@@ -232,7 +232,7 @@
         </div>
         <div class="modal-footer">
             <div style="float: left">
-                <a href="#showmodal=@Url.Page("/File/FilePage/Index", "EditFile")" class="btn btn-default btn-rounded waves-effect waves-light">بستن</a>
+                <a href="#showmodal=@Url.Page("/Company/FilePage/Index", "EditFile")" class="btn btn-default btn-rounded waves-effect waves-light">بستن</a>
                 <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
             </div>
         </div>
@@ -244,21 +244,21 @@
 
     $(document).ready(function() {
 
-        CreateDatePicker('#PetitionIssuanceDate', `#NotificationPetitionDate`);
+        //CreateDatePicker('#PetitionIssuanceDate', `#NotificationPetitionDate`);
 
-        var i = 0;
-        $(".recordVerification").each(function() {
-            CreateDatePicker(`#CreateWorkHistory_${i}__FromDate`, `#CreateWorkHistory_${i}__ToDate`)
+        //var i = 0;
+        //$(".recordVerification").each(function() {
+        //    CreateDatePicker(`#CreateWorkHistory_${i}__FromDate`, `#CreateWorkHistory_${i}__ToDate`)
 
-            i++;
-        })
+        //    i++;
+        //})
         
-        i = 0;
-        $(".penaltyTitles").each(function() {
-            CreateDatePicker(`#CreatePenaltyTitle_${i}__FromDate`, `#CreatePenaltyTitle_${i}__ToDate`)
+        //i = 0;
+        //$(".penaltyTitles").each(function() {
+        //    CreateDatePicker(`#CreatePenaltyTitle_${i}__FromDate`, `#CreatePenaltyTitle_${i}__ToDate`)
         
-            i++;
-        })
+        //    i++;
+        //})
     })
 
     $(".select2-tag").select2({
@@ -291,14 +291,14 @@
         const html = `<div class="col-md-3 recordVerification">
                             <div class="form-group">
                                 <label class="control-label" for="CreateWorkHistory_${workhistoryCounter}__FromDate"> از تاریخ </label>
-                                <input type="text" class="form-control" id="CreateWorkHistory_${workhistoryCounter}__FromDate" name="CreateWorkHistory[${workhistoryCounter}].FromDate" value="" readonly>
+                                <input type="text" class="form-control" id="CreateWorkHistory_${workhistoryCounter}__FromDate" name="CreateWorkHistory[${workhistoryCounter}].FromDate" value=""  dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                 <span class="error field-validation-valid" data-valmsg-for="CreateWorkHistory[${workhistoryCounter}].FromDate" data-valmsg-replace="true"></span>
                             </div>
                         </div>
                         <div class="col-md-3 recordVerification">
                             <div class="form-group">
                                 <label class="control-label" for="CreateWorkHistory_${workhistoryCounter}__ToDate"> تا تاریخ </label>
-                                <input type="text" class="form-control" id="CreateWorkHistory_${workhistoryCounter}__ToDate" name="CreateWorkHistory[${workhistoryCounter}].ToDate" value="" readonly>
+                                <input type="text" class="form-control" id="CreateWorkHistory_${workhistoryCounter}__ToDate" name="CreateWorkHistory[${workhistoryCounter}].ToDate" value="" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                 <span class="error field-validation-valid" data-valmsg-for="CreateWorkHistory[${workhistoryCounter}].ToDate" data-valmsg-replace="true"></span>
                             </div>
                         </div>   
@@ -328,7 +328,7 @@
 
         $(html).insertBefore("."+ flag)
         
-        CreateDatePicker(`#CreateWorkHistory_${workhistoryCounter}__FromDate`, `#CreateWorkHistory_${workhistoryCounter}__ToDate`)
+        //CreateDatePicker(`#CreateWorkHistory_${workhistoryCounter}__FromDate`, `#CreateWorkHistory_${workhistoryCounter}__ToDate`)
         // $(`#CreateWorkHistory_${workhistoryCounter}__FromDate`).persianDatepicker({
         //    format: 'YYYY/MM/DD',
         //    initialValueType: 'persian',
@@ -378,17 +378,18 @@
                                 <input type="text" class="form-control" id="CreatePenaltyTitle_${penaltyTitleCounter}__Day" name="CreatePenaltyTitle[${penaltyTitleCounter}].Day" value="">
                                 <span class="error field-validation-valid" data-valmsg-for="CreatePenaltyTitle[${penaltyTitleCounter}].Day" data-valmsg-replace="true"></span>
                             </div>
-                        </div><div class="col-md-4 penaltyTitles">
+                        </div>
+                        <div class="col-md-4 penaltyTitles">
                             <div class="form-group">
                                 <label class="control-label" for="CreatePenaltyTitle_${penaltyTitleCounter}__FromDate"> از تاریخ </label>
-                                <input type="text" class="form-control" id="CreatePenaltyTitle_${penaltyTitleCounter}__FromDate" name="CreatePenaltyTitle[${penaltyTitleCounter}].FromDate" value="" readonly>
+                                <input type="text" class="form-control" id="CreatePenaltyTitle_${penaltyTitleCounter}__FromDate" name="CreatePenaltyTitle[${penaltyTitleCounter}].FromDate" value="" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                 <span class="error field-validation-valid" data-valmsg-for="CreatePenaltyTitle[${penaltyTitleCounter}].FromDate" data-valmsg-replace="true"></span>
                             </div>
                         </div>
                         <div class="col-md-4 penaltyTitles">
                             <div class="form-group">
                                 <label class="control-label" for="CreatePenaltyTitle_${penaltyTitleCounter}__ToDate"> تا تاریخ </label>
-                                <input type="text" class="form-control" id="CreatePenaltyTitle_${penaltyTitleCounter}__ToDate" name="CreatePenaltyTitle[${penaltyTitleCounter}].ToDate" value="" readonly>
+                                <input type="text" class="form-control" id="CreatePenaltyTitle_${penaltyTitleCounter}__ToDate" name="CreatePenaltyTitle[${penaltyTitleCounter}].ToDate" value="" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
                                 <span class="error field-validation-valid" data-valmsg-for="CreatePenaltyTitle[${penaltyTitleCounter}].ToDate" data-valmsg-replace="true"></span>
                             </div>
                         </div>
@@ -410,7 +411,7 @@
                     
         $(html).insertBefore("."+ flag)
         
-        CreateDatePicker(`#CreatePenaltyTitle_${penaltyTitleCounter}__FromDate`, `#CreatePenaltyTitle_${penaltyTitleCounter}__ToDate`)
+        //CreateDatePicker(`#CreatePenaltyTitle_${penaltyTitleCounter}__FromDate`, `#CreatePenaltyTitle_${penaltyTitleCounter}__ToDate`)
         //$(`#CreatePenaltyTitle_${penaltyTitleCounter}__FromDate`).persianDatepicker({
         //    format: 'YYYY/MM/DD',
         //    initialValueType: 'persian',

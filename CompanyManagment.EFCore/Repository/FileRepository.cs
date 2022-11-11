@@ -105,13 +105,26 @@ namespace CompanyManagment.EFCore.Repository
 
         public List<EmployeeViewModel> GetAllEmploees()
         {
-            return _context.Employees.Where(x=>x.IsActive).Select(x => new EmployeeViewModel()
+            //var query = _context.Files.Select(x => x.Reqester).ToList();
+            //query.AddRange(_context.Files.Select(x => x.Summoned).ToList());
+
+            //var query_1 = _context.Employees.Where(x=>x.IsActive).Select(x => new EmployeeViewModel()
+            //{
+            //    Id = x.id,
+            //    EmployeeFullName = x.FName + " " + x.LName,
+
+            //}).Where(x => query.Contains(x.Id));
+
+            //return query_1.ToList();
+
+            return _context.Employees.Where(x => x.IsActive).Select(x => new EmployeeViewModel()
             {
                 Id = x.id,
                 EmployeeFullName = x.FName + " " + x.LName,
-                
+
 
             }).ToList();
+
         }
 
         public List<EmployerViewModel> GetAllEmployers()

@@ -15,10 +15,11 @@ namespace CompanyManagment.App.Contracts.File1
         public long Reqester { get; set; }
         public long Summoned { get; set; }
         public long UserId { get; set; }
+        public List<Users> UsersList { get; set; }
         public string FileClass { get; set; }
         public int HasMandate { get; set; }
         public string Description { get; set; }
-        public List<ArchiveNo_FileClassList> ArchiveNo_FileClassList { get; set; }
+        public List<ArchiveNo_FileClass_UserIdList> ArchiveNo_FileClass_UserIdList { get; set; }
 
         //public List<User> Users { get; set; }
         public BoardSearchModel diagnosisBoard { get; set; }
@@ -29,9 +30,16 @@ namespace CompanyManagment.App.Contracts.File1
     }
 
 
-    public class ArchiveNo_FileClassList
+    public class ArchiveNo_FileClass_UserIdList
     {
         public string ArchiveNo { get; set; }
         public string FileClass { get; set; }
+        public long UserId { get; set; }
+    }
+
+    public class Users
+    {
+        public long Id { get; set; }
+        public string FullName { get; set; }
     }
 }

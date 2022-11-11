@@ -8,7 +8,7 @@ namespace CompanyManagment.App.Contracts.File1
     public class EditFile : CreateFile
     {
         public long Id { get; set; }
-
+        
         public EditBoard createDiagnosisBoard { get; set; }
         public EditBoard createDisputeResolutionBoard { get; set; }
         public List<EditProceedingSession> createDiagnosisPS { get; set; }

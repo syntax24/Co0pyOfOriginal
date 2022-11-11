@@ -62,9 +62,9 @@ namespace CompanyManagment.Application
             return _workHistoryRepository.Search(petitionId);
         }
 
-        public OperationResult2 CreateWorkHistories(List<EditWorkHistory> workHistories, long petitionId)
+        public OperationResult CreateWorkHistories(List<EditWorkHistory> workHistories, long petitionId)
         {
-            var operation = new OperationResult2();
+            var operation = new OperationResult();
 
             RemoveWorkHistories(petitionId);
 
