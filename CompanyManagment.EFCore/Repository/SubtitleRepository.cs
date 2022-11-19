@@ -20,6 +20,7 @@ namespace CompanyManagment.EFCore.Repository
             {
                 Id = x.id,
                 Subtitle = x.Subtitle,
+                IsActiveString = x.IsActiveString,
                 OriginalTitle_Id = x.OriginalTitle_Id
 
             }).ToList();
@@ -32,7 +33,7 @@ namespace CompanyManagment.EFCore.Repository
             {
                 Id = x.id,
                 Subtitle =x.Subtitle,
-                OriginalTitle_Id=x.OriginalTitle_Id
+                OriginalTitle_Id =x.OriginalTitle_Id
               }).FirstOrDefault(x => x.Id == id);
         }
 
@@ -44,6 +45,7 @@ namespace CompanyManagment.EFCore.Repository
                 Id = x.id,
                 Subtitle = x.Subtitle,
                 OriginalTitle_Id = x.OriginalTitle_Id,
+                IsActiveString = x.IsActiveString,
                 OriginalTitle =x.EntityOriginalTitle.Title
             });
 

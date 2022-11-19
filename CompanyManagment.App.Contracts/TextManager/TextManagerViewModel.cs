@@ -8,9 +8,9 @@ namespace CompanyManagment.App.Contracts.TextManager
     {
 
         public long Id { get; set; }
-        public int NoteNumber { get; set; }
+        public string NoteNumber { get; set; }
         public string SubjectTextManager { get; set; }
-        public int NumberTextManager { get; set; }
+        public string NumberTextManager { get; set; }
         public string DateTextManager { get; set; }
         public string Description { get; set; }
         public string Paragraph { get; set; }

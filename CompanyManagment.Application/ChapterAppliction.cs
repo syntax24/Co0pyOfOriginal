@@ -66,6 +66,30 @@ namespace CompanyManagment.Application
 
         }
 
-     
+        public OperationResult Active(long id)
+        {
+            var opration = new OperationResult();
+            var Chapter = _ChapterRepozitory.Get(id);
+            if (Chapter == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
+
+            Chapter.Active();
+
+            _ChapterRepozitory.SaveChanges();
+            return opration.Succcedded();
+        }
+        public OperationResult DeActive(long id)
+        {
+            var opration = new OperationResult();
+            var Chapter = _ChapterRepozitory.Get(id);
+            if (Chapter == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
+
+            Chapter.DeActive();
+
+
+            _ChapterRepozitory.SaveChanges();
+            return opration.Succcedded();
+        }
     }
 }

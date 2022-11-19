@@ -25,7 +25,7 @@ namespace CompanyManagment.Application
             var textManager = new EntityTextManager(command.NoteNumber,
                 command.SubjectTextManager,
                 command.NumberTextManager,
-                Tools.ToGeorgian(command.DateTextManager.ToString()),
+                command.DateTextManager,
                 command.Description,
                 command.Paragraph,
                 command.OriginalTitle_Id,
@@ -57,7 +57,7 @@ namespace CompanyManagment.Application
             textManager.Edit(command.NoteNumber,
                                 command.SubjectTextManager,
                                 command.NumberTextManager,
-                                Tools.ToGeorgian(command.DateTextManager.ToString()),
+                                command.DateTextManager,
                                 command.Description,
                                 command.Paragraph,
                                 command.OriginalTitle_Id,
@@ -70,7 +70,7 @@ namespace CompanyManagment.Application
 
             if (command.ModuleIds.Length > 0 && textManager.id > 0)
             {
-                _TextManagerRepozitory.RemoveOldRelation(textManager.id);
+                _TextManagerRepozitory.RemoveOldRelation(textManager.id,0);
                 foreach (var moduleid in command.ModuleIds)
                 {
                     _TextManagerRepozitory.ModuleTextManager(textManager.id, moduleid);
@@ -90,62 +90,51 @@ namespace CompanyManagment.Application
         {
             return _TextManagerRepozitory.Search(SearchModel);
         }
-
-
         public OperationResult Active(long id)
         {
             var opration = new OperationResult();
-            var contract = _TextManagerRepozitory.Get(id);
-            if (contract == null)
+            var textManager = _TextManagerRepozitory.Get(id);
+            if (textManager == null)
                 return opration.Failed("رکورد مورد نظر یافت نشد");
 
-            contract.Active();
+            textManager.Active();
 
             _TextManagerRepozitory.SaveChanges();
             return opration.Succcedded();
         }
-
         public OperationResult DeActive(long id)
         {
             var opration = new OperationResult();
-            var contract = _TextManagerRepozitory.Get(id);
-            if (contract == null)
+            var textManager = _TextManagerRepozitory.Get(id);
+            if (textManager == null)
                 return opration.Failed("رکورد مورد نظر یافت نشد");
 
-            contract.DeActive();
+            textManager.DeActive();
 
 
             _TextManagerRepozitory.SaveChanges();
             return opration.Succcedded();
         }
-
-        public OperationResult Sign(long id)
+        public OperationResult SelectModule(long id, long moduleId,int ad)
         {
             var opration = new OperationResult();
-            var contract = _TextManagerRepozitory.Get(id);
-            if (contract == null)
+            var textManager = _TextManagerRepozitory.Get(id);
+            if (textManager == null)
                 return opration.Failed("رکورد مورد نظر یافت نشد");
 
-            contract.Sign();
+            
+            if (ad==1)
+            {
+                _TextManagerRepozitory.RemoveOldRelation(textManager.id, moduleId);
+                _TextManagerRepozitory.ModuleTextManager(textManager.id, moduleId);
+            }
+            else
+            {
+                _TextManagerRepozitory.RemoveOldRelation(textManager.id, moduleId);
+                //_TextManagerRepozitory.ModuleTextManager(textManager.id, moduleId);
+            }          
 
-
-            _TextManagerRepozitory.SaveChanges();
-            return opration.Succcedded();
-
-
-        }
-
-        public OperationResult UnSign(long id)
-        {
-            var opration = new OperationResult();
-            var contract = _TextManagerRepozitory.Get(id);
-            if (contract == null)
-                return opration.Failed("رکورد مورد نظر یافت نشد");
-
-            contract.UnSign();
-
-
-            _TextManagerRepozitory.SaveChanges();
+           _TextManagerRepozitory.SaveChanges();
             return opration.Succcedded();
         }
 

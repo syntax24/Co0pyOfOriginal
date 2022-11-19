@@ -47,7 +47,7 @@
           data-action="Refresh"
           enctype="multipart/form-data">
         <div class="modal-body">
-
+            
 
             <div class="row">
                 <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
@@ -71,90 +71,86 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
-                        <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control select-city" asp-for="OriginalTitle_Id" asp-items='@Model.OriginalTitleViewModels' id="originalTitle1">
+                                    <option value="-1"> بخش را انتخاب کنید ... </option>
+                                </select>
+                                <span asp-validation-for="OriginalTitle_Id" class="error"></span>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="control-label">انتخاب عنوان: </label>
-                                    <select class="form-control select-city" asp-for="OriginalTitle_Id" asp-items='@Model.OriginalTitleViewModels' id="originalTitle1">
-                                        <option value="-1"> بخش را انتخاب کنید ... </option>
-                                    </select>
-                                    <span asp-validation-for="OriginalTitle_Id" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <select class="form-control select-city" asp-for="Subtitle_Id" asp-items='@Model.SubtitleViewModels' id="subtitle1">
+                                    <option value="0"> بخش</option>
+                                </select>
+                                <span asp-validation-for="Subtitle_Id" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
 
+                                <select class="form-control select-city" asp-for="Chapter_Id" asp-items='@Model.ChapterViewModels' id="chapter1">
+                                    <option value="0"> فصل</option>
+                                </select>
+                                <span asp-validation-for="Chapter_Id" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" asp-for="NoteNumber" placeholder="ماده">
+                                    <span asp-validation-for="NoteNumber" class="error"></span>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="control-label"> انتخاب بخش :</label>
-                                    <select class="form-control select-city" asp-for="Subtitle_Id" asp-items='@Model.SubtitleViewModels' id="subtitle1">
-                                        <option value="0"> بخش</option>
-                                    </select>
-                                    <span asp-validation-for="Subtitle_Id" class="error"></span>
+                        </div>
+                           <div class="col-md-6" style="margin-bottom:20px;">
+                            <div class="form-group">
+
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" asp-for="SubjectTextManager" placeholder="موضوع">
+                                    <span asp-validation-for="SubjectTextManager" class="error"></span>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="control-label"> انتخاب فصل :</label>
-                                    <select class="form-control select-city" asp-for="Chapter_Id" asp-items='@Model.ChapterViewModels' id="chapter1">
-                                        <option value="0"> فصل</option>
-                                    </select>
-                                    <span asp-validation-for="Chapter_Id" class="error"></span>
+                        </div>
+                        <div class="col-md-6 m-b-30">
+                            <div class="form-group">
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" asp-for="DateTextManager"  placeholder=" تاریخ" onkeyup="validDate1(this)" maxlength="10">
+                                    <span id="spanmsg"></span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label asp-for="NoteNumber" class="control-label col-md-3 col-sm-3 col-xs-12">ماده : </label>
-                                    <div class="col-md-9 col-sm-9 col-xs-12">
-                                        <input type="text" class="form-control" asp-for="NoteNumber">
-                                        <span asp-validation-for="NoteNumber" class="error"></span>
-                                    </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" asp-for="NumberTextManager" placeholder="شماره">
+                                    <span asp-validation-for="NumberTextManager" class="error"></span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label asp-for="SubjectTextManager" class="control-label col-md-3 col-sm-3 col-xs-12">موضوع : </label>
-                                    <div class="col-md-9 col-sm-9 col-xs-12">
-                                        <input type="text" class="form-control" asp-for="SubjectTextManager">
-                                        <span asp-validation-for="SubjectTextManager" class="error"></span>
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea type="text" class="form-control" placeholder="نگارش متن" asp-for="Description" style=" height: 300px;"></textarea>
+                                <span asp-validation-for="Description" class="error"></span>
                             </div>
-                            <div class="col-md-6 m-b-30">
-                                <div class="form-group">
-                                    <label asp-for="DateTextManager" class="control-label col-md-3 col-sm-3 col-xs-12"> تاریخ : </label>
-                                    <div class="col-md-9 col-sm-9 col-xs-12">
-                                        <input type="text" class="form-control" asp-for="DateTextManager" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
-                                        <span asp-validation-for="DateTextManager" class="error"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label asp-for="NumberTextManager" class="control-label col-md-3 col-sm-3 col-xs-12"> شماره : </label>
-                                    <div class="col-md-9 col-sm-9 col-xs-12">
-                                        <input type="text" class="form-control" asp-for="NumberTextManager">
-                                        <span asp-validation-for="NumberTextManager" class="error"></span>
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea type="text" class="form-control" asp-for="Paragraph" placeholder="نگارش محشا /پی نوشت" style=" height: 100px;"></textarea>
+                                <span asp-validation-for="Paragraph" class="error"></span>
                             </div>
 
 
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <textarea type="text" class="form-control" placeholder="نگارش متن" asp-for="Description" style=" height: 300px;"></textarea>
-                                    <span asp-validation-for="Description" class="error"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <textarea type="text" class="form-control" asp-for="Paragraph" placeholder="نگارش محشا /پی نوشت" style=" height: 100px;"></textarea>
-                                    <span asp-validation-for="Paragraph" class="error"></span>
-                                </div>
-                            </div>
 
                         </div>
+
                     </div>
+
                 </fieldset>
             </div>
         </div>
@@ -243,6 +239,90 @@
             return false;
         });
     });
+    function keyupphoneNo() {
+        /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(event.key) ? ($("#spanmsg").html("شماره تماس صحیح است"), $("#spanmsg").css({
+            color: "green"
+        }
+        )) : ($("#spanmsg").html("شماره تماس صحیح نیست"), $("#spanmsg").css({
+            color: "red"
+        }
+        )), 11 != $("#phoneNo").val().length && ($("#spanmsg").html("شماره تماس صحیح نیست"), $("#spanmsg").css({
+            color: "red"
+        }
+        ))
+    }
+    function validDate1(inputField) {
+        var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (var i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+        let getdate = inputField.value;
+        var m1, m2;
+        var y1, y2, y3, y4;
+        var d1, d2;
+        var s1, s2;
+        for (var i = 0; i < getdate.length; i++) {
+            if (i === 0) {
+                y1 = fixNumbers(getdate[i]);
+            }
+            if (i === 1) {
+                y2 = fixNumbers(getdate[i]);
+            }
+            if (i === 2) {
+                y3 = fixNumbers(getdate[i]);
+            }
+            if (i === 3) {
+                y4 = fixNumbers(getdate[i]);
+            }
+            if (i === 4) {
+                s1 = fixNumbers(getdate[i]);
+            }
+            if (i === 5) {
+                m1 = fixNumbers(getdate[i]);
+            }
+            if (i === 6) {
+                m2 = fixNumbers(getdate[i]);
+            }
+            if (i === 7) {
+                s2 = fixNumbers(getdate[i]);
+            }
+            if (i === 8) {
+                d1 = fixNumbers(getdate[i]);
+            }
+            if (i === 9) {
+                d2 = fixNumbers(getdate[i]);
+            }
+        }
+        var yRes = y1 + y2 + y3 + y4;
+        var year = parseInt(yRes);
+        var mRes = m1 + m2;
+        var month = parseInt(mRes);
+        var dRes = d1 + d2;
+        var day = parseInt(dRes);
+        var FixResult = yRes + s1 + mRes + s2 + dRes;
+        var isValid = /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(FixResult);
+        if (isValid) {
+            $("#spanmsg").empty();
+            validCheck = true;
+
+        } else {
+            $("#spanmsg").html("لطفا تاریخ را بصورت صحیح وارد کنید"), $("#spanmsg").css({
+                color: "red"
+            });
+
+            validCheck = false;
+
+        }
+        return validCheck;
+
+    }
+
 </script>
 
 

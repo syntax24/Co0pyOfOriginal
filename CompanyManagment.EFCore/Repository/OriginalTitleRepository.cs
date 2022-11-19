@@ -20,7 +20,7 @@ namespace CompanyManagment.EFCore.Repository
             {
                 Id = x.id,
                 Title = x.Title,
-             
+                IsActiveString = x.IsActiveString,
             }).ToList();
         }
 
@@ -39,10 +39,14 @@ namespace CompanyManagment.EFCore.Repository
             {
                 Id = x.id,
                 Title = x.Title,
+                IsActiveString = x.IsActiveString,
             });
             if (!string.IsNullOrWhiteSpace(SearchModel.Title))
                 query = query.Where(x => x.Title.Contains(SearchModel.Title));
-
+            if (SearchModel.IsActiveString == "false")
+                query = query.Where(x => x.IsActiveString == "false");
+            if (SearchModel.IsActiveString == "true")
+                query = query.Where(x => x.IsActiveString == "true");
             return query.OrderByDescending(x => x.Id).ToList();
         }
     }

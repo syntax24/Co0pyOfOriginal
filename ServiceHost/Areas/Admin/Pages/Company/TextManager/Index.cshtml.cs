@@ -16,13 +16,14 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
 {
     public class IndexModel : PageModel
     {
+        public string TextManagerSearch = "false";
         public string Message { get; set; }
         public TextManagerViewModel searchModel;
         public List<SubtitleViewModel> SubtitlesViewModels;
         public List<TextManagerViewModel> TextManagers;
         public SelectList SelectListOriginalTitle;
         public SelectList SelectListSubtitle;
-        private SelectList SelectListChapter;
+        public SelectList SelectListChapter;
         public string[] ListModule;
         public List<OriginalTitleViewModel> OriginalTitleViewModels;
         public SelectList categoryListItems;
@@ -50,6 +51,15 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
             SelectListSubtitle = new SelectList(_subtitleApplication.GetAllSubtitle(), "Id", "Subtitle");
             SelectListChapter = new SelectList(_chapterApplication.GetAllChapter(), "Id", "Chapter");
             ListModule = _moduleApplication.GetAllModule().Select(x => x.NameSubModule).ToArray();
+
+            if (TextManagers != null)
+            {
+                if (searchModel.OriginalTitle_Id != 0)
+                {
+                    TextManagerSearch = "true";
+                }
+                //TextManagerSearch = "true";
+            }
         }
         public IActionResult OnGetCreate()
         {
@@ -78,7 +88,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
             {
                 Id = id,
                 NoteNumber = textManager.NoteNumber,
-                DateTextManager = Tools.ToFarsi(Convert.ToDateTime(textManager.DateTextManager)).ToString(),
+                DateTextManager = textManager.DateTextManager,
                 Description = textManager.Description,
                 NumberTextManager = textManager.NumberTextManager,
                 SubjectTextManager = textManager.SubjectTextManager,
@@ -181,23 +191,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
             return RedirectToPage("./Index");
         }
 
-        public IActionResult OnGetSign(long id)
-        {
-
-
-            var result = _textManagerApplication.Sign(id);
-            return RedirectToPage("./Index");
-
-
-        }
-        public IActionResult OnGetUnSign(long id)
-        {
-
-
-            var result = _textManagerApplication.UnSign(id);
-            return RedirectToPage("./Index");
-
-        }
+       
         public IActionResult OnGetGroupDeActive(List<long> ids)
         {
 
@@ -225,23 +219,13 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
             return RedirectToPage("./Index");
         }
 
-
-        public IActionResult OnGetGroupSign(List<long> ids)
+        public IActionResult OnGetGroupSelectModule(List<long> ids, string module,int AD)
         {
-
+          long moduleId= _moduleApplication.GetAllModule().Where(x => x.NameSubModule == module).Select(x => x.Id).FirstOrDefault();
             foreach (var item in ids)
             {
-                var result = _textManagerApplication.Sign(item);
-            }
-            return RedirectToPage("./Index");
-
-        }
-        public IActionResult OnGetGroupUnSign(List<long> ids)
-        {
-
-            foreach (var item in ids)
-            {
-                var result = _textManagerApplication.UnSign(item);
+                var result = _textManagerApplication.SelectModule(item, moduleId, AD);
+                
             }
             return RedirectToPage("./Index");
 

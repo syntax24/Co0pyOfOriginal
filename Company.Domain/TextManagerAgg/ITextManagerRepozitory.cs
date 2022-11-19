@@ -13,7 +13,7 @@ namespace P_TextManager.Domin.TextManagerAgg
         List<TextManagerViewModel> GetAllTextManager();
         List<long> GetRelation(long textManagerId);
         void ModuleTextManager(long textManagerId, long moduleId);
-        void RemoveOldRelation(long textManagerId);
+        void RemoveOldRelation(long textManagerId, long moduleId);
         List<string> GetlisAllModulet();
     }
 }

@@ -4,7 +4,7 @@
     public class OriginalTitleSearchModel
     {
         public string Title { get; set; }
-        //public List<TSubtitle> Subtitles{ get; set; }
+        public string IsActiveString { get; set; }
     }
  
 }

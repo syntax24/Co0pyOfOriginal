@@ -7,6 +7,8 @@ namespace ServiceHost.Areas.Admin.Pages.Company.OriginalTitle
 {
     public class IndexModel : PageModel
     {
+        public string OriginalTitleSearch = "false";
+        public string Message { get; set; }
         public OriginalTitleViewModel searchModel;
         public List<OriginalTitleViewModel> OriginalTitles;
           private readonly IOriginalTitleApplication _originalTitleApplication;
@@ -19,7 +21,14 @@ namespace ServiceHost.Areas.Admin.Pages.Company.OriginalTitle
         public void OnGet(OriginalTitleSearchModel searchModel)
         {
             OriginalTitles = _originalTitleApplication.Search(searchModel);
-        }
+            if (OriginalTitles != null)
+            {
+                
+                    OriginalTitleSearch = "true";
+                
+            }
+
+        } 
         public IActionResult OnGetCreate()
         {
 
@@ -47,6 +56,48 @@ namespace ServiceHost.Areas.Admin.Pages.Company.OriginalTitle
         {
             var editJob = _originalTitleApplication.GetDetails(id);
             return Partial("Details", editJob);
+        }
+
+
+        public IActionResult OnGetGroupDeActive(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _originalTitleApplication.DeActive(item);
+            }
+            return RedirectToPage("./Index");
+
+        }
+        public IActionResult OnGetGroupReActive(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _originalTitleApplication.Active(item);
+            }
+            return RedirectToPage("./Index");
+        }
+        public IActionResult OnGetDeActive(long id)
+        {
+
+
+            var result = _originalTitleApplication.DeActive(id);
+
+            if (result.IsSuccedded)
+                return RedirectToPage("./Index");
+            Message = result.Message;
+            return RedirectToPage("./Index");
+        }
+        public IActionResult OnGetIsActive(long id)
+        {
+
+
+            var result = _originalTitleApplication.Active(id);
+            if (result.IsSuccedded)
+                return RedirectToPage("./Index");
+            Message = result.Message;
+            return RedirectToPage("./Index");
         }
 
     }

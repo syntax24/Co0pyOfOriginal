@@ -14,7 +14,7 @@ namespace Company.Domain.ModuleAgg
         }
 
         public string NameSubModule { get; private set; }
-
+        public string IsActiveString { get; set; }
 
         public List<EntityModuleTextManager> EntityModuleTextManagers { get; private set; }
 
@@ -22,6 +22,17 @@ namespace Company.Domain.ModuleAgg
         {
             NameSubModule = nameSubModule;
 
+        }
+        public void Active()
+        {
+
+            this.IsActiveString = "true";
+        }
+
+        public void DeActive()
+        {
+
+            this.IsActiveString = "false";
         }
     }
 }

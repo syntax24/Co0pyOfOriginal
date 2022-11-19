@@ -15,6 +15,6 @@ namespace CompanyManagment.App.Contracts.Module
 
         //[Display(Name = "Subjects")]
         public long[] ModuleIds { get; set; }
-
+        public string IsActiveString { get; set; }
     }
 }

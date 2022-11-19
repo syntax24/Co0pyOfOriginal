@@ -84,7 +84,7 @@
     }
 
     .panel-default > .panel-heading {
-        background-color: #950000 !important;
+        background-color: #545353 !important;
     }
 
 
@@ -202,7 +202,7 @@
     }
 </style>
 
-}
+
 
 <div class="row">
     <div class="col-sm-12 m-r-10">
@@ -216,16 +216,14 @@
 
 <div class="row">
     <div class="col-sm-12 m-r-10">
-
-        @*<input type="hidden" id="sercheCheck" value="@Model.WorkshopSearch" />*@
- 
+        <input type="hidden" id="sercheCheck" value="@Model.TextManagerSearch" />
         @*href="#showmodal=@Url.Page("./Index", "PrintAll", new {ids = idss})"*@
     </div>
 </div>
 <div class="col-sm-12">
     <div class="panel-group panel-group-joined" id="accordion-test">
-        <div class="panel panel-default" style="border-radius: 15px !important; background-color: #fdc0c0; ">
-            <div class="panel-heading" style="background-color: #950000 !important">
+        <div class="panel panel-default" style="border-radius: 15px !important;">
+            <div class="panel-heading" style="background-color: #545353 !important">
                 <h4 class="panel-title" style="color: #edebeb !important; display: inline;">
                     <a data-toggle="collapse" data-parent="#accordion-test" href="#collapseOne" class="collapsed" style="display: inline;">
                         جستجوی مخاطبین
@@ -240,29 +238,31 @@
                                 <div class="form-group col-sm-12">
                                     <div class="row">
                                         <div class="col-sm-3 pull-right">
-
                                             <select class=" form-control inpt" asp-for="searchModel.OriginalTitle_Id" asp-items="Model.SelectListOriginalTitle" placeholder="عنوان" id="originalTitle" style="width: 100%">
-                                                <option value="0" selected="selected" disabled>عنوان </option>
+                                                <option value="0" selected="selected" >
+                                                    عنوان راانتخاب کنید
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-3 pull-right">
+                                            <select class=" form-control inpt" asp-for="searchModel.Subtitle_Id" asp-items="Model.SelectListSubtitle" placeholder="بخش" id="subtitle" style="width: 100%">
+                                                <option value="0" selected="selected" >بخش را انتخاب کنید </option>
                                             </select>
                                         </div>
                                         <div class="col-sm-3 pull-right">
 
-                                            <select class=" form-control inpt" asp-for="searchModel.Subtitle_Id" asp-items="Model.SelectListSubtitle" placeholder="بخش" id="subtitle" style="width: 100%">
-                                                <option value="-1" selected="selected" disabled>بخش </option>
+                                            <select class=" form-control inpt" asp-for="searchModel.Chapter_Id" asp-items="Model.SelectListChapter" placeholder="فصل" id="chapter" style="width: 100%">
+                                                <option value="0" selected="selected" >فصل را انتخاب کنید </option>
                                             </select>
                                         </div>
-                                        <div class="col-sm-3 pull-right">
-                                            <label class="sr-only" asp-for="searchModel.Description"></label>
-                                            <input class=" form-control inpt" asp-for="searchModel.Description" placeholder="مخاطب " style="width: 100%">
-                                        </div>
+
                                         <div class="col-sm-3 pull-right">
                                             <input class="form-control inpt" asp-for="searchModel.SubjectTextManager" placeholder="موضوع" style="width: 100%">
                                         </div>
-                                        <div class="col-sm-3 pull-right">
+                                        <div class="col-sm-3 pull-right" style="margin-top:20px;">
                                             <input class="form-control inpt" asp-for="searchModel.NoteNumber" placeholder="شماره" style="width: 100%">
                                         </div>
                                     </div>
-
                                     <hr style=" margin-top: 12px;margin-bottom: 12px;" />
                                     <div class="row" style="margin-top: 15px">
                                         <div class="col-lg-9">
@@ -292,80 +292,74 @@
         <div class="panel-heading">
             <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست متون</h3>
         </div>
-        <div class="panel-body">
+        <div class="panel-body" style="padding-right: 10px;">
             <div class="row">
                 <div class="col-sm-12 col-sm-12 col-xs-12">
-                    <table id="datatable" class="table table-striped table-bordered">
+                    <table id="datatable" class=" table-striped ">
                         <thead style="background-color: #ecefee">
                             <tr>
-
-                                <th style="font-size: 10px !important;" class="sizeSet">
+                                <th style="font-size: 10px !important; display: none" class="sizeSet">
                                     <span class="tooltip-container">
-                                        <input class="checkboxtitle" type="checkbox" id="checkSelect" onclick="selectori(this)" />
-                                        <span class="tooltip"> با استفاده از این چک باکس می توانید  متن ها را بصورت گروهی انتخاب کرده و سپس با کلیک بر روی دکمه حذف گروهی یا پرینت گروهی اقدام به حذف یا پرینت گروهی نمایید</span>
+                                        <input class="checkboxtitle" type="checkbox" id="checkSelect" onclick="selectori(this)" checked="checked" />
                                     </span>
-
-                                </th>           
-                                <th style="font-size: 16px !important; width: 1% !important">#</th>
-                                <th style="font-size: 16px !important; width: 4% !important ; text-align:center">بخش</th>
-                                <th style="font-size: 16px !important; width: 4% !important ; text-align:center">عنوان</th>
-                                <th style="font-size: 16px !important; width: 4% !important; text-align:center">فصل </th>
+                                </th>
+                                <th style="font-size: 16px !important; width: 1% !important;margin-right:10px">#</th>
+                                <th style="font-size: 16px !important; width: 10% !important ; text-align:center">بخش</th>
+                                <th style="font-size: 16px !important; width: 10% !important ; text-align:center">عنوان</th>
+                                <th style="font-size: 16px !important; width: 10% !important; text-align:center">فصل </th>
                                 <th style="font-size: 16px !important; width: 1% !important ; text-align:center"> ماده </th>
                                 <th style="font-size: 16px !important; width: 1% !important ; text-align:center"> شماره </th>
-                                <th style="font-size: 16px !important; width: 15% !important; text-align:center">موضوع </th>
-
+                                <th style="font-size: 16px !important; width: 20% !important; text-align:center">موضوع </th>
+                                <th style="font-size: 16px !important; width: 5% !important; text-align:center">توضیحات </th>
                                 @foreach (var module in Model.ListModule)
                                 {
-                                    <th style="font-size: 16px !important; writing-mode:sideways-lr; width: 10px !important;">@module</th>
+
+                                    <th style="font-size: 16px !important;">
+                                        <div style="text-align:center">
+
+                                            <div style="font-size: 16px !important; writing-mode: sideways-lr;padding-right:25%;  "> @module</div>
+                                            <div style="margin-top: 5px;">
+                                                <span class="tooltip2-container">
+                                                    <button type="button" style=" padding: 2px;" id="@module" class="btn btn-icon waves-effect waves-light btn-success m-b-5" onclick="ModuleSelect(this.id,1)">
+                                                        <i class="ion-checkmark-circled" style="color: #fff; font-size: 10px"></i>
+                                                    </button>
+                                                    <span class="tooltip2">
+                                                        با استفاده از این دکمه می توانید  متن ها را بصورت گروهی امضاء نمایید
+                                                    </span>
+                                                </span>
+                                                <span class="tooltip2-container">
+                                                    <button type="button" style="padding: 2px;" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" id="@module" onclick="ModuleSelect(this.id,0)">
+                                                        <i class="ion-close-circled" style="color: #fff;font-size: 10px"></i>
+                                                    </button>
+                                                    <span class="tooltip2">
+                                                        با استفاده از این دکمه می توانید امضاء  متن ها را بصورت گروهی حذف نمایید
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                    </th>
                                 }
-                        <th permission="20117" style="font-size: 10px !important;" onclick="event.stopPropagation();" class="sizeSet">
-                            <span class="tooltip2-container">
-                                <button type="button" style="padding: 5px 7px 0px 7px" class="btn btn-icon waves-effect waves-light btn-success m-b-5" id="checkSign" onclick="SignatureSelect()">
-                                    <i class="ion-checkmark-circled" style="color: #fff; font-size: 17px"></i>
-                                </button>
-                                <span class="tooltip2">
-                                    با استفاده از این دکمه می توانید  متن ها را بصورت گروهی امضاء نمایید
-                                </span>
-                            </span>
-                            <span class="tooltip2-container">
-                                <button type="button" style="padding: 5px 7px 0px 7px" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" id="checkUnSign" onclick="SignatureSelect2()">
-                                    <i class="ion-close-circled" style="color: #fff;font-size: 17px"></i>
-                                </button>
-                                <span class="tooltip2">
-                                    با استفاده از این دکمه می توانید امضاء  متن ها را بصورت گروهی حذف نمایید
-                                </span>
-                            </span>
+                                <th style="font-size: 10px !important">
+                                    <span style="float: right;">
+                                        <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                        <span>&nbsp;</span><span>&nbsp;</span>
+                                    </span>
 
-
-                        </th>
-                        <th style="font-size: 10px !important">
-                            <span style="float: right;">
-                                <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
-                                <span>&nbsp;</span><span>&nbsp;</span>
-                            </span>
-                            @*<a class="btn btn-info pull-right m-rl-5 rad" onclick="copyLink()">
-                                <i class="fa faSize fa-print"></i>
-                            </a>*@
-
-                            <span class="act">
-
-                            </span>
-                            <a class="btn btn-danger pull-right m-rl-5 rad deact" onclick="deactiveAll()">
-                                <i class="fa faSize fa-trash"></i>
-                            </a>
-
-
-
-                        </th>
-
-                        </tr>
-                        </thead>
+                                    <span class="act">
+                                    </span>
+                                    <a class="btn btn-danger pull-right m-rl-5 rad deact" onclick="deactiveAll()">
+                                        <i class="fa faSize fa-trash"></i>
+                                    </a>
+                                </th>
+                                </th>
+</thead>
                         <tbody>
                             @foreach (var item in Model.TextManagers)
                             {
                             <tr>
-                                <td style="font-size: 12px !important; text-align: center">
-                                    <input type="checkbox" name="foo" value="@item.Id" />
+                                <td style="font-size: 12px !important; text-align: center;display:none">
+                                    <input type="checkbox" name="foo" value="@item.Id" checked="checked" />
                                 </td>
                                 <td style="font-size: 14px !important; text-align: right">@i </td>
                                 <td style="font-size: 14px !important; text-align: right">@item.OriginalTitle</td>
@@ -374,7 +368,7 @@
                                 <td style="font-size: 14px !important; text-align: right">@item.NoteNumber</td>
                                 <td style="font-size: 14px !important; text-align: right">@item.NumberTextManager</td>
                                 <td style="font-size: 14px !important; text-align: right">@item.SubjectTextManager</td>
-
+                                <td style="font-size: 14px !important; text-align: right">@item.Description</td>
                                 @{
                                     var result = string.Join(",", item.ListUseModule.ToArray());
                                     for (int c = 0; c < Model.ListModule.Count(); c++)
@@ -397,41 +391,13 @@
                                 @{
                                     i++;
                                 }
-                                <td permission="20117" style="font-size: 12px !important; text-align: center">
-                                    @if (item.Signature == "1")
-                                    {
-                                        <a asp-page="./Index" name="foo1" asp-page-handler="UnSign" asp-route-id="@item.Id" style="font-size: 20px">
 
-                                            <i class="ion-checkmark-circled" style="color: #1f9c11"></i>
-                                            <input type="hidden" value="@item.Id" name="signed" />
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <a asp-page="./Index" name="foo2" asp-page-handler="Sign" asp-route-id="@item.Id" style="font-size: 20px">
-                                            <i class="ion-ios7-circle-outline" style="color: #dd3632"></i>
-                                            <input type="hidden" value="@item.Id" name="unsigned" />
-                                        </a>
-
-                                    }
-
-                                </td>
-
-                                @{
-                                    i++;
-                                }
                                 <td>
 
                                     <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
                                        href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
                                         <i class="fa faSize fa-edit"></i>
                                     </a>
-                                    @*<a permission="20115" class="btn btn-info pull-right m-rl-5 rad"
-                                       href="#showmodal=@Url.Page("./Index", "Details", new {Id = item.Id})">
-                                        <i class="fa faSize fa-print"></i>
-                                    </a>*@
-
-
 
                                     @if (item.IsActiveString == "true")
                                     {
@@ -444,16 +410,8 @@
                                     }
 
                                 </td>
-
                             </tr>
-
-
-
-
                             }
-
-
-
                         </tbody>
                     </table>
                 </div>
@@ -469,31 +427,24 @@
 
     <script>
         $(document).ready(function () {
-            //$(function () {
-            //    $('#search').on('keyup', function () {
-            //        var pattern = $(this).val();
-            //        $('.searchable-container .items').hide();
-            //        $('.searchable-container .items').filter(function () {
-
-            //            /*      $('#hhh').val() = $(this).text().match(new RegExp(pattern, 'i'));*/
-            //            return $(this).text().match(new RegExp(pattern, 'i'));
-            //        }).show();
-            //    });
-            //});
             $("#originalTitle").change(function () {
                 $("#subtitle").empty();
+                $("#chapter").empty();
                 $.ajax({
                     type: 'GET',
                     url: '/Admin/Company/TextManager?handler=SubtitleList',
                     dataType: 'json',
                     data: { OriginalTitle_Id: $("#originalTitle").val() },
                     success: function (result) {
-                        $("#subtitle").append(' <option value="' + -1 + '">' +
-                            "نام بخش را انتخاب کنید" + '</option>');
+                        $("#subtitle").append(' <option value="' + 0 + '">' +
+                            " بخش را انتخاب کنید" + '</option>');
+                        $("#chapter").append(' <option value="' + 0 + '">' +
+                            "فصل را انتخاب کنید" + '</option>');
                         $.each(result, function (i, result) {
                             $("#subtitle").append(' <option value="' + result.id + '">' +
                                 result.subtitle + '</option>');
                         });
+                        changesubtitle();
                     },
                     error: function (ex) {
                         alert('Error');
@@ -501,14 +452,48 @@
                 });
                 return false;
             });
+            $("#subtitle").change(function () {
+                changesubtitle();
+            });
+
 
         });
+        function changesubtitle() {
+            $("#chapter").empty();
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/Company/TextManager?handler=ChptereList',
+                dataType: 'json',
+                data: { Subtitle_Id: $("#subtitle").val() },
+                success: function (results) {
+                    $("#chapter").append(' <option value="' + 0 + '">' +
+                        "فصل را انتخاب کنید" + '</option>');
+                    $.each(results, function (i, result) {
+                        $("#chapter").append(' <option value="' + result.value + '">' +
+                            result.text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('ffff');
+                }
+            });
+            return false;
+        }
     </script>
 
     <script>
         $('.activer').on('change',
             function (e) {
                 e.preventDefault();
+
+                //var e = document.getElementById("originalTitle");
+                //var value = e.value;
+                //var text1 = e.options[e.selectedIndex].text;
+
+                //console.log(text1);
+                //console.log(value);
+                //document.getElementById("originalTitle").selectedIndex = 1;
+                //document.getElementById("originalTitle").selectedIndex = 0;
                 $('.search').click();
             });
     </script>
@@ -527,53 +512,68 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
+            var countcul = document.getElementById('datatable').rows[0].cells.length;
+            var sub_array = [];
+            sub_array.push(0);
+            for (var i = 8; i <= countcul - 1; i++) {
+                sub_array.push(i);
+            }
             $('#datatable').dataTable({
-                "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
+                "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]],
+                "columnDefs": [
+                    { "targets": sub_array, "orderable": false, },
+                ]
+            });
+            $('#datatable2').dataTable({
+                "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]],
+                "columnDefs": [
+                    { "targets": sub_array, "orderable": false, },
+                ]
             });
         });
     </script>
     <script>
-        $(document).ready(function () {
-            $('#datatable2').dataTable(
-                {
-                    "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
-                });
-        });
-    </script>
-
-    <script>
-        var checkboxes;
-        function selectori(source) {
-            checkboxes = document.getElementsByName('foo');
-            for (var i = 0, n = checkboxes.length; i < n; i++) {
-                checkboxes[i].checked = source.checked;
-            }
-        }
-    </script>
-    <script>
-        function copyLink() {
+        function reActiveAll() {
+        
             if (document.getElementById("checkSelect").checked == false) {
-                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  متن ی انتخاب نشده است ");
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  متنی انتخاب نشده است ");
             } else {
-                if (document.getElementById("sercheCheck").value == "true") {
-                    checkboxes = document.getElementsByName('foo');
-                    var url3 = '';
-                    for (var i = 0, n = checkboxes.length; i < n; i++) {
-                        if (checkboxes[i].checked == true) {
-                            var u = '&ids=' + checkboxes[i].value;
-                            url3 = url3 + u;
+                if (document.getElementById("sercheCheck").value == "false") {
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان،بخش  را انتخاب نموده و سپس جستجو را کلیک کنید ");
+                } else if (document.getElementById("sercheCheck").value == "true") {
+                    swal({
+                        title: "آیا فعال نمودن این  متن ها اطمینان دارید؟",
+                        text: "",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "بله",
+                        cancelButtonText: "خیر",
+                        closeOnConfirm: false
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            checkboxes2 = document.getElementsByName('foo');
+                            var url3b = '';
+                            for (var i2 = 0, n2 = checkboxes2.length; i2 < n2; i2++) {
+                                if (checkboxes2[i2].checked == true) {
+                                    var u2 = '&ids=' + checkboxes2[i2].value;
+                                    console.log(u2);
+                                    url3b = url3b + u2;
+                                    console.log(url3b);
+                                }
+                            }
+                            var url2b = '@Url.Page("/Company/TextManager/Index", "GroupReActive")';
+                            console.log(url2b);
+                            window.location.href = url2b + url3b;
                         }
-                    }
-                    var url1 = '#showmodal=';
-                    var url2 = '@Url.Page("/Company/Contracts/Index", "PrintAll")';
-                    window.location.href = url1 + url2 + url3;
-                } else if (document.getElementById("sercheCheck").value == "false") {
-                    console.log(document.getElementById("sercheCheck").value);
-                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای کارکاه یا پرسنل را انتخاب نموده و سپس جستجو را کلیک کنید ");
+                    });
                 }
             }
         }
+    </script>
+    <script>
         function deactiveAll() {
+
             if (document.getElementById("checkSelect").checked == false) {
                 $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  متنی انتخاب نشده است ");
             } else {
@@ -594,87 +594,67 @@
                             for (var i2 = 0, n2 = checkboxes2.length; i2 < n2; i2++) {
                                 if (checkboxes2[i2].checked == true) {
                                     var u2 = '&ids=' + checkboxes2[i2].value;
+                                    console.log(u2);
                                     url3b = url3b + u2;
+                                    console.log(url3b);
                                 }
                             }
-                            /*  var url1 = '#showmodal=';*/
-                            var url2b = '@Url.Page("/Company/Contracts/Index", "GroupDeActive")';
-                            /*   var url3 = document.getElementById('yearSend').value;*/
+                            var url2b = '@Url.Page("/Company/TextManager/Index", "GroupDeActive")';
                             window.location.href = url2b + url3b;
+                            console.log(url2b);
                         }
                     });
 
                 } else if (document.getElementById("sercheCheck").value == "false") {
                     console.log(document.getElementById("sercheCheck").value);
-                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای کارکاه یا پرسنل را انتخاب نموده و سپس جستجو را کلیک کنید ");
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان،بخش  را انتخاب نموده و سپس جستجو را کلیک کنید ");
                 }
             }
         }
     </script>
     <script>
-        function reActiveAll() {
-            if (document.getElementById("checkSelect").checked == false) {
-                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  متن ی انتخاب نشده است ");
-            } else {
-                if (document.getElementById("sercheCheck").value == "false") {
-                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای کارکاه یا پرسنل را انتخاب نموده و سپس جستجو را کلیک کنید ");
-                } else if (document.getElementById("sercheCheck").value == "true") {
-                    swal({
-                        title: "آیا فعال نمودن این  متن ها اطمینان دارید؟",
-                        text: "",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "بله",
-                        cancelButtonText: "خیر",
-                        closeOnConfirm: false
-                    }, function (isConfirm) {
-                        if (isConfirm) {
-                            checkboxes2 = document.getElementsByName('foo');
-                            var url3b = '';
-                            for (var i2 = 0, n2 = checkboxes2.length; i2 < n2; i2++) {
-                                if (checkboxes2[i2].checked == true) {
-                                    var u2 = '&ids=' + checkboxes2[i2].value;
-                                    url3b = url3b + u2;
-                                }
+        function ModuleSelect(module,d) {
+            console.log(document.getElementById("sercheCheck").value);
+            if (document.getElementById("sercheCheck").value == "false") {
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای  عنوان،بخش ، فصل را انتخاب نموده و سپس جستجو را کلیک کنید ");
+            } else if (document.getElementById("sercheCheck").value == "true") {
+                var messageSwal = '';
+                if (d == 1) {
+                    messageSwal = "آیاازانتخاب کلیه گزینه های این ستون اطمینان دارید؟";
+                        }
+                else {
+                    messageSwal = "آیاازحذف کلیه گزینه های این ستون اطمینان دارید؟";
+                }
+                swal({
+
+                    title: messageSwal,
+                    text: "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "بله",
+                    cancelButtonText: "خیر",
+                    closeOnConfirm: false
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        checkboxes = document.getElementsByName('foo');
+                        var url3 = '';
+                        for (var i = 0, n = checkboxes.length; i < n; i++) {
+                            if (checkboxes[i].checked == true) {
+                                var u = '&ids=' + checkboxes[i].value;
+                                url3 = url3 + u;
                             }
-                            var url2b = '@Url.Page("/Company/Contracts/Index", "GroupReActive")';
-                            window.location.href = url2b + url3b;
                         }
-                    });
-                }
-            }
-        }
-    </script>
-    <script>
+                        var module1 = '&module=' + module;
+                        var url2b = '@Url.Page("/Company/TextManager/Index", "GroupSelectModule")';
 
-        function SignatureSelect() {
-
-            if (document.getElementById("sercheCheck").value == "false") {
-                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای کارکاه یا پرسنل را انتخاب نموده و سپس جستجو را کلیک کنید ");
-            } else if (document.getElementById("sercheCheck").value == "true") {
-
-                swal({
-                    title: "آیا از حذف این  متن ها اطمینان دارید؟",
-                    text: "",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "بله",
-                    cancelButtonText: "خیر",
-                    closeOnConfirm: false
-                }, function (isConfirm) {
-                    if (isConfirm) {
-                        /*    $("a.dell").click();*/
-                        checkboxes2 = document.getElementsByName('unsigned');
-                        var url3b = '';
-                        for (var i2 = 0, n2 = checkboxes2.length; i2 < n2; i2++) {
-
-                            var u2 = '&ids=' + checkboxes2[i2].value;
-                            url3b = url3b + u2;
+                        if (d == 1) {
+                            window.location.href = url2b + url3 + module1 + '&AD=' + 1;
                         }
-                        var url2b = '@Url.Page("/Company/Contracts/Index", "GroupSign")';
-                        window.location.href = url2b + url3b;
+                        else {
+                            window.location.href = url2b + url3 + module1 + '&AD=' + 0;
+                        }
+
                     } else {
 
                     }
@@ -682,39 +662,4 @@
             }
         }
     </script>
-    <script>
-        function SignatureSelect2() {
-            if (document.getElementById("sercheCheck").value == "false") {
-                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای کارکاه یا پرسنل را انتخاب نموده و سپس جستجو را کلیک کنید ");
-            } else if (document.getElementById("sercheCheck").value == "true") {
-
-                swal({
-                    title: "آیا حذف این  متن ها اطمینان دارید؟",
-                    text: "",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "بله",
-                    cancelButtonText: "خیر",
-                    closeOnConfirm: false
-                }, function (isConfirm) {
-                    if (isConfirm) {
-                        /*    $("a.dell").click();*/
-                        checkboxes2 = document.getElementsByName('signed');
-                        var url3b = '';
-                        for (var i2 = 0, n2 = checkboxes2.length; i2 < n2; i2++) {
-
-                            var u2 = '&ids=' + checkboxes2[i2].value;
-                            url3b = url3b + u2;
-                        }
-                        var url2b = '@Url.Page("/Company/Contracts/Index", "GroupUnSign")';
-
-                        window.location.href = url2b + url3b;
-                    } else {
-                    }
-                });
-            }
-        }
-    </script>
-
 }

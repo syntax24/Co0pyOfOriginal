@@ -25,7 +25,7 @@ namespace CompanyManagment.EFCore.Repository
                 NoteNumber = x.NoteNumber,
                 SubjectTextManager = x.SubjectTextManager,
                 NumberTextManager = x.NumberTextManager,
-                DateTextManager = x.DateTextManager.ToString(),
+                DateTextManager = x.DateTextManager,
                 Description = x.Description,
                 Paragraph = x.Paragraph,
                  OriginalTitle_Id = x.OriginalTitle_Id,
@@ -44,7 +44,7 @@ namespace CompanyManagment.EFCore.Repository
                 NoteNumber = x.NoteNumber,
                 SubjectTextManager = x.SubjectTextManager,
                 NumberTextManager = x.NumberTextManager,
-                DateTextManager = x.DateTextManager.ToString(),
+                DateTextManager = x.DateTextManager,
                 Description = x.Description,
                 Paragraph = x.Paragraph,
                 OriginalTitle_Id = x.OriginalTitle_Id,
@@ -53,46 +53,56 @@ namespace CompanyManagment.EFCore.Repository
               
             }).FirstOrDefault(x => x.Id == id);
         }
-
         List<TextManagerViewModel> ITextManagerRepozitory.Search(TextManagerSearchModel searchModel)
         {
-          
             var query = _context.EntityTextManagers.Select(x => new TextManagerViewModel
             {
                 Id = x.id,
                 NoteNumber = x.NoteNumber,
                 SubjectTextManager = x.SubjectTextManager,
                 NumberTextManager = x.NumberTextManager,
-                DateTextManager = x.DateTextManager.ToString(),
+                DateTextManager = x.DateTextManager,
                 Description = x.Description,
                 Paragraph = x.Paragraph,
                 OriginalTitle_Id = x.OriginalTitle_Id,
                 Subtitle_Id = x.Subtitle_Id,
                 Chapter_Id = x.Chapter_Id,
                 IsActiveString = x.IsActiveString,
-                Signature = x.Signature,
                 OriginalTitle = _context.EntityOriginalTitles.Where(i => i.id == x.OriginalTitle_Id).Select(t => t.Title).FirstOrDefault(),
                 Subtitle = _context.EntitySubtitles.Where(i => i.id == x.Subtitle_Id).Select(t => t.Subtitle).FirstOrDefault(),
                 Chapter = _context.EntityChapters.Where(i => i.id == x.Chapter_Id).Select(t => t.Chapter).FirstOrDefault(),
                 ListUseModule = _context.EntityModuleTextManagers.Where(xi => xi.TextManagerId == x.id) .Select(xi => xi.Module.NameSubModule).ToList(),
             });
-            if (searchModel.OriginalTitle_Id!=0)
-                query = query.Where(x => x.OriginalTitle_Id==searchModel.OriginalTitle_Id);
+            if (searchModel.OriginalTitle_Id != 0) {
+                query = query.Where(x => x.OriginalTitle_Id == searchModel.OriginalTitle_Id);
+                if (searchModel.IsActiveString == "false")
+                    query = query.Where(x => x.IsActiveString == "false");
+                if (searchModel.IsActiveString == "true")
+                    query = query.Where(x => x.IsActiveString == "true");
+                if (string.IsNullOrWhiteSpace(searchModel.IsActiveString) || searchModel.IsActiveString == null || searchModel.IsActiveString == "null")
+                    query = query.Where(x => x.IsActiveString == "true");
+            }
+            else
+            {
+                if (searchModel.IsActiveString == "false")
+                    query = query.Where(x => x.IsActiveString == "false");
+                if (searchModel.IsActiveString == "true")
+                    query = query.Where(x => x.IsActiveString == "true");
+                if (string.IsNullOrWhiteSpace(searchModel.IsActiveString) || searchModel.IsActiveString == null || searchModel.IsActiveString == "null")
+                    query = query.Where(x => x.IsActiveString == "true");
+            }
             if (searchModel.Subtitle_Id != 0)
-                query = query.Where(x => x.Subtitle_Id == searchModel.Subtitle_Id);
-            if (searchModel.Chapter_Id != 0)
-                query = query.Where(x => x.Chapter_Id == searchModel.Chapter_Id); ;
-            if (searchModel.IsActiveString == "false")
-                query = query.Where(x => x.IsActiveString == "false");
-            if (searchModel.IsActiveString == "true")
-                query = query.Where(x => x.IsActiveString == "true");
-
-
-
+            {   
+                if (searchModel.Chapter_Id != 0) {
+                 query = query.Where(x => x.Chapter_Id == searchModel.Chapter_Id);
+                }
+                else
+                {
+                    query = query.Where(x => x.Subtitle_Id == searchModel.Subtitle_Id);
+                }   
+            }
             return query.OrderByDescending(x => x.Id).ToList();
         }
-
-
         public List<long> GetRelation(long textManagerId)
         {
             var moduleId = _context.EntityModuleTextManagers.Where(x => x.TextManagerId == textManagerId)
@@ -110,12 +120,19 @@ namespace CompanyManagment.EFCore.Repository
             var moduleId = _context.EntityModules.Select(xi => xi.NameSubModule).ToList();
             return moduleId;
         }
-        public void RemoveOldRelation(long textManagerId)
+        public void RemoveOldRelation(long textManagerId, long moduleId)
         {
-            _context.EntityModuleTextManagers.Where(x => x.TextManagerId == textManagerId).ToList()
+            if (moduleId!=0)
+            {
+                _context.EntityModuleTextManagers.Where(x => x.TextManagerId == textManagerId && x.ModuleId== moduleId).ToList()
                 .ForEach(x => _context.EntityModuleTextManagers.Remove(x));
+            }
+            else
+            {
+                _context.EntityModuleTextManagers.Where(x => x.TextManagerId == textManagerId).ToList()
+            .ForEach(x => _context.EntityModuleTextManagers.Remove(x));
+            }
         }
-
         public void ModuleTextManager(long textManagerId, long moduleId)
         {
             _context.EntityModuleTextManagers.Add(new EntityModuleTextManager
@@ -123,6 +140,7 @@ namespace CompanyManagment.EFCore.Repository
                 TextManagerId= textManagerId,
                 ModuleId= moduleId
             });
+
             _context.SaveChanges();
         }
         public List<TextManagerViewModel> PrintAll(List<long> ids)
@@ -140,12 +158,10 @@ namespace CompanyManagment.EFCore.Repository
                 Subtitle_Id = x.Subtitle_Id,
                 Chapter_Id = x.Chapter_Id,
                 IsActiveString = x.IsActiveString,
-                Signature = x.Signature,
+              
             }).ToList();
 
 
         }
-
-       
     }
     }

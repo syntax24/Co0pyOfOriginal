@@ -5,10 +5,16 @@
         <h3> لایحه جدید</h3>
     </div>
     <br />
+
+ 
+
+
+
+
+
     <form asp-page="./CreateBill" asp-page-handler="Create"
           method="post">
         @*<form method="post">*@
-      
         <div class="row" onkeydown="checkKeyPress(event);">
             <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
                 <div class="row">
@@ -55,67 +61,51 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-
-
-          
                     <div class="form-group">
                         <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
                         <a type="button" asp-page="./Index" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">برگشت به لیست</a>
-                        <div>
-                            <a id="btnPopModal" href="#showmodal=/Admin/Company/Bill/Edit?handler=Search" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" float: inline-end; position: absolute; left: 17px; margin-top: 80px;"> جستجوی درج متن &nbsp;<i class="fa  fa-search" style="padding-left: 3px; font-size: 14px; color: white !important "></i> </a>
-                            <textarea id="Description" name="CreateBill.Description" asp-for="CreateBill.Description" class="form-control textarea1"></textarea>
-                            <span asp-validation-for="CreateBill.Description" class="text-danger"></span>
-                        </div>
+                        <div >
+                            <div id="desid">
+                                <a id="btnPopModal" href="#showmodal=/Admin/Company/Bill/Edit?handler=Search" class="btn btn-success btn-rounded waves-effect waves-light m-b-5 " style=" float: inline-end; position: absolute; left: 17px; margin-top: 80px; display:none"> جستجوی درج متن &nbsp;<i class="fa  fa-search" style="padding-left: 3px; font-size: 14px; color: white !important "></i> </a>
+                            </div>
+                                <textarea id="Description" name="CreateBill.Description" asp-for="CreateBill.Description" class="form-control textarea1"></textarea>
+                                <span asp-validation-for="CreateBill.Description" class="text-danger"></span>
+                            </div>
 
-                        <style>
-                            #cke_376_bottom {
-                                display: none !important
-                            }
-                        </style>
-                    </div>
+                            <style>
+                                #cke_376_bottom {
+                                    display: none !important
+                                }
+                            </style>
+                        </div>
                 </div>
             </fieldset>
         </div>
-
         <br />
-
-
-
-        <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
-        <a type="button" asp-page="./Index" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">برگشت به لیست</a>
+        <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" >ذخیره</button>
+        <a type="button"    asp-page="./Index" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">برگشت به لیست</a>
     </form>
-  
 </div>
+<style>
+    .cke_button__placeholder_icon {
+        background-position: 0 0px;
+        background-size: 57px;
+        width: 57px;
+        height: 16px;
+        background-size: 62px !important;
+        background-color: #41bc76;
+    }
+
+</style>
 <link href="~/js/PTextManager/jquery-ui/jquery-ui.css" rel="stylesheet" />
 @section PanelScripts{
     <script src="~/js/PTextManager/jquery-ui/jquery-ui.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#Appointed_Id1').autocomplete({
-                source: '@Url.Page("CreateBill", "Appointed")'
-              });
-            $('#ProcessingStage_Id1').autocomplete({
-                source: '@Url.Page("CreateBill", "ProcessingStage")'
-              });
-            $('#Contact_Id1').autocomplete({
-                source: '@Url.Page("CreateBill", "Contact")'
-            });
-
-          
-        });
-
-        function checkKeyPress(e) {
-
-            if (e.which == 83 && e.ctrlKey) {
-                event.preventDefault();
-                alert(
-                    "CTRL key pressed: " + e.ctrlKey + "\n"
-                );
-            }
-        }
-    </script>
     <script src="~/AdminTheme/assets/js/site.js"></script>
     <script src="~/js/PTextManager/ckeditor/ckeditor.js"></script>
     <script src="~/js/PTextManager/ckeditor/textv01.js"></script>
+
+
+
 }
+            
 

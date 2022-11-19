@@ -14,6 +14,7 @@ namespace Company.Domain.SubtitleAgg
         }
         public string Subtitle { get; private set; }
         public long OriginalTitle_Id { get; private set; }
+        public string IsActiveString { get; set; }
         public EntityOriginalTitle EntityOriginalTitle { get; set; }
 
         public List<EntityChapter> Chapters { get; private set; }
@@ -30,6 +31,17 @@ namespace Company.Domain.SubtitleAgg
         {
             Subtitle = subtitle;
             OriginalTitle_Id = originalTitle_Id;
+        }
+        public void Active()
+        {
+
+            this.IsActiveString = "true";
+        }
+
+        public void DeActive()
+        {
+
+            this.IsActiveString = "false";
         }
     }
 }

@@ -11,6 +11,8 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Module
 {
     public class IndexModel : PageModel
     {
+        public string Message { get; set; }
+        public string ModulesSearch = "false";
         public ModuleViewModel searchModel;
         public List<ModuleViewModel> Modules;
         private CompanyContext db;
@@ -25,6 +27,13 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Module
         public void OnGet(ModuleSearchModel searchModel)
         {
             Modules = _ModuleApplication.Search(searchModel);
+            if (Modules != null)
+            {
+
+                    ModulesSearch = "true";
+
+            }
+
         }
         public IActionResult OnGetCreate()
         {
@@ -42,9 +51,6 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Module
         }
         public JsonResult OnPostEdit(EditModule command)
         {
-            //if (ModelState.IsValid)
-            //{
-            //}
             var result = _ModuleApplication.Edit(command);
             return new JsonResult(result);
         }
@@ -59,10 +65,49 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Module
             var names = db.EntityModules.Where(p => p.NameSubModule.Contains(term)).Select(p => p.NameSubModule).ToList();
             return new JsonResult(names);
         }
-      
-     
 
-       
+        public IActionResult OnGetGroupDeActive(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _ModuleApplication.DeActive(item);
+            }
+            return RedirectToPage("./Index");
+
+        }
+        public IActionResult OnGetGroupReActive(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _ModuleApplication.Active(item);
+            }
+            return RedirectToPage("./Index");
+        }
+        public IActionResult OnGetDeActive(long id)
+        {
+
+
+            var result = _ModuleApplication.DeActive(id);
+
+            if (result.IsSuccedded)
+                return RedirectToPage("./Index");
+            Message = result.Message;
+            return RedirectToPage("./Index");
+        }
+        public IActionResult OnGetIsActive(long id)
+        {
+
+
+            var result = _ModuleApplication.Active(id);
+            if (result.IsSuccedded)
+                return RedirectToPage("./Index");
+            Message = result.Message;
+            return RedirectToPage("./Index");
+        }
+
+
 
     }
 }

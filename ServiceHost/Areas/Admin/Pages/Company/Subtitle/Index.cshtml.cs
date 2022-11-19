@@ -10,6 +10,9 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Subtitle
   
         public class IndexModel : PageModel
         {
+        public string Message { get; set; }
+        public string OriginalTitleSearch = "false";
+        public string SubtitleSearch = "false";
         public SubtitleSearchModel searchModel;
         public SelectList SelectListOriginalTitle;
         public List<SubtitleViewModel> Subtitles;
@@ -31,6 +34,11 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Subtitle
 
             SelectListOriginalTitle = new SelectList(_originalTitleApplication.GetAllOriginalTitle(), "Id", "Title");
             Subtitles = _subtitleApplication.Search(searchModel);
+            if (Subtitles != null)
+            {
+               
+                    SubtitleSearch = "true";
+            }
             }
             public IActionResult OnGetCreate()
             {
@@ -76,6 +84,49 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Subtitle
                 return Partial("Details", editJob);
             }
 
+
+
+        public IActionResult OnGetGroupDeActive(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _subtitleApplication.DeActive(item);
+            }
+            return RedirectToPage("./Index");
+
         }
+        public IActionResult OnGetGroupReActive(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _subtitleApplication.Active(item);
+            }
+            return RedirectToPage("./Index");
+        }
+        public IActionResult OnGetDeActive(long id)
+        {
+
+
+            var result = _subtitleApplication.DeActive(id);
+
+            if (result.IsSuccedded)
+                return RedirectToPage("./Index");
+            Message = result.Message;
+            return RedirectToPage("./Index");
+        }
+        public IActionResult OnGetIsActive(long id)
+        {
+
+
+            var result = _subtitleApplication.Active(id);
+            if (result.IsSuccedded)
+                return RedirectToPage("./Index");
+            Message = result.Message;
+            return RedirectToPage("./Index");
+        }
+    }
+
 
 }

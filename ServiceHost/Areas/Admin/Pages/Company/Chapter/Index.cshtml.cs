@@ -12,6 +12,8 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Chapter
   
         public class IndexModel : PageModel
         {
+        public string ChapterSearch = "false";
+        public string Message { get; set; }
         public ChapterSearchModel searchModel;
         public SelectList SelectListOriginalTitle;
 
@@ -38,8 +40,16 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Chapter
             SelectListOriginalTitle = new SelectList(_originalTitleApplication.GetAllOriginalTitle(), "Id", "Title");
             SelectListSubtitles = new SelectList(_subtitleApplication.GetAllSubtitle(), "Id", "Subtitle");
 
+            
+
             Chapters = _chapterApplication.Search(searchModel);
+            if (Chapters != null)
+            {
+               
+                    ChapterSearch = "true";
+                
             }
+        }
             public IActionResult OnGetCreate()
             {
                 var allCategory = new CreateChapter
@@ -88,6 +98,48 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Chapter
                 return Partial("Details", editchapter);
             }
 
+        public IActionResult OnGetGroupDeActive(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _chapterApplication.DeActive(item);
+            }
+            return RedirectToPage("./Index");
+
         }
+        public IActionResult OnGetGroupReActive(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _chapterApplication.Active(item);
+            }
+            return RedirectToPage("./Index");
+        }
+        public IActionResult OnGetDeActive(long id)
+        {
+
+
+            var result = _chapterApplication.DeActive(id);
+
+            if (result.IsSuccedded)
+                return RedirectToPage("./Index");
+            Message = result.Message;
+            return RedirectToPage("./Index");
+        }
+        public IActionResult OnGetIsActive(long id)
+        {
+
+
+            var result = _chapterApplication.Active(id);
+            if (result.IsSuccedded)
+                return RedirectToPage("./Index");
+            Message = result.Message;
+            return RedirectToPage("./Index");
+        }
+
+    }
+
 
 }

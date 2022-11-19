@@ -14,7 +14,6 @@ namespace CompanyManagment.App.Contracts.TextManager
 
         OperationResult Active(long id);
         OperationResult DeActive(long id);
-        OperationResult Sign(long id);
-        OperationResult UnSign(long id);
+         OperationResult SelectModule(long id, long moduleId,int ad);
     }
 }
