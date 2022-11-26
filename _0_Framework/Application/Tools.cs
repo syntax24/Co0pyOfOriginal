@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace _0_Framework.Application
+namespace _0_Framework_b.Application
 {
     public static class Tools
     {

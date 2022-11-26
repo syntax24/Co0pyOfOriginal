@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using _0_Framework.Application;
+using _0_Framework_b.Application;
 using Company.Domain.Petition;
 using Company.Domain.WorkHistory;
 using CompanyManagment.App.Contracts.Petition;

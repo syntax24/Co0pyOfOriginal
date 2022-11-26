@@ -653,4 +653,83 @@
 
     //}
 </Script>
+<script>
+    function validDate(inputField) {
 
+        var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (var i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+        let getdate = inputField.value;
+
+        var m1, m2;
+        var y1, y2, y3, y4;
+        var d1, d2;
+        var s1, s2;
+        for (var i = 0; i < getdate.length; i++) {
+            if (i === 0) {
+                y1 = fixNumbers(getdate[i]);
+            }
+            if (i === 1) {
+                y2 = fixNumbers(getdate[i]);
+            }
+            if (i === 2) {
+                y3 = fixNumbers(getdate[i]);
+            }
+            if (i === 3) {
+                y4 = fixNumbers(getdate[i]);
+            }
+            if (i === 4) {
+                s1 = fixNumbers(getdate[i]);
+            }
+            if (i === 5) {
+                m1 = fixNumbers(getdate[i]);
+            }
+            if (i === 6) {
+                m2 = fixNumbers(getdate[i]);
+            }
+            if (i === 7) {
+                s2 = fixNumbers(getdate[i]);
+            }
+            if (i === 8) {
+                d1 = fixNumbers(getdate[i]);
+            }
+            if (i === 9) {
+                d2 = fixNumbers(getdate[i]);
+            }
+
+        }
+        var yRes = y1 + y2 + y3 + y4;
+        var year = parseInt(yRes);
+        var mRes = m1 + m2;
+        var month = parseInt(mRes);
+        var dRes = d1 + d2;
+        var day = parseInt(dRes);
+        var FixResult = yRes + s1 + mRes + s2 + dRes;
+
+
+        var isValid = /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(FixResult);
+
+
+        if (isValid) {
+            inputField.style.backgroundColor = '#a6e9a6';
+            $("button[type=submit]").attr('disabled', false);
+            validCheck = true;
+
+        } else {
+            inputField.style.backgroundColor = '#f94c4c';
+            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را بصورت صحیح وارد کنید");
+            $("button[type=submit]").attr('disabled', true)
+            validCheck = false;
+
+        }
+        return validCheck;
+
+    }
+</script>

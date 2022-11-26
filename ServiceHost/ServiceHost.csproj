@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PersonalContractingParty.Config\PersonalContractingParty.Config.csproj" />
+    <ProjectReference Include="..\_0_Framework\_0_Framework_b.csproj" />
   </ItemGroup>
 
   <ItemGroup>
