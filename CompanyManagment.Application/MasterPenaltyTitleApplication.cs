@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using _0_Framework.Application;
-using Company.Domain.PenaltyTitle;
-using CompanyManagment.App.Contracts.PenaltyTitle;
+using Company.Domain.MasterPenaltyTitle;
+using CompanyManagment.App.Contracts.MasterPenaltyTitle;
 
 namespace CompanyManagment.Application
 {
-    public class PenaltyTitleApplication : IPenaltyTitleApplication
+    public class MasterPenaltyTitleApplication : IMasterPenaltyTitleApplication
     {
-        private readonly IPenaltyTitleRepository _penaltyTitleRepository;
+        private readonly IMasterPenaltyTitleRepository _masterPenaltyTitleRepository;
 
-        public PenaltyTitleApplication(IPenaltyTitleRepository penaltyTitleRepository)
+        public MasterPenaltyTitleApplication(IMasterPenaltyTitleRepository masterPenaltyTitleRepository)
         {
-            _penaltyTitleRepository = penaltyTitleRepository;
+            _masterPenaltyTitleRepository = masterPenaltyTitleRepository;
         }
 
-        public OperationResult Create(CreatePenaltyTitle command)
+        public OperationResult Create(CreateMasterPenaltyTitle command)
         {
             var operation = new OperationResult();
             DateTime? FromDate = null;
@@ -37,27 +37,27 @@ namespace CompanyManagment.Application
             //if(_BoardRepository.Exists(x=>x.Branch == command.Branch))
             //    operation.Failed("fail message")
 
-            var penaltyTitle = new PenaltyTitle(FromDate, ToDate, command.Title, command.Day, command.Petition_Id, command.PaidAmount, command.RemainingAmount);
-            _penaltyTitleRepository.Create(penaltyTitle);
-            _penaltyTitleRepository.SaveChanges();
+            var masterPenaltyTitle = new MasterPenaltyTitle(FromDate, ToDate, command.Title, command.Day, command.MasterPetition_Id, command.PaidAmount, command.RemainingAmount);
+            _masterPenaltyTitleRepository.Create(masterPenaltyTitle);
+            _masterPenaltyTitleRepository.SaveChanges();
 
             return operation.Succcedded();
         }
 
-        public OperationResult CreatePenaltyTitles(List<EditPenaltyTitle> penaltyTitles, long petitionId)
+        public OperationResult CreateMasterPenaltyTitles(List<EditMasterPenaltyTitle> masterPenaltyTitles, long masterPetitionId)
         {
             var operation = new OperationResult();
 
-            RemovePenaltyTitles(petitionId);
+            RemoveMasterPenaltyTitles(masterPetitionId);
 
-            foreach (var obj in penaltyTitles)
+            foreach (var obj in masterPenaltyTitles)
             {
                 if(obj.PaidAmount != null || obj.RemainingAmount != null || obj.Title != null || obj.FromDate != null || obj.ToDate != null || obj.Day != null )
                 {
                     if ((obj.FromDate == null && obj.ToDate != null) || (obj.FromDate != null && obj.ToDate == null))
                         return operation.Failed("لطفا تاریخ جزئیات دادنامه را وارد نمایید");
 
-                    obj.Petition_Id = petitionId;
+                    obj.MasterPetition_Id = masterPetitionId;
                     obj.Id = 0;
 
                     Create(obj);
@@ -67,10 +67,10 @@ namespace CompanyManagment.Application
             return operation.Succcedded();
         }
 
-        public OperationResult Edit(EditPenaltyTitle command)
+        public OperationResult Edit(EditMasterPenaltyTitle command)
         {
             var operation = new OperationResult();
-            var penaltyTitle = _penaltyTitleRepository.Get(command.Id);
+            var masterPenaltyTitle = _masterPenaltyTitleRepository.Get(command.Id);
 
             var FromDate = new DateTime();
             FromDate = command.FromDate.ToGeorgianDateTime();
@@ -82,22 +82,23 @@ namespace CompanyManagment.Application
             //if(_BoardRepository.Exists(x=>x.Branch == command.Branch))
             //    operation.Failed("fail message")
 
-            penaltyTitle.Edit(FromDate, ToDate, command.Title, command.Day, command.Petition_Id, command.PaidAmount, command.RemainingAmount);
-            _penaltyTitleRepository.SaveChanges();
+            masterPenaltyTitle.Edit(FromDate, ToDate, command.Title, command.Day, command.MasterPetition_Id, command.PaidAmount, command.RemainingAmount);
+            _masterPenaltyTitleRepository.SaveChanges();
 
             return operation.Succcedded();
         }
 
-        public void RemovePenaltyTitles(long petitionId)
+        public void RemoveMasterPenaltyTitles(long masterPetitionId)
         {
-            var objects = Search(petitionId);
+            var objects = Search(masterPetitionId);
 
-            _penaltyTitleRepository.RemovePenaltyTitles(objects);
+            _masterPenaltyTitleRepository.RemoveMasterPenaltyTitles(objects);
+            _masterPenaltyTitleRepository.SaveChanges();
         }
 
-        public List<EditPenaltyTitle> Search(long petitionId)
+        public List<EditMasterPenaltyTitle> Search(long masterPetitionId)
         {
-            return _penaltyTitleRepository.Search(petitionId);
+            return _masterPenaltyTitleRepository.Search(masterPetitionId);
         }
     }
 }

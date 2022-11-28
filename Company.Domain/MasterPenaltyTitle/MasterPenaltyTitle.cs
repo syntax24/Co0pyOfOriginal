@@ -1,17 +1,18 @@
 ﻿using _0_Framework.Domain;
 using System;
+using System.Collections.Generic;
 
-namespace Company.Domain.PenaltyTitle
+namespace Company.Domain.MasterPenaltyTitle
 {
-    public class PenaltyTitle : EntityBase
+    public class MasterPenaltyTitle : EntityBase
     {
-        public PenaltyTitle(DateTime? fromDate, DateTime? toDate, string title, string day, long petition_Id, string paidAmount, string remainingAmount)
+        public MasterPenaltyTitle(DateTime? fromDate, DateTime? toDate, string title, string day, long masterPetition_Id, string paidAmount, string remainingAmount)
         {
             FromDate = fromDate;
             ToDate = toDate;
             Title = title;
             Day = day;
-            Petition_Id = petition_Id;
+            MasterPetition_Id = masterPetition_Id;
             PaidAmount = paidAmount;
             RemainingAmount = remainingAmount;
         }
@@ -22,10 +23,11 @@ namespace Company.Domain.PenaltyTitle
         public string Day { get; private set; }
         public string PaidAmount { get; private set; }
         public string RemainingAmount { get; private set; }
-        public long Petition_Id { get; private set; }
-        public Petition.Petition Petition { get; private set; }
+        public long MasterPetition_Id { get; private set; }
 
-        public void Edit(DateTime fromDate, DateTime toDate, string title, string day, long petition_Id, string paidAmount, string remainingAmount)
+        public MasterPetition.MasterPetition MasterPetition { get; private set; }
+
+        public void Edit(DateTime fromDate, DateTime toDate, string title, string day, long masterPetition_Id, string paidAmount, string remainingAmount)
         {
             FromDate = fromDate;
             ToDate = toDate;
@@ -33,7 +35,7 @@ namespace Company.Domain.PenaltyTitle
             Day = day;
             PaidAmount = paidAmount;
             RemainingAmount = remainingAmount;
-            Petition_Id = petition_Id;
+            MasterPetition_Id = masterPetition_Id;
         }
     }
 }

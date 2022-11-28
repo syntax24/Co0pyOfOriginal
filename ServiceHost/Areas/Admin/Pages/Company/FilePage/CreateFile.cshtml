@@ -38,7 +38,7 @@
           method="post"
           data-ajax="true"
           data-callback=""
-          data-action="Refresh"
+          data-action="LoadFileEditPage"
        >
         <div class="modal-body">
             <div class="row">
@@ -75,7 +75,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="ClientVisitDate" class="control-label">  تاریخ مراجعه موکل </label>
-                                <input type="text" class="form-control" asp-for="ClientVisitDate" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
+                                <input type="text" class="form-control date" asp-for="ClientVisitDate" dir="ltr" maxlength="10" onchange="validDate(this);"  onfocusout="CompareDates($(this))" style="width: 100%; text-align: center">
                                 <span asp-validation-for="ClientVisitDate" class="error"></span>
                             </div>
                         </div>
@@ -322,7 +322,7 @@
 
         const archiveNo = document.getElementById("ArchiveNo").value;
 
-        console.log(archiveNo);
+        //console.log(archiveNo);
         if (archiveNo == "") return;
         
         $.ajax({

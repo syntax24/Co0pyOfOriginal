@@ -61,7 +61,7 @@ namespace CompanyManagment.Application
 
             file.Edit(command.ArchiveNo, clientVisitDate, command.ProceederReference,
                 command.Reqester, command.Summoned, command.Client, command.FileClass, command.HasMandate,
-                command.Description);
+                command.Description, command.Status);
             _fileRepository.SaveChanges();
 
             return operation.Succcedded();

@@ -6,6 +6,9 @@ using _0_Framework.Application;
 using CompanyManagment.App.Contracts.Board;
 
 using CompanyManagment.App.Contracts.File1;
+using CompanyManagment.App.Contracts.MasterPenaltyTitle;
+using CompanyManagment.App.Contracts.MasterPetition;
+using CompanyManagment.App.Contracts.MasterWorkHistory;
 using CompanyManagment.App.Contracts.PenaltyTitle;
 using CompanyManagment.App.Contracts.Petition;
 using CompanyManagment.App.Contracts.ProceedingSession;
@@ -27,7 +30,10 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
         private readonly IWorkHistoryApplication _workHistoryApplication;
         private readonly IPenaltyTitleApplication _penaltyTitleApplication;
         private readonly IProceedingSessionApplication _proceedingSessionApplication;
-   
+        private readonly IMasterPetitionApplication _masterPetitionApplication;
+        private readonly IMasterWorkHistoryApplication _masterWorkHistoryApplication;
+        private readonly IMasterPenaltyTitleApplication _masterPenaltyTitleApplication;
+
 
         public IndexModel(
             IFileApplication fileApplication,
@@ -35,7 +41,10 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             IPetitionApplication petitionApplication,
             IWorkHistoryApplication workHistoryApplication,
             IPenaltyTitleApplication penaltyTitleApplication,
-            IProceedingSessionApplication proceedingSessionApplication
+            IProceedingSessionApplication proceedingSessionApplication,
+            IMasterPetitionApplication masterPetitionApplication,
+            IMasterWorkHistoryApplication masterWorkHistoryApplication,
+            IMasterPenaltyTitleApplication masterPenaltyTitleApplication
          )
         {
             _fileApplication = fileApplication;
@@ -44,7 +53,9 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             _workHistoryApplication = workHistoryApplication;
             _penaltyTitleApplication = penaltyTitleApplication;
             _proceedingSessionApplication = proceedingSessionApplication;
-          
+            _masterPetitionApplication = masterPetitionApplication;
+            _masterWorkHistoryApplication = masterWorkHistoryApplication;
+            _masterPenaltyTitleApplication = masterPenaltyTitleApplication;
         }
 
         public void OnGet(FileSearchModel fileSearchModel)
@@ -277,13 +288,16 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             var file = _fileApplication.GetDetails(fileId);
 
             if (file.Client == 1)
+            {
                 file.ClientFullName = _fileApplication.GetEmployeeFullNameById(file.Reqester);
-
+                file.OppositePersonFullName = _fileApplication.GetEmployerFullNameById(file.Summoned);
+            }
             else
+            {
                 file.ClientFullName = _fileApplication.GetEmployerFullNameById(file.Summoned);
-
-            var petition =
-                _petitionApplication.GetDetails(fileId, boardTypeId) ?? new EditPetition();
+                file.OppositePersonFullName = _fileApplication.GetEmployeeFullNameById(file.Reqester);
+            }
+            var petition = _petitionApplication.GetDetails(fileId, boardTypeId) ?? new EditPetition();
             var workHistories = _workHistoryApplication.Search(petition.Id);
             workHistories =
                 workHistories.Count != 0
@@ -350,6 +364,87 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             return new JsonResult(penaltyResult);
         }
 
+        public IActionResult OnGetCreateOrEditMasterPetition(long fileId, int boardTypeId)
+        {
+            var file = _fileApplication.GetDetails(fileId);
+
+            if (file.Client == 1)
+            {
+                file.ClientFullName = _fileApplication.GetEmployeeFullNameById(file.Reqester);
+                file.OppositePersonFullName = _fileApplication.GetEmployerFullNameById(file.Summoned);
+            }
+            else
+            {
+                file.ClientFullName = _fileApplication.GetEmployerFullNameById(file.Summoned);
+                file.OppositePersonFullName = _fileApplication.GetEmployeeFullNameById(file.Reqester);
+            }
+            var masterPetition = _masterPetitionApplication.GetDetails(fileId, boardTypeId) ?? new EditMasterPetition();
+            var workHistories = _masterWorkHistoryApplication.Search(masterPetition.Id);
+            workHistories =
+                workHistories.Count != 0
+                    ? workHistories
+                    : new List<EditMasterWorkHistory> { new EditMasterWorkHistory() };
+
+            var PenaltyTitles = _masterPenaltyTitleApplication.Search(masterPetition.Id);
+            PenaltyTitles =
+                PenaltyTitles.Count != 0
+                    ? PenaltyTitles
+                    : new List<EditMasterPenaltyTitle> { new EditMasterPenaltyTitle() };
+
+            masterPetition.File_Id = fileId;
+            masterPetition.BoardType_Id = boardTypeId;
+            masterPetition.FileData = file;
+            masterPetition.CreateMasterWorkHistory = workHistories;
+            masterPetition.CreateMasterPenaltyTitle = PenaltyTitles;
+
+            return Partial("./CreateOrEditMasterPetition", masterPetition);
+        }
+
+        public IActionResult OnPostCreateOrEditMasterPetition(EditMasterPetition command)
+        {
+            var masterPetitionResult = new OperationResult();
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest();
+
+            //}
+
+            //var result = _fileApplication.Edit(command.FileData);
+
+            //if (!result.IsSuccedded)
+            //    return new JsonResult(result);
+
+            if (command.Id == 0)
+            {
+                masterPetitionResult = _masterPetitionApplication.Create(command);
+            }
+            else
+            {
+                masterPetitionResult = _masterPetitionApplication.Edit(command);
+            }
+
+            if (!masterPetitionResult.IsSuccedded)
+                return new JsonResult(masterPetitionResult);
+
+            var workResult = _masterWorkHistoryApplication.CreateMasterWorkHistories(
+                command.CreateMasterWorkHistory,
+                masterPetitionResult.EntityId
+            );
+
+            if (!workResult.IsSuccedded)
+                return new JsonResult(workResult);
+
+            var penaltyResult = _masterPenaltyTitleApplication.CreateMasterPenaltyTitles(
+                command.CreateMasterPenaltyTitle,
+                masterPetitionResult.EntityId
+            );
+
+            if (!penaltyResult.IsSuccedded)
+                return new JsonResult(penaltyResult);
+
+            return new JsonResult(penaltyResult);
+        }
+
         public IActionResult OnGetDetails(long id)
         {
             var editJob = _fileApplication.GetDetails(id);
@@ -369,6 +464,39 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
                     message = vModel == null ? "" : "شماره بایگانی تکراری است"
                 }
             );
+        }
+        
+        public JsonResult OnPostRemoveMasterPetition(long id)
+        {
+            _masterPenaltyTitleApplication.RemoveMasterPenaltyTitles(id);
+            _masterWorkHistoryApplication.RemoveMasterWorkHistories(id);
+            var result = _masterPetitionApplication.Remove(id);
+
+            return new JsonResult(result);
+        }
+
+        public JsonResult OnPostSetFileStatus(long id)
+        {
+            var result = new OperationResult();
+            var file = _fileApplication.GetDetails(id);
+
+            switch(file.Status)
+            {
+                case 1:
+
+                    file.Status = 2;
+                    result = _fileApplication.Edit(file);
+                    result.Message = "پرونده با موفقیت فعال شد";
+                    break;
+
+                case 2:
+                    file.Status = 1;
+                    result = _fileApplication.Edit(file);
+                    result.Message = "پرونده با موفقیت غیرفعال شد";
+                    break;
+            }
+
+            return new JsonResult(result);
         }
 
         private FileViewModel GetFileDetails(FileViewModel file)
@@ -458,6 +586,14 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             viewModel.FirstDisputeResolutionPS = firstDisputeResolutionProceedingSession;
             viewModel.LastDisputeResolutionPS = lastDisputeResolutionProceedingSession;
             viewModel.DisputeResolutionPetition = disputeResolutionPetition;
+
+            var masterPetitions = _masterPetitionApplication.Search(new MasterPetitionSearchModel { File_Id = file.Id }).ToList();
+            viewModel.DiagnosisMasterPetitionId = masterPetitions.Where(x => x.BoardType_Id == 1).FirstOrDefault() != null
+                ? masterPetitions.Where(x => x.BoardType_Id == 1).FirstOrDefault().Id
+                : 0;
+            viewModel.DisputeResolutionMasterPetitionId = masterPetitions.Where(x => x.BoardType_Id == 2).FirstOrDefault() != null
+                ? masterPetitions.Where(x => x.BoardType_Id == 2).FirstOrDefault().Id
+                : 0;
 
             return viewModel;
         }

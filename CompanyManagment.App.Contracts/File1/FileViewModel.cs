@@ -28,5 +28,8 @@ namespace CompanyManagment.App.Contracts.File1
         public EditProceedingSession LastDisputeResolutionPS { get; set; }
         public EditPetition DiagnosisPetition { get; set; }
         public EditPetition DisputeResolutionPetition { get; set; }
+        public long DiagnosisMasterPetitionId { get; set; }
+        public long DisputeResolutionMasterPetitionId { get; set; }
+        public int Status { get; set; }
     }
 }

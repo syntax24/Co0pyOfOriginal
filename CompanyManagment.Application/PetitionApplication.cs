@@ -31,7 +31,7 @@ namespace CompanyManagment.Application
             //    operation.Failed("fail message")
 
             var petition = new Petition(petitionIssuanceDate, notificationPetitionDate,
-                command.TotalPenalty, command.TotalPenaltyTitles, command.Description, command.BoardType_Id, command.File_Id);
+                command.TotalPenalty, command.TotalPenaltyTitles, command.Description, command.WorkHistoryDescription, command.BoardType_Id, command.File_Id);
             _petitionRepository.Create(petition);
             _petitionRepository.SaveChanges();
 
@@ -55,7 +55,7 @@ namespace CompanyManagment.Application
             //    operation.Failed("fail message")
 
             petition.Edit(petitionIssuanceDate, notificationPetitionDate,
-                command.TotalPenalty, command.TotalPenaltyTitles, command.Description, command.BoardType_Id, command.File_Id);
+                command.TotalPenalty, command.TotalPenaltyTitles, command.Description, command.WorkHistoryDescription, command.BoardType_Id, command.File_Id);
             _petitionRepository.SaveChanges();
 
             return operation.Succcedded(entityId: petition.id);

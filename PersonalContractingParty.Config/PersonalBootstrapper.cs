@@ -3,6 +3,9 @@ using Company.Domain.Board;
 using Company.Domain.ChapterAgg;
 using Company.Domain.Contact2Agg;
 using Company.Domain.File1;
+using Company.Domain.MasterPenaltyTitle;
+using Company.Domain.MasterPetition;
+using Company.Domain.MasterWorkHistory;
 using Company.Domain.ModuleAgg;
 using Company.Domain.OriginalTitleAgg;
 using Company.Domain.PenaltyTitle;
@@ -15,6 +18,9 @@ using CompanyManagment.App.Contracts.Chapter;
 using CompanyManagment.App.Contracts.Contact2;
 using CompanyManagment.App.Contracts.Contract;
 using CompanyManagment.App.Contracts.File1;
+using CompanyManagment.App.Contracts.MasterPenaltyTitle;
+using CompanyManagment.App.Contracts.MasterPetition;
+using CompanyManagment.App.Contracts.MasterWorkHistory;
 using CompanyManagment.App.Contracts.Module;
 using CompanyManagment.App.Contracts.OriginalTitle;
 using CompanyManagment.App.Contracts.PenaltyTitle;
@@ -40,7 +46,6 @@ namespace PersonalContractingParty.Config
         
 
             //---File Project------------------------------------
-
             services.AddTransient<IBoardApplication, BoardApplication>();
             services.AddTransient<IBoardRepository, BoardRepository>();
 
@@ -58,6 +63,15 @@ namespace PersonalContractingParty.Config
 
             services.AddTransient<IProceedingSessionApplication, ProceedingSessionApplication>();
             services.AddTransient<IProceedingSessionRepository, ProceedingSessionRepository>();
+
+            services.AddTransient<IMasterPetitionApplication, MasterPetitionApplication>();
+            services.AddTransient<IMasterPetitionRepository, MasterPetitionRepository>();
+
+            services.AddTransient<IMasterWorkHistoryApplication, MasterWorkHistoryApplication>();
+            services.AddTransient<IMasterWorkHistoryRepository, MasterWorkHistoryRepository>();
+
+            services.AddTransient<IMasterPenaltyTitleApplication, MasterPenaltyTitleApplication>();
+            services.AddTransient<IMasterPenaltyTitleRepository, MasterPenaltyTitleRepository>();
 
             //----Text-Manager-Project---------------------------------
             services.AddTransient<ISubtitleApplication, SubtitleAppliction>();

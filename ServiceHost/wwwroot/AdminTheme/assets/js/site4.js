@@ -501,3 +501,272 @@ function InsertTime(id) {
     $(id).val(new persianDate().format("HH:mm"));
 }
 
+//function checkDateValidation(date, checkComparison = true, activeStartDate = true, activeEndDate = true) {
+
+//    validDate(date)
+
+//    if (checkComparison)
+//        CompareDates(date, activeStartDate, activeEndDate)
+//}
+
+function validDate(inputField) {
+
+    var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+        arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+        fixNumbers = function (str) {
+            if (typeof str === 'string') {
+                for (var i = 0; i < 10; i++) {
+                    str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                }
+            }
+            return str;
+        };
+    
+    let getdate;
+
+    inputField.value == undefined ? getdate = inputField : getdate = inputField.value;
+
+    if (getdate == '') return validCheck = true;
+
+    var m1, m2;
+    var y1, y2, y3, y4;
+    var d1, d2;
+    var s1, s2;
+    for (var i = 0; i < getdate.length; i++) {
+        if (i === 0) {
+            y1 = fixNumbers(getdate[i]);
+        }
+        if (i === 1) {
+            y2 = fixNumbers(getdate[i]);
+        }
+        if (i === 2) {
+            y3 = fixNumbers(getdate[i]);
+        }
+        if (i === 3) {
+            y4 = fixNumbers(getdate[i]);
+        }
+        if (i === 4) {
+            s1 = fixNumbers(getdate[i]);
+        }
+        if (i === 5) {
+            m1 = fixNumbers(getdate[i]);
+        }
+        if (i === 6) {
+            m2 = fixNumbers(getdate[i]);
+        }
+        if (i === 7) {
+            s2 = fixNumbers(getdate[i]);
+        }
+        if (i === 8) {
+            d1 = fixNumbers(getdate[i]);
+        }
+        if (i === 9) {
+            d2 = fixNumbers(getdate[i]);
+        }
+
+    }
+    var yRes = y1 + y2 + y3 + y4;
+    var year = parseInt(yRes);
+    var mRes = m1 + m2;
+    var month = parseInt(mRes);
+    var dRes = d1 + d2;
+    var day = parseInt(dRes);
+    var FixResult = yRes + s1 + mRes + s2 + dRes;
+
+
+    var isValid = /^([1][3-7][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(FixResult);
+
+    if (inputField.value == undefined) {
+
+        if (isValid)
+            validCheck = true;
+
+        else
+            validCheck = false;
+    }
+    else {
+
+        if (isValid) {
+            //inputField.style.backgroundColor = '#a6e9a6';
+            //$("button[type=submit]").attr('disabled', false);
+            validCheck = true;
+
+        } else {
+            inputField.style.backgroundColor = '#f94c4c';
+            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را بصورت صحیح وارد کنید");
+            $("button[type=submit]").attr('disabled', true)
+            validCheck = false;
+
+        }
+    }
+
+    
+    return validCheck;
+
+}
+
+
+function CompareDates(date, activeStartDate = true, activeEndDate = true) {
+
+    
+    var dates = $('.date');
+    var i = 0;
+
+    for (k in dates) {
+
+        //if (!Number.isInteger(k)) return;
+
+        if (dates[k] == date[0])
+            break;
+
+        i++;
+    }
+
+    startDate = (i - 1 >= 0 && activeStartDate) ? $(dates[i - 1]) : $('<input id="nullDate" value="1300/01/01" hidden/>');
+    middleDate = $(dates[i])
+    endDate = (dates[i + 1] != undefined && activeEndDate) ? $(dates[i + 1]) : $('<input id="nullDate" value="1600/01/01" hidden/>');
+
+    //console.log(startDate)
+    //console.log(middleDate)
+    //console.log(endDate)
+    //console.log(startDate.val())
+    //console.log(middleDate.val())
+    //console.log(endDate.val())
+    //console.log(validDate(startDate.val()))
+    //console.log(validDate(middleDate.val()))
+    //console.log(validDate(endDate.val()))
+                
+    if (validDate(startDate.val()) && validDate(middleDate.val()) && validDate(endDate.val())) {
+
+        start = startDate.val().split('/').join("");
+        middle = middleDate.val().split('/').join("");
+        end = endDate.val().split('/').join("");
+
+        console.log(activeStartDate, startDate.val(), middleDate.val())
+
+        //if (activeStartDate && (startDate.val() == '' && middleDate.val() == '')) {
+        //    $(endDate).css('backgroundColor', '#fff').removeClass('invalidDate');
+        //    $(middleDate).css('backgroundColor', '#fff').removeClass('invalidDate');
+        //    $(startDate).css('backgroundColor', '#fff').removeClass('invalidDate');
+
+        //    var invalidDates = $('.invalidDate').length;
+
+        //    if (invalidDates === 0)
+        //        $("button[type=submit]").attr('disabled', false)
+
+        //    return;
+        //}
+
+        //if (activeEndDate && (endDate.val() == '' && middleDate.val() == '')) {
+        //    $(endDate).css('backgroundColor', '#fff').removeClass('invalidDate');
+        //    $(middleDate).css('backgroundColor', '#fff').removeClass('invalidDate');
+        //    $(startDate).css('backgroundColor', '#fff').removeClass('invalidDate');
+
+        //    var invalidDates = $('.invalidDate').length;
+
+        //    if (invalidDates === 0)
+        //        $("button[type=submit]").attr('disabled', false)
+
+        //    return;
+        //}
+
+        //if (activeStartDate && (startDate.val() == '' || middleDate.val() == ''))
+        //{
+        //    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را درج نمایید");
+        //    $(middleDate).css('backgroundColor', '#f94c4c').addClass('invalidDate');
+        //    $(startDate).css('backgroundColor', '#f94c4c').addClass('invalidDate');
+        //    $("button[type=submit]").attr('disabled', true)
+
+        //    return;
+        //}
+
+        //if (activeEndDate && (endDate.val() == '' || middleDate.val() == ''))
+        //{
+        //    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را درج نمایید");
+        //    $(middleDate).css('backgroundColor', '#f94c4c').addClass('invalidDate');
+        //    $(endDate).css('backgroundColor', '#f94c4c').addClass('invalidDate');
+        //    $("button[type=submit]").attr('disabled', true)
+
+        //    return;
+        //}
+
+        if (start > middle && middle > end) {
+
+            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "تاریخ درج شده قابل قبول نیست");
+            $(endDate).css('backgroundColor', '#f94c4c').addClass('invalidDate');
+            $(middleDate).css('backgroundColor', '#f94c4c').addClass('invalidDate');
+            $(startDate).css('backgroundColor', '#f94c4c').addClass('invalidDate');
+            $("button[type=submit]").attr('disabled', true)
+
+            return;
+        }
+        if (start <= middle && middle > end) {
+
+            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "تاریخ درج شده قابل قبول نیست");
+            $(endDate).css('backgroundColor', '#f94c4c').addClass('invalidDate');
+            $(middleDate).css('backgroundColor', '#f94c4c').addClass('invalidDate');
+            $(startDate).css('backgroundColor', '#fff').removeClass('invalidDate');
+            $("button[type=submit]").attr('disabled', true)
+
+            return;
+        }
+        if (start > middle && middle <= end) {
+
+            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "تاریخ درج شده قابل قبول نیست");
+            $(endDate).css('backgroundColor', '#fff').removeClass('invalidDate');
+            $(middleDate).css('backgroundColor', '#f94c4c').addClass('invalidDate');
+            $(startDate).css('backgroundColor', '#f94c4c').addClass('invalidDate');
+            $("button[type=submit]").attr('disabled', true)
+
+            return;
+        }
+        if (start <= middle && middle <= end) {
+
+            //$.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "تاریخ درج شده قابل قبول نیست");
+            $(endDate).css('backgroundColor', '#fff').removeClass('invalidDate');
+            $(middleDate).css('backgroundColor', '#fff').removeClass('invalidDate');
+            $(startDate).css('backgroundColor', '#fff').removeClass('invalidDate');
+
+            var invalidDates = $('.invalidDate').length;
+
+            if (invalidDates === 0)
+                $("button[type=submit]").attr('disabled', false)
+
+            return;
+        }
+
+        return true;
+    } 
+
+}
+
+
+function removeRow(tag, sortId = '') {
+
+    $(tag).parent().remove();
+
+    if (sortId != '') {
+
+        sortPS(sortId);
+    }
+}
+
+
+function sortPS(id) {
+
+    const turns = ['اول', 'دوم', 'سوم', 'چهارم', 'پنجم', 'ششم', 'هفتم', 'هشتم', 'نهم', 'دهم']
+    var PSCount = ($("#" + id + " .proceedingSession").length - 1) / 2;
+    var PS = $("#" + id + " .dateLabel");
+
+    for (var i = 0; i < PSCount; i++) {
+
+        $(PS[i]).html('تاریخ نوبت ' + turns[i] + ' رسیدگی')
+    }
+}
+
+
+function numberWithCommas(input) {
+
+    $(input).val($(input).val().split(',').join("").toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
+}
+

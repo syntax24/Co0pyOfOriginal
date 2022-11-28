@@ -31,6 +31,7 @@ namespace CompanyManagment.EFCore.Repository
                 FileClass = x.FileClass,
                 HasMandate = x.HasMandate,
                 Description = x.Description,
+                Status = x.Status
             }).FirstOrDefault(x => x.Id == id);
         }
 
@@ -48,6 +49,7 @@ namespace CompanyManagment.EFCore.Repository
                 FileClass = x.FileClass,
                 HasMandate = x.HasMandate,
                 Description = x.Description,
+                Status = x.Status
             });
 
             //TODO if
@@ -64,6 +66,11 @@ namespace CompanyManagment.EFCore.Repository
             if(searchModel.UserId != 0)
             {
                 query = query.Where(x => x.Reqester == searchModel.UserId || x.Summoned == searchModel.UserId);
+            }
+            
+            if(searchModel.Status != 0)
+            {
+                query = query.Where(x => x.Status == searchModel.Status);
             }
 
             return query.OrderByDescending(x => x.Id).ToList();

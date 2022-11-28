@@ -70,7 +70,7 @@ namespace CompanyManagment.Application
 
             foreach (var obj in workHistories)
             {
-                if(obj.FromDate != null || obj.ToDate != null || obj.Description != null)
+                if(obj.FromDate != null || obj.ToDate != null)
                 {
                     obj.Petition_Id = petitionId;
                     obj.Id = 0;
@@ -87,6 +87,7 @@ namespace CompanyManagment.Application
             var objects = Search(petitionId);
 
             _workHistoryRepository.RemoveWorkHistories(objects);
+            _workHistoryRepository.SaveChanges();
         }
 
     }

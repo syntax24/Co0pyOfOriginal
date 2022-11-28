@@ -6,7 +6,7 @@ namespace Company.Domain.File1
 {
     public class File1 : EntityBase
     {
-        public File1(long archiveNo, DateTime clientVisitDate, string proceederReference, long reqester, long summoned, int client, string fileClass, int hasMandate, string description)
+        public File1(long archiveNo, DateTime clientVisitDate, string proceederReference, long reqester, long summoned, int client, string fileClass, int hasMandate, string description, int status = 2)
         {
             ArchiveNo = archiveNo;
             ClientVisitDate = clientVisitDate;
@@ -19,6 +19,8 @@ namespace Company.Domain.File1
             Description = description;
             BoardsList = new List<Board.Board>();
             PetitionsList = new List<Petition.Petition>();
+            MasterPetitionsList = new List<MasterPetition.MasterPetition>();
+            Status = status;
         }
 
 
@@ -31,16 +33,18 @@ namespace Company.Domain.File1
         public string FileClass { get; private set; }
         public int HasMandate { get; private set; } // 1-> has not , 2-> has
         public string Description { get; private set; }
+        public int Status { get; private set; } // 1-> deactive , 2 -> active 
 
         public List<Board.Board> BoardsList { get; set; }
         public List<Petition.Petition> PetitionsList { get; set; }
+        public List<MasterPetition.MasterPetition> MasterPetitionsList { get; set; }
 
         //public File()
         //{
         //    BoardsList = new List<Board.Board>();
         //}
 
-        public void Edit(long archiveNo, DateTime clientVisitDate, string proceederReference, long reqester, long summoned, int client, string fileClass, int hasMandate, string description)
+        public void Edit(long archiveNo, DateTime clientVisitDate, string proceederReference, long reqester, long summoned, int client, string fileClass, int hasMandate, string description, int status = 2)
         {
             ArchiveNo = archiveNo;
             ClientVisitDate = clientVisitDate;
@@ -51,6 +55,7 @@ namespace Company.Domain.File1
             FileClass = fileClass;
             HasMandate = hasMandate;
             Description = description;
+            Status = status;
         }
     }
 }

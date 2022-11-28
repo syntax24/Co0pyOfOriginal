@@ -1,4 +1,4 @@
-﻿@model CompanyManagment.App.Contracts.Petition.EditPetition
+﻿@model CompanyManagment.App.Contracts.MasterPetition.EditMasterPetition
 
     <style>
         /* .modal-dialog {
@@ -34,7 +34,7 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
-    <form asp-page="./Index" asp-page-handler="CreateOrEditPetition" id="workshops" autocomplete="off"
+    <form asp-page="./Index" asp-page-handler="CreateOrEditMasterPetition" id="workshops" autocomplete="off"
           method="post"
           data-ajax="true"
           data-callback=""
@@ -43,6 +43,14 @@
         <input asp-for="Id" hidden/>
         <input asp-for="BoardType_Id" hidden/>
         <input asp-for="File_Id" hidden/>
+        @if(Model.BoardType_Id == 1)
+        {
+            <input asp-for="BoardProcessingStage" value="1" hidden/>
+        }
+        else
+        {
+            <input asp-for="BoardProcessingStage" value="2" hidden/>
+        }
         <div class="modal-body">
             <div class="row">
                 <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
@@ -85,68 +93,27 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label asp-for="BoardProcessingStage" class="control-label"> مرحله رسیدگی </label>
-                                    @*<select class="form-control select2-tag" asp-for="BoardProcessingStage" readonly>*@
-                                        @if(Model.BoardType_Id == 1)
-                                        {
-                                            <input asp-for="BoardProcessingStage" value="1" hidden/>
-                                            <input type="text" class="form-control" value="تشخیص" readonly>
-                                            @*<option value="1">تشخیص</option>*@
-                                        }
-                                        else
-                                        {
-                                            <input asp-for="BoardProcessingStage" value="2" hidden/>
-                                            <input type="text" class="form-control" value="حل اختلاف" readonly>
-                                            @*<option value="2">حل اختلاف</option>*@
-                                        }
-                                    @*</select>*@
+                                    <label asp-for="MasterName" class="control-label"> نام کارشناس </label>
+                                    <input type="text" class="form-control" asp-for="MasterName">
+                                    <span asp-validation-for="MasterName" class="error"></span>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label asp-for="PetitionIssuanceDate" class="control-label persianDateInput"> تاریخ صدور دادنامه </label>
-                                    <input type="text" class="form-control date" asp-for="PetitionIssuanceDate" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this))" style="width: 100%; text-align: center">
-                                    <span asp-validation-for="PetitionIssuanceDate" class="error"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label asp-for="NotificationPetitionDate" class="control-label persianDateInput"> تاریخ ابلاغ دادنامه </label>
-                                    <input type="text" class="form-control date" asp-for="NotificationPetitionDate" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), true, false)" style="width: 100%; text-align: center">
-                                    <span asp-validation-for="NotificationPetitionDate" class="error"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label asp-for="TotalPenalty" class="control-label"> جمع نهایی دادنامه </label>
-                                    <input type="text" class="form-control" asp-for="TotalPenalty" onkeyup="numberWithCommas(this)">
-                                    <span asp-validation-for="TotalPenalty" class="error"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label asp-for="TotalPenaltyTitles" class="control-label"> جمع عناوین دادنامه </label>
-                                    <input type="text" class="form-control totalPenaltyTitles" asp-for="TotalPenaltyTitles" readonly>
-                                    <span asp-validation-for="TotalPenaltyTitles" class="error"></span>
-                                </div>
-                            </div>
-                        </div>
+                            </div>        
                     </fieldset>
                     <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert; margin: 15px">
                         <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> جزئیات دادنامه </legend>
                         <div id="penaltyTitles" class="row m-t-15">
                     
-                            @for(var i = 0; i < @Model.CreatePenaltyTitle.Count; i++)
+                            @for(var i = 0; i < @Model.CreateMasterPenaltyTitle.Count; i++)
                             {
                                 <div class="d-flex">
                                     <div class="col-md-2 penaltyTitles">
                                         <div class="form-group">
                                             @if (i == 0)
                                             {
-                                                <label asp-for="CreatePenaltyTitle[i].Title" class="control-label"> عنوان </label>
+                                                <label asp-for="CreateMasterPenaltyTitle[i].Title" class="control-label"> عنوان </label>
                                             }
-                                            <input type="text" class="form-control" asp-for="CreatePenaltyTitle[i].Title">
-                                            <span asp-validation-for="CreatePenaltyTitle[i].Title" class="error"></span>
+                                            <input type="text" class="form-control" asp-for="CreateMasterPenaltyTitle[i].Title">
+                                            <span asp-validation-for="CreateMasterPenaltyTitle[i].Title" class="error"></span>
                                         </div>
                                     </div>
                                     <div class="penaltyTitleDates">
@@ -154,30 +121,30 @@
                                             <div class="form-group">
                                                 @if (i == 0)
                                                 {
-                                                    <label asp-for="CreatePenaltyTitle[i].Day" class="control-label"> روز </label>
+                                                    <label asp-for="CreateMasterPenaltyTitle[i].Day" class="control-label"> روز </label>
                                                 }
-                                                <input type="text" class="form-control day" asp-for="CreatePenaltyTitle[i].Day" onfocusout="removeExtraData()">
-                                                <span asp-validation-for="CreatePenaltyTitle[i].Day" class="error"></span>
+                                                <input type="text" class="form-control day" asp-for="CreateMasterPenaltyTitle[i].Day" onfocusout="removeExtraData()">
+                                                <span asp-validation-for="CreateMasterPenaltyTitle[i].Day" class="error"></span>
                                             </div>
                                         </div>
                                         <div class="col-md-2 penaltyTitles">
                                             <div class="form-group">
                                                 @if (i == 0)
                                                 {
-                                                    <label asp-for="CreatePenaltyTitle[i].FromDate" class="control-label"> از تاریخ </label>
+                                                    <label asp-for="CreateMasterPenaltyTitle[i].FromDate" class="control-label"> از تاریخ </label>
                                                 }
-                                                <input type="text" class="form-control date penaltyTitleFromDate" asp-for="CreatePenaltyTitle[i].FromDate" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), false); removeExtraData();" style="width: 100%; text-align: center">
-                                                <span asp-validation-for="CreatePenaltyTitle[i].FromDate" class="error"></span>
+                                                <input type="text" class="form-control date penaltyTitleFromDate" asp-for="CreateMasterPenaltyTitle[i].FromDate" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), false); removeExtraData();" style="width: 100%; text-align: center">
+                                                <span asp-validation-for="CreateMasterPenaltyTitle[i].FromDate" class="error"></span>
                                             </div>
                                         </div>
                                         <div class="col-md-2 penaltyTitles">
                                             <div class="form-group">
                                                 @if (i == 0)
                                                 {
-                                                    <label asp-for="CreatePenaltyTitle[i].ToDate" class="control-label"> تا تاریخ </label>
+                                                    <label asp-for="CreateMasterPenaltyTitle[i].ToDate" class="control-label"> تا تاریخ </label>
                                                 }
-                                                <input type="text" class="form-control date penaltyTitleToDate" asp-for="CreatePenaltyTitle[i].ToDate" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), true, false); removeExtraData();" style="width: 100%; text-align: center">
-                                                <span asp-validation-for="CreatePenaltyTitle[i].ToDate" class="error"></span>
+                                                <input type="text" class="form-control date penaltyTitleToDate" asp-for="CreateMasterPenaltyTitle[i].ToDate" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), true, false); removeExtraData();" style="width: 100%; text-align: center">
+                                                <span asp-validation-for="CreateMasterPenaltyTitle[i].ToDate" class="error"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -186,20 +153,20 @@
                                             @if (i == 0)
                                             {
                                         
-                                                <label asp-for="CreatePenaltyTitle[i].PaidAmount" class="control-label" style="font-size: smaller"> علی الحساب پرداختی </label>
+                                                <label asp-for="CreateMasterPenaltyTitle[i].PaidAmount" class="control-label" style="font-size: smaller"> علی الحساب پرداختی </label>
                                             }
-                                            <input type="text" class="form-control" asp-for="CreatePenaltyTitle[i].PaidAmount" onkeyup="numberWithCommas(this)">
-                                            <span asp-validation-for="CreatePenaltyTitle[i].PaidAmount" class="error"></span>
+                                            <input type="text" class="form-control" asp-for="CreateMasterPenaltyTitle[i].PaidAmount" onkeyup="numberWithCommas(this)">
+                                            <span asp-validation-for="CreateMasterPenaltyTitle[i].PaidAmount" class="error"></span>
                                         </div>
                                     </div>
                                     <div class="col-md-2 penaltyTitles">
                                         <div class="form-group">
                                             @if (i == 0)
                                             {
-                                                <label asp-for="CreatePenaltyTitle[i].RemainingAmount" class="control-label"> مبلغ باقیمانده </label>
+                                                <label asp-for="CreateMasterPenaltyTitle[i].RemainingAmount" class="control-label"> مبلغ باقیمانده </label>
                                             }
-                                            <input type="text" class="form-control remainingAmount" asp-for="CreatePenaltyTitle[i].RemainingAmount" onkeyup="numberWithCommas(this)" onfocusout="SumRemainingAmounts()">
-                                            <span asp-validation-for="CreatePenaltyTitle[i].RemainingAmount" class="error"></span>
+                                            <input type="text" class="form-control remainingAmount" asp-for="CreateMasterPenaltyTitle[i].RemainingAmount" onkeyup="numberWithCommas(this)" onfocusout="SumRemainingAmounts()">
+                                            <span asp-validation-for="CreateMasterPenaltyTitle[i].RemainingAmount" class="error"></span>
                                         </div>
                                     </div>
                                     @if (i != 0)
@@ -228,27 +195,27 @@
                         <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> احراز سابقه </legend>        
                         <div id="recordVerification" class="row m-t-15">
                        
-                            @for(var i = 0; i < @Model.CreateWorkHistory.Count; i++)
+                            @for(var i = 0; i < @Model.CreateMasterWorkHistory.Count; i++)
                             {
                                 <div class="d-felx">
                                     <div class="col-md-2 recordVerification">
                                         <div class="form-group">
                                             @if (i == 0)
                                             {
-                                                <label asp-for="CreateWorkHistory[i].FromDate" class="control-label"> از تاریخ </label>
+                                                <label asp-for="CreateMasterWorkHistory[i].FromDate" class="control-label"> از تاریخ </label>
                                             }
-                                            <input type="text" class="form-control date" asp-for="CreateWorkHistory[i].FromDate" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this) , false)" style="width: 100%; text-align: center">
-                                            <span asp-validation-for="CreateWorkHistory[i].FromDate" class="error"></span>
+                                            <input type="text" class="form-control date" asp-for="CreateMasterWorkHistory[i].FromDate" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this) , false)" style="width: 100%; text-align: center">
+                                            <span asp-validation-for="CreateMasterWorkHistory[i].FromDate" class="error"></span>
                                         </div>
                                     </div>
                                     <div class="col-md-2 recordVerification">
                                         <div class="form-group">
                                             @if (i == 0)
                                             {
-                                                <label asp-for="CreateWorkHistory[i].ToDate" class="control-label"> تا تاریخ </label>
+                                                <label asp-for="CreateMasterWorkHistory[i].ToDate" class="control-label"> تا تاریخ </label>
                                             }
-                                            <input type="text" class="form-control date" asp-for="CreateWorkHistory[i].ToDate" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), true, false)" style="width: 100%; text-align: center">
-                                            <span asp-validation-for="CreateWorkHistory[i].ToDate" class="error"></span>
+                                            <input type="text" class="form-control date" asp-for="CreateMasterWorkHistory[i].ToDate" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), true, false)" style="width: 100%; text-align: center">
+                                            <span asp-validation-for="CreateMasterWorkHistory[i].ToDate" class="error"></span>
                                         </div>
                                     </div>
                                     <div class="row col-md-4 workingHours" style="margin: 0">
@@ -256,20 +223,20 @@
                                             <div class="form-group">
                                                 @if (i == 0)
                                                 {
-                                                    <label asp-for="CreateWorkHistory[i].WorkingHoursPerDay" class="control-label"> ساعت کار در روز </label>
+                                                    <label asp-for="CreateMasterWorkHistory[i].WorkingHoursPerDay" class="control-label"> ساعت کار در روز </label>
                                                 }
-                                                <input type="text" class="form-control workingHoursPerDay" asp-for="CreateWorkHistory[i].WorkingHoursPerDay" onfocusout="removeExtraData()">
-                                                <span asp-validation-for="CreateWorkHistory[i].WorkingHoursPerDay" class="error"></span>
+                                                <input type="text" class="form-control workingHoursPerDay" asp-for="CreateMasterWorkHistory[i].WorkingHoursPerDay" onfocusout="removeExtraData()">
+                                                <span asp-validation-for="CreateMasterWorkHistory[i].WorkingHoursPerDay" class="error"></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6 recordVerification">
                                             <div class="form-group">
                                                 @if (i == 0)
                                                 {
-                                                    <label asp-for="CreateWorkHistory[i].WorkingHoursPerWeek" class="control-label" style="font-size: smaller"> ساعت کار در هفته </label>
+                                                    <label asp-for="CreateMasterWorkHistory[i].WorkingHoursPerWeek" class="control-label" style="font-size: smaller"> ساعت کار در هفته </label>
                                                 }
-                                                <input type="text" class="form-control workingHoursPerWeek" asp-for="CreateWorkHistory[i].WorkingHoursPerWeek" onfocusout="removeExtraData()">
-                                                <span asp-validation-for="CreateWorkHistory[i].WorkingHoursPerWeek" class="error"></span>
+                                                <input type="text" class="form-control workingHoursPerWeek" asp-for="CreateMasterWorkHistory[i].WorkingHoursPerWeek" onfocusout="removeExtraData()">
+                                                <span asp-validation-for="CreateMasterWorkHistory[i].WorkingHoursPerWeek" class="error"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -277,10 +244,10 @@
                                         <div class="form-group">
                                             @if (i == 0)
                                             {
-                                                <label asp-for="CreateWorkHistory[i].Description" class="control-label"> توضیحات </label>
+                                                <label asp-for="CreateMasterWorkHistory[i].Description" class="control-label"> توضیحات </label>
                                             }
-                                            <textarea class="form-control" asp-for="CreateWorkHistory[i].Description"></textarea>
-                                            <span asp-validation-for="CreateWorkHistory[i].Description" class="error"></span>
+                                            <textarea class="form-control" asp-for="CreateMasterWorkHistory[i].Description"></textarea>
+                                            <span asp-validation-for="CreateMasterWorkHistory[i].Description" class="error"></span>
                                         </div>
                                     </div>
                                     @if (i != 0)
@@ -315,6 +282,11 @@
                 <a class="btn btn-default btn-rounded waves-effect waves-light" data-dismiss="modal">بستن</a>
                 <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
             </div>
+
+            @if(Model.Id != 0)
+            {
+                <a class="btn btn-danger btn-rounded waves-effect waves-light" onclick="removeMasterPetition()"> حذف کارشناسی </a>
+            }
         </div>
     </form>
 </div>
@@ -329,14 +301,14 @@
 
         //var i = 0;
         //$(".recordVerification").each(function() {
-        //    CreateDatePicker(`#CreateWorkHistory_${i}__FromDate`, `#CreateWorkHistory_${i}__ToDate`)
+        //    CreateDatePicker(`#CreateMasterWorkHistory_${i}__FromDate`, `#CreateMasterWorkHistory_${i}__ToDate`)
 
         //    i++;
         //})
         
         //i = 0;
         //$(".penaltyTitles").each(function() {
-        //    CreateDatePicker(`#CreatePenaltyTitle_${i}__FromDate`, `#CreatePenaltyTitle_${i}__ToDate`)
+        //    CreateDatePicker(`#CreateMasterPenaltyTitle_${i}__FromDate`, `#CreateMasterPenaltyTitle_${i}__ToDate`)
         
         //    i++;
         //})
@@ -350,12 +322,12 @@
         language: "fa",
         dir: "rtl"
     });
-    
+
 </script>
 <script>
     
-    var penaltyTitleCounter = @Model.CreatePenaltyTitle.Count  - 1;
-    var workhistoryCounter = @Model.CreateWorkHistory.Count - 1;
+    var penaltyTitleCounter = @Model.CreateMasterPenaltyTitle.Count  - 1;
+    var workhistoryCounter = @Model.CreateMasterWorkHistory.Count - 1;
 
     function addNewFormWorkhistory(flag) {
 
@@ -376,39 +348,39 @@
         const html = `<div class="d-flex">
                         <div class="col-md-2 recordVerification">
                             <div class="form-group">
-                                <!-- <label class="control-label" for="CreateWorkHistory_${workhistoryCounter}__FromDate"> از تاریخ </label> -->
-                                <input type="text" class="form-control date" id="CreateWorkHistory_${workhistoryCounter}__FromDate" name="CreateWorkHistory[${workhistoryCounter}].FromDate" value=""  dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), false)" style="width: 100%; text-align: center">
-                                <span class="error field-validation-valid" data-valmsg-for="CreateWorkHistory[${workhistoryCounter}].FromDate" data-valmsg-replace="true"></span>
+                                <!-- <label class="control-label" for="CreateMasterWorkHistory_${workhistoryCounter}__FromDate"> از تاریخ </label> -->
+                                <input type="text" class="form-control date" id="CreateMasterWorkHistory_${workhistoryCounter}__FromDate" name="CreateMasterWorkHistory[${workhistoryCounter}].FromDate" value=""  dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), false)" style="width: 100%; text-align: center">
+                                <span class="error field-validation-valid" data-valmsg-for="CreateMasterWorkHistory[${workhistoryCounter}].FromDate" data-valmsg-replace="true"></span>
                             </div>
                         </div>
                         <div class="col-md-2 recordVerification">
                             <div class="form-group">
-                                <!-- <label class="control-label" for="CreateWorkHistory_${workhistoryCounter}__ToDate"> تا تاریخ </label> -->
-                                <input type="text" class="form-control date" id="CreateWorkHistory_${workhistoryCounter}__ToDate" name="CreateWorkHistory[${workhistoryCounter}].ToDate" value="" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), true, false)" style="width: 100%; text-align: center">
-                                <span class="error field-validation-valid" data-valmsg-for="CreateWorkHistory[${workhistoryCounter}].ToDate" data-valmsg-replace="true"></span>
+                                <!-- <label class="control-label" for="CreateMasterWorkHistory_${workhistoryCounter}__ToDate"> تا تاریخ </label> -->
+                                <input type="text" class="form-control date" id="CreateMasterWorkHistory_${workhistoryCounter}__ToDate" name="CreateMasterWorkHistory[${workhistoryCounter}].ToDate" value="" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), true, false)" style="width: 100%; text-align: center">
+                                <span class="error field-validation-valid" data-valmsg-for="CreateMasterWorkHistory[${workhistoryCounter}].ToDate" data-valmsg-replace="true"></span>
                             </div>
                         </div>   
                         <div class="row col-md-4 workingHours" style="margin: 0">
                             <div class="col-md-6 recordVerification">
                                 <div class="form-group">
-                                    <!-- <label class="control-label" for="CreateWorkHistory_${workhistoryCounter}__WorkingHoursPerDay"> ساعت کار در روز </label> -->
-                                    <input type="text" class="form-control workingHoursPerDay" id="CreateWorkHistory_${workhistoryCounter}__WorkingHoursPerDay" name="CreateWorkHistory[${workhistoryCounter}].WorkingHoursPerDay" value="" onfocusout="removeExtraData()">
-                                    <span class="error field-validation-valid" data-valmsg-for="CreateWorkHistory[${workhistoryCounter}].WorkingHoursPerDay" data-valmsg-replace="true"></span>
+                                    <!-- <label class="control-label" for="CreateMasterWorkHistory_${workhistoryCounter}__WorkingHoursPerDay"> ساعت کار در روز </label> -->
+                                    <input type="text" class="form-control workingHoursPerDay" id="CreateMasterWorkHistory_${workhistoryCounter}__WorkingHoursPerDay" name="CreateMasterWorkHistory[${workhistoryCounter}].WorkingHoursPerDay" value="" onfocusout="removeExtraData()">
+                                    <span class="error field-validation-valid" data-valmsg-for="CreateMasterWorkHistory[${workhistoryCounter}].WorkingHoursPerDay" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                             <div class="col-md-6 recordVerification">
                                 <div class="form-group">
-                                    <!-- <label class="control-label" for="CreateWorkHistory_${workhistoryCounter}__WorkingHoursPerWeek"> ساعت کار در هفته </label> -->
-                                    <input type="text" class="form-control workingHoursPerWeek" id="CreateWorkHistory_${workhistoryCounter}__WorkingHoursPerWeek" name="CreateWorkHistory[${workhistoryCounter}].WorkingHoursPerWeek" value="" onfocusout="removeExtraData()">
-                                    <span class="error field-validation-valid" data-valmsg-for="CreateWorkHistory[${workhistoryCounter}].WorkingHoursPerWeek" data-valmsg-replace="true"></span>
+                                    <!-- <label class="control-label" for="CreateMasterWorkHistory_${workhistoryCounter}__WorkingHoursPerWeek"> ساعت کار در هفته </label> -->
+                                    <input type="text" class="form-control workingHoursPerWeek" id="CreateMasterWorkHistory_${workhistoryCounter}__WorkingHoursPerWeek" name="CreateMasterWorkHistory[${workhistoryCounter}].WorkingHoursPerWeek" value="" onfocusout="removeExtraData()">
+                                    <span class="error field-validation-valid" data-valmsg-for="CreateMasterWorkHistory[${workhistoryCounter}].WorkingHoursPerWeek" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                          </div>
                         <div class="col-md-3 recordVerification">
                             <div class="form-group">
-                                <!-- <label class="control-label" for="CreateWorkHistory_${workhistoryCounter}__Description"> توضیحات </label> -->
-                                <textarea class="form-control" id="CreateWorkHistory_${workhistoryCounter}__Description" name="CreateWorkHistory[${workhistoryCounter}].Description"></textarea>
-                                <span class="error field-validation-valid" data-valmsg-for="CreateWorkHistory[${workhistoryCounter}].Description" data-valmsg-replace="true"></span>
+                                <!-- <label class="control-label" for="CreateMasterWorkHistory_${workhistoryCounter}__Description"> توضیحات </label> -->
+                                <textarea class="form-control" id="CreateMasterWorkHistory_${workhistoryCounter}__Description" name="CreateMasterWorkHistory[${workhistoryCounter}].Description"></textarea>
+                                <span class="error field-validation-valid" data-valmsg-for="CreateMasterWorkHistory[${workhistoryCounter}].Description" data-valmsg-replace="true"></span>
                             </div>
                         </div>
                         <div class="col-md-1" onclick="removeRow(this);">
@@ -418,8 +390,8 @@
 
         $(html).insertBefore("."+ flag)
         
-        //CreateDatePicker(`#CreateWorkHistory_${workhistoryCounter}__FromDate`, `#CreateWorkHistory_${workhistoryCounter}__ToDate`)
-        // $(`#CreateWorkHistory_${workhistoryCounter}__FromDate`).persianDatepicker({
+        //CreateDatePicker(`#CreateMasterWorkHistory_${workhistoryCounter}__FromDate`, `#CreateMasterWorkHistory_${workhistoryCounter}__ToDate`)
+        // $(`#CreateMasterWorkHistory_${workhistoryCounter}__FromDate`).persianDatepicker({
         //    format: 'YYYY/MM/DD',
         //    initialValueType: 'persian',
         //    initialValue: false,
@@ -434,8 +406,8 @@
             
         //    onSelect: function(dateStr) 
         //    {         
-        //        //$(`#CreateWorkHistory_${workhistoryCounter}__ToDate`).val(dateStr);
-        //        $(`#CreateWorkHistory_${workhistoryCounter}__ToDate`).persianDatepicker({ 
+        //        //$(`#CreateMasterWorkHistory_${workhistoryCounter}__ToDate`).val(dateStr);
+        //        $(`#CreateMasterWorkHistory_${workhistoryCounter}__ToDate`).persianDatepicker({ 
         //            minDate: new Date(dateStr),
         //            format: 'YYYY/MM/DD',
         //            initialValueType: 'persian',
@@ -457,47 +429,47 @@
         const html = `<div class="d-flex">
                         <div class="col-md-2 penaltyTitles">
                             <div class="form-group">
-                                <!-- <label class="control-label" for="CreatePenaltyTitle_${penaltyTitleCounter}__Title"> عنوان </label> -->
-                                <input type="text" class="form-control" id="CreatePenaltyTitle_${penaltyTitleCounter}__Title" name="CreatePenaltyTitle[${penaltyTitleCounter}].Title" value="">
-                                <span class="error field-validation-valid" data-valmsg-for="CreatePenaltyTitle[${penaltyTitleCounter}].Title" data-valmsg-replace="true"></span>
+                                <!-- <label class="control-label" for="CreateMasterPenaltyTitle_${penaltyTitleCounter}__Title"> عنوان </label> -->
+                                <input type="text" class="form-control" id="CreateMasterPenaltyTitle_${penaltyTitleCounter}__Title" name="CreateMasterPenaltyTitle[${penaltyTitleCounter}].Title" value="">
+                                <span class="error field-validation-valid" data-valmsg-for="CreateMasterPenaltyTitle[${penaltyTitleCounter}].Title" data-valmsg-replace="true"></span>
                             </div>
                         </div>
                         <div class="penaltyTitleDates">
                             <div class="col-md-1 penaltyTitles">
                                 <div class="form-group">
-                                    <!-- <label class="control-label" for="CreatePenaltyTitle_${penaltyTitleCounter}__Day"> روز </label> -->
-                                    <input type="text" class="form-control day" id="CreatePenaltyTitle_${penaltyTitleCounter}__Day" name="CreatePenaltyTitle[${penaltyTitleCounter}].Day" value="" onfocusout="removeExtraData()">
-                                    <span class="error field-validation-valid" data-valmsg-for="CreatePenaltyTitle[${penaltyTitleCounter}].Day" data-valmsg-replace="true"></span>
+                                    <!-- <label class="control-label" for="CreateMasterPenaltyTitle_${penaltyTitleCounter}__Day"> روز </label> -->
+                                    <input type="text" class="form-control day" id="CreateMasterPenaltyTitle_${penaltyTitleCounter}__Day" name="CreateMasterPenaltyTitle[${penaltyTitleCounter}].Day" value="" onfocusout="removeExtraData()">
+                                    <span class="error field-validation-valid" data-valmsg-for="CreateMasterPenaltyTitle[${penaltyTitleCounter}].Day" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                             <div class="col-md-2 penaltyTitles">
                                 <div class="form-group">
-                                   <!--  <label class="control-label" for="CreatePenaltyTitle_${penaltyTitleCounter}__FromDate"> از تاریخ </label> -->
-                                    <input type="text" class="form-control date penaltyTitleFromDate" id="CreatePenaltyTitle_${penaltyTitleCounter}__FromDate" name="CreatePenaltyTitle[${penaltyTitleCounter}].FromDate" value="" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), false); removeExtraData();" style="width: 100%; text-align: center">
-                                    <span class="error field-validation-valid" data-valmsg-for="CreatePenaltyTitle[${penaltyTitleCounter}].FromDate" data-valmsg-replace="true"></span>
+                                   <!--  <label class="control-label" for="CreateMasterPenaltyTitle_${penaltyTitleCounter}__FromDate"> از تاریخ </label> -->
+                                    <input type="text" class="form-control date penaltyTitleFromDate" id="CreateMasterPenaltyTitle_${penaltyTitleCounter}__FromDate" name="CreateMasterPenaltyTitle[${penaltyTitleCounter}].FromDate" value="" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), false); removeExtraData();" style="width: 100%; text-align: center">
+                                    <span class="error field-validation-valid" data-valmsg-for="CreateMasterPenaltyTitle[${penaltyTitleCounter}].FromDate" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                             <div class="col-md-2 penaltyTitles">
                                 <div class="form-group">
-                                    <!-- <label class="control-label" for="CreatePenaltyTitle_${penaltyTitleCounter}__ToDate"> تا تاریخ </label> -->
-                                    <input type="text" class="form-control date penaltyTitleToDate" id="CreatePenaltyTitle_${penaltyTitleCounter}__ToDate" name="CreatePenaltyTitle[${penaltyTitleCounter}].ToDate" value="" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), true, false); removeExtraData();" style="width: 100%; text-align: center">
-                                    <span class="error field-validation-valid" data-valmsg-for="CreatePenaltyTitle[${penaltyTitleCounter}].ToDate" data-valmsg-replace="true"></span>
+                                    <!-- <label class="control-label" for="CreateMasterPenaltyTitle_${penaltyTitleCounter}__ToDate"> تا تاریخ </label> -->
+                                    <input type="text" class="form-control date penaltyTitleToDate" id="CreateMasterPenaltyTitle_${penaltyTitleCounter}__ToDate" name="CreateMasterPenaltyTitle[${penaltyTitleCounter}].ToDate" value="" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), true, false); removeExtraData();" style="width: 100%; text-align: center">
+                                    <span class="error field-validation-valid" data-valmsg-for="CreateMasterPenaltyTitle[${penaltyTitleCounter}].ToDate" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-2 penaltyTitles">
                             <div class="form-group">
-                                <!-- <label class="control-label" for="CreatePenaltyTitle_${penaltyTitleCounter}__PaidAmount" style="font-size: smaller"> علی الحساب پرداختی </label> -->
-                                <input type="text" class="form-control" id="CreatePenaltyTitle_${penaltyTitleCounter}__PaidAmount" name="CreatePenaltyTitle[${penaltyTitleCounter}].PaidAmount" value="" onkeyup="numberWithCommas(this)">
-                                <span class="error field-validation-valid" data-valmsg-for="CreatePenaltyTitle[${penaltyTitleCounter}].PaidAmount" data-valmsg-replace="true"></span>
+                                <!-- <label class="control-label" for="CreateMasterPenaltyTitle_${penaltyTitleCounter}__PaidAmount" style="font-size: smaller"> علی الحساب پرداختی </label> -->
+                                <input type="text" class="form-control" id="CreateMasterPenaltyTitle_${penaltyTitleCounter}__PaidAmount" name="CreateMasterPenaltyTitle[${penaltyTitleCounter}].PaidAmount" value="" onkeyup="numberWithCommas(this)">
+                                <span class="error field-validation-valid" data-valmsg-for="CreateMasterPenaltyTitle[${penaltyTitleCounter}].PaidAmount" data-valmsg-replace="true"></span>
                             </div>
                         </div>
                         <div class="col-md-2 penaltyTitles">
                             <div class="form-group">
-                                <!-- <label class="control-label" for="CreatePenaltyTitle_${penaltyTitleCounter}__RemainingAmount"> مبلغ باقیمانده </label>  -->
-                                <input type="text" class="form-control remainingAmount" id="CreatePenaltyTitle_${penaltyTitleCounter}__RemainingAmount" name="CreatePenaltyTitle[${penaltyTitleCounter}].RemainingAmount" value=""
+                                <!-- <label class="control-label" for="CreateMasterPenaltyTitle_${penaltyTitleCounter}__RemainingAmount"> مبلغ باقیمانده </label>  -->
+                                <input type="text" class="form-control remainingAmount" id="CreateMasterPenaltyTitle_${penaltyTitleCounter}__RemainingAmount" name="CreateMasterPenaltyTitle[${penaltyTitleCounter}].RemainingAmount" value=""
                                     onfocusout="SumRemainingAmounts()" onkeyup="numberWithCommas(this)">
-                                <span class="error field-validation-valid" data-valmsg-for="CreatePenaltyTitle[${penaltyTitleCounter}].RemainingAmount" data-valmsg-replace="true"></span>
+                                <span class="error field-validation-valid" data-valmsg-for="CreateMasterPenaltyTitle[${penaltyTitleCounter}].RemainingAmount" data-valmsg-replace="true"></span>
                             </div>
                         </div>
                         <div class="col-md-1" onclick="removeRow(this);">
@@ -507,8 +479,8 @@
                     
         $(html).insertBefore("."+ flag)
         
-        //CreateDatePicker(`#CreatePenaltyTitle_${penaltyTitleCounter}__FromDate`, `#CreatePenaltyTitle_${penaltyTitleCounter}__ToDate`)
-        //$(`#CreatePenaltyTitle_${penaltyTitleCounter}__FromDate`).persianDatepicker({
+        //CreateDatePicker(`#CreateMasterPenaltyTitle_${penaltyTitleCounter}__FromDate`, `#CreateMasterPenaltyTitle_${penaltyTitleCounter}__ToDate`)
+        //$(`#CreateMasterPenaltyTitle_${penaltyTitleCounter}__FromDate`).persianDatepicker({
         //    format: 'YYYY/MM/DD',
         //    initialValueType: 'persian',
         //    initialValue: false,
@@ -523,7 +495,7 @@
             
         //    onSelect: function(dateStr) 
         //    {         
-        //        $(`#CreatePenaltyTitle_${penaltyTitleCounter}__ToDate`).persianDatepicker({ 
+        //        $(`#CreateMasterPenaltyTitle_${penaltyTitleCounter}__ToDate`).persianDatepicker({ 
         //            minDate: new Date(dateStr),
         //            format: 'YYYY/MM/DD',
         //            initialValueType: 'persian',
@@ -604,6 +576,52 @@
                 $(this).parents('.penaltyTitleDates').find('.day').val("")
             }
         })
+    }
+
+
+    function removeMasterPetition() {
+
+        const id = document.getElementById("Id").value;
+
+        swal({
+            title: "",
+            text: "آیا از حذف تمامی اطلاعات کارشناسی مطمئن هستید؟",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "بله",
+            cancelButtonText: "خیر",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        }, function (isConfirm) {
+            if (isConfirm) {
+                  
+                $.ajax({
+            //contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: '@Url.Page("./Index", "RemoveMasterPetition")',
+                    headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                    data: { "id" : id },
+
+                    success: function (response) {
+                        console.log(response);
+                        $.Notification.autoHideNotify('success', 'top center', 'پیام سیستم ', response.message);
+                        setTimeout(function() {
+                            location.reload(); 
+                        }, 1200);
+                
+                    },
+                    failure: function (response) {
+                        console.log(5, response)
+                        $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', response.message);
+                    }
+                });
+            }
+        });
+
+        
+
     }
 
 </Script>                               

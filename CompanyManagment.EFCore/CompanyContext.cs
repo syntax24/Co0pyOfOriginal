@@ -12,6 +12,9 @@ using Company.Domain.HolidayAgg;
 using Company.Domain.HolidayItemAgg;
 using Company.Domain.JobAgg;
 using Company.Domain.MandatoryHoursAgg;
+using Company.Domain.MasterPenaltyTitle;
+using Company.Domain.MasterPetition;
+using Company.Domain.MasterWorkHistory;
 using Company.Domain.ModuleAgg;
 using Company.Domain.ModuleTextManagerAgg;
 using Company.Domain.OriginalTitleAgg;
@@ -53,6 +56,9 @@ namespace CompanyManagment.EFCore
         public DbSet<Petition> Petitions { get; set; }
         public DbSet<ProceedingSession> ProceedingSessions { get; set; }
         public DbSet<WorkHistory> WorkHistory { get; set; }
+        public DbSet<MasterPetition> MasterPetitions { get; set; }
+        public DbSet<MasterPenaltyTitle> MasterPenaltyTitles { get; set; }
+        public DbSet<MasterWorkHistory> MasterWorkHistories { get; set; }
         //-------Main-Project----------------------------
         public DbSet<WorkshopAccount> WorkshopAccounts { get; set; }
         public DbSet<WorkingHoursItems> WorkingHoursItemsSet { get; set; }

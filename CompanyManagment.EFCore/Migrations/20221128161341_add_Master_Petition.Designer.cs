@@ -4,14 +4,16 @@ using CompanyManagment.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CompanyManagment.EFCore.Migrations
 {
     [DbContext(typeof(CompanyContext))]
-    partial class CompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20221128161341_add_Master_Petition")]
+    partial class add_Master_Petition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

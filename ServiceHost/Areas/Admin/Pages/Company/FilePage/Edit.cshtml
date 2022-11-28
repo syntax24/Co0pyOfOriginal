@@ -65,7 +65,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="ClientVisitDate" class="control-label">  تاریخ مراجعه موکل </label>
-                                <input type="text" class="form-control" asp-for="ClientVisitDate"  dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
+                                <input type="text" class="form-control date" asp-for="ClientVisitDate"  dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), false, false)" style="width: 100%; text-align: center">
                                 <span asp-validation-for="ClientVisitDate" class="error"></span>
                             </div>
                         </div>
@@ -133,22 +133,22 @@
                 <fieldset class="m-b-30" style="border: 1px solid #999797; border-radius: 10px; padding: revert">
                     <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> هیات تشخیص </legend>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label asp-for="createDiagnosisBoard.DisputeResolutionPetitionDate" class="control-label"> تاریخ ثبت دادخواست تشخیص </label>
-                                <input type="text" class="form-control" asp-for="createDiagnosisBoard.DisputeResolutionPetitionDate" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
+                                <input type="text" class="form-control date" asp-for="createDiagnosisBoard.DisputeResolutionPetitionDate" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), false, true)" style="width: 100%; text-align: center">
                                 <span asp-validation-for="createDiagnosisBoard.DisputeResolutionPetitionDate" class="error"></span>
                             </div>
                         </div>
                         <div class="col-xs-12"></div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label asp-for="createDiagnosisBoard.Branch" class="control-label"> شعبه </label>
                                 <input type="text" class="form-control" asp-for="createDiagnosisBoard.Branch">
                                 <span asp-validation-for="createDiagnosisBoard.Branch" class="error"></span>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label asp-for="createDiagnosisBoard.BoardChairman" class="control-label"> نام رییس هیات  </label>
                                 <input type="text" class="form-control" asp-for="createDiagnosisBoard.BoardChairman">
@@ -160,18 +160,23 @@
                         {
                             var id = "createDiagnosisPS_" + i + "__Time";
 
-                            <div class="col-md-6 proceedingSession">
-                                <div class="form-group">
-                                    <label asp-for="createDiagnosisPS[i].Date" class="control-label"> تاریخ نوبت @turns[i] رسیدگی </label>
-                                    <input type="text" class="form-control" asp-for="createDiagnosisPS[i].Date"  dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
-                                    <span asp-validation-for="createDiagnosisPS[i].Date" class="error"></span>
+                            <div class="d-flex">
+                                <div class="col-md-5 proceedingSession">
+                                    <div class="form-group">
+                                        <label asp-for="createDiagnosisPS[i].Date" class="control-label dateLabel"> تاریخ نوبت @turns[i] رسیدگی </label>
+                                        <input type="text" class="form-control date" asp-for="createDiagnosisPS[i].Date"  dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this))" style="width: 100%; text-align: center">
+                                        <span asp-validation-for="createDiagnosisPS[i].Date" class="error"></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6 proceedingSession">
-                                <div class="form-group">
-                                    <label asp-for="createDiagnosisPS[i].Time" class="control-label"> ساعت برگزاری جلسه </label>
-                                    <input type="text" class="form-control" asp-for="createDiagnosisPS[i].Time">
-                                    <span asp-validation-for="createDiagnosisPS[i].Time" class="error"></span>
+                                <div class="col-md-5 proceedingSession">
+                                    <div class="form-group">
+                                        <label asp-for="createDiagnosisPS[i].Time" class="control-label"> ساعت برگزاری جلسه </label>
+                                        <input type="text" class="form-control" asp-for="createDiagnosisPS[i].Time">
+                                        <span asp-validation-for="createDiagnosisPS[i].Time" class="error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" onclick="removeRow(this, 'diagnosis');">
+                                    <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 28px; cursor: pointer;"></i>
                                 </div>
                             </div>
                         }
@@ -188,7 +193,7 @@
                                 <span asp-validation-for="createDiagnosisBoard.ExpertReport" class="error"></span>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        @*<div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="createDiagnosisPetition.PetitionIssuanceDate" class="control-label"> تاریخ دادنامه </label>
                                 <input type="text" class="form-control" asp-for="createDiagnosisPetition.PetitionIssuanceDate" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
@@ -204,7 +209,7 @@
                         </div>
                         <div class="col-md-4">
                             <a href="#showmodal=@Url.Page("./Index", "CreateOrEditPetition", new { fileId = @Model.Id, boardTypeId = 1 })"  class="btn btn-rounded btn-warning waves-effect waves-light col-xs-12 m-t-20">درج دادنامه</a>
-                        </div>
+                        </div>*@
                     </div>
                 </fieldset>
             </div>
@@ -215,22 +220,22 @@
                 <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
                     <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> هیات حل اختلاف </legend>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label asp-for="createDisputeResolutionBoard.DisputeResolutionPetitionDate" class="control-label"> تاریخ ثبت دادخواست حل اختلاف </label>
-                                <input type="text" class="form-control" asp-for="createDisputeResolutionBoard.DisputeResolutionPetitionDate"  dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
+                                <input type="text" class="form-control date" asp-for="createDisputeResolutionBoard.DisputeResolutionPetitionDate"  dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this))" style="width: 100%; text-align: center">
                                 <span asp-validation-for="createDisputeResolutionBoard.DisputeResolutionPetitionDate" class="error"></span>
                             </div>
                         </div>
                         <div class="col-xs-12"></div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label asp-for="createDisputeResolutionBoard.Branch" class="control-label"> شعبه </label>
                                 <input type="text" class="form-control" asp-for="createDisputeResolutionBoard.Branch">
                                 <span asp-validation-for="createDisputeResolutionBoard.Branch" class="error"></span>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label asp-for="createDisputeResolutionBoard.BoardChairman" class="control-label"> نام رییس هیات  </label>
                                 <input type="text" class="form-control" asp-for="createDisputeResolutionBoard.BoardChairman">
@@ -241,18 +246,23 @@
                         {
                             var id = "createDisputeResolutionPS_" + i + "__Time";
 
-                            <div class="col-md-6 proceedingSession">
-                                <div class="form-group">
-                                    <label asp-for="createDisputeResolutionPS[i].Date" class="control-label"> تاریخ نوبت اول رسیدگی </label>
-                                    <input type="text" class="form-control" asp-for="createDisputeResolutionPS[i].Date"  dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
-                                    <span asp-validation-for="createDisputeResolutionPS[i].Date" class="error"></span>
+                            <div class="d-flex">
+                                <div class="col-md-5 proceedingSession">
+                                    <div class="form-group">
+                                        <label asp-for="createDisputeResolutionPS[i].Date" class="control-label dateLabel"> تاریخ نوبت @turns[i] رسیدگی </label>
+                                        <input type="text" class="form-control date" asp-for="createDisputeResolutionPS[i].Date"  dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this))" style="width: 100%; text-align: center">
+                                        <span asp-validation-for="createDisputeResolutionPS[i].Date" class="error"></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6 proceedingSession">
-                                <div class="form-group">
-                                    <label asp-for="createDisputeResolutionPS[i].Time" class="control-label"> ساعت برگزاری جلسه </label>
-                                    <input type="text" class="form-control" asp-for="createDisputeResolutionPS[i].Time">
-                                    <span asp-validation-for="createDisputeResolutionPS[i].Time" class="error"></span>
+                                <div class="col-md-5 proceedingSession">
+                                    <div class="form-group">
+                                        <label asp-for="createDisputeResolutionPS[i].Time" class="control-label"> ساعت برگزاری جلسه </label>
+                                        <input type="text" class="form-control" asp-for="createDisputeResolutionPS[i].Time">
+                                        <span asp-validation-for="createDisputeResolutionPS[i].Time" class="error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" onclick="removeRow(this, 'disputeResolution');">
+                                    <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 28px; cursor: pointer;"></i>
                                 </div>
                             </div>
                         }
@@ -268,7 +278,7 @@
                                 <span asp-validation-for="createDisputeResolutionBoard.ExpertReport" class="error"></span>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        @*<div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="createDisputeResolutionPetition.PetitionIssuanceDate" class="control-label"> تاریخ دادنامه </label>
                                 <input type="text" class="form-control" asp-for="createDisputeResolutionPetition.PetitionIssuanceDate"  dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
@@ -284,14 +294,14 @@
                         </div>
                         <div class="col-md-4">
                             <a href="#showmodal=@Url.Page("./Index", "CreateOrEditPetition", new { fileId = @Model.Id, boardTypeId = 2 })"  class="btn btn-rounded btn-warning waves-effect waves-light col-xs-12 m-t-20">درج دادنامه</a>
-                        </div>
+                        </div>*@
                     </div>
                 </fieldset>
             </div>
         </div>
         <div class="modal-footer">
             <div style="float: left">
-                <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+                <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal" onclick="location.reload();">بستن</button>
                 <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="float: left">ذخیره</button>
             </div>
         </div>
@@ -301,7 +311,7 @@
 <script>
     
     $(document).ready(function()  {
-        
+
         //CreateDatePicker('#ClientVisitDate', null);
         //CreateDatePicker('#createDiagnosisBoard_DisputeResolutionPetitionDate', null);
 
@@ -468,29 +478,32 @@
 </script>
 <script>
     
-    var DiagnosisPSCounter = @Model.createDiagnosisPS.Count - 1;
-    var DisputeResolutionPSCounter = @Model.createDisputeResolutionPS.Count - 1;
+    //var DiagnosisPSCounter = @Model.createDiagnosisPS.Count - 1;
+    //var DisputeResolutionPSCounter = @Model.createDisputeResolutionPS.Count - 1;
     const turns = ['اول', 'دوم', 'سوم', 'چهارم', 'پنجم', 'ششم', 'هفتم', 'هشتم', 'نهم', 'دهم']
 
     function addNewFormDiagnosisPS(boardType) {
-        
+
+        var DiagnosisPSCounter = ($("#diagnosis .proceedingSession").length - 1) / 2;
+               
         if (DiagnosisPSCounter >= 9)
             return;
 
-        DiagnosisPSCounter++;
+        sortPS('diagnosis')
 
         const label = 'تاریخ نوبت ' + turns[DiagnosisPSCounter] + ' رسیدگی';
          
-        const html = `<div class="col-md-6 proceedingSession">
+        const html = `<div class="row">
+                        <div class="col-md-5 proceedingSession">
                             <div class="form-group">
-                                <label class="control-label" for="createDiagnosisPS_${DiagnosisPSCounter}__Date"> ${label} </label>
-                                <input type="text" class="form-control createDiagnosisPS_Date" data-val="true" data-val-required="فیلد الزامی است" 
-                                id="createDiagnosisPS_${DiagnosisPSCounter}__Date" name="createDiagnosisPS[${DiagnosisPSCounter}].Date" value=""  dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
+                                <label class="control-label dateLabel" for="createDiagnosisPS_${DiagnosisPSCounter}__Date"> ${label} </label>
+                                <input type="text" class="form-control createDiagnosisPS_Date date" data-val="true" data-val-required="فیلد الزامی است" 
+                                id="createDiagnosisPS_${DiagnosisPSCounter}__Date" name="createDiagnosisPS[${DiagnosisPSCounter}].Date" value=""  dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this))" style="width: 100%; text-align: center">
                                 <span class="error field-validation-valid" data-valmsg-for="createDiagnosisPS[${DiagnosisPSCounter}].Date" 
                                 data-valmsg-replace="true"></span>
                             </div>
                         </div>
-                        <div class="col-md-6 proceedingSession">
+                        <div class="col-md-5 proceedingSession">
                             <div class="form-group">
                                 <label class="control-label" for="createDiagnosisPS_${DiagnosisPSCounter}__Time"> ساعت برگزاری جلسه </label>
                                 <input type="text" class="form-control" data-val="true" data-val-required="فیلد الزامی است" 
@@ -498,7 +511,11 @@
                                 <span class="error field-validation-valid" data-valmsg-for="createDiagnosisPS[${DiagnosisPSCounter}].Time" 
                                 data-valmsg-replace="true"></span>
                             </div>
-                        </div>`
+                        </div>
+                        <div class="col-md-2" onclick="removeRow(this, 'diagnosis');">
+                            <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 28px; cursor: pointer;"></i>
+                        </div>
+                    </div>`
                         
         $(html).insertBefore("#" + boardType + " .addProceedingSessionFormButton");
         
@@ -540,24 +557,29 @@
     
     function addNewFormDisputeResolutionPS(boardType) 
     {
+        var DisputeResolutionPSCounter = ($("#disputeResolution .proceedingSession").length - 1) / 2;
+        
         if (DisputeResolutionPSCounter >= 9)
             return;
 
-        DisputeResolutionPSCounter++;
+        sortPS('disputeResolution')
+
+        //DisputeResolutionPSCounter++;
 
         const label = 'تاریخ نوبت ' + turns[DisputeResolutionPSCounter] + ' رسیدگی';
         
-        const html = `<div class="col-md-6 proceedingSession">
+        const html = `<div class="row">
+                        <div class="col-md-5 proceedingSession">
                             <div class="form-group">
-                                <label class="control-label" for="createDisputeResolutionPS_${DisputeResolutionPSCounter}__Date"> ${label} </label>
-                                <input type="text" class="form-control" data-val="true" data-val-required="فیلد الزامی است" 
+                                <label class="control-label dateLabel" for="createDisputeResolutionPS_${DisputeResolutionPSCounter}__Date"> ${label} </label>
+                                <input type="text" class="form-control date" data-val="true" data-val-required="فیلد الزامی است" 
                                 id="createDisputeResolutionPS_${DisputeResolutionPSCounter}__Date" 
-                                name="createDisputeResolutionPS[${DisputeResolutionPSCounter}].Date" value=""  dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
+                                name="createDisputeResolutionPS[${DisputeResolutionPSCounter}].Date" value=""  dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this))" style="width: 100%; text-align: center">
                                 <span class="error field-validation-valid" data-valmsg-for="createDisputeResolutionPS[${DisputeResolutionPSCounter}].Date" 
                                 data-valmsg-replace="true"></span>
                             </div>
                         </div>
-                        <div class="col-md-6 proceedingSession">
+                        <div class="col-md-5 proceedingSession">
                             <div class="form-group">
                                 <label class="control-label" for="createDisputeResolutionPS_${DisputeResolutionPSCounter}__Time"> ساعت برگزاری جلسه </label>
                                 <input type="text" class="form-control" data-val="true" data-val-required="فیلد الزامی است" 
@@ -566,7 +588,11 @@
                                 <span class="error field-validation-valid" data-valmsg-for="createDisputeResolutionPS[${DisputeResolutionPSCounter}].Time" 
                                 data-valmsg-replace="true"></span>
                             </div>
-                        </div>`
+                        </div>
+                        <div class="col-md-2" onclick="removeRow(this, 'disputeResolution');">
+                            <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 28px; cursor: pointer;"></i>
+                        </div>
+                    </div>`
                         
         $(html).insertBefore("#" + boardType + " .addProceedingSessionFormButton");
         
@@ -645,12 +671,15 @@
         });
 
     }
+
+
     
     //function checkTime(element){
-    
+
     //    if(!element.value)
     //        InsertTime("#" + element.id);
 
     //}
+
 </Script>
 

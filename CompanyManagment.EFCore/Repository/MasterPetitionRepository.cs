@@ -2,29 +2,28 @@
 using System.Linq;
 using _0_Framework.Application;
 using _0_Framework.InfraStructure;
-using Company.Domain.Petition;
-using CompanyManagment.App.Contracts.Petition;
+using Company.Domain.MasterPetition;
+using CompanyManagment.App.Contracts.MasterPetition;
 
 
 namespace CompanyManagment.EFCore.Repository
 {
-    public class PetitionRepository : RepositoryBase<long, Petition>, IPetitionRepository
+    public class MasterPetitionRepository : RepositoryBase<long, MasterPetition>, IMasterPetitionRepository
     {
         private readonly CompanyContext _context;
-        public PetitionRepository(CompanyContext context) : base(context)
+        public MasterPetitionRepository(CompanyContext context) : base(context)
         {
             _context = context;
         }
 
-        public EditPetition GetDetails(long id)
+        public EditMasterPetition GetDetails(long id)
         {
-            return _context.Petitions.Select(x => new EditPetition
+            return _context.MasterPetitions.Select(x => new EditMasterPetition
             {
                 Id = x.id,
-                PetitionIssuanceDate = x.PetitionIssuanceDate.ToFarsi(),
-                NotificationPetitionDate = x.NotificationPetitionDate.ToFarsi(),
-                TotalPenalty = x.TotalPenalty,
-                TotalPenaltyTitles = x.TotalPenaltyTitles,
+                MasterName = x.MasterName,
+                //TotalPenalty = x.TotalPenalty,
+                //TotalPenaltyTitles = x.TotalPenaltyTitles,
                 Description = x.Description,
                 WorkHistoryDescription = x.WorkHistoryDescreption,
                 File_Id = x.File_Id,
@@ -32,15 +31,14 @@ namespace CompanyManagment.EFCore.Repository
             }).FirstOrDefault(x => x.Id == id);
         }
 
-        public EditPetition GetDetails(long fileId, int boardTypeId)
+        public EditMasterPetition GetDetails(long fileId, int boardTypeId)
         {
-            return _context.Petitions.Select(x => new EditPetition
+            return _context.MasterPetitions.Select(x => new EditMasterPetition
             {
                 Id = x.id,
-                PetitionIssuanceDate = x.PetitionIssuanceDate.ToFarsi(),
-                NotificationPetitionDate = x.NotificationPetitionDate.ToFarsi(),
-                TotalPenalty = x.TotalPenalty,
-                TotalPenaltyTitles = x.TotalPenaltyTitles,
+                MasterName = x.MasterName,
+                //TotalPenalty = x.TotalPenalty,
+                //TotalPenaltyTitles = x.TotalPenaltyTitles,
                 Description = x.Description,
                 WorkHistoryDescription = x.WorkHistoryDescreption,
                 File_Id = x.File_Id,
@@ -48,15 +46,21 @@ namespace CompanyManagment.EFCore.Repository
             }).FirstOrDefault(x => x.File_Id == fileId && x.BoardType_Id == boardTypeId);
         }
 
-        public List<EditPetition> Search(PetitionSearchModel searchModel)
+        public void Remove(long id)
         {
-            var query = _context.Petitions.Select(x => new EditPetition
+            var petition = _context.MasterPetitions.Where(x => x.id == id).FirstOrDefault();
+
+            Remove(petition);
+        }
+
+        public List<EditMasterPetition> Search(MasterPetitionSearchModel searchModel)
+        {
+            var query = _context.MasterPetitions.Select(x => new EditMasterPetition
             {
                 Id = x.id,
-                PetitionIssuanceDate = x.PetitionIssuanceDate.ToFarsi(),
-                NotificationPetitionDate = x.NotificationPetitionDate.ToFarsi(),
-                TotalPenalty = x.TotalPenalty,
-                TotalPenaltyTitles = x.TotalPenaltyTitles,
+                MasterName = x.MasterName,
+                //TotalPenalty = x.TotalPenalty,
+                //TotalPenaltyTitles = x.TotalPenaltyTitles,
                 Description = x.Description,
                 WorkHistoryDescription = x.WorkHistoryDescreption,
                 BoardType_Id = x.BoardType_Id,
@@ -64,6 +68,10 @@ namespace CompanyManagment.EFCore.Repository
             });
 
             //TODO if
+            if (searchModel.File_Id != 0)
+            {
+                query = query.Where(x => x.File_Id == searchModel.File_Id);
+            }
             //if(!string.IsNullOrEmpty(searchModel.PetitionIssuanceDate))
             //{
             //    query = query.Where(x => x.PetitionIssuanceDate == searchModel.PetitionIssuanceDate);

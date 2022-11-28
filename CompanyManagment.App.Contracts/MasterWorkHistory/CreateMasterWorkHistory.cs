@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CompanyManagment.App.Contracts.WorkHistory
+namespace CompanyManagment.App.Contracts.MasterWorkHistory
 {
-    public class CreateWorkHistory
+    public class CreateMasterWorkHistory
     {
         //[Required]
         public string FromDate { get; set; }
@@ -11,6 +11,6 @@ namespace CompanyManagment.App.Contracts.WorkHistory
         public string WorkingHoursPerDay { get; set; }
         public string WorkingHoursPerWeek { get; set; }
         public string Description { get; set; }
-        public long Petition_Id { get; set; }
+        public long MasterPetition_Id { get; set; }
     }
 }
