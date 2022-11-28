@@ -42,13 +42,13 @@
         <div class="modal-body">
             <div class="row">
                 <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
-                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> تعریف بخش  </legend>
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> تعریف فصل  </legend>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label">انتخاب عنوان: </label>
+                                
                                 <select class="form-control select-city" asp-for="OriginalTitle_Id" asp-items='@Model.OriginalTitleViewModels' id="originalTitle1">
-                                    <option value="-1"> بخش را انتخاب کنید ... </option>
+                                    <option value="-1"> عنوان را انتخاب کنید ... </option>
                                 </select>
                                 <span asp-validation-for="OriginalTitle_Id" class="error"></span>
 
@@ -56,17 +56,17 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label"> انتخاب بخش :</label>
+                              
                                 <select class="form-control select-city" asp-for="Subtitle_Id" asp-items='@Model.SubtitleViewModels' id="subtitle1">
-                                    <option value="0"> بخش</option>
+                                    <option value="0"> نام بخش را انتخاب کنید...</option>
                                 </select>
                                 <span asp-validation-for="Subtitle_Id" class="error"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label asp-for="Chapter" class="control-label"> ایجاد بخش : </label>
-                                <input type="text" class="form-control" asp-for="Chapter">
+                                
+                                <input type="text" class="form-control" asp-for="Chapter" placeholder="فصل">
                                 <span asp-validation-for="Chapter" class="error"></span>
                             </div>
                         </div>

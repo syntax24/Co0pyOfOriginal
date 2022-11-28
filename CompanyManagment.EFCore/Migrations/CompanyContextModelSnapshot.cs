@@ -121,6 +121,9 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("IsActiveString")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("Subtitle_Id")
                         .HasColumnType("bigint");
 
@@ -141,7 +144,13 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("IsActiveString")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NameContact")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Signature")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
@@ -783,6 +792,9 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("IsActiveString")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NameSubModule")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -816,6 +828,9 @@ namespace CompanyManagment.EFCore.Migrations
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("IsActiveString")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -947,6 +962,9 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Property<long?>("EntitySubtitleid")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("IsActiveString")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("OriginalTitle_Id")
                         .HasColumnType("bigint");
 
@@ -977,26 +995,26 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateTextManager")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DateTextManager")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NoteNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("IsActiveString")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NumberTextManager")
-                        .HasColumnType("int");
+                    b.Property<string>("NoteNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumberTextManager")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("OriginalTitle_Id")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Paragraph")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
 
                     b.Property<string>("SubjectTextManager")
                         .HasColumnType("nvarchar(max)");

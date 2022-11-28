@@ -11,6 +11,7 @@ namespace CompanyManagment.App.Contracts.Chapter
         EditChapter GetDetails( long id);
         List<ChapterViewModel> Search(ChapterSearchModel SearchModel);
         List<ChapterViewModel> GetAllChapter();
-     
+        OperationResult Active(long id);
+        OperationResult DeActive(long id);
     }
 }

@@ -11,6 +11,7 @@ namespace CompanyManagment.App.Contracts.Module
         List<ModuleViewModel> Search(ModuleSearchModel SearchModel);
         List<ModuleViewModel> GetAllModule();
 
-       
+        OperationResult Active(long id);
+        OperationResult DeActive(long id);
     }
 }

@@ -10,6 +10,7 @@ namespace CompanyManagment.App.Contracts.Subtitle
         EditSubtitle GetDetails( long id);
         List<SubtitleViewModel> Search(SubtitleSearchModel SearchModel);
         List<SubtitleViewModel> GetAllSubtitle();
-     
+        OperationResult Active(long id);
+        OperationResult DeActive(long id);
     }
 }

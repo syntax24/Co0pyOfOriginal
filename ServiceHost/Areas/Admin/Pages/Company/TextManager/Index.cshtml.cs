@@ -16,13 +16,14 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
 {
     public class IndexModel : PageModel
     {
-
+        public string TextManagerSearch = "false";
+        public string Message { get; set; }
         public TextManagerViewModel searchModel;
         public List<SubtitleViewModel> SubtitlesViewModels;
         public List<TextManagerViewModel> TextManagers;
         public SelectList SelectListOriginalTitle;
         public SelectList SelectListSubtitle;
-        private SelectList SelectListChapter;
+        public SelectList SelectListChapter;
         public string[] ListModule;
         public List<OriginalTitleViewModel> OriginalTitleViewModels;
         public SelectList categoryListItems;
@@ -50,6 +51,15 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
             SelectListSubtitle = new SelectList(_subtitleApplication.GetAllSubtitle(), "Id", "Subtitle");
             SelectListChapter = new SelectList(_chapterApplication.GetAllChapter(), "Id", "Chapter");
             ListModule = _moduleApplication.GetAllModule().Select(x => x.NameSubModule).ToArray();
+
+            if (TextManagers != null)
+            {
+                if (searchModel.OriginalTitle_Id != 0)
+                {
+                    TextManagerSearch = "true";
+                }
+                //TextManagerSearch = "true";
+            }
         }
         public IActionResult OnGetCreate()
         {
@@ -78,7 +88,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
             {
                 Id = id,
                 NoteNumber = textManager.NoteNumber,
-                DateTextManager = Tools.ToFarsi(Convert.ToDateTime(textManager.DateTextManager)).ToString(),
+                DateTextManager = textManager.DateTextManager,
                 Description = textManager.Description,
                 NumberTextManager = textManager.NumberTextManager,
                 SubjectTextManager = textManager.SubjectTextManager,
@@ -111,7 +121,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
         }
         public IActionResult OnGetChptereList(long Subtitle_Id)
         {
-            var chapterleList = _chapterApplication.GetAllChapter().Where(d => d.Subtitle_Id == Subtitle_Id).ToList();
+            var chapterleList = _chapterApplication.GetAllChapter().Where(x => x.Subtitle_Id == Subtitle_Id).ToList().Select(x => new SelectListItem { Text = x.Chapter, Value = x.Id.ToString() }).ToList();
             return new JsonResult(chapterleList);
         }
 
@@ -156,6 +166,69 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
             {
                 return BadRequest();
             }
+        }
+
+        public IActionResult OnGetDeActive(long id)
+        {
+
+
+            var result = _textManagerApplication.DeActive(id);
+
+            if (result.IsSuccedded)
+                return RedirectToPage("./Index");
+            Message = result.Message;
+            return RedirectToPage("./Index");
+        }
+
+        public IActionResult OnGetIsActive(long id)
+        {
+
+
+            var result = _textManagerApplication.Active(id);
+            if (result.IsSuccedded)
+                return RedirectToPage("./Index");
+            Message = result.Message;
+            return RedirectToPage("./Index");
+        }
+
+       
+        public IActionResult OnGetGroupDeActive(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _textManagerApplication.DeActive(item);
+            }
+            return RedirectToPage("./Index");
+
+        }
+
+
+        public IActionResult OnGetGroupReActive(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _textManagerApplication.Active(item);
+            }
+
+
+            //if (result.IsSuccedded)
+            //    return RedirectToPage("./Index");
+
+            return RedirectToPage("./Index");
+        }
+
+        public IActionResult OnGetGroupSelectModule(List<long> ids, string module,int AD)
+        {
+          long moduleId= _moduleApplication.GetAllModule().Where(x => x.NameSubModule == module).Select(x => x.Id).FirstOrDefault();
+            foreach (var item in ids)
+            {
+                var result = _textManagerApplication.SelectModule(item, moduleId, AD);
+                
+            }
+            return RedirectToPage("./Index");
+
         }
         private class Parvandeh
         {

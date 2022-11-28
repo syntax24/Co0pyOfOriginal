@@ -12,7 +12,7 @@ namespace Company.Domain.OriginalTitleAgg
        
         }
         public string Title { get; private set; }
-     
+        public string IsActiveString { get; set; }
         public List< EntitySubtitle> Subtitles { get; private set; }
 
         public EntityOriginalTitle()
@@ -23,6 +23,17 @@ namespace Company.Domain.OriginalTitleAgg
         {
             Title = title;
       
+        }
+        public void Active()
+        {
+
+            this.IsActiveString = "true";
+        }
+
+        public void DeActive()
+        {
+
+            this.IsActiveString = "false";
         }
     }
 }

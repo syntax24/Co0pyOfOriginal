@@ -25,13 +25,13 @@ namespace CompanyManagment.Application
             var textManager = new EntityTextManager(command.NoteNumber,
                 command.SubjectTextManager,
                 command.NumberTextManager,
-                Tools.ToGeorgian(command.DateTextManager.ToString()),
+                command.DateTextManager,
                 command.Description,
                 command.Paragraph,
                 command.OriginalTitle_Id,
                 command.Subtitle_Id,
-                 command.Chapter_Id,
-                 command.Status
+                 command.Chapter_Id
+                 
                );
             _TextManagerRepozitory.Create(textManager);
             _TextManagerRepozitory.SaveChanges();
@@ -57,20 +57,20 @@ namespace CompanyManagment.Application
             textManager.Edit(command.NoteNumber,
                                 command.SubjectTextManager,
                                 command.NumberTextManager,
-                                Tools.ToGeorgian(command.DateTextManager.ToString()),
+                                command.DateTextManager,
                                 command.Description,
                                 command.Paragraph,
                                 command.OriginalTitle_Id,
                                 command.Subtitle_Id,
-                                  command.Chapter_Id,
-                                command.Status
+                                command.Chapter_Id
+                           
                                 );
                
             _TextManagerRepozitory.SaveChanges();
 
             if (command.ModuleIds.Length > 0 && textManager.id > 0)
             {
-                _TextManagerRepozitory.RemoveOldRelation(textManager.id);
+                _TextManagerRepozitory.RemoveOldRelation(textManager.id,0);
                 foreach (var moduleid in command.ModuleIds)
                 {
                     _TextManagerRepozitory.ModuleTextManager(textManager.id, moduleid);
@@ -89,6 +89,58 @@ namespace CompanyManagment.Application
         public List<TextManagerViewModel> Search(TextManagerSearchModel SearchModel)
         {
             return _TextManagerRepozitory.Search(SearchModel);
+        }
+        public OperationResult Active(long id)
+        {
+            var opration = new OperationResult();
+            var textManager = _TextManagerRepozitory.Get(id);
+            if (textManager == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
+
+            textManager.Active();
+
+            _TextManagerRepozitory.SaveChanges();
+            return opration.Succcedded();
+        }
+        public OperationResult DeActive(long id)
+        {
+            var opration = new OperationResult();
+            var textManager = _TextManagerRepozitory.Get(id);
+            if (textManager == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
+
+            textManager.DeActive();
+
+
+            _TextManagerRepozitory.SaveChanges();
+            return opration.Succcedded();
+        }
+        public OperationResult SelectModule(long id, long moduleId,int ad)
+        {
+            var opration = new OperationResult();
+            var textManager = _TextManagerRepozitory.Get(id);
+            if (textManager == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
+
+            
+            if (ad==1)
+            {
+                _TextManagerRepozitory.RemoveOldRelation(textManager.id, moduleId);
+                _TextManagerRepozitory.ModuleTextManager(textManager.id, moduleId);
+            }
+            else
+            {
+                _TextManagerRepozitory.RemoveOldRelation(textManager.id, moduleId);
+                //_TextManagerRepozitory.ModuleTextManager(textManager.id, moduleId);
+            }          
+
+           _TextManagerRepozitory.SaveChanges();
+            return opration.Succcedded();
+        }
+
+        public List<TextManagerViewModel> PrintAll(List<long> ids)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

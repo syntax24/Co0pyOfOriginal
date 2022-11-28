@@ -1,18 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using CompanyManagment.App.Contracts.Contact2;
+using CompanyManagment.App.Contracts.Contract;
 using CompanyManagment.EFCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 
 namespace ServiceHost.Areas.Admin.Pages.Company.Contact2
 {
     public class IndexModel : PageModel
     {
+        public string Message { get; set; }
         public Contact2ViewModel searchModel;
         public List<Contact2ViewModel> Contacts;
         private CompanyContext db;
+        public string WorkshopSearch = "false";
 
         private readonly IContactApplication2 _contactApplication2;
 
@@ -24,6 +27,14 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Contact2
         public void OnGet(Contact2SearchModel searchModel)
         {
             Contacts = _contactApplication2.Search(searchModel);
+    
+            if (Contacts != null)
+            {
+                //if (searchModel.WorkshopIds != 0 || searchModel.EmployeeId != 0)
+                //{
+                //    WorkshopSearch = "true";
+                //}
+            }
         }
         public IActionResult OnGetCreate()
         {
@@ -63,6 +74,112 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Contact2
         {
             var names = _contactApplication2.GetAllContact().Where(p => p.NameContact.Contains(term)).Select(p => p.NameContact).ToList();
             return new JsonResult(names);
+        }
+
+
+
+
+
+
+        
+
+        //public IActionResult OnGetPrintAll(List<long> ids)
+        //{
+        //    var res = new GroupPrintViewModel2
+        //    {
+        //        ContractList = _contactApplication2.PrintAll(ids)
+        //    };
+        //    //var res = _contractApplication.PrintAll(ids);
+
+        //    return Partial("PrintAll", res);
+        //}
+        public IActionResult OnGetDeActive(long id)
+        {
+
+
+            var result = _contactApplication2.DeActive(id);
+
+            if (result.IsSuccedded)
+                return RedirectToPage("./Index");
+            Message = result.Message;
+            return RedirectToPage("./Index");
+        }
+
+        public IActionResult OnGetIsActive(long id)
+        {
+
+
+            var result = _contactApplication2.Active(id);
+            if (result.IsSuccedded)
+                return RedirectToPage("./Index");
+            Message = result.Message;
+            return RedirectToPage("./Index");
+        }
+
+        public IActionResult OnGetSign(long id)
+        {
+
+
+            var result = _contactApplication2.Sign(id);
+            return RedirectToPage("./Index");
+
+
+        }
+        public IActionResult OnGetUnSign(long id)
+        {
+
+
+            var result = _contactApplication2.UnSign(id);
+            return RedirectToPage("./Index");
+
+        }
+        public IActionResult OnGetGroupDeActive(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _contactApplication2.DeActive(item);
+            }
+            return RedirectToPage("./Index");
+
+        }
+
+
+        public IActionResult OnGetGroupReActive(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _contactApplication2.Active(item);
+            }
+
+
+            //if (result.IsSuccedded)
+            //    return RedirectToPage("./Index");
+
+            return RedirectToPage("./Index");
+        }
+
+
+        public IActionResult OnGetGroupSign(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _contactApplication2.Sign(item);
+            }
+            return RedirectToPage("./Index");
+
+        }
+        public IActionResult OnGetGroupUnSign(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _contactApplication2.UnSign(item);
+            }
+            return RedirectToPage("./Index");
+
         }
 
     }

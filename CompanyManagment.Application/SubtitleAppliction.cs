@@ -18,9 +18,7 @@ namespace CompanyManagment.Application
         public OperationResult Create(CreateSubtitle command)
         {
             var oprtaion = new OperationResult();
-            if (_subtitleRepozitory.Exists(x => x.Subtitle == command.Subtitle ))
-                return oprtaion.Failed("  این متن برای بخش قبلا ثبت شده است");
-
+      
             if (string.IsNullOrWhiteSpace(command.Subtitle))
                 return oprtaion.Failed("ثبت  بخش الزامیست");
             if (command.OriginalTitle_Id<=0)
@@ -38,9 +36,6 @@ namespace CompanyManagment.Application
             var oprtaion = new OperationResult();
 
             var SubtitleEdit = _subtitleRepozitory.Get(command.Id);
-
-            if (_subtitleRepozitory.Exists(x => x.Subtitle == command.Subtitle))
-                return oprtaion.Failed("  این متن برای بخش قبلا ثبت شده است");
             if (string.IsNullOrWhiteSpace(command.Subtitle))
                 return oprtaion.Failed("ثبت  بخش الزامیست");
 
@@ -69,7 +64,30 @@ namespace CompanyManagment.Application
             return _subtitleRepozitory.GetAllSubtitle();
 
         }
+        public OperationResult Active(long id)
+        {
+            var opration = new OperationResult();
+            var subtitle = _subtitleRepozitory.Get(id);
+            if (subtitle == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
 
-     
+            subtitle.Active();
+
+            _subtitleRepozitory.SaveChanges();
+            return opration.Succcedded();
+        }
+        public OperationResult DeActive(long id)
+        {
+            var opration = new OperationResult();
+            var subtitle = _subtitleRepozitory.Get(id);
+            if (subtitle == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
+
+            subtitle.DeActive();
+
+
+            _subtitleRepozitory.SaveChanges();
+            return opration.Succcedded();
+        }
     }
 }

@@ -7,162 +7,507 @@
     int i = 1;
 }
 @{
-   
+
     Layout = "Shared/_AdminLayout";
     ViewData["title"] = "فصل";
-    <style>
-        .thh0 {
-            width: 8px !important;
-        }
 
-        .thh {
-            width: 40px !important;
-        }
-
-        .thh2 {
-            width: 130px !important;
-        }
-
-        .thhNastionalId {
-            width: 30px !important;
-        }
-
-        .inpt {
-            width: 100%;
-            border: 1px solid #c7c7c7;
-        }
-
-        .searchpanel {
-            background-color: #747272;
-        }
-    </style>
 }
+<style>
+    .thh0 {
+        width: 8px !important;
+    }
+
+    .thh {
+        width: 40px !important;
+    }
+
+    .thh2 {
+        width: 130px !important;
+    }
+
+    .thhNastionalId {
+        width: 30px !important;
+    }
+
+    .inpt {
+        width: 100%;
+        border: 1px solid #c7c7c7;
+    }
+
+    .searchpanel {
+        background-color: #747272;
+    }
+
+    <style >
+    .sizeSet {
+        padding: 2px !important;
+        text-align: center !important;
+    }
+
+    .rad {
+        border-radius: 8px !important;
+        /* padding: 10px; */
+        padding: 2px 5px 0px 5px;
+    }
+
+    .faSize {
+        font-size: 22px !important;
+    }
+
+    .thh0 {
+        width: 8px !important;
+    }
+
+    .thh {
+        width: 40px !important;
+    }
+
+    .thh2 {
+        width: 130px !important;
+    }
+
+    .thhNastionalId {
+        width: 30px !important;
+    }
+
+    .inpt {
+        width: 100%;
+        border: 1px solid #c7c7c7;
+    }
+
+    .searchpanel {
+        background-color: #747272;
+    }
+
+    select {
+        cursor: pointer;
+    }
+
+    .panel-default > .panel-heading {
+        background-color: #545353 !important;
+    }
+
+
+
+
+
+    .tooltip-container {
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+    }
+
+    .tooltip2-container {
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+    }
+
+    .tooltip {
+        opacity: 0;
+        z-index: 99;
+        color: #fff;
+        width: 220px;
+        display: block;
+        font-size: 14px;
+        font-family: 'IranSans';
+        padding: 5px 10px;
+        border-radius: 3px;
+        text-align: center;
+        /*text-shadow: 1px 1px 2px #111;*/
+        background: #e67e22;
+        border: 1px solid #e67e22;
+        box-shadow: 0 0 3px rgba(0,0,0,0.5);
+        -webkit-transition: all .2s ease-in-out;
+        -moz-transition: all .2s ease-in-out;
+        -o-transition: all .2s ease-in-out;
+        -ms-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        -o-transform: scale(0);
+        -ms-transform: scale(0);
+        transform: scale(0);
+        position: absolute;
+        right: -50px;
+        bottom: 40px;
+    }
+
+        .tooltip:before, .tooltip:after {
+            content: '';
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #e67e22;
+            position: absolute;
+            bottom: -10px;
+            left: 70%;
+        }
+
+    .tooltip-container:hover .tooltip, a:hover .tooltip {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -o-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+    }
+
+    .tooltip2 {
+        opacity: 0;
+        z-index: 99;
+        color: #fff;
+        width: 220px;
+        display: block;
+        font-size: 14px;
+        font-family: 'IranSans';
+        padding: 5px 10px;
+        border-radius: 3px;
+        text-align: center;
+        /*text-shadow: 1px 1px 2px #111;*/
+        background: #e67e22;
+        border: 1px solid #e67e22;
+        box-shadow: 0 0 3px rgba(0,0,0,0.5);
+        -webkit-transition: all .2s ease-in-out;
+        -moz-transition: all .2s ease-in-out;
+        -o-transition: all .2s ease-in-out;
+        -ms-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        -o-transform: scale(0);
+        -ms-transform: scale(0);
+        transform: scale(0);
+        position: absolute;
+        right: -90px;
+        bottom: 40px;
+    }
+
+        .tooltip2:before, .tooltip2:after {
+            content: '';
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #e67e22;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+        }
+
+    .tooltip2-container:hover .tooltip2, a:hover .tooltip2 {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -o-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+    }
+</style>
 <div class="row">
-    <div class="row">
-        <div class="col-sm-12 m-r-10">
-            <p class="pull-right">
-                <a id="btnPopModal" href="#showmodal=@Url.Page("/Company/Chapter/Index", "Create" )" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-right: 10px "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> تعریف بخش جدید </a>
-            </p>
-        </div>
+    <div class="col-sm-12 m-r-10">
+        <input type="hidden" id="sercheCheck" value="@Model.ChapterSearch" />
     </div>
-    <div class="col-sm-12">
-        <div class="panel-group panel-group-joined" id="accordion-test">
-            <div class="panel panel-default" style="border-radius: 15px !important;">
-                <div class="panel-heading" style="background-color: #545353 !important">
-                    <h4 class="panel-title" style="color: #edebeb !important; display: inline;">
-                        <a data-toggle="collapse" data-parent="#accordion-test" href="#collapseOne" class="collapsed" style="display: inline;">
-                            جستجوی بخش
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse in ">
-                    <div class="panel-body" style="padding-top: 15px; padding-bottom: 15px;">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <form class="form-inline" role="form" method="get" name="search-theme-form" id="search-theme-form" autocomplete="off">
-                                    <div class="form-group col-sm-12">
-                                        <div class="row">
+</div>
+<div class="row">
+    <div class="col-sm-12 m-r-10">
+        <p class="pull-right">
+            <a id="btnPopModal" href="#showmodal=@Url.Page("/Company/Chapter/Index", "Create" )" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-right: 10px "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> تعریف فصل جدید </a>
+        </p>
+    </div>
+</div>
 
-                                            <div class="col-sm-3 pull-right">
-                                                <select class=" form-control inpt" asp-for="searchModel.OriginalTitle_Id" asp-items="@Model.SelectListOriginalTitle" placeholder="عنوان" id="originalTitle" style="width: 100%">
-                                                    <option value="0" selected="selected" disabled>همه موارد </option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-3 pull-right">
-                                                <select class=" form-control inpt" asp-for="searchModel.OriginalTitle_Id" asp-items="@Model.SelectListOriginalTitle" placeholder="بخش" id="originalTitle" style="width: 100%">
-                                                    <option value="0" selected="selected" disabled>همه موارد </option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-4 pull-right">
 
-                                                <label class="sr-only" asp-for="searchModel.Chapter"></label>
-                                                <input class="form-control inpt" asp-for="searchModel.Chapter" placeholder="فصل" style="width: 100%">
-                                            </div>
+
+
+<div class="col-sm-12">
+    <div class="panel-group panel-group-joined" id="accordion-test">
+        <div class="panel panel-default" style="border-radius: 15px !important;">
+            <div class="panel-heading" style="background-color: #545353 !important">
+                <h4 class="panel-title" style="color: #edebeb !important; display: inline;">
+                    <a data-toggle="collapse" data-parent="#accordion-test" href="#collapseOne" class="collapsed" style="display: inline;">
+                        جستجوی فصل
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in ">
+                <div class="panel-body" style="padding-top: 15px; padding-bottom: 15px;">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form class="form-inline" role="form" method="get" name="search-theme-form" id="search-theme-form" autocomplete="off">
+                                <div class="form-group col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-3 pull-right">
+                                            <select class=" form-control inpt" asp-for="searchModel.OriginalTitle_Id" asp-items="@Model.SelectListOriginalTitle" placeholder="عنوان" id="OriginalTitle_Id" style="width: 100%">
+                                                <option value="0" selected="selected" disabled>عنوان </option>
+                                            </select>
                                         </div>
-                                        <div class="row" style="margin-top: 15px">
-                                            <div class="col-lg-9">
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; background-color: #950000; border-color: #950000; font-family: 'Web_Yekan' !important; margin-left: -3px"> <i class="fa fa-search" style="padding-left: 3px; font-size: 14px;"></i> جستجو</button>
-                                                <a class="btn btn-info btn-rounded waves-effect waves-light m-b-5" style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; background-color: #545353; border-color: #545353; font-family: 'Web_Yekan' !important;" asp-page="./Index">مشاهده همه</a>
-                                            </div>
+                                        <div class="col-sm-3 pull-right">
+                                            <select class=" form-control inpt" asp-for="searchModel.Subtitle_Id" asp-items="@Model.SelectListSubtitles" placeholder="بخش" id="Subtitle_Id" style="width: 100%">
+                                                <option value="0" selected="selected" disabled>بخش  </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4 pull-right">
+                                            <label class="sr-only" asp-for="searchModel.Chapter"></label>
+                                            <input class="form-control inpt" asp-for="searchModel.Chapter" placeholder="فصل" style="width: 100%">
                                         </div>
                                     </div>
-                                </form>
-                            </div>
+                                    <hr style=" margin-top: 12px;margin-bottom: 12px;" />
+                                    <div class="row" style="margin-top: 15px">
+                                        <div class="col-lg-9">
+                                            <label class="sr-only" asp-for="searchModel.IsActiveString"></label>
+                                            <select id="activing" class="form-control activer" asp-for="searchModel.IsActiveString" style="background-color: #dddddd; border-radius: 25px; border: 1px solid #bfbfbf;">
+                                                <option value="true"> فعال  </option>
+                                                <option value="false"> غیرفعال</option>
+                                                <option value="both"> هردو</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light m-b-5 search" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; background-color: #950000; border-color: #950000; font-family: 'Web_Yekan' !important; margin-left: -3px "> <i class="fa fa-search" style="padding-left: 3px; font-size: 14px;"></i> جستجو</button>
+                                            <a class="btn btn-info btn-rounded waves-effect waves-light m-b-5" style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; background-color: #545353; border-color: #545353; font-family: 'Web_Yekan' !important;" asp-page="./Index">مشاهده همه</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست بخش</h3>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-sm-12 col-sm-12 col-xs-12">
-                        <table id="datatable" class="table table-striped table-bordered">
-                            <thead>
+</div>
+
+<div class="col-sm-12">
+    <div permission="20113" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست فصل</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12 col-sm-12 col-xs-12">
+                    <table id="datatable" class="table table-striped table-bordered">
+                        <thead style="background-color: #ecefee">
+                            <tr>
+                                <th style="font-size: 10px !important; width: 5% !important" class="sizeSet">
+                                    <span class="tooltip-container">
+                                        <input class="checkboxtitle" type="checkbox" id="checkSelect" onclick="selectori(this)" />
+                                        <span class="tooltip"> با استفاده از این چک باکس می توانید  فصل ها را بصورت گروهی انتخاب کرده و سپس با کلیک بر روی دکمه حذف گروهی  اقدام به حذف  نمایید</span>
+                                    </span>
+                                </th>
+                                <th style="font-size: 16px !important; width: 5% !important">#</th>
+                                <th style="font-size: 16px !important; text-align: center; width: 20% !important">عنوان</th>
+                                <th style="font-size: 16px !important; text-align: center;width: 20% !important"> بخش </th>
+                                <th style="font-size: 16px !important; text-align: center; width: 20% !important"> فصل </th>
+
+
+                                <th style="font-size: 10px !important ;width: 10% !important">
+                                    <span style="float: right;">
+                                        <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                        <span>&nbsp;</span><span>&nbsp;</span>
+                                    </span>
+                                    <span class="act">
+                                    </span>
+                                    <a class="btn btn-danger pull-right m-rl-5 rad deact" onclick="deactiveAll()">
+                                        <i class="fa faSize fa-trash"></i>
+                                    </a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Chapters)
+                            {
                                 <tr>
-                                    <th style="font-size: 16px !important; width: 5% !important">#</th>
-                                    <th style="font-size: 16px !important; text-align: center">عنوان</th>
-                                    <th style="font-size: 16px !important; text-align: center"> بخش </th>
-                                    <th style="font-size: 16px !important; width: 5% !important">عملیات</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.Chapters)
-                                {
-                                <tr>
+                                    <td style="font-size: 12px !important; text-align: center">
+                                        <input type="checkbox" name="foo" value="@item.Id" />
+                                    </td>
                                     <td style="font-size: 14px !important; text-align: center">@i </td>
+                                    <td style="font-size: 14px !important; text-align: center">@item.OriginalTitle </td>
                                     <td style="font-size: 14px !important; text-align: center">@item.Subtitle </td>
                                     <td style="font-size: 14px !important; text-align: center">@item.Chapter </td>
                                     @{
                                         i++;
                                     }
+
                                     <td>
-                                        <a class="btn btn-warning pull-right m-rl-5"
-                                           href="#showmodal=@Url.Page("./Index", "Edit" , new {Id=item.Id})">
-                                            <i class="fa fa-edit"></i> ویرایش
+
+                                        <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
+                                           href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
+                                            <i class="fa faSize fa-edit"></i>
                                         </a>
-                                    
+
+                                        @if (item.IsActiveString == "true")
+                                        {
+                                            <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
+
+                                        }
+                                        else
+                                        {
+                                            <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
+                                        }
+
                                     </td>
                                 </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-<link href="~/js/PTextManager/TvMultiSelectPanel.min.css" rel="stylesheet" />
-<div id="data" style="height: 500px; max-width: 700px; margin: 0 auto;" class="tv-select-panel"></div>
-<div style="text-align: center; margin-top: 15px">
-    <button id="btn">show id selected</button>
-</div>
-
 @section PanelScripts{
     <script src="~/AdminTheme/assets/js/site.js"></script>
     <script src="~/AdminTheme/assets/datatables/jquery.dataTables.min.js"></script>
     <script src="~/AdminTheme/assets/datatables/dataTables.bootstrap.js"></script>
     <script>
+        $('.activer').on('change',
+            function (e) {
+                e.preventDefault();
+                $('.search').click();
+            });
+    </script>
+    <script>
+
+        if (document.getElementById("activing").selectedIndex == 1) {
+            $('.deact').remove();
+            $('.act').append(
+                ' <a class="btn btn-success pull-right m-rl-5 rad react" onclick="reActiveAll()">' + '<i class="fa faSize fa-rotate-left"></i>' + ' </a>'
+            );
+        }
+        if (document.getElementById("activing").selectedIndex == 2) {
+            $('.deact').remove();
+        }
+
+    </script>
+    <script type="text/javascript">
         $(document).ready(function () {
-                    $('#datatable').dataTable({
+            $('#datatable').dataTable({
+                "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#datatable2').dataTable(
+                {
                     "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
                 });
-                    $('#datatable2').dataTable(
-                        {
-                            "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
-                        });
-         });
+        });
     </script>
+
+    <script>
+        var checkboxes;
+        function selectori(source) {
+            checkboxes = document.getElementsByName('foo');
+            for (var i = 0, n = checkboxes.length; i < n; i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+    </script>
+    <script>
+        function deactiveAll() {
+
+            if (document.getElementById("checkSelect").checked == false) {
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  متنی انتخاب نشده است ");
+            } else {
+                if (document.getElementById("sercheCheck").value == "true") {
+                    swal({
+                        title: "آیا حذف این  متن ها اطمینان دارید؟",
+                        text: "",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "بله",
+                        cancelButtonText: "خیر",
+                        closeOnConfirm: false
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            checkboxes2 = document.getElementsByName('foo');
+                            var url3b = '';
+                            for (var i2 = 0, n2 = checkboxes2.length; i2 < n2; i2++) {
+                                if (checkboxes2[i2].checked == true) {
+                                    var u2 = '&ids=' + checkboxes2[i2].value;
+                                    console.log(u2);
+                                    url3b = url3b + u2;
+                                    console.log(url3b);
+                                }
+                            }
+                            /*  var url1 = '#showmodal=';*/
+                            var url2b = '@Url.Page("/Company/Chapter/Index", "GroupDeActive")';
+                            /*   var url3 = document.getElementById('yearSend').value;*/
+                            window.location.href = url2b + url3b;
+                            console.log(url2b);
+                        }
+                    });
+
+                } else if (document.getElementById("sercheCheck").value == "false") {
+                    console.log(document.getElementById("sercheCheck").value);
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان،متن،بخش را انتخاب نموده و سپس جستجو را کلیک کنید ");
+                }
+            }
+        }
+    </script>
+    <script>
+        function reActiveAll() {
+            console.log(document.getElementById("sercheCheck").value);
+            if (document.getElementById("checkSelect").checked == false) {
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  متن ی انتخاب نشده است ");
+            } else {
+                if (document.getElementById("sercheCheck").value == "false") {
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان،متن،بخش را انتخاب نموده و سپس جستجو را کلیک کنید ");
+                } else if (document.getElementById("sercheCheck").value == "true") {
+                    swal({
+                        title: "آیا فعال نمودن این  متن ها اطمینان دارید؟",
+                        text: "",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "بله",
+                        cancelButtonText: "خیر",
+                        closeOnConfirm: false
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            checkboxes2 = document.getElementsByName('foo');
+                            var url3b = '';
+                            for (var i2 = 0, n2 = checkboxes2.length; i2 < n2; i2++) {
+                                if (checkboxes2[i2].checked == true) {
+                                    var u2 = '&ids=' + checkboxes2[i2].value;
+                                    console.log(u2);
+                                    url3b = url3b + u2;
+                                    console.log(url3b);
+                                }
+                            }
+                            var url2b = '@Url.Page("/Company/Chapter/Index", "GroupReActive")';
+                            console.log(url2b);
+                            window.location.href = url2b + url3b;
+                        }
+                    });
+                }
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#OriginalTitle_Id").change(function () {
+                $("#Subtitle_Id").empty();
+                $.ajax({
+                    type: 'GET',
+                    url: '/Admin/Company/TextManager?handler=SubtitleList',
+                    dataType: 'json',
+                    data: { OriginalTitle_Id: $("#OriginalTitle_Id").val() },
+                    success: function (result) {
+                        $("#Subtitle_Id").append(' <option value="' + -1 + '">' +
+                            "نام بخش را انتخاب کنید" + '</option>');
+                        $.each(result, function (i, result) {
+                            $("#Subtitle_Id").append(' <option value="' + result.id + '">' +
+                                result.subtitle + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Error');
+                    }
+                });
+                return false;
+            });
+
+        });
+    </script>
+
 }

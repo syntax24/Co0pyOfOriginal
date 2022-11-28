@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalContractingParty.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceHost", "ServiceHost\ServiceHost.csproj", "{35B6B963-974A-4414-8609-B0668181FA64}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_0_Framework", "_0_Framework\_0_Framework.csproj", "{F138CA45-A2CA-4C77-B8AA-5AC6B4ECB834}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_0_Framework_b", "_0_Framework\_0_Framework_b.csproj", "{F138CA45-A2CA-4C77-B8AA-5AC6B4ECB834}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

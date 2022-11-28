@@ -68,27 +68,27 @@
                                         <div class="row">
                                             <div class="col-sm-3 pull-right">
                                                 <div class="form-group">
-                                                    <input id="Appointed_Id" asp-for="searchModel.Appointed" class="form-control"  placeholder="انتخاب موکل" style="z-index: 0;" />
+                                                    <input id="Appointed_Id" asp-for="searchModel.Appointed" class="form-control" placeholder="انتخاب موکل" style="z-index: 0;" />
 
                                                 </div>
                                             </div>
                                             <div class="col-sm-3 pull-right">
                                                 <div class="form-group">
-                                                    <input id="ProcessingStage_Id" asp-for="searchModel.ProcessingStage"  placeholder="مرحله رسیدگی" class="form-control" style="z-index: 0;" />
+                                                    <input id="ProcessingStage_Id" asp-for="searchModel.ProcessingStage" placeholder="مرحله رسیدگی" class="form-control" style="z-index: 0;" />
                                                 </div>
                                             </div>
                                             <div class="col-sm-3 pull-right">
                                                 <div class="form-group">
-                                                    <input id="Contact_Id" asp-for="searchModel.Contact"  placeholder="نتخاب مخاطب" class="form-control" style="z-index: 0;" />
+                                                    <input id="Contact_Id" asp-for="searchModel.Contact" placeholder="انتخاب مخاطب" class="form-control" style="z-index: 0;" />
                                                 </div>
                                             </div>
                                             <div class="col-sm-3 pull-right">
                                                 <div class="form-group">
-                                                    <input asp-for="searchModel.SubjectBill"  placeholder="موضوع" class="form-control" />
+                                                    <input asp-for="searchModel.SubjectBill" placeholder="موضوع" class="form-control" />
                                                 </div>
                                             </div>
                                         </div>
-                                           <div class="row" style="margin-top: 15px">
+                                        <div class="row" style="margin-top: 15px">
                                             <div class="col-lg-6" style="margin-top: 15px">
                                             </div>
                                             <div class="col-lg-3" style="margin-top: 15px">
@@ -105,7 +105,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                 </form>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -155,18 +155,14 @@
         </div>
     </div>
 </div>
-<link href="~/AdminTheme/assets/css/jquery-ui.css" rel="stylesheet" />
+<link href="~/js/PTextManager/jquery-ui/jquery-ui.css" rel="stylesheet" />
 @section PanelScripts{
     <script src="~/AdminTheme/assets/js/site.js"></script>
     <script src="~/adminTheme/assets/datatables/jquery.dataTables.min.js"></script>
     <script src="~/adminTheme/assets/datatables/dataTables.bootstrap.js"></script>
-    <script src="~/AdminTheme/assets/js/jquery-ui-1.10.1.custom.min.js"></script>
+    <script src="~/js/PTextManager/jquery-ui/jquery-ui.min.js"></script>
     <script>
-        $(document).ready(function () {
-           $('#Appointed_Id').autocomplete({
-               source: '@Url.Page("CreateBill", "Appointed")',
-               autofocus: true
-              });
+    $(document).ready(function () {
             $('#Appointed_Id').autocomplete({
                 source: '@Url.Page("CreateBill", "Appointed")'
               });
@@ -176,21 +172,12 @@
             $('#Contact_Id').autocomplete({
                 source: '@Url.Page("CreateBill", "Contact")'
             });
+
+
         });
     </script>
     <script>
-
-
-
         $(document).ready(function () {
-
-
-
-
-
-
-
-
             $(function () {
                 $('#search').on('keyup', function () {
                     var pattern = $(this).val();

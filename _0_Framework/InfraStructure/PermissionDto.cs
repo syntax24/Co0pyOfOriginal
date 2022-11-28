@@ -1,4 +1,4 @@
-﻿namespace _0_Framework.Infrastructure
+﻿namespace _0_Framework_b.Infrastructure
 {
     public class PermissionDto
     {

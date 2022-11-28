@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using _0_Framework.Application;
+using _0_Framework_b.Application;
 
 namespace CompanyManagment.App.Contracts.ProceedingSession
 {

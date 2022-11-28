@@ -4,6 +4,7 @@
     public class ModuleSearchModel
     {
         public string NameSubModule { get; set; }
+        public string IsActiveString { get; set; }
     }
  
 }

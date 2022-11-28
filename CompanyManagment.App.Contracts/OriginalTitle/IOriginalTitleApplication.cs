@@ -11,6 +11,7 @@ namespace CompanyManagment.App.Contracts.OriginalTitle
         EditOriginalTitle GetDetails( long id);
         List<OriginalTitleViewModel> Search(OriginalTitleSearchModel SearchModel);
         List<OriginalTitleViewModel> GetAllOriginalTitle();
-
+        OperationResult Active(long id);
+        OperationResult DeActive(long id);
     }
 }

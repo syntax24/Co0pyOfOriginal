@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
-using _0_Framework.Domain;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using _0_Framework_b.Domain;
 using CompanyManagment.App.Contracts.WorkHistory;
 
 namespace Company.Domain.WorkHistory
