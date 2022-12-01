@@ -390,13 +390,24 @@
                                         </td>
 
                                         <td style="font-size: 14px !important; text-align: center">
-                                            <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditPetition", new { fileId = @item.Id, boardTypeId = 1 })" style="background-color: #009688; border-color: #009688;">
+
+                                            @{ var style = ""; }
+                                            @if(item.DiagnosisEvidenceId == 0)
+                                            {
+                                                style = "background-color: #fff; border-color: #009688; color: #009688 !important"; 
+                                            }
+                                            else
+                                            {
+                                                style = "background-color: #009688; border-color: #009688;";
+                                            }
+
+                                            <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditEvidence", new { fileId = @item.Id, boardTypeId = 1 })" onclick="setUrl(this)" style="@style">
                                                 <i class="fa fa-clipboard ionSize"></i>
                                             </a>      
                                         </td>
                                         <td style="font-size: 14px !important; text-align: center">
 
-                                            @{ var style = ""; }
+                                            
                                             @if(item.DiagnosisMasterPetitionId == 0)
                                             {
                                                 style = "background-color: #fff; border-color: #ff7700; color: #ff7700 !important"; 
@@ -406,7 +417,7 @@
                                                 style = "background-color: #ff7700; border-color: #ff7700;";
                                             }
 
-                                            <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditMasterPetition", new { fileId = @item.Id, boardTypeId = 1 })" style="@style">
+                                            <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditMasterPetition", new { fileId = @item.Id, boardTypeId = 1 })" onclick="setUrl(this)" style="@style">
                                                 <i class="fa fa-search ionSize"></i>
                                             </a>  
                                         </td>
@@ -461,7 +472,7 @@
                                                         <td class="p-0" style="text-align: center">
                                                             @*@if(item.DiagnosisPetition.PetitionIssuanceDate != null)
                                                             {*@
-                                                                <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditPetition", new { fileId = @item.Id, boardTypeId = 1 })" style="background-color: #00c1f3; border-color: #00c1f3;">
+                                                                <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditPetition", new { fileId = @item.Id, boardTypeId = 1 })" onclick="setUrl(this)" style="background-color: #00c1f3; border-color: #00c1f3;">
                                                                     <i class="fa fa-file ionSize"></i>
                                                                 </a>
                                                             @*}*@
@@ -508,7 +519,17 @@
                                             }
                                         </td>
                                         <td style="font-size: 14px !important; text-align: center">
-                                            <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditPetition", new { fileId = @item.Id, boardTypeId = 2 })" style="background-color: #009688; border-color: #009688;">
+
+                                            @if(item.DisputeResolutionEvidenceId == 0)
+                                            {
+                                                style = "background-color: #fff; border-color: #009688; color: #009688 !important"; 
+                                            }
+                                            else
+                                            {
+                                                style = "background-color: #009688; border-color: #009688;";
+                                            }
+
+                                            <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditEvidence", new { fileId = @item.Id, boardTypeId = 2 })" onclick="setUrl(this)" style="@style">
                                                 <i class="fa fa-clipboard ionSize"></i>
                                             </a>      
                                         </td>
@@ -523,7 +544,7 @@
                                                 style = "background-color: #ff7700; border-color: #ff7700;";
                                             }
 
-                                            <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditMasterPetition", new { fileId = @item.Id, boardTypeId = 2 })" style="@style">
+                                            <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditMasterPetition", new { fileId = @item.Id, boardTypeId = 2 })" onclick="setUrl(this)" style="@style">
                                                 <i class="fa fa-search ionSize"></i>
                                             </a>  
                                         </td>
@@ -578,7 +599,7 @@
                                                         <td class="p-0" style="text-align: center">
                                                             @*@if(item.DisputeResolutionPetition.PetitionIssuanceDate != null)
                                                             {*@
-                                                                <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditPetition", new { fileId = @item.Id, boardTypeId = 2 })" style="background-color: #00c1f3; border-color: #00c1f3;">
+                                                                <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditPetition", new { fileId = @item.Id, boardTypeId = 2 })" onclick="setUrl(this)" style="background-color: #00c1f3; border-color: #00c1f3;">
                                                                     <i class="fa fa-file ionSize"></i>
                                                                 </a>
                                                             @*}*@
@@ -657,6 +678,8 @@
             $('#datatable2').dataTable({
                 "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
             });
+
+            var URL = "";
 
         });
 
@@ -799,6 +822,8 @@
                 }
             });
         }
+
+        
 
     </script>
 }

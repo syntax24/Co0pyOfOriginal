@@ -10,7 +10,6 @@ namespace CompanyManagment.Application
     public class PetitionApplication : IPetitionApplication
     {
         private readonly IPetitionRepository _petitionRepository;
-        private readonly IWorkHistoryRepository _workHistoryRepository;
 
         public PetitionApplication(IPetitionRepository petitionRepository)
         {

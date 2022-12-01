@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using _0_Framework.Application;
+using _0_Framework_b.Application;
 using Company.Domain.MasterPetition;
 using Company.Domain.MasterWorkHistory;
 using CompanyManagment.App.Contracts.MasterPetition;
@@ -10,7 +10,6 @@ namespace CompanyManagment.Application
     public class MasterPetitionApplication : IMasterPetitionApplication
     {
         private readonly IMasterPetitionRepository _masterPetitionRepository;
-        private readonly IMasterWorkHistoryRepository _MasterWorkHistoryRepository;
 
         public MasterPetitionApplication(IMasterPetitionRepository MasterPetitionRepository)
         {

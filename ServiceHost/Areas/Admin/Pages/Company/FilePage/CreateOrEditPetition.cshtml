@@ -135,7 +135,11 @@
                     <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert; margin: 15px">
                         <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> جزئیات دادنامه </legend>
                         <div id="penaltyTitles" class="row m-t-15">
-                    
+                            <div class="col-sm-12 m-b-4">
+                                <a id="btnPopModal-1" href="#showmodal=@Url.Page("./Index", "CreateOrEditFileTitle", new { Type = "petition" })" class="col-xs-3 pull-right btn btn-success btn-rounded waves-effect waves-light w-100" style=" background-color: #f5f5f5; font-size: 13px; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-bottom: 15px"> 
+                                    + ایجاد عنوان جدید
+                                </a>
+                            </div>
                             @for(var i = 0; i < @Model.CreatePenaltyTitle.Count; i++)
                             {
                                 <div class="d-flex">
@@ -145,7 +149,7 @@
                                             {
                                                 <label asp-for="CreatePenaltyTitle[i].Title" class="control-label"> عنوان </label>
                                             }
-                                            <input type="text" class="form-control" asp-for="CreatePenaltyTitle[i].Title">
+                                            <input type="text" class="form-control" asp-for="CreatePenaltyTitle[i].Title" onfocus="getSugesstedTitles(this, 'petition')">
                                             <span asp-validation-for="CreatePenaltyTitle[i].Title" class="error"></span>
                                         </div>
                                     </div>
@@ -315,7 +319,7 @@
                 <a class="btn btn-default btn-rounded waves-effect waves-light" data-dismiss="modal">بستن</a>
                 <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
             </div>
-        </div>
+        </div>  
     </form>
 </div>
 

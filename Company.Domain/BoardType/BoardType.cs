@@ -17,11 +17,12 @@ namespace Company.Domain.BoardType
             MasterPetitionsList = new List<MasterPetition.MasterPetition>();
         }
 
-        public int Id { get; set; }
+        public int Id { get; private set; }
         public string Title { get; set; }
-        public List<Board.Board> BoardsList { get; set; }
-        public List<Petition.Petition> PetitionsList { get; set; }
-        public List<MasterPetition.MasterPetition> MasterPetitionsList { get; set; }
+        public List<Board.Board> BoardsList { get; private set; }
+        public List<Petition.Petition> PetitionsList { get; private set; }
+        public List<MasterPetition.MasterPetition> MasterPetitionsList { get; private set; }
+        public List<Evidence.Evidence> EvidencesList { get; private set; }
 
         public void Edit(string title)
         {

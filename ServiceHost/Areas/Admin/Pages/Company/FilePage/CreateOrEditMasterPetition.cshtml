@@ -54,7 +54,7 @@
         <div class="modal-body">
             <div class="row">
                 <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
-                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> شرح دادنامه </legend>
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> کارشناسی </legend>
                     <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert; margin: 15px">
                         <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> مشخصات پرونده </legend>
                         <div class="row">
@@ -100,9 +100,13 @@
                             </div>        
                     </fieldset>
                     <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert; margin: 15px">
-                        <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> جزئیات دادنامه </legend>
+                        <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 220px; text-align: center;"> جزئیات پرداخت کارشناسی </legend>
                         <div id="penaltyTitles" class="row m-t-15">
-                    
+                            <div class="col-sm-12 m-b-4">
+                                <a id="btnPopModal-1" href="#showmodal=@Url.Page("./Index", "CreateOrEditFileTitle", new { Type = "masterPetition" })" class="col-xs-3 pull-right btn btn-success btn-rounded waves-effect waves-light w-100" style=" background-color: #f5f5f5; font-size: 13px; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-bottom: 15px"> 
+                                    + ایجاد عنوان جدید
+                                </a>
+                            </div>
                             @for(var i = 0; i < @Model.CreateMasterPenaltyTitle.Count; i++)
                             {
                                 <div class="d-flex">
@@ -112,7 +116,7 @@
                                             {
                                                 <label asp-for="CreateMasterPenaltyTitle[i].Title" class="control-label"> عنوان </label>
                                             }
-                                            <input type="text" class="form-control" asp-for="CreateMasterPenaltyTitle[i].Title">
+                                            <input type="text" class="form-control" asp-for="CreateMasterPenaltyTitle[i].Title" onfocus="getSugesstedTitles(this, 'masterPetition')">
                                             <span asp-validation-for="CreateMasterPenaltyTitle[i].Title" class="error"></span>
                                         </div>
                                     </div>
@@ -192,7 +196,7 @@
                         </div>
                     </fieldset>
                     <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert; margin: 15px">
-                        <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> احراز سابقه </legend>        
+                        <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 230px; text-align: center;">  احراز سابقه توسط کارشناس </legend>        
                         <div id="recordVerification" class="row m-t-15">
                        
                             @for(var i = 0; i < @Model.CreateMasterWorkHistory.Count; i++)
@@ -597,7 +601,6 @@
             if (isConfirm) {
                   
                 $.ajax({
-            //contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
                     type: 'POST',
                     url: '@Url.Page("./Index", "RemoveMasterPetition")',

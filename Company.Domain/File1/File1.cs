@@ -38,9 +38,10 @@ namespace Company.Domain.File1
         public string Description { get; private set; }
         public int Status { get; private set; } // 1-> deactive , 2 -> active 
 
-        public List<Board.Board> BoardsList { get; set; }
-        public List<Petition.Petition> PetitionsList { get; set; }
-        public List<MasterPetition.MasterPetition> MasterPetitionsList { get; set; }
+        public List<Board.Board> BoardsList { get; private set; }
+        public List<Petition.Petition> PetitionsList { get; private set; }
+        public List<MasterPetition.MasterPetition> MasterPetitionsList { get; private set; }
+        public List<Evidence.Evidence> EvidencesList { get; set; }
 
         //public File()
         //{

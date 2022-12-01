@@ -300,7 +300,7 @@ function CallBackHandler(data, action, form) {
 
                 $.Notification.autoHideNotify('success', 'top center', 'پیام سیستم ', data.message);
                 setTimeout(function () {
-                    window.location.href = "#showmodal=/Admin/Company/FilePage?handler=EditFile";
+                    window.location.replace("#showmodal=/Admin/Company/FilePage?handler=EditFile");
 
                 }, 1000);
 
@@ -308,6 +308,23 @@ function CallBackHandler(data, action, form) {
                 /*alert(data.message);*/
 
                 $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', data.message);
+
+            }
+            break;
+
+        case "ReloadFileTitle":
+            console.log(data)
+            if (data.result.isSuccedded) {
+
+                $.Notification.autoHideNotify('success', 'top center', 'پیام سیستم ', data.result.message);
+                setTimeout(function () {
+                    window.location.href = "#showmodal=/Admin/Company/FilePage?handler=CreateOrEditFileTitle&Type=" + data.type;
+                }, 1000);
+                window.location.hash = "##";
+            } else {
+                /*alert(data.message);*/
+
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', data.result.message);
 
             }
             break;
@@ -768,5 +785,48 @@ function sortPS(id) {
 function numberWithCommas(input) {
 
     $(input).val($(input).val().split(',').join("").toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
+}
+
+function setUrl(element) {
+
+    URL = $(element).attr('href');
+}
+
+function getUrl(element) {
+
+    window.location.hash = "##"
+    $(element).attr('href', URL)
+}
+
+function getSugesstedTitles(element, type) {
+
+    var id = $(element).attr('id') + 's';
+    var tag = $(document).find('#' + id).length;
+
+    if (tag == 0) {
+
+        $.ajax({
+            dataType: 'json',
+            type: 'GET',
+            url: '/Admin/Company/FilePage?handler=GetFileTitles',
+            //headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+            data: { "type": type },
+
+            success: function (response) {
+
+                $(element).attr('list', id)
+                const html = `<datalist id="${id}"></datalist>`
+
+                $(html).insertAfter(element)
+                $.each(response, function (i, item) {
+                    $('#' + id).append($("<option>").text(item));
+                });
+            },
+            failure: function (response) {
+                console.log(5, response)
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', response.message);
+            }
+        });
+    }
 }
 

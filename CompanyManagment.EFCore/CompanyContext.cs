@@ -8,6 +8,9 @@ using Company.Domain.ContractAgg;
 using Company.Domain.EmployeeAgg;
 using Company.Domain.EmployeeChildrenAgg;
 using Company.Domain.empolyerAgg;
+using Company.Domain.Evidence;
+using Company.Domain.EvidenceDetail;
+using Company.Domain.FileTitle;
 using Company.Domain.HolidayAgg;
 using Company.Domain.HolidayItemAgg;
 using Company.Domain.JobAgg;
@@ -59,6 +62,9 @@ namespace CompanyManagment.EFCore
         public DbSet<MasterPetition> MasterPetitions { get; set; }
         public DbSet<MasterPenaltyTitle> MasterPenaltyTitles { get; set; }
         public DbSet<MasterWorkHistory> MasterWorkHistories { get; set; }
+        public DbSet<Evidence> Evidences { get; set; }
+        public DbSet<EvidenceDetail> EvidenceDetails { get; set; }
+        public DbSet<FileTitle> FileTitles { get; set; }
         //-------Main-Project----------------------------
         public DbSet<WorkshopAccount> WorkshopAccounts { get; set; }
         public DbSet<WorkingHoursItems> WorkingHoursItemsSet { get; set; }
