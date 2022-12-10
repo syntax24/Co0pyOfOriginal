@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +24,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
         public SelectList SelectListOriginalTitle;
         public SelectList SelectListSubtitle;
         public SelectList SelectListChapter;
+        public SelectList SelectListActiveString;
         public string[] ListModule;
         public List<OriginalTitleViewModel> OriginalTitleViewModels;
         public SelectList categoryListItems;
@@ -42,23 +43,25 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
             _textManagerApplication = textManagerApplication;
             _moduleApplication = moduleApplication;
         }
-
+       
         public void OnGet(TextManagerSearchModel searchModel)
         {
 
-            TextManagers = _textManagerApplication.Search(searchModel);
+           TextManagers = _textManagerApplication.Search(searchModel);
             SelectListOriginalTitle = new SelectList(_originalTitleApplication.GetAllOriginalTitle(), "Id", "Title");
             SelectListSubtitle = new SelectList(_subtitleApplication.GetAllSubtitle(), "Id", "Subtitle");
             SelectListChapter = new SelectList(_chapterApplication.GetAllChapter(), "Id", "Chapter");
             ListModule = _moduleApplication.GetAllModule().Select(x => x.NameSubModule).ToArray();
-
+         
+          
+         
             if (TextManagers != null)
             {
                 if (searchModel.OriginalTitle_Id != 0)
                 {
                     TextManagerSearch = "true";
                 }
-                //TextManagerSearch = "true";
+
             }
         }
         public IActionResult OnGetCreate()
@@ -130,11 +133,14 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
             var descriptions = _textManagerApplication.GetAllTextManager().Where(d => d.Subtitle_Id == subtitle_Id).Select(x => x.Description).ToList();
             return new JsonResult(descriptions);
         }
-        public IActionResult OnGetDescriptionAll(string term)
+        public IActionResult OnGetDescriptionAll(string term, int Id)
         {
-            var descriptions = _textManagerApplication.GetAllTextManager().Where(d => d.Description.Contains(term)).Select(x => x.Description).ToList();
-            return new JsonResult(descriptions);
+            if (Id == 0)
+                return new JsonResult(_textManagerApplication.GetAllTextManager().Where(d => d.Description.Contains(term) && d.IsActiveString == "true").Select(x => x.Description).ToList());
+            else
+                return new JsonResult(_textManagerApplication.GetAllTextManager().Where(d => d.Description.Contains(term) && d.Chapter_Id == Id && d.IsActiveString == "true").Select(x => x.Description).ToList());
         }
+
         public IActionResult OnGetSearchText1(string term)
         {
             try
@@ -167,31 +173,33 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
                 return BadRequest();
             }
         }
-
-        public IActionResult OnGetDeActive(long id)
+        public string isActiveString { get; set; }
+        public IActionResult OnGetDeActive(long id,string url)
         {
+
 
 
             var result = _textManagerApplication.DeActive(id);
 
             if (result.IsSuccedded)
-                return RedirectToPage("./Index");
-            Message = result.Message;
-            return RedirectToPage("./Index");
+                   return Redirect(url);
+                  Message = result.Message;
+            return RedirectToPage(url);
+           
         }
 
-        public IActionResult OnGetIsActive(long id)
+        public IActionResult OnGetIsActive(long id, string url)
         {
 
 
             var result = _textManagerApplication.Active(id);
             if (result.IsSuccedded)
-                return RedirectToPage("./Index");
+                return Redirect(url);
             Message = result.Message;
-            return RedirectToPage("./Index");
+            return RedirectToPage(url);
         }
 
-       
+
         public IActionResult OnGetGroupDeActive(List<long> ids)
         {
 
@@ -219,13 +227,13 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
             return RedirectToPage("./Index");
         }
 
-        public IActionResult OnGetGroupSelectModule(List<long> ids, string module,int AD)
+        public IActionResult OnGetGroupSelectModule(List<long> ids, string module, int AD)
         {
-          long moduleId= _moduleApplication.GetAllModule().Where(x => x.NameSubModule == module).Select(x => x.Id).FirstOrDefault();
+            long moduleId = _moduleApplication.GetAllModule().Where(x => x.NameSubModule == module).Select(x => x.Id).FirstOrDefault();
             foreach (var item in ids)
             {
                 var result = _textManagerApplication.SelectModule(item, moduleId, AD);
-                
+
             }
             return RedirectToPage("./Index");
 

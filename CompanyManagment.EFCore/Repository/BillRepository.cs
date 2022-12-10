@@ -24,9 +24,9 @@ namespace CompanyManagment.EFCore.Repository
                 Description = x.Description,
                 Appointed=x.Appointed,
                 Contact=x.Contact,
-                ProcessingStage=x.ProcessingStage,
-                Status=x.Status,
-    
+                IsActiveString = x.IsActiveString
+
+
             }).ToList();
         }
         public EditBill GetDetails(long id)
@@ -39,9 +39,6 @@ namespace CompanyManagment.EFCore.Repository
                 Appointed=x.Appointed,
                 Contact=x.Contact,
                 ProcessingStage=x.ProcessingStage,
-                Status = x.Status,
-              
-
             }).FirstOrDefault(x => x.Id == id);
         }
 
@@ -56,18 +53,37 @@ namespace CompanyManagment.EFCore.Repository
                 Appointed = x.Appointed,
                 Contact = x.Contact,
                 ProcessingStage = x.ProcessingStage,
-                Status = x.Status,
-           
+                IsActiveString = x.IsActiveString
+
             });
-            if (searchModel.Status != 0)
-                query = query.Where(x => x.Status == searchModel.Status);
-           
-            // if(!string.IsNullOrWhiteSpace(searchModel.SubjectBill))
-            //   query = query.Where(x => x.SubjectBill.Contains(searchModel.SubjectBill));
-            //if (!string.IsNullOrWhiteSpace(searchModel.Appointed))
-            //    query = query.Where(x => x.SubjectBill.Contains(searchModel.Appointed));
-            //if (!string.IsNullOrWhiteSpace(searchModel.ProcessingStage))
-            //    query = query.Where(x => x.SubjectBill.Contains(searchModel.ProcessingStage));
+            if (!string.IsNullOrWhiteSpace(searchModel.Appointed))
+            {
+                query = query.Where(x => x.Appointed.Contains(searchModel.Appointed)); ;
+                if (searchModel.IsActiveString == "false")
+                    query = query.Where(x => x.IsActiveString == "false");
+                if (searchModel.IsActiveString == "true")
+                    query = query.Where(x => x.IsActiveString == "true");
+                if (string.IsNullOrWhiteSpace(searchModel.IsActiveString) || searchModel.IsActiveString == null || searchModel.IsActiveString == "null")
+                    query = query.Where(x => x.IsActiveString == "true");
+            }
+            else
+            {
+                if (searchModel.IsActiveString == "false")
+                    query = query.Where(x => x.IsActiveString == "false");
+                if (searchModel.IsActiveString == "true")
+                    query = query.Where(x => x.IsActiveString == "true");
+                if (string.IsNullOrWhiteSpace(searchModel.IsActiveString) || searchModel.IsActiveString == null || searchModel.IsActiveString == "null")
+                    query = query.Where(x => x.IsActiveString == "true");
+            }
+
+
+
+            if (!string.IsNullOrWhiteSpace(searchModel.ProcessingStage))
+                query = query.Where(x => x.ProcessingStage.Contains(searchModel.ProcessingStage));
+            if (!string.IsNullOrWhiteSpace(searchModel.Contact))
+                query = query.Where(x => x.Contact.Contains(searchModel.Contact));
+            if (!string.IsNullOrWhiteSpace(searchModel.Description))
+                query = query.Where(x => x.Description.Contains(searchModel.Description));
 
 
             return query.OrderByDescending(x => x.Id).ToList();

@@ -14,5 +14,6 @@ namespace Company.Domain.BillAgg
         //void ModuleTextManager(long textManagerId, long moduleId);
         //void RemoveOldRelation(long textManagerId);
         //List<string> GetlisAllModulet();
+      
     }
 }

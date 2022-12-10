@@ -45,11 +45,12 @@ blockquote
 	border-left-width: 5px;
 }
 
-.cke_contents_rtl blockquote
-{
+.cke_contents_rtl blockquote {
 	padding-left: 8px;
 	padding-right: 20px;
 	border-right-width: 5px;
+	font-family: 'Web_Yekan';
+	font-size:18px;
 }
 
 a

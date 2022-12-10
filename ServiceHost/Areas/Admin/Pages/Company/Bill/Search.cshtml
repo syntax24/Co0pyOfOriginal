@@ -47,8 +47,13 @@
             *border-right-width: 2px;
             *border-bottom-width: 2px;
         }
+
+        .select2-selection__rendered {
+            font-size: 12px;
+        }
     </style>
 }
+
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <div class="modal-body">
@@ -56,33 +61,46 @@
             <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
                 <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> جستجو  </legend>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label class="control-label">انتخاب عنوان: </label>
-                            <select class="form-control select-city " id="originalTitle" asp-items="@Model. SelectListOriginalTitle">
-                                <option value="1"> انتخاب عنوان : </option>
+                            <select class="form-control select-city" asp-items='@Model.SelectListOriginalTitle' id="originalTitle1">
+                                <option value="-1"> عنوان را انتخاب کنید ... </option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6" >
-                        <label class="control-label" > انتخاب بخش :</label>
-                        <div class="input-group">
-
-                            <select class="form-control select-city " id="subtitle" style="width: 186px; " >
-                                <option value="1"> انتخاب بخش : </option>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control select-city" id="subtitle1">
+                                <option value="0"> بخش</option>
                             </select>
-                            <span class="input-group-btn" >
-                                <button class="btn btn-success  " style="border-radius: 50px 0px 0px 50px;position: absolute;margin: -18px -8px;height: 36px;width: 80px;" onclick="showbtnMsg()">انتخاب</button>                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control select-city" id="chapter1">
+                                <option value="0"> فصل</option>
+                            </select>
                             <input type="hidden" id="resultsubtitle" />
                         </div>
                     </div>
+                </div>
+                <div class="row">
+                    @*<div class="row col-md-12" style="margin: 0px;">
+                            <div class="panel panel-default" style="background: #7dae8b4f;">
+                                <div class="panel-body">
+                                    <label style="font-size: 13px;color: green;width: 86%;margin-right: 9px;"> چنانچه تیک چک باکس روبه رو زده شودمورد انتخابی در فیلدکشویی فصل درنتایج جستجوی متن لایحه اعمال خواهد شد در غیر این صورت همه موارد متون جستجو خواهد شد</label>
+                                    <samp> <input id="checkfilter" type="checkbox" class="form-control " style="width: 31px;position: absolute;top: 0;left: 35px;"></samp>
+                                </div>
+                            </div>
+                        </div>*@
                     <div class="col-md-12" dir="ltr" style="text-align:right;margin-bottom:10px">
+                        <span class="alert-danger" id="alertcheckfilter"></span>
                         <label class="control-label"> : جستجو متن لایحه</label>
                         <div class="input-group">
                             <span class="input-group-btn">
                                 <button class="btn btn-success btn-rounded " onclick="showMsg()">انتخاب</button>
                             </span>
-                              <input id="DescriptionModal_Id" type="text" name="DescriptionModal_Id" style="text-align:right" placeholder="... عبارت مورد نظر را تایپ کنید " class="form-control" />
+                            <input id="DescriptionModal_Id" type="text" name="DescriptionModal_Id" style="text-align: right; font-size: 18px; font-family: 'Web_Yekan'" placeholder="... عبارت مورد نظر را تایپ کنید " class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -91,6 +109,7 @@
                         </div>
                     </div>
                 </div>
+
             </fieldset>
         </div>
     </div>
@@ -98,7 +117,6 @@
         <button type="button" id="btnmodal" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
     </div>
 </div>
-
 <script>
     $(document).ready(function () {
         $('#btnmodal').click(function () {
@@ -111,32 +129,65 @@
             source: '/Admin/Company/TextManager?handler=DescriptionAll'
         });
     });
+    $(document).ready(function () {
+        $('#DescriptionModal_Id').autocomplete({
+            source: function (request, response) {
+                var chaptervalue = document.getElementById("chapter1").value;
+                $.ajax({
+                    url: '/Admin/Company/TextManager?handler=DescriptionAll',
+                    data: {
+                        term: request.term,
+                        Id: chaptervalue,
+                    },
+                    success: function (data) {
+                        response(data);
+                        console.log(data);
+                    }
+                });
+            },
+            minLength: 3
+        });
+    });
+</script>
+<script>
+
     function showMsg() {
         $("#des").empty();
         var descriptionModalInput = document.getElementById('DescriptionModal_Id').value;
         document.getElementById('des').value = descriptionModalInput;
     }
-    function showbtnMsg() {
-        $("#des").empty();
-        var descriptionModalInput = document.getElementById('resultsubtitle').value;
-        document.getElementById('des').value = descriptionModalInput;
-    }
+    var url = null;
+    jQuery(document).ready(function ($) {
+        $.ui.autocomplete.prototype._renderItem = function (ul, item) {
+            var t = String(item.value).replace(
+                new RegExp(this.term, "gi"),
+                "<strong  style='font-size:12px;color:red'>$&</strong>");
+            return $("<li></li>")
+                .data("item.autocomplete", item)
+                .append("<div>" + t + "</div>")
+                .appendTo(ul);
+        };
+
+    });
 
 </script>
 <script>
     $(document).ready(function () {
-        $("#originalTitle").change(function () {
-            $("#subtitle").empty();
+        $("#originalTitle1").change(function () {
+            $("#subtitle1").empty();
+            $("#chapter1").empty();
             $.ajax({
                 type: 'GET',
                 url: '/Admin/Company/TextManager?handler=SubtitleList',
                 dataType: 'json',
-                data: { OriginalTitle_Id: $("#originalTitle").val() },
+                data: { OriginalTitle_Id: $("#originalTitle1").val() },
                 success: function (result) {
-                    $("#subtitle").append(' <option value="' + -1 + '">' +
+                    $("#subtitle1").append(' <option  value="' + -1 + '">' +
                         "نام بخش را انتخاب کنید" + '</option>');
+                    $("#chapter1").append(' <option value="' + -1 + '">' +
+                        "فصل را انتخاب کنید" + '</option>');
                     $.each(result, function (i, result) {
-                        $("#subtitle").append(' <option value="' + result.id + '">' +
+                        $("#subtitle1").append(' <option value="' + result.id + '">' +
                             result.subtitle + '</option>');
                     });
                 },
@@ -146,26 +197,27 @@
             });
             return false;
         });
-    });
-
-    $(document).ready(function () {
-        $("#subtitle").change(function () {
-            $("#DescriptionModal").empty();
+        $("#subtitle1").change(function () {
+            $("#chapter1").empty();
             $.ajax({
                 type: 'GET',
-                url: '/Admin/Company/TextManager?handler=Description',
+                url: '/Admin/Company/TextManager?handler=ChptereList',
                 dataType: 'json',
-                data: { subtitle_Id: $("#subtitle").val() },
-                success: function (result) {
-                    document.getElementById('resultsubtitle').value = result;
+                data: { Subtitle_Id: $("#subtitle1").val() },
+                success: function (results) {
+                    $("#chapter1").append(' <option value="' + -1 + '">' +
+                        "فصل را انتخاب کنید" + '</option>');
+                    $.each(results, function (i, result) {
+                        $("#chapter1").append(' <option value="' + result.value + '">' +
+                            result.text + '</option>');
+                    });
                 },
                 error: function (ex) {
-                    alert('Error');
+                    alert('ffff');
                 }
             });
             return false;
         });
-
     });
-
 </script>
+

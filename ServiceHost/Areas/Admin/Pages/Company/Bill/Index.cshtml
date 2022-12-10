@@ -1,9 +1,8 @@
 ﻿@page
 @model ServiceHost.Areas.Admin.Pages.Company.Bill.IndexModel
-
+@using Microsoft.AspNetCore.Http.Extensions;
 @{
-    //string colaps = "in";
-    //string act = "active";
+    string url = HttpContext.Request.GetEncodedUrl();
     int i = 1;
 }
 @{
@@ -11,6 +10,41 @@
     Layout = "Shared/_AdminLayout";
     ViewData["title"] = "مدیریت لایحه";
     <style>
+        .sizeSet {
+            padding: 2px !important;
+            text-align: center !important;
+        }
+
+        .rad {
+            border-radius: 8px !important;
+            /* padding: 10px; */
+            padding: 2px 5px 0px 5px;
+        }
+
+        .ionSize {
+            font-size: 20px !important;
+            top: 2px !important;
+            position: relative;
+        }
+
+        .ionRad {
+            border-radius: 8px !important;
+            padding: 0px 7px 0px 7px !important;
+            background-color: #ff7700 !important;
+            border-color: #ff7700 !important;
+        }
+
+        .ionRad2 {
+            border-radius: 8px !important;
+            padding: 0px 7px 0px 7px !important;
+            background-color: #7c7a7a !important;
+            border-color: #7c7a7a !important;
+        }
+
+        .faSize {
+            font-size: 22px !important;
+        }
+
         .thh0 {
             width: 8px !important;
         }
@@ -35,31 +69,153 @@
         .searchpanel {
             background-color: #747272;
         }
+
+        select {
+            cursor: pointer;
+        }
+
+        .panel-default > .panel-heading {
+            background-color: #950000 !important;
+        }
+
+
+
+
+
+        .tooltip-container {
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip2-container {
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip {
+            opacity: 0;
+            z-index: 99;
+            color: #fff;
+            width: 220px;
+            display: block;
+            font-size: 14px;
+            font-family: 'IranSans';
+            padding: 5px 10px;
+            border-radius: 3px;
+            text-align: center;
+            /*text-shadow: 1px 1px 2px #111;*/
+            background: #e67e22;
+            border: 1px solid #e67e22;
+            box-shadow: 0 0 3px rgba(0,0,0,0.5);
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+            -ms-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+            -webkit-transform: scale(0);
+            -moz-transform: scale(0);
+            -o-transform: scale(0);
+            -ms-transform: scale(0);
+            transform: scale(0);
+            position: absolute;
+            right: -50px;
+            bottom: 40px;
+        }
+
+            .tooltip:before, .tooltip:after {
+                content: '';
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-top: 10px solid #e67e22;
+                position: absolute;
+                bottom: -10px;
+                left: 70%;
+            }
+
+        .tooltip-container:hover .tooltip, a:hover .tooltip {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            -o-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+        }
+
+        .tooltip2 {
+            opacity: 0;
+            z-index: 99;
+            color: #fff;
+            width: 220px;
+            display: block;
+            font-size: 14px;
+            font-family: 'IranSans';
+            padding: 5px 10px;
+            border-radius: 3px;
+            text-align: center;
+            /*text-shadow: 1px 1px 2px #111;*/
+            background: #e67e22;
+            border: 1px solid #e67e22;
+            box-shadow: 0 0 3px rgba(0,0,0,0.5);
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+            -ms-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+            -webkit-transform: scale(0);
+            -moz-transform: scale(0);
+            -o-transform: scale(0);
+            -ms-transform: scale(0);
+            transform: scale(0);
+            position: absolute;
+            right: -90px;
+            bottom: 40px;
+        }
+
+            .tooltip2:before, .tooltip2:after {
+                content: '';
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-top: 10px solid #e67e22;
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+            }
+
+        .tooltip2-container:hover .tooltip2, a:hover .tooltip2 {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            -o-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+        }
     </style>
+
 }
 <div class="row">
     <div class="row">
         <div class="col-sm-12 m-r-10">
             <p class="pull-right">
-                <a id="btnPopModal" asp-page="/Company/Bill/CreateBill" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-right: 10px "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> ایجاد لایحه جدید </a>
+                <a id="btnPopModal" asp-page="/Company/Bill/CreateBill" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-right: 10px "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 9px; color: #0f9500 !important "></i> ایجاد لایحه جدید </a>
             </p>
+            <input type="hidden" id="sercheCheck" value="@Model.BillSearch" />
         </div>
     </div>
 
-
     <div class="col-sm-12">
         <div class="panel-group panel-group-joined" id="accordion-test">
-            <div class="panel panel-default" style="border-radius: 15px !important;">
-                <div class="panel-heading" style="background-color: #545353 !important">
+            <div class="panel panel-default" style="border-radius: 15px !important; background-color: #fdc0c0; ">
+                <div class="panel-heading" style="background-color: #950000 !important">
                     <h4 class="panel-title" style="color: #edebeb !important; display: inline;">
                         <a data-toggle="collapse" data-parent="#accordion-test" href="#collapseOne" class="collapsed" style="display: inline;">
-                            جستجوی عناوین
+                            جستجوی لایحه
                         </a>
                     </h4>
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse in ">
                     <div class="panel-body" style="padding-top: 15px; padding-bottom: 15px;">
-
                         <div class="row">
                             <div class="col-sm-12">
                                 <form class="form-inline" role="form" method="get" name="search-theme-form" id="search-theme-form" autocomplete="off">
@@ -67,42 +223,33 @@
                                     <div class="form-group col-sm-12">
                                         <div class="row">
                                             <div class="col-sm-3 pull-right">
-                                                <div class="form-group">
-                                                    <input id="Appointed_Id" asp-for="searchModel.Appointed" class="form-control" placeholder="انتخاب موکل" style="z-index: 0;" />
-
-                                                </div>
+                                                <input id="Appointed_Id" asp-for="searchModel.Appointed" class=" form-control inpt" placeholder="انتخاب موکل" style="width: 100%">
                                             </div>
                                             <div class="col-sm-3 pull-right">
-                                                <div class="form-group">
-                                                    <input id="ProcessingStage_Id" asp-for="searchModel.ProcessingStage" placeholder="مرحله رسیدگی" class="form-control" style="z-index: 0;" />
-                                                </div>
+                                                <input id="ProcessingStage_Id" asp-for="searchModel.ProcessingStage" placeholder="مرحله رسیدگی" class=" form-control inpt" style="width: 100%">
                                             </div>
                                             <div class="col-sm-3 pull-right">
-                                                <div class="form-group">
-                                                    <input id="Contact_Id" asp-for="searchModel.Contact" placeholder="انتخاب مخاطب" class="form-control" style="z-index: 0;" />
-                                                </div>
+                                                <input id="Contact_Id" asp-for="searchModel.Contact" placeholder="انتخاب مخاطب" class=" form-control inpt" style="width: 100%">
                                             </div>
                                             <div class="col-sm-3 pull-right">
-                                                <div class="form-group">
-                                                    <input asp-for="searchModel.SubjectBill" placeholder="موضوع" class="form-control" />
-                                                </div>
+                                                <input asp-for="searchModel.SubjectBill" placeholder="موضوع" class=" form-control inpt" style="width: 100%">
                                             </div>
                                         </div>
+                                        <hr style=" margin-top: 12px;margin-bottom: 12px;" />
                                         <div class="row" style="margin-top: 15px">
-                                            <div class="col-lg-6" style="margin-top: 15px">
-                                            </div>
-                                            <div class="col-lg-3" style="margin-top: 15px">
-                                                <label asp-for="searchModel.Status" class="control-label col-md-5 col-sm-5 col-xs-12"> وضعیت : </label>
-                                                <select class="form-control" asp-for="searchModel.Status" placeholder="وضعیت">
-                                                    <option value="1"> فعال </option>
-                                                    <option value="2">غیر فعال </option>
-                                                    <option value="0">هردو </option>
+                                            <div class="col-lg-9">
+                                                <label class="sr-only" asp-for="searchModel.IsActiveString"></label>
+                                                <select id="activing" class="form-control activer" asp-for="searchModel.IsActiveString" style="background-color: #dddddd; border-radius: 25px; border: 1px solid #bfbfbf;">
+                                                    <option value="true"> فعال  </option>
+                                                    <option value="false"> غیرفعال</option>
+                                                    <option value="both"> هردو</option>
                                                 </select>
                                             </div>
-                                            <div class="col-lg-3" style="margin-top: 15px">
-                                                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; background-color: #950000; border-color: #950000; font-family: 'Web_Yekan' !important; margin-left: -3px"> <i class="fa fa-search" style="padding-left: 3px; font-size: 14px;"></i> جستجو</button>
+                                            <div class="col-lg-3">
+                                                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light m-b-5 search" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; background-color: #950000; border-color: #950000; font-family: 'Web_Yekan' !important; margin-left: -3px "> <i class="fa fa-search" style="padding-left: 3px; font-size: 10px;"></i> جستجو</button>
                                                 <a class="btn btn-info btn-rounded waves-effect waves-light m-b-5" style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; background-color: #545353; border-color: #545353; font-family: 'Web_Yekan' !important;" asp-page="./Index">مشاهده همه</a>
                                             </div>
+
                                         </div>
                                     </div>
                                 </form>
@@ -111,42 +258,79 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
-
-
     <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست بخش</h3>
+                <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 9px"></i> لیست لایحه</h3>
             </div>
             <div class="panel-body">
                 <table id="datatable" class="table table-striped table-bordered" width="100%">
                     <thead>
                         <tr>
-                            <th style="font-size: 16px !important; width: 3% !important">#</th>
-                            <th style="font-size: 16px !important; width: 5% !important ; text-align:center">انتخاب موکل</th>
-                            <th style="font-size: 16px !important; width: 5% !important ; text-align:center"> مرحله رسیدگی </th>
-                            <th style="font-size: 16px !important; width: 15% !important; text-align:center">انتخاب مخاطب </th>
-                            <th style="font-size: 16px !important; width: 15% !important; text-align:center">موضوع </th>
-                            <th style="font-size: 16px !important; width: 5% !important;text-align: center">عملیات</th>
+                            <th style="font-size: 10px !important; display: none" class="sizeSet">
+                                <span class="tooltip-container">
+                                    <input class="checkboxtitle" type="checkbox" id="checkSelect" onclick="selectori(this)" checked="checked" />
+                                </span>
+                            </th>
+                            <th style="font-size: 10px !important; ">#</th>
+                            <th style="font-size: 10px !important; width: 15% !important ; text-align:center">انتخاب موکل</th>
+                            <th style="font-size: 10px !important; width: 15% !important ; text-align:center"> مرحله رسیدگی </th>
+                            <th style="font-size: 10px !important; width: 15% !important; text-align:center">انتخاب مخاطب </th>
+                            <th style="font-size: 10px !important; width: 45% !important; text-align:center">موضوع </th>
+                            <th style="font-size: 10px !important; width: 10%">
+                                <span style="float: right;">
+                                    <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                </span>
+                                <span class="act">
+                                </span>
+                                <a class="btn btn-danger pull-right m-rl-5 rad deact" onclick="deactiveAll()">
+                                    <i class="fa faSize fa-trash"></i>
+                                </a>
+                            </th>
+
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.Bills)
                         {
                             <tr>
-                                <td style="font-size: 14px !important; text-align: right">@i </td>
-                                <td style="font-size: 14px !important; text-align: right">@item.Appointed&nbsp; </td>
-                                <td style="font-size: 14px !important; text-align: right">@item.ProcessingStage  </td>
-                                <td style="font-size: 14px !important; text-align: right">@item.Contact </td>
-                                <td style="font-size: 14px !important; text-align: right">@item.SubjectBill</td>
+                                <td style="font-size: 12px !important; text-align: center;display:none">
+                                    <input type="checkbox" name="foo" value="@item.Id" checked="checked" />
+                                </td>
+                                <td style="font-size: 12px !important; text-align: right">@i </td>
+                                <td style="font-size: 12px !important; text-align: right">@item.Appointed&nbsp; </td>
+                                <td style="font-size: 12px !important; text-align: right">@item.ProcessingStage  </td>
+                                <td style="font-size: 12px !important; text-align: right">@item.Contact </td>
+                                <td style="font-size: 12px !important; text-align: right">@item.SubjectBill</td>
                                 @{
                                     i++;
                                 }
+
                                 <td>
-                                    <a class="btn btn-warning pull-left m-rl-5" asp-page="./Edit" asp-route-id="@item.Id">ویرایش</a> |
+                                    <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
+                                       asp-page="./Edit" asp-route-id="@item.Id">
+                                        <i class="fa faSize fa-edit"></i>
+                                    </a>
+
+                                    @if (item.IsActiveString == "true")
+                                    {
+
+                                        <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
+
+                                    }
+                                    else
+                                    {
+                                        <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
+                                    }
+
                                 </td>
+
+
+
+
                             </tr>
                         }
                     </tbody>
@@ -202,6 +386,104 @@
 
         });
     </script>
+    <script>
+        $('.activer').on('change',
+            function (e) {
+                e.preventDefault();
+                $('.search').click();
+            });
+    </script>
+    <script>
 
+        if (document.getElementById("activing").selectedIndex == 1) {
+            $('.deact').remove();
+            $('.act').append(
+                ' <a class="btn btn-success pull-right m-rl-5 rad react" onclick="reActiveAll()">' + '<i class="fa faSize fa-rotate-left"></i>' + ' </a>'
+            );
+        }
+        if (document.getElementById("activing").selectedIndex == 2) {
+            $('.deact').remove();
+        }
 
+    </script>
+    <script>
+        function reActiveAll() {
+
+            if (document.getElementById("checkSelect").checked == false) {
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  لایحهی انتخاب نشده است ");
+            } else {
+                if (document.getElementById("sercheCheck").value == "false") {
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  لوایح   موکل را انتخاب نموده و سپس جستجو را کلیک کنید ");
+                } else if (document.getElementById("sercheCheck").value == "true") {
+                    swal({
+                        title: "آیا فعال نمودن این  لایحه ها اطمینان دارید؟",
+                        text: "",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "بله",
+                        cancelButtonText: "خیر",
+                        closeOnConfirm: false
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            checkboxes2 = document.getElementsByName('foo');
+                            var url3b = '';
+                            for (var i2 = 0, n2 = checkboxes2.length; i2 < n2; i2++) {
+                                if (checkboxes2[i2].checked == true) {
+                                    var u2 = '&ids=' + checkboxes2[i2].value;
+                                    console.log(u2);
+                                    url3b = url3b + u2;
+                                    console.log(url3b);
+                                }
+                            }
+                            var url2b = '@Url.Page("/Company/Bill/Index", "GroupReActive")';
+                            console.log(url2b);
+                            window.location.href = url2b + url3b;
+                        }
+                    });
+                }
+            }
+        }
+    </script>
+    <script>
+        function deactiveAll() {
+
+            if (document.getElementById("checkSelect").checked == false) {
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  لایحهی انتخاب نشده است ");
+            } else {
+                if (document.getElementById("sercheCheck").value == "true") {
+                    swal({
+                        title: "آیا حذف این  لایحه ها اطمینان دارید؟",
+                        text: "",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "بله",
+                        cancelButtonText: "خیر",
+                        closeOnConfirm: false
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            checkboxes2 = document.getElementsByName('foo');
+                            var url3b = '';
+                            for (var i2 = 0, n2 = checkboxes2.length; i2 < n2; i2++) {
+                                if (checkboxes2[i2].checked == true) {
+                                    var u2 = '&ids=' + checkboxes2[i2].value;
+                                    console.log(u2);
+                                    url3b = url3b + u2;
+                                    console.log(url3b);
+                                }
+                            }
+                            var url2b = '@Url.Page("/Company/Bill/Index", "GroupDeActive")';
+                            window.location.href = url2b + url3b;
+                            console.log(url2b);
+                        }
+                    });
+
+                } else if (document.getElementById("sercheCheck").value == "false") {
+                    console.log(document.getElementById("sercheCheck").value);
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا در قسمت جستجوی  لوایح   موکل را انتخاب نموده و سپس جستجو را کلیک کنید");
+                }
+            }
+        }
+    </script>
 }

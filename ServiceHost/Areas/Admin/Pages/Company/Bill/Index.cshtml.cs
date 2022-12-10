@@ -4,18 +4,18 @@ using CompanyManagment.App.Contracts.Contact2;
 using CompanyManagment.App.Contracts.TextManager;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ServiceHost.Areas.Admin.Pages.Company.Bill
 {
     public class IndexModel : PageModel
     {
-
+        public string BillSearch = "false";
         public BillSearchModel searchModel;
         public List<BillViewModel> Bills;
         private readonly IBillApplication _billApplication;
         private readonly IContactApplication2 _contactApplication;
-
+        public string Message { get; set; }
         public IndexModel(IBillApplication billApplication, IContactApplication2 contactApplication)
         {
             _billApplication = billApplication;
@@ -25,6 +25,13 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Bill
         {
             Bills = _billApplication.Search(searchModel);
 
+            if (Bills != null)
+            {
+                if (!string.IsNullOrWhiteSpace(searchModel.Appointed))
+                {
+                    BillSearch = "true";
+                }
+            }
         }
         public IActionResult OnGetCreate()
         {
@@ -77,8 +84,70 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Bill
             var result = _billApplication.Edit(command);
             return new JsonResult(result);
         }
+      
+        public IActionResult OnGetDeActive(long id, string url)
+        {
+
+
+
+            var result = _billApplication.DeActive(id);
+
+            if (result.IsSuccedded)
+                return Redirect(url);
+            Message = result.Message;
+            return RedirectToPage(url);
+
+        }
+
+        public IActionResult OnGetIsActive(long id, string url)
+        {
+
+
+            var result = _billApplication.Active(id);
+            if (result.IsSuccedded)
+                return Redirect(url);
+            Message = result.Message;
+            return RedirectToPage(url);
+        }
+
+
+
+        public IActionResult OnGetGroupDeActive(List<long> ids)
+        {
+            foreach (var item in ids)
+            {
+                var result = _billApplication.DeActive(item);
+            }
+            return RedirectToPage("./Index");
+        }
+        public IActionResult OnGetGroupReActive(List<long> ids)
+        {
+            foreach (var item in ids)
+            {
+                var result = _billApplication.Active(item);
+            }
+            //if (result.IsSuccedded)
+            //    return RedirectToPage("./Index");
+            return RedirectToPage("./Index");
+        }
+
+        //public IActionResult OnGetGroupSelectModule(List<long> ids, string module, int AD)
+        //{
+        //    long moduleId = _billApplication.GetAllModule().Where(x => x.NameSubModule == module).Select(x => x.Id).FirstOrDefault();
+        //    foreach (var item in ids)
+        //    {
+        //        var result = _billApplication.SelectModule(item, moduleId, AD);
+
+        //    }
+        //    return RedirectToPage("./Index");
+
+        //}
+
+
+
         private static List<Appointed> ListAppointed()
         {
+           
             return new List<Appointed>()
             {
                 new Appointed {Id=1,Name="موکل1" },

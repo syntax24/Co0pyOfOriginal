@@ -16,7 +16,7 @@ namespace CompanyManagment.EFCore.Mapping
             builder.Property(x => x.ProcessingStage);
             builder.Property(x => x.Contact);
             builder.Property(x => x.Appointed);
-            builder.Property(x => x.Status);
+    
         }
     }
 }
