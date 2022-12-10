@@ -240,18 +240,18 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <select class="form-control select-city" asp-for="searchModel.Subtitle_Id" id="subtitle" style="width: 100%">
+                                                    <select class="form-control select-city" asp-for="searchModel.Subtitle_Id" asp-items="Model.SelectListSubtitle"  id="subtitle" style="width: 100%">
                                                         <option value="0"> فصل را انتخاب کنید</option>
                                                     </select>
 
                                                 </div>
                                                 <div class="col-sm-3 pull-right">
-                                                    <select class="form-control select-city" asp-for="searchModel.Chapter_Id" placeholder="فصل" id="chapter" style="width: 100%">
+                                                    <select class="form-control select-city" asp-for="searchModel.Chapter_Id" asp-items="Model.SelectListChapter"  placeholder="فصل" id="chapter" style="width: 100%">
                                                         <option value="0" selected="selected">بخش را انتخاب کنید </option>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-3 pull-right">
-                                                    <input class="form-control inpt" asp-for="searchModel.SubjectTextManager" placeholder="موضوع" style="width: 100%">
+                                                    <input class="form-control inpt" asp-for="searchModel.SubjectTextManager"  placeholder="موضوع" style="width: 100%">
                                                 </div>
 
                                             </div>
@@ -298,8 +298,8 @@
                                             </span>
                                         </th>
                                         <th style="font-size: 10px !important" class="sizeSet">#</th>
-                                        <th style="font-size: 10px !important" class="sizeSet">بخش</th>
                                         <th style="font-size: 10px !important" class="sizeSet">عنوان</th>
+                                        <th style="font-size: 10px !important" class="sizeSet">بخش</th>
                                         <th style="font-size: 10px !important" class="sizeSet">فصل </th>
                                         <th style="font-size: 10px !important" class="sizeSet"> ماده </th>
                                         <th style="font-size: 10px !important" class="sizeSet"> شماره </th>

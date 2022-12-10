@@ -59,46 +59,27 @@ namespace ServiceHost.Areas.Admin.Pages.Company.OriginalTitle
         }
 
 
-        public IActionResult OnGetGroupDeActive(List<long> ids)
+        public IActionResult OnGetDeActive(long id, string url)
         {
-
-            foreach (var item in ids)
-            {
-                var result = _originalTitleApplication.DeActive(item);
-            }
-            return RedirectToPage("./Index");
-
-        }
-        public IActionResult OnGetGroupReActive(List<long> ids)
-        {
-
-            foreach (var item in ids)
-            {
-                var result = _originalTitleApplication.Active(item);
-            }
-            return RedirectToPage("./Index");
-        }
-        public IActionResult OnGetDeActive(long id)
-        {
-
-
             var result = _originalTitleApplication.DeActive(id);
 
             if (result.IsSuccedded)
-                return RedirectToPage("./Index");
+                return Redirect(url);
             Message = result.Message;
-            return RedirectToPage("./Index");
+            return RedirectToPage(url);
+
         }
-        public IActionResult OnGetIsActive(long id)
+        public IActionResult OnGetIsActive(long id, string url)
         {
 
 
             var result = _originalTitleApplication.Active(id);
             if (result.IsSuccedded)
-                return RedirectToPage("./Index");
+                return Redirect(url);
             Message = result.Message;
-            return RedirectToPage("./Index");
+            return RedirectToPage(url);
         }
+
 
     }
 }

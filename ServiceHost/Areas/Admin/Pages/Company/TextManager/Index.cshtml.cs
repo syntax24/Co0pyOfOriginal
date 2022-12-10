@@ -176,18 +176,14 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
      
         public IActionResult OnGetDeActive(long id,string url)
         {
-
-
-
             var result = _textManagerApplication.DeActive(id);
 
             if (result.IsSuccedded)
                    return Redirect(url);
                   Message = result.Message;
             return RedirectToPage(url);
-           
+          
         }
-
         public IActionResult OnGetIsActive(long id, string url)
         {
 
