@@ -80,6 +80,31 @@ namespace ServiceHost.Areas.Admin.Pages.Company.OriginalTitle
             return RedirectToPage(url);
         }
 
+        public IActionResult OnGetGroupDeActive(List<long> ids)
+        {
 
+            foreach (var item in ids)
+            {
+                var result = _originalTitleApplication.DeActive(item);
+            }
+            return RedirectToPage("./Index");
+
+        }
+
+
+        public IActionResult OnGetGroupReActive(List<long> ids)
+        {
+
+            foreach (var item in ids)
+            {
+                var result = _originalTitleApplication.Active(item);
+            }
+
+
+            //if (result.IsSuccedded)
+            //    return RedirectToPage("./Index");
+
+            return RedirectToPage("./Index");
+        }
     }
 }

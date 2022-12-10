@@ -231,21 +231,24 @@
                             <form class="form-inline" role="form" method="get" name="search-theme-form" id="search-theme-form" autocomplete="off">
                                 <div class="form-group col-sm-12">
                                     <div class="row">
+                                        <div class="col-sm-3 pull-right">
+                                            <select class="form-control select-city" asp-for="searchModel.OriginalTitle_Id" asp-items="Model.SelectListOriginalTitle" placeholder="عنوان" id="OriginalTitle_Id" style="width: 100%">
+                                                <option value="0" selected="selected">
+                                                    عنوان راانتخاب کنید
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control select-city" asp-for="searchModel.Subtitle_Id" asp-items="Model.SelectListSubtitles" id="Subtitle_Id" style="width: 100%">
+                                                <option value="0"> فصل را انتخاب کنید</option>
+                                            </select>
 
-                                        <div class="col-sm-3 pull-right">
-                                            <select class=" form-control inpt" asp-for="searchModel.OriginalTitle_Id" asp-items="@Model.SelectListOriginalTitle" placeholder="عنوان" id="OriginalTitle_Id" style="width: 100%">
-                                                <option value="0" selected="selected" disabled>عنوان </option>
-                                            </select>
                                         </div>
                                         <div class="col-sm-3 pull-right">
-                                            <select class=" form-control inpt" asp-for="searchModel.Subtitle_Id" asp-items="@Model.SelectListSubtitles" placeholder="بخش" id="Subtitle_Id" style="width: 100%">
-                                                <option value="0" selected="selected" disabled>بخش  </option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-4 pull-right">
                                             <label class="sr-only" asp-for="searchModel.Chapter"></label>
                                             <input class="form-control inpt" asp-for="searchModel.Chapter" placeholder="فصل" style="width: 100%">
                                         </div>
+
                                     </div>
                                     <hr style=" margin-top: 12px;margin-bottom: 12px;" />
                                     <div class="row" style="margin-top: 15px">
@@ -283,10 +286,9 @@
                     <table id="datatable" class="table table-striped table-bordered">
                         <thead style="background-color: #ecefee">
                             <tr>
-                                <th style="font-size: 10px !important; width: 5% !important" class="sizeSet">
+                                <th style="font-size: 10px !important; display: none" class="sizeSet">
                                     <span class="tooltip-container">
-                                        <input class="checkboxtitle" type="checkbox" id="checkSelect" onclick="selectori(this)" />
-                                        <span class="tooltip"> با استفاده از این چک باکس می توانید  فصل ها را بصورت گروهی انتخاب کرده و سپس با کلیک بر روی دکمه حذف گروهی  اقدام به حذف  نمایید</span>
+                                        <input class="checkboxtitle" type="checkbox" id="checkSelect" onclick="selectori(this)" checked="checked" />
                                     </span>
                                 </th>
                                 <th style="font-size: 16px !important; width: 5% !important">#</th>
@@ -295,53 +297,54 @@
                                 <th style="font-size: 16px !important; text-align: center; width: 20% !important"> فصل </th>
 
 
-                                <th style="font-size: 10px !important ;width: 10% !important">
+                                <th style="font-size: 10px !important; width: 65px; ">
                                     <span style="float: right;">
-                                        <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
-                                        <span>&nbsp;</span><span>&nbsp;</span>
+                                        <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
                                     </span>
                                     <span class="act">
                                     </span>
                                     <a class="btn btn-danger pull-right m-rl-5 rad deact" onclick="deactiveAll()">
                                         <i class="fa faSize fa-trash"></i>
                                     </a>
+
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model.Chapters)
                             {
-                                <tr>
-                                    <td style="font-size: 12px !important; text-align: center">
-                                        <input type="checkbox" name="foo" value="@item.Id" />
-                                    </td>
-                                    <td style="font-size: 14px !important; text-align: center">@i </td>
-                                    <td style="font-size: 14px !important; text-align: center">@item.OriginalTitle </td>
-                                    <td style="font-size: 14px !important; text-align: center">@item.Subtitle </td>
-                                    <td style="font-size: 14px !important; text-align: center">@item.Chapter </td>
-                                    @{
-                                        i++;
+                            <tr>
+                                <td style="font-size: 16px !important; text-align: center;display:none">
+                                    <input type="checkbox" name="foo" value="@item.Id" checked="checked" />
+                                </td>
+                                <td style="font-size: 14px !important; text-align: center">@i </td>
+                                <td style="font-size: 14px !important; text-align: center">@item.OriginalTitle </td>
+                                <td style="font-size: 14px !important; text-align: center">@item.Subtitle </td>
+                                <td style="font-size: 14px !important; text-align: center">@item.Chapter </td>
+                                @{
+                                    i++;
+                                }
+
+                                <td>
+
+                                    <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
+                                       href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
+                                        <i class="fa faSize fa-edit"></i>
+                                    </a>
+
+                                    @if (item.IsActiveString == "true")
+                                    {
+
+                                        <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
+
+                                    }
+                                    else
+                                    {
+                                        <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
                                     }
 
-                                    <td>
-
-                                        <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
-                                           href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
-                                            <i class="fa faSize fa-edit"></i>
-                                        </a>
-
-                                        @if (item.IsActiveString == "true")
-                                        {
-                                            <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
-
-                                        }
-                                        else
-                                        {
-                                            <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
-                                        }
-
-                                    </td>
-                                </tr>
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>
@@ -407,7 +410,7 @@
             } else {
                 if (document.getElementById("sercheCheck").value == "true") {
                     swal({
-                        title: "آیا حذف این  متن ها اطمینان دارید؟",
+                        title: "آیا حذف این  عنوان ها اطمینان دارید؟",
                         text: "",
                         type: "warning",
                         showCancelButton: true,
@@ -427,17 +430,12 @@
                                     console.log(url3b);
                                 }
                             }
-                            /*  var url1 = '#showmodal=';*/
                             var url2b = '@Url.Page("/Company/Chapter/Index", "GroupDeActive")';
-                            /*   var url3 = document.getElementById('yearSend').value;*/
                             window.location.href = url2b + url3b;
                             console.log(url2b);
                         }
                     });
 
-                } else if (document.getElementById("sercheCheck").value == "false") {
-                    console.log(document.getElementById("sercheCheck").value);
-                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان،متن،بخش را انتخاب نموده و سپس جستجو را کلیک کنید ");
                 }
             }
         }
@@ -449,7 +447,7 @@
                 $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  متن ی انتخاب نشده است ");
             } else {
                 if (document.getElementById("sercheCheck").value == "false") {
-                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان،متن،بخش را انتخاب نموده و سپس جستجو را کلیک کنید ");
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان را انتخاب نموده و سپس جستجو را کلیک کنید ");
                 } else if (document.getElementById("sercheCheck").value == "true") {
                     swal({
                         title: "آیا فعال نمودن این  متن ها اطمینان دارید؟",
@@ -481,6 +479,7 @@
             }
         }
     </script>
+
     <script>
         $(document).ready(function () {
             $("#OriginalTitle_Id").change(function () {
@@ -491,7 +490,7 @@
                     dataType: 'json',
                     data: { OriginalTitle_Id: $("#OriginalTitle_Id").val() },
                     success: function (result) {
-                        $("#Subtitle_Id").append(' <option value="' + -1 + '">' +
+                        $("#Subtitle_Id").append(' <option value="' + 0 + '">' +
                             "نام بخش را انتخاب کنید" + '</option>');
                         $.each(result, function (i, result) {
                             $("#Subtitle_Id").append(' <option value="' + result.id + '">' +
