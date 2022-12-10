@@ -55,15 +55,11 @@ namespace CompanyManagment.EFCore.Repository
             
             if (!string.IsNullOrWhiteSpace(searchModel.Chapter))
                 query = query.Where(x => x.Chapter.Contains(searchModel.Chapter));
-            if (searchModel.OriginalTitle_Id != 0)
+            if (searchModel.Subtitle_Id != 0)
             {
-                query = query.Where(x => x.OriginalTitle_Id == searchModel.OriginalTitle_Id);
-                if (searchModel.Subtitle_Id != 0)
-                {
-
+  
                     query = query.Where(x => x.Subtitle_Id == searchModel.Subtitle_Id);
 
-                }
                 if (searchModel.IsActiveString == "false")
                     query = query.Where(x => x.IsActiveString == "false");
                 if (searchModel.IsActiveString == "true")

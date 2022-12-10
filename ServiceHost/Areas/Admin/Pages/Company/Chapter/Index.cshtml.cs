@@ -42,7 +42,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Chapter
 
             if (Chapters != null)
             {
-                if (searchModel.OriginalTitle_Id != 0)
+                if (searchModel.Subtitle_Id != 0)
                 {
                     ChapterSearch = "true";
                 }

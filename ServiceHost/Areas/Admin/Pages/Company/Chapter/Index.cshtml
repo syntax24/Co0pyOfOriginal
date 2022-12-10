@@ -292,12 +292,11 @@
                                     </span>
                                 </th>
                                 <th style="font-size: 16px !important; width: 5% !important">#</th>
-                                <th style="font-size: 16px !important; text-align: center; width: 20% !important">عنوان</th>
-                                <th style="font-size: 16px !important; text-align: center;width: 20% !important"> بخش </th>
-                                <th style="font-size: 16px !important; text-align: center; width: 20% !important"> فصل </th>
+                                <th style="font-size: 16px !important; text-align: center; width: 25% !important">عنوان</th>
+                                <th style="font-size: 16px !important; text-align: center;width: 25% !important"> بخش </th>
+                                <th style="font-size: 16px !important; text-align: center; width: 25% !important"> فصل </th>
 
-
-                                <th style="font-size: 10px !important; width: 65px; ">
+                                <th style="font-size: 10px !important;width: 10% !important ">
                                     <span style="float: right;">
                                         <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
                                     </span>
@@ -308,43 +307,44 @@
                                     </a>
 
                                 </th>
+
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model.Chapters)
                             {
-                            <tr>
-                                <td style="font-size: 16px !important; text-align: center;display:none">
-                                    <input type="checkbox" name="foo" value="@item.Id" checked="checked" />
-                                </td>
-                                <td style="font-size: 14px !important; text-align: center">@i </td>
-                                <td style="font-size: 14px !important; text-align: center">@item.OriginalTitle </td>
-                                <td style="font-size: 14px !important; text-align: center">@item.Subtitle </td>
-                                <td style="font-size: 14px !important; text-align: center">@item.Chapter </td>
-                                @{
-                                    i++;
-                                }
-
-                                <td>
-
-                                    <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
-                                       href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
-                                        <i class="fa faSize fa-edit"></i>
-                                    </a>
-
-                                    @if (item.IsActiveString == "true")
-                                    {
-
-                                        <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
-
-                                    }
-                                    else
-                                    {
-                                        <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
+                                <tr>
+                                    <td style="font-size: 16px !important; text-align: center;display:none">
+                                        <input type="checkbox" name="foo" value="@item.Id" checked="checked" />
+                                    </td>
+                                    <td style="font-size: 14px !important; text-align: center">@i </td>
+                                    <td style="font-size: 14px !important; text-align: center">@item.OriginalTitle </td>
+                                    <td style="font-size: 14px !important; text-align: center">@item.Subtitle </td>
+                                    <td style="font-size: 14px !important; text-align: center">@item.Chapter </td>
+                                    @{
+                                        i++;
                                     }
 
-                                </td>
-                            </tr>
+                                    <td>
+
+                                        <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
+                                           href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
+                                            <i class="fa faSize fa-edit"></i>
+                                        </a>
+
+                                        @if (item.IsActiveString == "true")
+                                        {
+
+                                            <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
+
+                                        }
+                                        else
+                                        {
+                                            <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
+                                        }
+
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -406,11 +406,13 @@
         function deactiveAll() {
 
             if (document.getElementById("checkSelect").checked == false) {
-                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  متنی انتخاب نشده است ");
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  بخشی انتخاب نشده است ");
             } else {
-                if (document.getElementById("sercheCheck").value == "true") {
+                if (document.getElementById("sercheCheck").value == "false") {
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان وبخش را انتخاب نموده و سپس جستجو را کلیک کنید ");
+                } else if (document.getElementById("sercheCheck").value == "true") {
                     swal({
-                        title: "آیا حذف این  عنوان ها اطمینان دارید؟",
+                        title: "آیا غیرفعال نمودن این  موارد انتخاب شده اطمینان دارید؟",
                         text: "",
                         type: "warning",
                         showCancelButton: true,
@@ -442,15 +444,15 @@
     </script>
     <script>
         function reActiveAll() {
-            console.log(document.getElementById("sercheCheck").value);
+   
             if (document.getElementById("checkSelect").checked == false) {
-                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  متن ی انتخاب نشده است ");
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  بخشی انتخاب نشده است ");
             } else {
                 if (document.getElementById("sercheCheck").value == "false") {
-                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان را انتخاب نموده و سپس جستجو را کلیک کنید ");
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان وبخش را انتخاب نموده و سپس جستجو را کلیک کنید ");
                 } else if (document.getElementById("sercheCheck").value == "true") {
                     swal({
-                        title: "آیا فعال نمودن این  متن ها اطمینان دارید؟",
+                        title: "آیا فعال نمودن این  موارد انتخاب شده اطمینان دارید؟",
                         text: "",
                         type: "warning",
                         showCancelButton: true,
