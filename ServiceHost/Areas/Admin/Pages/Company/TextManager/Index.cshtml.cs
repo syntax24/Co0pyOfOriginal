@@ -173,7 +173,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
                 return BadRequest();
             }
         }
-        public string isActiveString { get; set; }
+     
         public IActionResult OnGetDeActive(long id,string url)
         {
 

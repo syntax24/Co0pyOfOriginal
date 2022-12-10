@@ -1,8 +1,10 @@
 ﻿@page
 @model ServiceHost.Areas.Admin.Pages.Company.Contact2.IndexModel
+@using Microsoft.AspNetCore.Http.Extensions;
 @{
 }
 @{
+    string url = HttpContext.Request.GetEncodedUrl();
     //string colaps = "in";
     //string act = "active";
     int i = 1;
@@ -10,491 +12,385 @@
 @{
     //Layout = "~/Pages/Shared/_Layout.cshtml";
     Layout = "Shared/_AdminLayout";
-    ViewData["title"] = "مخاطب"; 
+    ViewData["title"] = "مخاطب";
+}
+<style>
+    .thh0 {
+        width: 8px !important;
     }
-    <style>
-        .thh0 {
-            width: 8px !important;
-        }
 
-        .thh {
-            width: 40px !important;
-        }
+    .thh {
+        width: 40px !important;
+    }
 
-        .thh2 {
-            width: 130px !important;
-        }
+    .thh2 {
+        width: 130px !important;
+    }
 
-        .thhNastionalId {
-            width: 30px !important;
-        }
+    .thhNastionalId {
+        width: 30px !important;
+    }
 
-        .inpt {
-            width: 100%;
-            border: 1px solid #c7c7c7;
-        }
+    .inpt {
+        width: 100%;
+        border: 1px solid #c7c7c7;
+    }
 
-        .searchpanel {
-            background-color: #747272;
-        }
+    .searchpanel {
+        background-color: #747272;
+    }
 
-        <style >
-        .sizeSet {
-            padding: 2px !important;
-            text-align: center !important;
-        }
+    <style >
+    .sizeSet {
+        padding: 2px !important;
+        text-align: center !important;
+    }
 
-        .rad {
-            border-radius: 8px !important;
-            /* padding: 10px; */
-            padding: 2px 5px 0px 5px;
-        }
+    .rad {
+        border-radius: 8px !important;
+        /* padding: 10px; */
+        padding: 2px 5px 0px 5px;
+    }
 
-        .faSize {
-            font-size: 22px !important;
-        }
+    .faSize {
+        font-size: 22px !important;
+    }
 
-        .thh0 {
-            width: 8px !important;
-        }
+    .thh0 {
+        width: 8px !important;
+    }
 
-        .thh {
-            width: 40px !important;
-        }
+    .thh {
+        width: 40px !important;
+    }
 
-        .thh2 {
-            width: 130px !important;
-        }
+    .thh2 {
+        width: 130px !important;
+    }
 
-        .thhNastionalId {
-            width: 30px !important;
-        }
+    .thhNastionalId {
+        width: 30px !important;
+    }
 
-        .inpt {
-            width: 100%;
-            border: 1px solid #c7c7c7;
-        }
+    .inpt {
+        width: 100%;
+        border: 1px solid #c7c7c7;
+    }
 
-        .searchpanel {
-            background-color: #747272;
-        }
+    .searchpanel {
+        background-color: #747272;
+    }
 
-        select {
-            cursor: pointer;
-        }
+    select {
+        cursor: pointer;
+    }
 
-        .panel-default > .panel-heading {
-            background-color: #950000 !important;
-        }
+    .panel-default > .panel-heading {
+        background-color: #950000 !important;
+    }
 
 
 
 
 
-        .tooltip-container {
-            cursor: pointer;
-            position: relative;
-            display: inline-block;
-        }
+    .tooltip-container {
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+    }
 
-        .tooltip2-container {
-            cursor: pointer;
-            position: relative;
-            display: inline-block;
-        }
+    .tooltip2-container {
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+    }
 
-        .tooltip {
-            opacity: 0;
-            z-index: 99;
-            color: #fff;
-            width: 220px;
-            display: block;
-            font-size: 14px;
-            font-family: 'IranSans';
-            padding: 5px 10px;
-            border-radius: 3px;
-            text-align: center;
-            /*text-shadow: 1px 1px 2px #111;*/
-            background: #e67e22;
-            border: 1px solid #e67e22;
-            box-shadow: 0 0 3px rgba(0,0,0,0.5);
-            -webkit-transition: all .2s ease-in-out;
-            -moz-transition: all .2s ease-in-out;
-            -o-transition: all .2s ease-in-out;
-            -ms-transition: all .2s ease-in-out;
-            transition: all .2s ease-in-out;
-            -webkit-transform: scale(0);
-            -moz-transform: scale(0);
-            -o-transform: scale(0);
-            -ms-transform: scale(0);
-            transform: scale(0);
+    .tooltip {
+        opacity: 0;
+        z-index: 99;
+        color: #fff;
+        width: 220px;
+        display: block;
+        font-size: 14px;
+        font-family: 'IranSans';
+        padding: 5px 10px;
+        border-radius: 3px;
+        text-align: center;
+        /*text-shadow: 1px 1px 2px #111;*/
+        background: #e67e22;
+        border: 1px solid #e67e22;
+        box-shadow: 0 0 3px rgba(0,0,0,0.5);
+        -webkit-transition: all .2s ease-in-out;
+        -moz-transition: all .2s ease-in-out;
+        -o-transition: all .2s ease-in-out;
+        -ms-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        -o-transform: scale(0);
+        -ms-transform: scale(0);
+        transform: scale(0);
+        position: absolute;
+        right: -50px;
+        bottom: 40px;
+    }
+
+        .tooltip:before, .tooltip:after {
+            content: '';
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #e67e22;
             position: absolute;
-            right: -50px;
-            bottom: 40px;
+            bottom: -10px;
+            left: 70%;
         }
 
-            .tooltip:before, .tooltip:after {
-                content: '';
-                border-left: 10px solid transparent;
-                border-right: 10px solid transparent;
-                border-top: 10px solid #e67e22;
-                position: absolute;
-                bottom: -10px;
-                left: 70%;
-            }
+    .tooltip-container:hover .tooltip, a:hover .tooltip {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -o-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+    }
 
-        .tooltip-container:hover .tooltip, a:hover .tooltip {
-            opacity: 1;
-            -webkit-transform: scale(1);
-            -moz-transform: scale(1);
-            -o-transform: scale(1);
-            -ms-transform: scale(1);
-            transform: scale(1);
-        }
+    .tooltip2 {
+        opacity: 0;
+        z-index: 99;
+        color: #fff;
+        width: 220px;
+        display: block;
+        font-size: 14px;
+        font-family: 'IranSans';
+        padding: 5px 10px;
+        border-radius: 3px;
+        text-align: center;
+        /*text-shadow: 1px 1px 2px #111;*/
+        background: #e67e22;
+        border: 1px solid #e67e22;
+        box-shadow: 0 0 3px rgba(0,0,0,0.5);
+        -webkit-transition: all .2s ease-in-out;
+        -moz-transition: all .2s ease-in-out;
+        -o-transition: all .2s ease-in-out;
+        -ms-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        -o-transform: scale(0);
+        -ms-transform: scale(0);
+        transform: scale(0);
+        position: absolute;
+        right: -90px;
+        bottom: 40px;
+    }
 
-        .tooltip2 {
-            opacity: 0;
-            z-index: 99;
-            color: #fff;
-            width: 220px;
-            display: block;
-            font-size: 14px;
-            font-family: 'IranSans';
-            padding: 5px 10px;
-            border-radius: 3px;
-            text-align: center;
-            /*text-shadow: 1px 1px 2px #111;*/
-            background: #e67e22;
-            border: 1px solid #e67e22;
-            box-shadow: 0 0 3px rgba(0,0,0,0.5);
-            -webkit-transition: all .2s ease-in-out;
-            -moz-transition: all .2s ease-in-out;
-            -o-transition: all .2s ease-in-out;
-            -ms-transition: all .2s ease-in-out;
-            transition: all .2s ease-in-out;
-            -webkit-transform: scale(0);
-            -moz-transform: scale(0);
-            -o-transform: scale(0);
-            -ms-transform: scale(0);
-            transform: scale(0);
+        .tooltip2:before, .tooltip2:after {
+            content: '';
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #e67e22;
             position: absolute;
-            right: -90px;
-            bottom: 40px;
+            bottom: -10px;
+            left: 50%;
         }
 
-            .tooltip2:before, .tooltip2:after {
-                content: '';
-                border-left: 10px solid transparent;
-                border-right: 10px solid transparent;
-                border-top: 10px solid #e67e22;
-                position: absolute;
-                bottom: -10px;
-                left: 50%;
-            }
-
-        .tooltip2-container:hover .tooltip2, a:hover .tooltip2 {
-            opacity: 1;
-            -webkit-transform: scale(1);
-            -moz-transform: scale(1);
-            -o-transform: scale(1);
-            -ms-transform: scale(1);
-            transform: scale(1);
-        }
-    </style>
+    .tooltip2-container:hover .tooltip2, a:hover .tooltip2 {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -o-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+    }
+</style>
 
 }
-        <div class="row">
-            <div class="col-sm-12 m-r-10">
-
-                <input type="hidden" id="sercheCheck" value="@Model.WorkshopSearch" />
-
-                @*href="#showmodal=@Url.Page("./Index", "PrintAll", new {ids = idss})"*@
+<div class="row">
+    <div class="col-sm-12 m-r-10">
+        <input type="hidden" id="sercheCheck" value="@Model.searchModel" />
+    </div>
+</div>
+<div class="col-sm-12">
+    <div class="panel-group panel-group-joined" id="accordion-test">
+        <div class="panel panel-default" style="border-radius: 15px !important; background-color: #fdc0c0; ">
+            <div class="panel-heading" style="background-color: #950000 !important">
+                <h4 class="panel-title" style="color: #edebeb !important; display: inline;">
+                    <a data-toggle="collapse" data-parent="#accordion-test" href="#collapseOne" class="collapsed" style="display: inline;">
+                        جستجوی مخاطبین
+                    </a>
+                </h4>
             </div>
-        </div>
-        <div class="col-sm-12">
-            <div  class="panel-group panel-group-joined" id="accordion-test">
+            <div id="collapseOne" class="panel-collapse collapse in ">
+                <div class="panel-body" style="padding-top: 15px; padding-bottom: 15px;">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form class="form-inline" role="form" method="get" name="search-theme-form" id="search-theme-form" autocomplete="off">
+                                <div class="form-group col-sm-12">
+                                    <div class="row">
 
-
-
-                <div class="panel panel-default" style="border-radius: 15px !important; background-color: #fdc0c0; ">
-                    <div class="panel-heading" style="background-color: #950000 !important">
-                        <h4 class="panel-title" style="color: #edebeb !important; display: inline;">
-                            <a data-toggle="collapse" data-parent="#accordion-test" href="#collapseOne" class="collapsed" style="display: inline;">
-                                جستجوی مخاطبین
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseOne" class="panel-collapse collapse in ">
-                        <div class="panel-body" style="padding-top: 15px; padding-bottom: 15px;">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <form class="form-inline" role="form" method="get" name="search-theme-form" id="search-theme-form" autocomplete="off">
-                                        <div class="form-group col-sm-12">
-                                            <div class="row">
-
-                                                <div class="col-sm-3 pull-right">
-                                                    <label class="sr-only" asp-for="searchModel.NameContact"></label>
-                                                    <input class=" form-control inpt" asp-for="searchModel.NameContact" placeholder="مخاطب " style="width: 100%">
-                                                </div>
-
-                                            </div>
-
-                                            <hr style=" margin-top: 12px;margin-bottom: 12px;" />
-                                            <div class="row" style="margin-top: 15px">
-                                                <div class="col-lg-9">
-                                                    <label class="sr-only" asp-for="searchModel.IsActiveString"></label>
-                                                    <select id="activing" class="form-control activer" asp-for="searchModel.IsActiveString" style="background-color: #dddddd; border-radius: 25px; border: 1px solid #bfbfbf;">
-                                                        <option value="true"> فعال  </option>
-                                                        <option value="false"> غیرفعال</option>
-                                                        <option value="both"> هردو</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light m-b-5 search" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; background-color: #950000; border-color: #950000; font-family: 'Web_Yekan' !important; margin-left: -3px "> <i class="fa fa-search" style="padding-left: 3px; font-size: 14px;"></i> جستجو</button>
-                                                    <a class="btn btn-info btn-rounded waves-effect waves-light m-b-5" style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; background-color: #545353; border-color: #545353; font-family: 'Web_Yekan' !important;" asp-page="./Index">مشاهده همه</a>
-                                                </div>
-                                            </div>
-
-
-
+                                        <div class="col-sm-3 pull-right">
+                                            <label class="sr-only" asp-for="searchModel.NameContact"></label>
+                                            <input class=" form-control inpt" asp-for="searchModel.NameContact" placeholder="مخاطب " style="width: 100%">
                                         </div>
 
-
-                                    </form>
-
+                                    </div>
+                                    <hr style=" margin-top: 12px;margin-bottom: 12px;" />
+                                    <div class="row" style="margin-top: 15px">
+                                        <div class="col-lg-9">
+                                            <label class="sr-only" asp-for="searchModel.IsActiveString"></label>
+                                            <select id="activing" class="form-control activer" asp-for="searchModel.IsActiveString" style="background-color: #dddddd; border-radius: 25px; border: 1px solid #bfbfbf;">
+                                                <option value="true"> فعال  </option>
+                                                <option value="false"> غیرفعال</option>
+                                                <option value="both"> هردو</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light m-b-5 search" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; background-color: #950000; border-color: #950000; font-family: 'Web_Yekan' !important; margin-left: -3px "> <i class="fa fa-search" style="padding-left: 3px; font-size: 14px;"></i> جستجو</button>
+                                            <a class="btn btn-info btn-rounded waves-effect waves-light m-b-5" style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; background-color: #545353; border-color: #545353; font-family: 'Web_Yekan' !important;" asp-page="./Index">مشاهده همه</a>
+                                        </div>
+                                    </div>
                                 </div>
-
-
-                            </div>
-
-                            @*==================================================================personal=====*@
-
-
-
-
+                           </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-12">
-            <div permission="20113" class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست قرارداد ها</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-sm-12 col-sm-12 col-xs-12">
-                            <table id="datatable" class="table table-striped table-bordered">
-                                <thead style="background-color: #ecefee">
-                                    <tr>
+    </div>
+</div>
+<div class="col-sm-12">
+    <div permission="20113" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست مخاطبین</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12 col-sm-12 col-xs-12">
+                    <table id="datatable" class="table table-striped table-bordered">
+                        <thead style="background-color: #ecefee">
+                            <tr>
 
-                                        <th style="font-size: 10px !important;" class="sizeSet">
-                                            <span class="tooltip-container">
-                                                <input class="checkboxtitle" type="checkbox" id="checkSelect" onclick="selectori(this)" />
-                                                <span class="tooltip"> با استفاده از این چک باکس می توانید قراردادها را بصورت گروهی انتخاب کرده و سپس با کلیک بر روی دکمه حذف گروهی یا پرینت گروهی اقدام به حذف یا پرینت گروهی نمایید</span>
-                                            </span>
+                                <th style="font-size: 10px !important;" class="sizeSet">
+                                    <span class="tooltip-container">
+                                        <input class="checkboxtitle" type="checkbox" id="checkSelect" onclick="selectori(this)" />
+                                        <span class="tooltip"> با استفاده از این چک باکس می توانید قراردادها را بصورت گروهی انتخاب کرده و سپس با کلیک بر روی دکمه حذف گروهی  اقدام به حذف  نمایید</span>
+                                    </span>
 
-                                        </th>
+                                </th>
 
-                                        <th style="font-size: 10px !important" class="sizeSet">#</th>
-                                        <th style="font-size: 10px !important" class="sizeSet">نام مخاظب</th>
-
-
-
-                                        <th permission="20117" style="font-size: 10px !important;" onclick="event.stopPropagation();" class="sizeSet">
-                                            <span class="tooltip2-container">
-                                                <button type="button" style="padding: 5px 7px 0px 7px" class="btn btn-icon waves-effect waves-light btn-success m-b-5" id="checkSign" onclick="SignatureSelect()">
-                                                    <i class="ion-checkmark-circled" style="color: #fff; font-size: 17px"></i>
-                                                </button>
-                                                <span class="tooltip2">
-                                                    با استفاده از این دکمه می توانید قراردادها را بصورت گروهی امضاء نمایید
-                                                </span>
-                                            </span>
-                                            <span class="tooltip2-container">
-                                                <button type="button" style="padding: 5px 7px 0px 7px" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" id="checkUnSign" onclick="SignatureSelect2()">
-                                                    <i class="ion-close-circled" style="color: #fff;font-size: 17px"></i>
-                                                </button>
-                                                <span class="tooltip2">
-                                                    با استفاده از این دکمه می توانید امضاء قراردادها را بصورت گروهی حذف نمایید
-                                                </span>
-                                            </span>
-
-
-                                        </th>
-                                        <th style="font-size: 10px !important">
-                                            <span style="float: right;">
-                                                <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
-                                                <span>&nbsp;</span><span>&nbsp;</span>
-                                            </span>
-                                            <a class="btn btn-info pull-right m-rl-5 rad" onclick="copyLink()">
-                                                <i class="fa faSize fa-print"></i>
-                                            </a>
-
-                                            <span class="act">
-
-                                            </span>
-                                            <a class="btn btn-danger pull-right m-rl-5 rad deact" onclick="deactiveAll()">
-                                                <i class="fa faSize fa-trash"></i>
-                                            </a>
+                                <th style="font-size: 10px !important" class="sizeSet">#</th>
+                                <th style="font-size: 10px !important" class="sizeSet">نام مخاظب</th>
 
 
 
-                                        </th>
+                                <th style="font-size: 10px !important">
+                                    <span style="float: right;">
+                                        <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                        <span>&nbsp;</span><span>&nbsp;</span>
+                                    </span>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.Contacts)
-                                    {
+                                </th>
 
-
-                                        <tr>
-
-
-                                            <td style="font-size: 12px !important; text-align: center">
-                                                <input type="checkbox" name="foo" value="@item.Id" />
-                                            </td>
-                                            <td style="font-size: 12px !important;text-align: center">@i </td>
-                                            <td style="font-family: 'IranText' !important; font-size: 12px !important; text-align: center">
-                                                @item.NameContact
-                                            </td>
-                                            <td permission="20117" style="font-size: 12px !important; text-align: center">
-                                                @if (item.Signature == "1")
-                                                {
-                                                    <a asp-page="./Index" name="foo1" asp-page-handler="UnSign" asp-route-id="@item.Id" style="font-size: 20px">
-
-                                                        <i class="ion-checkmark-circled" style="color: #1f9c11"></i>
-                                                        <input type="hidden" value="@item.Id" name="signed" />
-                                                    </a>
-
-                                                }
-                                                else
-                                                {
-                                                    <a asp-page="./Index" name="foo2" asp-page-handler="Sign" asp-route-id="@item.Id" style="font-size: 20px">
-                                                        <i class="ion-ios7-circle-outline" style="color: #dd3632"></i>
-                                                        <input type="hidden" value="@item.Id" name="unsigned" />
-                                                    </a>
-
-                                                }
-
-                                            </td>
-
-                                            @{
-                                                i++;
-                                            }
-                                            <td>
-
-                                                <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
-                                                   href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
-                                                    <i class="fa faSize fa-edit"></i>
-                                                </a>
-                                                <a permission="20115" class="btn btn-info pull-right m-rl-5 rad"
-                                                   href="#showmodal=@Url.Page("./Index", "Details", new {Id = item.Id})">
-                                                    <i class="fa faSize fa-print"></i>
-                                                </a>
-
-
-
-                                                @if (item.IsActiveString == "true")
-                                                {
-                                                    <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
-
-                                                }
-                                                else
-                                                {
-                                                    <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
-                                                }
-
-                                            </td>
-
-                                        </tr>
-
-
-
-
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Contacts)
+                            {
+                                <tr>
+                                    <td style="font-size: 12px !important; text-align: center">
+                                        <input type="checkbox" name="foo" value="@item.Id" />
+                                    </td>
+                                    <td style="font-size: 12px !important;text-align: center">@i </td>
+                                    <td style="font-family: 'IranText' !important; font-size: 12px !important; text-align: center">
+                                        @item.NameContact
+                                    </td>
+               
+                                    @{
+                                        i++;
                                     }
+                                    <td>
+                                        <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
+                                           href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
+                                            <i class="fa faSize fa-edit"></i>
+                                        </a>
+                                        @if (item.IsActiveString == "true")
+                                        {
+                                            <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
+
+                                        }
+                                        else
+                                        {
+                                            <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
+                                        }
+
+                                    </td>
+
+                                </tr>
 
 
 
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+
+                            }
+
+
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        @section PanelScripts{
-            <script src="~/AdminTheme/assets/js/site.js"></script>
-            <script src="~/adminTheme/assets/datatables/jquery.dataTables.min.js"></script>
-            <script src="~/adminTheme/assets/datatables/dataTables.bootstrap.js"></script>
-            <script>
-                $('.activer').on('change',
-                    function (e) {
-                        e.preventDefault();
-                        $('.search').click();
-                    });
-            </script>
-            <script>
+@section PanelScripts{
+    <script src="~/AdminTheme/assets/js/site.js"></script>
+    <script src="~/adminTheme/assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/adminTheme/assets/datatables/dataTables.bootstrap.js"></script>
+    <script>
+        $('.activer').on('change',
+            function (e) {
+                e.preventDefault();
+                $('.search').click();
+            });
+    </script>
+    <script>
 
-                if (document.getElementById("activing").selectedIndex == 1) {
-                    $('.deact').remove();
-                    $('.act').append(
-                        ' <a class="btn btn-success pull-right m-rl-5 rad react" onclick="reActiveAll()">' + '<i class="fa faSize fa-rotate-left"></i>' + ' </a>'
-                    );
-                }
-                if (document.getElementById("activing").selectedIndex == 2) {
-                    $('.deact').remove();
-                }
-       
-            </script>
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $('#datatable').dataTable({
-                        "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
-                    });
+        if (document.getElementById("activing").selectedIndex == 1) {
+            $('.deact').remove();
+            $('.act').append(
+                ' <a class="btn btn-success pull-right m-rl-5 rad react" onclick="reActiveAll()">' + '<i class="fa faSize fa-rotate-left"></i>' + ' </a>'
+            );
+        }
+        if (document.getElementById("activing").selectedIndex == 2) {
+            $('.deact').remove();
+        }
+
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datatable').dataTable({
+                "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#datatable2').dataTable(
+                {
+                    "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
                 });
-            </script>
-            <script>
-                $(document).ready(function () {
-                    $('#datatable2').dataTable(
-                        {
-                            "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
-                        });
-                });
-            </script>
-            <script>
-                function selectori(source) {
-                    checkboxes = document.getElementsByName('foo');
-                    for (var i = 0, n = checkboxes.length; i < n; i++) {
-                        checkboxes[i].checked = source.checked;
-                    }
-                }
-            </script>
-            <script>
-        function copyLink() {
-            if (document.getElementById("checkSelect").checked == false) {
-                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ قراردادی انتخاب نشده است ");
-            } else {
-                if (document.getElementById("sercheCheck").value == "true") {
-                    checkboxes = document.getElementsByName('foo');
-                    var url3 = '';
-                    for (var i = 0, n = checkboxes.length; i < n; i++) {
-                        if (checkboxes[i].checked == true) {
-                            var u = '&ids=' + checkboxes[i].value;
-                            url3 = url3 + u;
-                        }
-                    }
-                    var url1 = '#showmodal=';
-                    var url2 = '@Url.Page("/Company/Contracts/Index", "PrintAll")';
-                    window.location.href = url1 + url2 + url3;
-                } else if (document.getElementById("sercheCheck").value == "false") {
-                    console.log(document.getElementById("sercheCheck").value);
-                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی قرارداد حداقل یکی از فیلدهای کارکاه یا پرسنل را انتخاب نموده و سپس جستجو را کلیک کنید ");
-                }
+        });
+    </script>
+    <script>
+        function selectori(source) {
+            checkboxes = document.getElementsByName('foo');
+            for (var i = 0, n = checkboxes.length; i < n; i++) {
+                checkboxes[i].checked = source.checked;
             }
         }
+    </script>
+    <script>
+    
         function deactiveAll() {
             if (document.getElementById("checkSelect").checked == false) {
                 $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ قراردادی انتخاب نشده است ");
@@ -532,8 +428,8 @@
                 }
             }
         }
-            </script>
-            <script>
+    </script>
+    <script>
         function reActiveAll() {
             if (document.getElementById("checkSelect").checked == false) {
                 $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ قراردادی انتخاب نشده است ");
@@ -567,8 +463,8 @@
                 }
             }
         }
-            </script>
-            <script>
+    </script>
+    <script>
 
         function SignatureSelect() {
 
@@ -603,40 +499,7 @@
                 });
             }
         }
-            </script>
-            <script>
-        function SignatureSelect2() {
-            if (document.getElementById("sercheCheck").value == "false") {
-                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی قرارداد حداقل یکی از فیلدهای کارکاه یا پرسنل را انتخاب نموده و سپس جستجو را کلیک کنید ");
-            } else if (document.getElementById("sercheCheck").value == "true") {
+    </script>
+  
 
-                swal({
-                    title: "آیا حذف امضاء این قراردادها اطمینان دارید؟",
-                    text: "",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "بله",
-                    cancelButtonText: "خیر",
-                    closeOnConfirm: false
-                }, function (isConfirm) {
-                    if (isConfirm) {
-                        /*    $("a.dell").click();*/
-                        checkboxes2 = document.getElementsByName('signed');
-                        var url3b = '';
-                        for (var i2 = 0, n2 = checkboxes2.length; i2 < n2; i2++) {
-
-                            var u2 = '&ids=' + checkboxes2[i2].value;
-                            url3b = url3b + u2;
-                        }
-                        var url2b = '@Url.Page("/Company/Contracts/Index", "GroupUnSign")';
-
-                        window.location.href = url2b + url3b;
-                    } else {
-                    }
-                });
-            }
-        }
-            </script>
-
-        }
+}

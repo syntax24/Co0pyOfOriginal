@@ -117,28 +117,24 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Chapter
             }
             return RedirectToPage("./Index");
         }
-        public IActionResult OnGetDeActive(long id)
+  
+        public IActionResult OnGetDeActive(long id, string url)
         {
-
-
             var result = _chapterApplication.DeActive(id);
-
             if (result.IsSuccedded)
-                return RedirectToPage("./Index");
+                return Redirect(url);
             Message = result.Message;
-            return RedirectToPage("./Index");
+            return RedirectToPage(url);
         }
-        public IActionResult OnGetIsActive(long id)
+
+        public IActionResult OnGetIsActive(long id, string url)
         {
-
-
             var result = _chapterApplication.Active(id);
             if (result.IsSuccedded)
-                return RedirectToPage("./Index");
+                return Redirect(url);
             Message = result.Message;
-            return RedirectToPage("./Index");
+            return RedirectToPage(url);
         }
-
     }
 
 
