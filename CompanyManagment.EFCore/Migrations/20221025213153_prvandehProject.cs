@@ -84,6 +84,7 @@ namespace CompanyManagment.EFCore.Migrations
                     TotalPenalty = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TotalPenaltyTitles = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WorkHistoryDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BoardType_Id = table.Column<int>(type: "int", nullable: false),
                     File_Id = table.Column<long>(type: "bigint", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -133,8 +134,8 @@ namespace CompanyManagment.EFCore.Migrations
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FromDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ToDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FromDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ToDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Day = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PaidAmount = table.Column<string>(type: "nvarchar(max)", nullable: true),

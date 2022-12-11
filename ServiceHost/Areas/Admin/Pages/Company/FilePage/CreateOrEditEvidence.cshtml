@@ -1,0 +1,401 @@
+﻿@model CompanyManagment.App.Contracts.Evidence.EditEvidence
+
+    <style>
+        /* .modal-dialog {
+            width: 94% !important;
+        }*/
+
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .modal-footer {
+            border-top: unset !important;
+        }
+
+        .modal .modal-dialog .modal-content .modal-footer {
+            padding-top: unset !important;
+        }
+
+        p {
+            direction: ltr !important;
+            text-align: right !important;
+        }
+
+        input[type=radio]:hover {
+            cursor: pointer;
+        }
+
+        .error {
+            font-size: 14px !important;
+        }
+    </style>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+    <form asp-page="./Index" asp-page-handler="CreateOrEditEvidence" id="workshops" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="Refresh"
+          enctype="multipart/form-data">
+        <input asp-for="Id" hidden/>
+        <input asp-for="BoardType_Id" hidden/>
+        <input asp-for="File_Id" hidden/>
+        @if(Model.BoardType_Id == 1)
+        {
+            <input asp-for="BoardProcessingStage" value="1" hidden/>
+        }
+        else
+        {
+            <input asp-for="BoardProcessingStage" value="2" hidden/>
+        }
+        <div class="modal-body">
+            <div class="row">
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> ثبت مدرک </legend>
+                    <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert; margin: 15px">
+                        <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> مشخصات پرونده </legend>
+                        <div class="row">
+                            <input asp-for="FileData.Id" hidden/>
+                            @*<div class="col-md-3">
+                                <div class="form-group">
+                                    <label asp-for="FileData.ArchiveNo" class="control-label">  شماره بایگانی </label>
+                                    <input type="text" class="form-control" asp-for="FileData.ArchiveNo" readonly>
+                                    <span asp-validation-for="FileData.ArchiveNo" class="error"></span>
+                                </div>
+                            </div>*@
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="FileData.FileClass" class="control-label"> کلاسه پرونده </label>
+                                    <input type="text" class="form-control" asp-for="FileData.FileClass" readonly>
+                                    <span asp-validation-for="FileData.FileClass" class="error"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="FileData.Reqester" class="control-label"> موکل </label>
+                                    <input type="text" class="form-control" value="@Model.FileData.ClientFullName" readonly>
+                                    @*<select class="form-control select2-tag" asp-for="FileData.Client" readonly>
+                                        <option value="-1">@Model.FileData.ClientFullName</option>
+                                    </select>*@
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="FileData.Reqester" class="control-label"> طرف مقابل </label>
+                                    <input type="text" class="form-control" value="@Model.FileData.OppositePersonFullName" readonly>
+                                    @*<select class="form-control select2-tag" asp-for="FileData.Client" readonly>
+                                        <option value="-1">@Model.FileData.ClientFullName</option>
+                                    </select>*@
+                                </div>
+                            </div>     
+                    </fieldset>
+                    <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert; margin: 15px">
+                        <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> جزئیات مدارک </legend>
+                        <div id="evideceDetails" class="row m-t-15">
+                            <div class="col-sm-12 m-b-4">
+                                <a id="btnPopModal-1" href="#showmodal=@Url.Page("./Index", "CreateOrEditFileTitle", new { Type = "evidence" })" class="col-xs-3 pull-right btn btn-success btn-rounded waves-effect waves-light w-100" style=" background-color: #f5f5f5; font-size: 13px; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-bottom: 15px"> 
+                                    + ایجاد عنوان جدید
+                                </a>
+                            </div>
+                            @for(var i = 0; i < @Model.CreateEvidenceDetail.Count; i++)
+                            {
+                                <div class="d-flex">
+                                    <div class="col-md-3 evideceDetails">
+                                        <div class="form-group">
+                                            @if (i == 0)
+                                            {
+                                                <label asp-for="CreateEvidenceDetail[i].Title" class="control-label"> عنوان </label>
+                                            }
+                                            <input type="text" class="form-control" asp-for="CreateEvidenceDetail[i].Title" onfocus="getSugesstedTitles(this, 'evidence')">
+                                            <span asp-validation-for="CreateEvidenceDetail[i].Title" class="error"></span>
+                                        </div>
+                                    </div>
+                                    <div class="evideceDetailDates">
+                                        <div class="col-md-1 evideceDetails">
+                                            <div class="form-group">
+                                                @if (i == 0)
+                                                {
+                                                    <label asp-for="CreateEvidenceDetail[i].Day" class="control-label"> روز </label>
+                                                }
+                                                <input type="text" class="form-control day" asp-for="CreateEvidenceDetail[i].Day" onfocusout="removeExtraData()">
+                                                <span asp-validation-for="CreateEvidenceDetail[i].Day" class="error"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 evideceDetails">
+                                            <div class="form-group">
+                                                @if (i == 0)
+                                                {
+                                                    <label asp-for="CreateEvidenceDetail[i].FromDate" class="control-label"> از تاریخ </label>
+                                                }
+                                                <input type="text" class="form-control date evideceDetailFromDate" asp-for="CreateEvidenceDetail[i].FromDate" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), false); removeExtraData();" style="width: 100%; text-align: center">
+                                                <span asp-validation-for="CreateEvidenceDetail[i].FromDate" class="error"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 evideceDetails">
+                                            <div class="form-group">
+                                                @if (i == 0)
+                                                {
+                                                    <label asp-for="CreateEvidenceDetail[i].ToDate" class="control-label"> تا تاریخ </label>
+                                                }
+                                                <input type="text" class="form-control date evideceDetailToDate" asp-for="CreateEvidenceDetail[i].ToDate" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), true, false); removeExtraData();" style="width: 100%; text-align: center">
+                                                <span asp-validation-for="CreateEvidenceDetail[i].ToDate" class="error"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 recordVerification">
+                                        <div class="form-group">
+                                            @if (i == 0)
+                                            {
+                                                <label asp-for="CreateEvidenceDetail[i].Description" class="control-label"> توضیحات </label>
+                                            }
+                                            <textarea class="form-control" asp-for="CreateEvidenceDetail[i].Description"></textarea>
+                                            <span asp-validation-for="CreateEvidenceDetail[i].Description" class="error"></span>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    
+                                    @if (i != 0)
+                                    {
+                                        <div class="col-md-1" onclick="removeRow(this);">
+                                            <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 4px cursor: pointer;"></i>
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+                            <div class="col-md-8 evideceDetailsFormButton"></div>
+                            <div class="col-md-4">
+                                <a onclick="addNewFormEvidenceDetail('evideceDetailsFormButton')" class="btn btn-rounded btn-success waves-effect waves-light col-xs-12 m-b-30">+ افزودن جزئیات مدارک</a>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="Description" class="control-label"> توضیحات </label>
+                                    <textarea class="form-control" asp-for="Description"></textarea>
+                                    <span asp-validation-for="Description" class="error"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </fieldset>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div style="float: left">
+                <a class="btn btn-default btn-rounded waves-effect waves-light" data-dismiss="modal">بستن</a>
+                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+            </div>
+
+            @if(Model.Id != 0)
+            {
+                <a class="btn btn-danger btn-rounded waves-effect waves-light" onclick="removeEvidence()"> حذف مدارک </a>
+            }
+        </div>
+    </form>
+</div>
+
+
+<script>
+
+    $(document).ready(function() {
+
+        $('.modal-dialog').addClass('modal-lg');
+        //CreateDatePicker('#PetitionIssuanceDate', `#NotificationPetitionDate`);
+
+        //var i = 0;
+        //$(".recordVerification").each(function() {
+        //    CreateDatePicker(`#CreateMasterWorkHistory_${i}__FromDate`, `#CreateMasterWorkHistory_${i}__ToDate`)
+
+        //    i++;
+        //})
+        
+        //i = 0;
+        //$(".evideceDetails").each(function() {
+        //    CreateDatePicker(`#CreateEvidenceDetail_${i}__FromDate`, `#CreateEvidenceDetail_${i}__ToDate`)
+        
+        //    i++;
+        //})
+    })
+
+    $('.modal').on('hidden.bs.modal', function() {
+        $('.modal-dialog').removeClass('modal-lg');
+    });
+
+    $(".select2-tag").select2({
+        language: "fa",
+        dir: "rtl"
+    });
+
+</script>
+<script>
+    
+    var evideceDetailCounter = @Model.CreateEvidenceDetail.Count  - 1;
+    
+    function addNewFormEvidenceDetail(flag) {
+
+        evideceDetailCounter++;
+        
+        const html = `<div class="d-flex">
+                        <div class="col-md-3 evideceDetails">
+                            <div class="form-group">
+                                <!-- <label class="control-label" for="CreateEvidenceDetail_${evideceDetailCounter}__Title"> عنوان </label> -->
+                                <input type="text" class="form-control" id="CreateEvidenceDetail_${evideceDetailCounter}__Title" name="CreateEvidenceDetail[${evideceDetailCounter}].Title" value="">
+                                <span class="error field-validation-valid" data-valmsg-for="CreateEvidenceDetail[${evideceDetailCounter}].Title" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="evideceDetailDates">
+                            <div class="col-md-1 evideceDetails">
+                                <div class="form-group">
+                                    <!-- <label class="control-label" for="CreateEvidenceDetail_${evideceDetailCounter}__Day"> روز </label> -->
+                                    <input type="text" class="form-control day" id="CreateEvidenceDetail_${evideceDetailCounter}__Day" name="CreateEvidenceDetail[${evideceDetailCounter}].Day" value="" onfocusout="removeExtraData()">
+                                    <span class="error field-validation-valid" data-valmsg-for="CreateEvidenceDetail[${evideceDetailCounter}].Day" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 evideceDetails">
+                                <div class="form-group">
+                                   <!--  <label class="control-label" for="CreateEvidenceDetail_${evideceDetailCounter}__FromDate"> از تاریخ </label> -->
+                                    <input type="text" class="form-control date evideceDetailFromDate" id="CreateEvidenceDetail_${evideceDetailCounter}__FromDate" name="CreateEvidenceDetail[${evideceDetailCounter}].FromDate" value="" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), false); removeExtraData();" style="width: 100%; text-align: center">
+                                    <span class="error field-validation-valid" data-valmsg-for="CreateEvidenceDetail[${evideceDetailCounter}].FromDate" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 evideceDetails">
+                                <div class="form-group">
+                                    <!-- <label class="control-label" for="CreateEvidenceDetail_${evideceDetailCounter}__ToDate"> تا تاریخ </label> -->
+                                    <input type="text" class="form-control date evideceDetailToDate" id="CreateEvidenceDetail_${evideceDetailCounter}__ToDate" name="CreateEvidenceDetail[${evideceDetailCounter}].ToDate" value="" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), true, false); removeExtraData();" style="width: 100%; text-align: center">
+                                    <span class="error field-validation-valid" data-valmsg-for="CreateEvidenceDetail[${evideceDetailCounter}].ToDate" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 evideceDetails">
+                            <div class="form-group">
+                                <textarea class="form-control" asp-for="CreateEvidenceDetail[i].Description"></textarea>
+                                <span asp-validation-for="CreateEvidenceDetail[i].Description" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-1" onclick="removeRow(this);">
+                            <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 4px; cursor: pointer;"></i>
+                        </div>
+                    </div>`;
+                    
+        $(html).insertBefore("."+ flag)
+        
+        //CreateDatePicker(`#CreateEvidenceDetail_${evideceDetailCounter}__FromDate`, `#CreateEvidenceDetail_${evideceDetailCounter}__ToDate`)
+        //$(`#CreateEvidenceDetail_${evideceDetailCounter}__FromDate`).persianDatepicker({
+        //    format: 'YYYY/MM/DD',
+        //    initialValueType: 'persian',
+        //    initialValue: false,
+        //    'position': [-270, 25],
+        //    autoClose: true,
+
+        //    calendar: {
+        //        persian: {
+        //            leapYearMode: 'astronomical'
+        //        }
+        //    },
+            
+        //    onSelect: function(dateStr) 
+        //    {         
+        //        $(`#CreateEvidenceDetail_${evideceDetailCounter}__ToDate`).persianDatepicker({ 
+        //            minDate: new Date(dateStr),
+        //            format: 'YYYY/MM/DD',
+        //            initialValueType: 'persian',
+        //            initialValue: false,
+        //            //'position': [-270, 25],
+        //            autoClose: true,
+
+        //            calendar: {
+        //                persian: {leapYearMode: 'astronomical'}
+        //            }
+        //        })
+        //    }
+
+        //});
+
+    }
+    
+    //function insertMinDate(dateFrom, dateTo){
+    //    console.log(dateFrom, dateTo)
+        
+    //    $(`#${dateTo}`).persianDatepicker({
+    //        minDate: $(`#${dateFrom}`).value,
+    //        //minDate: "۱۴۰۱/۰۶/۲۸",
+    //    });
+    //}
+
+    function removeExtraData() {
+
+        $('.day').focusout(function() {
+
+            if ($(this).val() != null || $(this).val() != 0) {
+
+                $(this).parents('.evideceDetailDates').find('.evideceDetailFromDate').val("")
+                $(this).parents('.evideceDetailDates').find('.evideceDetailToDate').val("")
+            }
+        })
+
+        $('.evideceDetailFromDate').focusout(function() {
+
+            if ($(this).val() != null || $(this).val() != 0) {
+
+                $(this).parents('.evideceDetailDates').find('.day').val("")
+            }
+        })
+
+        $('.evideceDetailToDate').focusout(function() {
+
+            if ($(this).val() != null || $(this).val() != 0) {
+
+                $(this).parents('.evideceDetailDates').find('.day').val("")
+            }
+        })
+    }
+
+
+    function removeEvidence() {
+
+        const id = document.getElementById("Id").value;
+
+        swal({
+            title: "",
+            text: "آیا از حذف تمامی اطلاعات مدارک مطمئن هستید؟",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "بله",
+            cancelButtonText: "خیر",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        }, function (isConfirm) {
+            if (isConfirm) {
+                  
+                $.ajax({
+            //contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: '@Url.Page("./Index", "RemoveEvidence")',
+                    headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                    data: { "id" : id },
+
+                    success: function (response) {
+                        console.log(response);
+                        $.Notification.autoHideNotify('success', 'top center', 'پیام سیستم ', response.message);
+                        setTimeout(function() {
+                            location.reload(); 
+                        }, 1200);
+                
+                    },
+                    failure: function (response) {
+                        console.log(5, response)
+                        $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', response.message);
+                    }
+                });
+            }
+        });
+
+        
+
+    }
+
+</Script>                               
+

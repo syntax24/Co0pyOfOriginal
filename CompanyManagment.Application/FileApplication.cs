@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _0_Framework.Application;
+using _0_Framework_b.Application;
 using Company.Domain.File1;
 using CompanyManagment.App.Contracts.Employee;
 using CompanyManagment.App.Contracts.Employer;
@@ -61,7 +61,7 @@ namespace CompanyManagment.Application
 
             file.Edit(command.ArchiveNo, clientVisitDate, command.ProceederReference,
                 command.Reqester, command.Summoned, command.Client, command.FileClass, command.HasMandate,
-                command.Description);
+                command.Description, command.Status);
             _fileRepository.SaveChanges();
 
             return operation.Succcedded();

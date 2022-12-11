@@ -27,12 +27,15 @@ namespace CompanyManagment.App.Contracts.File1
         public int Client { get; set; }
 
         public string ClientFullName { get; set; }
+        public string OppositePersonFullName { get; set; }
 
 
         public string FileClass { get; set; }
 
         [Required(ErrorMessage = "فیلد الزامی است")]
         public int HasMandate { get; set; }
+
+        public int Status { get; set; } = 2;
 
 
         public string Description { get; set; }

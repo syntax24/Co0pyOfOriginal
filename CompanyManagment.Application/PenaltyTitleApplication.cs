@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using _0_Framework.Application;
+using _0_Framework_b.Application;
 using Company.Domain.PenaltyTitle;
 using CompanyManagment.App.Contracts.PenaltyTitle;
 
@@ -18,12 +18,20 @@ namespace CompanyManagment.Application
         public OperationResult Create(CreatePenaltyTitle command)
         {
             var operation = new OperationResult();
+            DateTime? FromDate = null;
+            DateTime? ToDate = null;
 
-            var FromDate = new DateTime();
-            FromDate = command.FromDate.ToGeorgianDateTime();
+            if (command.FromDate != null)
+            {
+                //FromDate = new DateTime();
+                FromDate = command.FromDate.ToGeorgianDateTime();
+            }
 
-            var ToDate = new DateTime();
-            ToDate = command.ToDate.ToGeorgianDateTime();
+            if (command.ToDate != null)
+            {
+                //var ToDate = new DateTime();
+                ToDate = command.ToDate.ToGeorgianDateTime();
+            }
 
             //TODO if
             //if(_BoardRepository.Exists(x=>x.Branch == command.Branch))
@@ -46,6 +54,9 @@ namespace CompanyManagment.Application
             {
                 if(obj.PaidAmount != null || obj.RemainingAmount != null || obj.Title != null || obj.FromDate != null || obj.ToDate != null || obj.Day != null )
                 {
+                    if ((obj.FromDate == null && obj.ToDate != null) || (obj.FromDate != null && obj.ToDate == null))
+                        return operation.Failed("لطفا تاریخ جزئیات دادنامه را وارد نمایید");
+
                     obj.Petition_Id = petitionId;
                     obj.Id = 0;
 

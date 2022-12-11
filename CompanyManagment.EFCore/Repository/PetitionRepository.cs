@@ -26,6 +26,7 @@ namespace CompanyManagment.EFCore.Repository
                 TotalPenalty = x.TotalPenalty,
                 TotalPenaltyTitles = x.TotalPenaltyTitles,
                 Description = x.Description,
+                WorkHistoryDescription = x.WorkHistoryDescreption,
                 File_Id = x.File_Id,
                 BoardType_Id = x.BoardType_Id
             }).FirstOrDefault(x => x.Id == id);
@@ -41,6 +42,7 @@ namespace CompanyManagment.EFCore.Repository
                 TotalPenalty = x.TotalPenalty,
                 TotalPenaltyTitles = x.TotalPenaltyTitles,
                 Description = x.Description,
+                WorkHistoryDescription = x.WorkHistoryDescreption,
                 File_Id = x.File_Id,
                 BoardType_Id = x.BoardType_Id
             }).FirstOrDefault(x => x.File_Id == fileId && x.BoardType_Id == boardTypeId);
@@ -56,6 +58,7 @@ namespace CompanyManagment.EFCore.Repository
                 TotalPenalty = x.TotalPenalty,
                 TotalPenaltyTitles = x.TotalPenaltyTitles,
                 Description = x.Description,
+                WorkHistoryDescription = x.WorkHistoryDescreption,
                 BoardType_Id = x.BoardType_Id,
                 File_Id = x.File_Id,
             });

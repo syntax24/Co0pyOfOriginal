@@ -15,11 +15,11 @@ namespace CompanyManagment.App.Contracts.Petition
         public string TotalPenalty { get; set; }
         public string TotalPenaltyTitles { get; set; }
         public string Description { get; set; }
+        public string WorkHistoryDescription { get; set; }
         public int BoardType_Id { get; set; }
         public long File_Id { get; set; }
 
         public bool BoardProcessingStage { get; set; }
-        public bool BoardTypeId { get; set; }
         public EditFile FileData { get; set; }
         public List<EditWorkHistory> CreateWorkHistory { get; set; }
         public List<EditPenaltyTitle> CreatePenaltyTitle { get; set; }

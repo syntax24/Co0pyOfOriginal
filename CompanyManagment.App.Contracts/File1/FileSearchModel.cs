@@ -19,6 +19,7 @@ namespace CompanyManagment.App.Contracts.File1
         public string FileClass { get; set; }
         public int HasMandate { get; set; }
         public string Description { get; set; }
+        public int Status { get; set; } = 2;
         public List<ArchiveNo_FileClass_UserIdList> ArchiveNo_FileClass_UserIdList { get; set; }
 
         //public List<User> Users { get; set; }

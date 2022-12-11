@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using _0_Framework.Domain;
+﻿using System;
+using System.Collections.Generic;
+using _0_Framework_b.Domain;
 using CompanyManagment.App.Contracts.ProceedingSession;
 
 
