@@ -38,7 +38,7 @@ namespace CompanyManagment.EFCore.Repository
         }
 
 
-        public List<ChapterViewModel> Search(ChapterSearchModel SearchModel)
+        public List<ChapterViewModel> Search(ChapterSearchModel searchModel)
         {
             var query = _context.EntityChapters.Select(x => new ChapterViewModel
             {
@@ -52,10 +52,34 @@ namespace CompanyManagment.EFCore.Repository
             });
 
        
-            if (SearchModel.Subtitle_Id!=0)
-                query = query.Where(x => x.Subtitle_Id==SearchModel.Subtitle_Id);
-            if (!string.IsNullOrWhiteSpace(SearchModel.Chapter))
-                query = query.Where(x => x.Chapter.Contains(SearchModel.Chapter));
+            
+            if (!string.IsNullOrWhiteSpace(searchModel.Chapter))
+                query = query.Where(x => x.Chapter.Contains(searchModel.Chapter));
+            if (searchModel.Subtitle_Id != 0)
+            {
+  
+                    query = query.Where(x => x.Subtitle_Id == searchModel.Subtitle_Id);
+
+                if (searchModel.IsActiveString == "false")
+                    query = query.Where(x => x.IsActiveString == "false");
+                if (searchModel.IsActiveString == "true")
+                    query = query.Where(x => x.IsActiveString == "true");
+                if (string.IsNullOrWhiteSpace(searchModel.IsActiveString) || searchModel.IsActiveString == null || searchModel.IsActiveString == "null")
+                    query = query.Where(x => x.IsActiveString == "true");
+            }
+            else
+            {
+                if (searchModel.IsActiveString == "false")
+                    query = query.Where(x => x.IsActiveString == "false");
+                if (searchModel.IsActiveString == "true")
+                    query = query.Where(x => x.IsActiveString == "true");
+                if (string.IsNullOrWhiteSpace(searchModel.IsActiveString) || searchModel.IsActiveString == null || searchModel.IsActiveString == "null")
+                    query = query.Where(x => x.IsActiveString == "true");
+            }
+
+           
+
+
 
             return query.OrderByDescending(x => x.Id).ToList();
         }

@@ -31,6 +31,7 @@ namespace CompanyManagment.EFCore.Repository
                  OriginalTitle_Id = x.OriginalTitle_Id,
                 Subtitle_Id = x.Subtitle_Id,
                 Chapter_Id = x.Chapter_Id,
+                IsActiveString = x.IsActiveString,
                 OriginalTitle = _context.EntityOriginalTitles .Where(i=>i.id== x.OriginalTitle_Id).Select(t=>t.Title).FirstOrDefault(),
                 Subtitle = _context.EntitySubtitles.Where(i => i.id == x.Subtitle_Id).Select(t => t.Subtitle).FirstOrDefault(),
                 Chapter= _context.EntityChapters.Where(i => i.id == x.Chapter_Id).Select(t => t.Chapter).FirstOrDefault(),

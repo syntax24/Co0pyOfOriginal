@@ -33,7 +33,7 @@ namespace CompanyManagment.EFCore.Repository
               
             }).FirstOrDefault(x => x.Id == id);
         }
-        List<OriginalTitleViewModel> IOriginalTitleRepozitory.Search(OriginalTitleSearchModel SearchModel)
+        List<OriginalTitleViewModel> IOriginalTitleRepozitory.Search(OriginalTitleSearchModel searchModel)
         {
             var query = _context.EntityOriginalTitles.Select(x => new OriginalTitleViewModel
             {
@@ -41,11 +41,16 @@ namespace CompanyManagment.EFCore.Repository
                 Title = x.Title,
                 IsActiveString = x.IsActiveString,
             });
-            if (!string.IsNullOrWhiteSpace(SearchModel.Title))
-                query = query.Where(x => x.Title.Contains(SearchModel.Title));
-            if (SearchModel.IsActiveString == "false")
+
+
+
+            if (!string.IsNullOrWhiteSpace(searchModel.Title))
+                query = query.Where(x => x.Title.Contains(searchModel.Title));
+            if (string.IsNullOrWhiteSpace(searchModel.IsActiveString) || searchModel.IsActiveString == null || searchModel.IsActiveString == "null")
+                query = query.Where(x => x.IsActiveString == "true");
+            if (searchModel.IsActiveString == "false")
                 query = query.Where(x => x.IsActiveString == "false");
-            if (SearchModel.IsActiveString == "true")
+            if (searchModel.IsActiveString == "true")
                 query = query.Where(x => x.IsActiveString == "true");
             return query.OrderByDescending(x => x.Id).ToList();
         }

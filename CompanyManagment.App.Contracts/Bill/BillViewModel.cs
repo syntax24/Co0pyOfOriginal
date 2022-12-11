@@ -10,6 +10,7 @@ namespace CompanyManagment.App.Contracts.Bill
         public string Appointed { get; set; }
         public string Contact { get; set; }
         public string ProcessingStage { get; set; }
-        public byte Status { get; set; }
+        public string IsActiveString { get; set; }
+        public long Appointed_Id { get; set; }
     }
 }

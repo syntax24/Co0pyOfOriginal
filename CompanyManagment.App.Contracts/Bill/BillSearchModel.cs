@@ -8,7 +8,7 @@
         public long Contact_Id { get; set; }
         public long Appointed_Id { get; set; }
         public long ProcessingStage_Id { get; set; }
-        public byte Status { get; set; }
+        public string IsActiveString { get; set; }
         public string Contact { get; set; }   
         public string Appointed { get; set; }
         public string ProcessingStage { get; set; }

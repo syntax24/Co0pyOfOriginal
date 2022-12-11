@@ -59,6 +59,27 @@ namespace ServiceHost.Areas.Admin.Pages.Company.OriginalTitle
         }
 
 
+        public IActionResult OnGetDeActive(long id, string url)
+        {
+            var result = _originalTitleApplication.DeActive(id);
+
+            if (result.IsSuccedded)
+                return Redirect(url);
+            Message = result.Message;
+            return RedirectToPage(url);
+
+        }
+        public IActionResult OnGetIsActive(long id, string url)
+        {
+
+
+            var result = _originalTitleApplication.Active(id);
+            if (result.IsSuccedded)
+                return Redirect(url);
+            Message = result.Message;
+            return RedirectToPage(url);
+        }
+
         public IActionResult OnGetGroupDeActive(List<long> ids)
         {
 
@@ -69,6 +90,8 @@ namespace ServiceHost.Areas.Admin.Pages.Company.OriginalTitle
             return RedirectToPage("./Index");
 
         }
+
+
         public IActionResult OnGetGroupReActive(List<long> ids)
         {
 
@@ -76,29 +99,12 @@ namespace ServiceHost.Areas.Admin.Pages.Company.OriginalTitle
             {
                 var result = _originalTitleApplication.Active(item);
             }
+
+
+            //if (result.IsSuccedded)
+            //    return RedirectToPage("./Index");
+
             return RedirectToPage("./Index");
         }
-        public IActionResult OnGetDeActive(long id)
-        {
-
-
-            var result = _originalTitleApplication.DeActive(id);
-
-            if (result.IsSuccedded)
-                return RedirectToPage("./Index");
-            Message = result.Message;
-            return RedirectToPage("./Index");
-        }
-        public IActionResult OnGetIsActive(long id)
-        {
-
-
-            var result = _originalTitleApplication.Active(id);
-            if (result.IsSuccedded)
-                return RedirectToPage("./Index");
-            Message = result.Message;
-            return RedirectToPage("./Index");
-        }
-
     }
 }

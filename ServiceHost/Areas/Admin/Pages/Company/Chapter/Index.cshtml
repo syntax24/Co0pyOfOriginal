@@ -1,9 +1,12 @@
 ﻿@page
 @model ServiceHost.Areas.Admin.Pages.Company.Chapter.IndexModel
+@using Microsoft.AspNetCore.Http.Extensions;
 @{
 }
-
 @{
+    string url = HttpContext.Request.GetEncodedUrl();
+    //string colaps = "in";
+    //string act = "active";
     int i = 1;
 }
 @{
@@ -13,32 +16,6 @@
 
 }
 <style>
-    .thh0 {
-        width: 8px !important;
-    }
-
-    .thh {
-        width: 40px !important;
-    }
-
-    .thh2 {
-        width: 130px !important;
-    }
-
-    .thhNastionalId {
-        width: 30px !important;
-    }
-
-    .inpt {
-        width: 100%;
-        border: 1px solid #c7c7c7;
-    }
-
-    .searchpanel {
-        background-color: #747272;
-    }
-
-    <style >
     .sizeSet {
         padding: 2px !important;
         text-align: center !important;
@@ -48,6 +25,26 @@
         border-radius: 8px !important;
         /* padding: 10px; */
         padding: 2px 5px 0px 5px;
+    }
+
+    .ionSize {
+        font-size: 20px !important;
+        top: 2px !important;
+        position: relative;
+    }
+
+    .ionRad {
+        border-radius: 8px !important;
+        padding: 0px 7px 0px 7px !important;
+        background-color: #ff7700 !important;
+        border-color: #ff7700 !important;
+    }
+
+    .ionRad2 {
+        border-radius: 8px !important;
+        padding: 0px 7px 0px 7px !important;
+        background-color: #7c7a7a !important;
+        border-color: #7c7a7a !important;
     }
 
     .faSize {
@@ -84,7 +81,7 @@
     }
 
     .panel-default > .panel-heading {
-        background-color: #545353 !important;
+        background-color: #950000 !important;
     }
 
 
@@ -219,8 +216,8 @@
 
 <div class="col-sm-12">
     <div class="panel-group panel-group-joined" id="accordion-test">
-        <div class="panel panel-default" style="border-radius: 15px !important;">
-            <div class="panel-heading" style="background-color: #545353 !important">
+        <div class="panel panel-default" style="border-radius: 15px !important; background-color: #fdc0c0; ">
+            <div class="panel-heading" style="background-color: #950000 !important">
                 <h4 class="panel-title" style="color: #edebeb !important; display: inline;">
                     <a data-toggle="collapse" data-parent="#accordion-test" href="#collapseOne" class="collapsed" style="display: inline;">
                         جستجوی فصل
@@ -235,19 +232,23 @@
                                 <div class="form-group col-sm-12">
                                     <div class="row">
                                         <div class="col-sm-3 pull-right">
-                                            <select class=" form-control inpt" asp-for="searchModel.OriginalTitle_Id" asp-items="@Model.SelectListOriginalTitle" placeholder="عنوان" id="OriginalTitle_Id" style="width: 100%">
-                                                <option value="0" selected="selected" disabled>عنوان </option>
+                                            <select class="form-control select-city" asp-for="searchModel.OriginalTitle_Id" asp-items="Model.SelectListOriginalTitle" placeholder="عنوان" id="OriginalTitle_Id" style="width: 100%">
+                                                <option value="0" selected="selected">
+                                                    عنوان راانتخاب کنید
+                                                </option>
                                             </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control select-city" asp-for="searchModel.Subtitle_Id" asp-items="Model.SelectListSubtitles" id="Subtitle_Id" style="width: 100%">
+                                                <option value="0"> فصل را انتخاب کنید</option>
+                                            </select>
+
                                         </div>
                                         <div class="col-sm-3 pull-right">
-                                            <select class=" form-control inpt" asp-for="searchModel.Subtitle_Id" asp-items="@Model.SelectListSubtitles" placeholder="بخش" id="Subtitle_Id" style="width: 100%">
-                                                <option value="0" selected="selected" disabled>بخش  </option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-4 pull-right">
                                             <label class="sr-only" asp-for="searchModel.Chapter"></label>
                                             <input class="form-control inpt" asp-for="searchModel.Chapter" placeholder="فصل" style="width: 100%">
                                         </div>
+
                                     </div>
                                     <hr style=" margin-top: 12px;margin-bottom: 12px;" />
                                     <div class="row" style="margin-top: 15px">
@@ -285,37 +286,36 @@
                     <table id="datatable" class="table table-striped table-bordered">
                         <thead style="background-color: #ecefee">
                             <tr>
-                                <th style="font-size: 10px !important; width: 5% !important" class="sizeSet">
+                                <th style="font-size: 10px !important; display: none" class="sizeSet">
                                     <span class="tooltip-container">
-                                        <input class="checkboxtitle" type="checkbox" id="checkSelect" onclick="selectori(this)" />
-                                        <span class="tooltip"> با استفاده از این چک باکس می توانید  فصل ها را بصورت گروهی انتخاب کرده و سپس با کلیک بر روی دکمه حذف گروهی  اقدام به حذف  نمایید</span>
+                                        <input class="checkboxtitle" type="checkbox" id="checkSelect" onclick="selectori(this)" checked="checked" />
                                     </span>
                                 </th>
                                 <th style="font-size: 16px !important; width: 5% !important">#</th>
-                                <th style="font-size: 16px !important; text-align: center; width: 20% !important">عنوان</th>
-                                <th style="font-size: 16px !important; text-align: center;width: 20% !important"> بخش </th>
-                                <th style="font-size: 16px !important; text-align: center; width: 20% !important"> فصل </th>
+                                <th style="font-size: 16px !important; text-align: center; width: 25% !important">عنوان</th>
+                                <th style="font-size: 16px !important; text-align: center;width: 25% !important"> بخش </th>
+                                <th style="font-size: 16px !important; text-align: center; width: 25% !important"> فصل </th>
 
-
-                                <th style="font-size: 10px !important ;width: 10% !important">
+                                <th style="font-size: 10px !important;width: 10% !important ">
                                     <span style="float: right;">
-                                        <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
-                                        <span>&nbsp;</span><span>&nbsp;</span>
+                                        <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
                                     </span>
                                     <span class="act">
                                     </span>
                                     <a class="btn btn-danger pull-right m-rl-5 rad deact" onclick="deactiveAll()">
                                         <i class="fa faSize fa-trash"></i>
                                     </a>
+
                                 </th>
+
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model.Chapters)
                             {
                                 <tr>
-                                    <td style="font-size: 12px !important; text-align: center">
-                                        <input type="checkbox" name="foo" value="@item.Id" />
+                                    <td style="font-size: 16px !important; text-align: center;display:none">
+                                        <input type="checkbox" name="foo" value="@item.Id" checked="checked" />
                                     </td>
                                     <td style="font-size: 14px !important; text-align: center">@i </td>
                                     <td style="font-size: 14px !important; text-align: center">@item.OriginalTitle </td>
@@ -334,12 +334,13 @@
 
                                         @if (item.IsActiveString == "true")
                                         {
-                                            <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
+
+                                            <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
 
                                         }
                                         else
                                         {
-                                            <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
+                                            <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
                                         }
 
                                     </td>
@@ -405,11 +406,13 @@
         function deactiveAll() {
 
             if (document.getElementById("checkSelect").checked == false) {
-                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  متنی انتخاب نشده است ");
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  بخشی انتخاب نشده است ");
             } else {
-                if (document.getElementById("sercheCheck").value == "true") {
+                if (document.getElementById("sercheCheck").value == "false") {
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان وبخش را انتخاب نموده و سپس جستجو را کلیک کنید ");
+                } else if (document.getElementById("sercheCheck").value == "true") {
                     swal({
-                        title: "آیا حذف این  متن ها اطمینان دارید؟",
+                        title: "آیا غیرفعال نمودن این  موارد انتخاب شده اطمینان دارید؟",
                         text: "",
                         type: "warning",
                         showCancelButton: true,
@@ -429,32 +432,27 @@
                                     console.log(url3b);
                                 }
                             }
-                            /*  var url1 = '#showmodal=';*/
                             var url2b = '@Url.Page("/Company/Chapter/Index", "GroupDeActive")';
-                            /*   var url3 = document.getElementById('yearSend').value;*/
                             window.location.href = url2b + url3b;
                             console.log(url2b);
                         }
                     });
 
-                } else if (document.getElementById("sercheCheck").value == "false") {
-                    console.log(document.getElementById("sercheCheck").value);
-                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان،متن،بخش را انتخاب نموده و سپس جستجو را کلیک کنید ");
                 }
             }
         }
     </script>
     <script>
         function reActiveAll() {
-            console.log(document.getElementById("sercheCheck").value);
+   
             if (document.getElementById("checkSelect").checked == false) {
-                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  متن ی انتخاب نشده است ");
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  بخشی انتخاب نشده است ");
             } else {
                 if (document.getElementById("sercheCheck").value == "false") {
-                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان،متن،بخش را انتخاب نموده و سپس جستجو را کلیک کنید ");
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان وبخش را انتخاب نموده و سپس جستجو را کلیک کنید ");
                 } else if (document.getElementById("sercheCheck").value == "true") {
                     swal({
-                        title: "آیا فعال نمودن این  متن ها اطمینان دارید؟",
+                        title: "آیا فعال نمودن این  موارد انتخاب شده اطمینان دارید؟",
                         text: "",
                         type: "warning",
                         showCancelButton: true,
@@ -483,6 +481,7 @@
             }
         }
     </script>
+
     <script>
         $(document).ready(function () {
             $("#OriginalTitle_Id").change(function () {
@@ -493,7 +492,7 @@
                     dataType: 'json',
                     data: { OriginalTitle_Id: $("#OriginalTitle_Id").val() },
                     success: function (result) {
-                        $("#Subtitle_Id").append(' <option value="' + -1 + '">' +
+                        $("#Subtitle_Id").append(' <option value="' + 0 + '">' +
                             "نام بخش را انتخاب کنید" + '</option>');
                         $.each(result, function (i, result) {
                             $("#Subtitle_Id").append(' <option value="' + result.id + '">' +

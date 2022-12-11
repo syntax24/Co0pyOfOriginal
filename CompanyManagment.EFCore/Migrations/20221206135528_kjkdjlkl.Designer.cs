@@ -4,14 +4,16 @@ using CompanyManagment.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CompanyManagment.EFCore.Migrations
 {
     [DbContext(typeof(CompanyContext))]
-    partial class CompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20221206135528_kjkdjlkl")]
+    partial class kjkdjlkl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -506,69 +508,6 @@ namespace CompanyManagment.EFCore.Migrations
                     b.ToTable("EmployeeChildren");
                 });
 
-            modelBuilder.Entity("Company.Domain.Evidence.Evidence", b =>
-                {
-                    b.Property<long>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BoardType_Id")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("File_Id")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("BoardType_Id");
-
-                    b.HasIndex("File_Id");
-
-                    b.ToTable("Evidences");
-                });
-
-            modelBuilder.Entity("Company.Domain.EvidenceDetail.EvidenceDetail", b =>
-                {
-                    b.Property<long>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Day")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("Evidence_Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("FromDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ToDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("Evidence_Id");
-
-                    b.ToTable("EvidenceDetails");
-                });
-
             modelBuilder.Entity("Company.Domain.File1.File1", b =>
                 {
                     b.Property<long>("id")
@@ -603,36 +542,12 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Property<long>("Reqester")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<long>("Summoned")
                         .HasColumnType("bigint");
 
                     b.HasKey("id");
 
                     b.ToTable("Files");
-                });
-
-            modelBuilder.Entity("Company.Domain.FileTitle.FileTitle", b =>
-                {
-                    b.Property<long>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("File_Titles");
                 });
 
             modelBuilder.Entity("Company.Domain.HolidayAgg.Holiday", b =>
@@ -759,113 +674,6 @@ namespace CompanyManagment.EFCore.Migrations
                     b.ToTable("MandatoryHours");
                 });
 
-            modelBuilder.Entity("Company.Domain.MasterPenaltyTitle.MasterPenaltyTitle", b =>
-                {
-                    b.Property<long>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Day")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("FromDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("MasterPetition_Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("PaidAmount")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RemainingAmount")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ToDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("MasterPetition_Id");
-
-                    b.ToTable("Master_PenaltyTitles");
-                });
-
-            modelBuilder.Entity("Company.Domain.MasterPetition.MasterPetition", b =>
-                {
-                    b.Property<long>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BoardType_Id")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("File_Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("MasterName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WorkHistoryDescreption")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("BoardType_Id");
-
-                    b.HasIndex("File_Id");
-
-                    b.ToTable("Master_Petitions");
-                });
-
-            modelBuilder.Entity("Company.Domain.MasterWorkHistory.MasterWorkHistory", b =>
-                {
-                    b.Property<long>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("FromDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("MasterPetition_Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("ToDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("WorkingHoursPerDay")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("WorkingHoursPerWeek")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("MasterPetition_Id");
-
-                    b.ToTable("Master_WorkHistories");
-                });
-
             modelBuilder.Entity("Company.Domain.ModuleAgg.EntityModule", b =>
                 {
                     b.Property<long>("id")
@@ -939,7 +747,7 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Property<string>("Day")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("FromDate")
+                    b.Property<DateTime>("FromDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PaidAmount")
@@ -954,7 +762,7 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ToDate")
+                    b.Property<DateTime>("ToDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("id");
@@ -993,9 +801,6 @@ namespace CompanyManagment.EFCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TotalPenaltyTitles")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WorkHistoryDescreption")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
@@ -1721,36 +1526,6 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("Company.Domain.Evidence.Evidence", b =>
-                {
-                    b.HasOne("Company.Domain.BoardType.BoardType", "BoardType")
-                        .WithMany("EvidencesList")
-                        .HasForeignKey("BoardType_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Company.Domain.File1.File1", "File1")
-                        .WithMany("EvidencesList")
-                        .HasForeignKey("File_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BoardType");
-
-                    b.Navigation("File1");
-                });
-
-            modelBuilder.Entity("Company.Domain.EvidenceDetail.EvidenceDetail", b =>
-                {
-                    b.HasOne("Company.Domain.Evidence.Evidence", "Evidence")
-                        .WithMany("EvidenceDetailsList")
-                        .HasForeignKey("Evidence_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Evidence");
-                });
-
             modelBuilder.Entity("Company.Domain.HolidayItemAgg.HolidayItem", b =>
                 {
                     b.HasOne("Company.Domain.HolidayAgg.Holiday", "Holidayss")
@@ -1760,47 +1535,6 @@ namespace CompanyManagment.EFCore.Migrations
                         .IsRequired();
 
                     b.Navigation("Holidayss");
-                });
-
-            modelBuilder.Entity("Company.Domain.MasterPenaltyTitle.MasterPenaltyTitle", b =>
-                {
-                    b.HasOne("Company.Domain.MasterPetition.MasterPetition", "MasterPetition")
-                        .WithMany("MasterPenaltyTitlesList")
-                        .HasForeignKey("MasterPetition_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MasterPetition");
-                });
-
-            modelBuilder.Entity("Company.Domain.MasterPetition.MasterPetition", b =>
-                {
-                    b.HasOne("Company.Domain.BoardType.BoardType", "BoardType")
-                        .WithMany("MasterPetitionsList")
-                        .HasForeignKey("BoardType_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Company.Domain.File1.File1", "File1")
-                        .WithMany("MasterPetitionsList")
-                        .HasForeignKey("File_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BoardType");
-
-                    b.Navigation("File1");
-                });
-
-            modelBuilder.Entity("Company.Domain.MasterWorkHistory.MasterWorkHistory", b =>
-                {
-                    b.HasOne("Company.Domain.MasterPetition.MasterPetition", "MasterPetition")
-                        .WithMany("MasterWorkHistoriesList")
-                        .HasForeignKey("MasterPetition_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MasterPetition");
                 });
 
             modelBuilder.Entity("Company.Domain.ModuleTextManagerAgg.EntityModuleTextManager", b =>
@@ -1972,10 +1706,6 @@ namespace CompanyManagment.EFCore.Migrations
                 {
                     b.Navigation("BoardsList");
 
-                    b.Navigation("EvidencesList");
-
-                    b.Navigation("MasterPetitionsList");
-
                     b.Navigation("PetitionsList");
                 });
 
@@ -1996,18 +1726,9 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Navigation("EmployeeChildrenList");
                 });
 
-            modelBuilder.Entity("Company.Domain.Evidence.Evidence", b =>
-                {
-                    b.Navigation("EvidenceDetailsList");
-                });
-
             modelBuilder.Entity("Company.Domain.File1.File1", b =>
                 {
                     b.Navigation("BoardsList");
-
-                    b.Navigation("EvidencesList");
-
-                    b.Navigation("MasterPetitionsList");
 
                     b.Navigation("PetitionsList");
                 });
@@ -2025,13 +1746,6 @@ namespace CompanyManagment.EFCore.Migrations
             modelBuilder.Entity("Company.Domain.MandatoryHoursAgg.MandatoryHours", b =>
                 {
                     b.Navigation("Contracts");
-                });
-
-            modelBuilder.Entity("Company.Domain.MasterPetition.MasterPetition", b =>
-                {
-                    b.Navigation("MasterPenaltyTitlesList");
-
-                    b.Navigation("MasterWorkHistoriesList");
                 });
 
             modelBuilder.Entity("Company.Domain.ModuleAgg.EntityModule", b =>

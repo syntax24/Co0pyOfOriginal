@@ -3,18 +3,48 @@ using System.Collections.Generic;
 using Company.Domain.BillAgg;
 using CompanyManagment.App.Contracts.Bill;
 using CompanyManagment.App.Contracts.TextManager;
+using CompanyManagment.App.Contracts.Employee;
+using Company.Domain.EmployeeAgg;
 
 namespace CompanyManagment.Application
 {
     public class BillAppliction : IBillApplication
     {
         private readonly IBillRepozitory _BillRepozitory;
-
+        private readonly IEmployeeRepository _employeeRepository;
 
         public BillAppliction(IBillRepozitory BillRepozitory)
         {
             _BillRepozitory = BillRepozitory;
+           
         }
+
+        public OperationResult Active(long id)
+        {
+            var opration = new OperationResult();
+            var bill = _BillRepozitory.Get(id);
+            if (bill == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
+
+            bill.Active();
+
+            _BillRepozitory.SaveChanges();
+            return opration.Succcedded();
+        }
+        public OperationResult DeActive(long id)
+        {
+            var opration = new OperationResult();
+            var bill = _BillRepozitory.Get(id);
+            if (bill == null)
+                return opration.Failed("رکورد مورد نظر یافت نشد");
+
+            bill.DeActive();
+
+
+            _BillRepozitory.SaveChanges();
+            return opration.Succcedded();
+        }
+
         public OperationResult Create(CreateBill command)
         {
             var oprtaion = new OperationResult();
@@ -26,8 +56,8 @@ namespace CompanyManagment.Application
                                 command.Description,
                                 command.Appointed,
                                 command.Contact,
-                                command.ProcessingStage,
-                                 command.Status
+                                command.ProcessingStage
+                                
                                 );
             _BillRepozitory.Create(bill);
             _BillRepozitory.SaveChanges();
@@ -40,6 +70,9 @@ namespace CompanyManagment.Application
             //}
             return oprtaion.Succcedded();
         }
+
+      
+
         public OperationResult Edit(EditBill command)
         {
             var oprtaion = new OperationResult();
@@ -54,8 +87,8 @@ namespace CompanyManagment.Application
                                 command.Description,
                                 command.Appointed,
                                 command.Contact,
-                                command.ProcessingStage,
-                                 command.Status
+                                command.ProcessingStage
+                               
                                 );
 
             _BillRepozitory.SaveChanges();
@@ -63,10 +96,7 @@ namespace CompanyManagment.Application
             
             return oprtaion.Succcedded();
         }
-        public List<BillViewModel> GetAllTextManager()
-        {
-            return _BillRepozitory.GetAllBill();
-        }
+     
         public EditBill GetDetails(long id)
         {
             return _BillRepozitory.GetDetails(id);
@@ -74,6 +104,11 @@ namespace CompanyManagment.Application
         public List<BillViewModel> Search(BillSearchModel SearchModel)
         {
             return _BillRepozitory.Search(SearchModel);
+        }
+
+        public List<BillViewModel> GetAllTextManager()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -73,7 +73,7 @@ namespace CompanyManagment.EFCore.Repository
             throw new System.NotImplementedException();
         }
 
-        List<Contact2ViewModel> IContactRepozitory2.Search(Contact2SearchModel SearchModel)
+        List<Contact2ViewModel> IContactRepozitory2.Search(Contact2SearchModel searchModel)
         {
             var query = _context.EntityContacts.Select(x => new Contact2ViewModel
             {
@@ -83,13 +83,20 @@ namespace CompanyManagment.EFCore.Repository
                 Signature = x.Signature,
 
             });
-            if (!string.IsNullOrWhiteSpace(SearchModel.NameContact))
-                query = query.Where(x => x.NameContact.Contains(SearchModel.NameContact));
-            if (SearchModel.IsActiveString== "false")
+            if (!string.IsNullOrWhiteSpace(searchModel.NameContact))
+            {
+               query = query.Where(x => x.NameContact.Contains(searchModel.NameContact));
+            
+            }
+
+            if (string.IsNullOrWhiteSpace(searchModel.IsActiveString) || searchModel.IsActiveString == null || searchModel.IsActiveString == "null")
+                query = query.Where(x => x.IsActiveString == "true");
+            if (searchModel.IsActiveString== "false")
                 query = query.Where(x => x.IsActiveString == "false");
-            if (SearchModel.IsActiveString == "true")
-                query = query.Where(x => x.IsActiveString == "true"); 
-         
+            if (searchModel.IsActiveString == "true")
+                query = query.Where(x => x.IsActiveString == "true");
+      
+
             return query.OrderByDescending(x => x.Id).ToList();
         }
     }

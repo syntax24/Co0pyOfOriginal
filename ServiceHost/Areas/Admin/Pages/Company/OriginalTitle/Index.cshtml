@@ -1,9 +1,12 @@
 ﻿@page
 @model ServiceHost.Areas.Admin.Pages.Company.OriginalTitle.IndexModel
-
+@using Microsoft.AspNetCore.Http.Extensions;
 @{
 }
 @{
+    string url = HttpContext.Request.GetEncodedUrl();
+    //string colaps = "in";
+    //string act = "active";
     int i = 1;
 }
 @{
@@ -13,32 +16,6 @@
 
 }
 <style>
-    .thh0 {
-        width: 8px !important;
-    }
-
-    .thh {
-        width: 40px !important;
-    }
-
-    .thh2 {
-        width: 130px !important;
-    }
-
-    .thhNastionalId {
-        width: 30px !important;
-    }
-
-    .inpt {
-        width: 100%;
-        border: 1px solid #c7c7c7;
-    }
-
-    .searchpanel {
-        background-color: #747272;
-    }
-
-    <style >
     .sizeSet {
         padding: 2px !important;
         text-align: center !important;
@@ -48,6 +25,26 @@
         border-radius: 8px !important;
         /* padding: 10px; */
         padding: 2px 5px 0px 5px;
+    }
+
+    .ionSize {
+        font-size: 20px !important;
+        top: 2px !important;
+        position: relative;
+    }
+
+    .ionRad {
+        border-radius: 8px !important;
+        padding: 0px 7px 0px 7px !important;
+        background-color: #ff7700 !important;
+        border-color: #ff7700 !important;
+    }
+
+    .ionRad2 {
+        border-radius: 8px !important;
+        padding: 0px 7px 0px 7px !important;
+        background-color: #7c7a7a !important;
+        border-color: #7c7a7a !important;
     }
 
     .faSize {
@@ -84,7 +81,7 @@
     }
 
     .panel-default > .panel-heading {
-        background-color: #545353 !important;
+        background-color: #950000 !important;
     }
 
 
@@ -202,24 +199,29 @@
     }
 </style>
 <div class="row">
-    <div class="col-sm-12 m-r-10">
-        <input type="hidden" id="sercheCheck" value="@Model.OriginalTitleSearch" />
-    </div>
-</div>
     <div class="row">
         <div class="col-sm-12 m-r-10">
+
             <p class="pull-right">
-                <a id="btnPopModal" href="#showmodal=@Url.Page("/Company/OriginalTitle/Index", "Create")" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-right: 10px "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> تعریف عنوان  جدید </a>
+
+
             </p>
+            <p class="pull-right">
+
+                <a id="btnPopModal" href="#showmodal=@Url.Page("/Company/OriginalTitle/Index", "Create")" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-right: 10px "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> تعریف عنوان  جدید </a>
+
+            </p>
+            <input type="hidden" id="sercheCheck" value="@Model.OriginalTitleSearch" />
         </div>
     </div>
+
     <div class="col-sm-12">
         <div class="panel-group panel-group-joined" id="accordion-test">
-            <div class="panel panel-default" style="border-radius: 15px !important;">
-                <div class="panel-heading" style="background-color: #545353 !important">
+            <div class="panel panel-default" style="border-radius: 15px !important; background-color: #fdc0c0; ">
+                <div class="panel-heading" style="background-color: #950000 !important">
                     <h4 class="panel-title" style="color: #edebeb !important; display: inline;">
                         <a data-toggle="collapse" data-parent="#accordion-test" href="#collapseOne" class="collapsed" style="display: inline;">
-                            جستجوی عناوین
+                            جستجوی عنوان
                         </a>
                     </h4>
                 </div>
@@ -235,7 +237,7 @@
                                                 <input class=" form-control inpt" asp-for="searchModel.Title" placeholder="عنوان " style="width: 100%">
                                             </div>
                                         </div>
-                            
+
                                         <div class="row" style="margin-top: 15px">
                                             <div class="col-lg-9">
                                                 <label class="sr-only" asp-for="searchModel.IsActiveString"></label>
@@ -262,26 +264,26 @@
     <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست عناوین</h3>
+                <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست عنوان ها</h3>
             </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-12 col-sm-12 col-xs-12">
-                        <table id="datatable" class="table table-striped table-bordered">
-                            <thead>
+                        <table id="datatable" class="table table-striped table-bordered fc-scroller">
+                            <thead style="background-color: #ecefee">
                                 <tr>
-                                    <th style="font-size: 10px !important;" class="sizeSet">
+                                    <th style="font-size: 10px !important; display: none" class="sizeSet">
                                         <span class="tooltip-container">
-                                            <input class="checkboxtitle" type="checkbox" id="checkSelect" onclick="selectori(this)" />
-                                            <span class="tooltip"> با استفاده از این چک باکس می توانید  عنوان ها را بصورت گروهی انتخاب کرده و سپس با کلیک بر روی دکمه حذف گروهی  اقدام به حذف  نمایید</span>
+                                            <input class="checkboxtitle" type="checkbox" id="checkSelect" onclick="selectori(this)" checked="checked" />
                                         </span>
                                     </th>
-                                    <th style="font-size: 16px !important; width: 5% !important">#</th>
-                                    <th style="font-size: 16px !important; width: 80%!important" text-align: center"> عنوان</th>
-                                    <th style="font-size: 10px !important; width: 10% !important">
+                                    <th style="width:5%; font-size: 10px !important" class="sizeSet">#</th>
+                                    <th style="font-size: 16px !important; text-align: center" class="sizeSet">عنوان</th>
+                 
+                             
+                                    <th style="font-size: 10px !important; width: 65px; ">
                                         <span style="float: right;">
-                                            <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
-                                            <span>&nbsp;</span><span>&nbsp;</span>
+                                            <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
                                         </span>
                                         <span class="act">
                                         </span>
@@ -294,36 +296,37 @@
                             <tbody>
                                 @foreach (var item in Model.OriginalTitles)
                                 {
-                                <tr>
-                                    <td style="font-size: 12px !important; text-align: center">
-                                        <input type="checkbox" name="foo" value="@item.Id" />
-                                    </td>
-                                    <td style="font-size: 14px !important; text-align: center">@i </td>
-                                    <td style="font-size: 14px !important; text-align: center">@item.Title </td>
+                                    <tr>
+                                        <td style="font-size: 16px !important; text-align: center;display:none">
+                                            <input type="checkbox" name="foo" value="@item.Id" checked="checked" />
+                                        </td>
+                                        <td style="font-size: 16px !important; text-align: center">@i </td>
+                                        <td style="font-size: 16px !important; text-align: center">@item.Title</td>
 
-                                    @{
-                                        i++;
-                                    }
-
-                                    <td>
-
-                                        <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
-                                           href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
-                                            <i class="fa faSize fa-edit"></i>
-                                        </a>
-
-                                        @if (item.IsActiveString == "true")
-                                        {
-                                            <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
-
-                                        }
-                                        else
-                                        {
-                                            <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
+                                        @{
+                                            i++;
                                         }
 
-                                    </td>
-                                </tr>
+                                        <td>
+
+                                            <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
+                                               href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
+                                                <i class="fa faSize fa-edit"></i>
+                                            </a>
+
+                                            @if (item.IsActiveString == "true")
+                                            {
+
+                                                <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
+
+                                            }
+                                            else
+                                            {
+                                                <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
+                                            }
+
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -332,6 +335,9 @@
             </div>
         </div>
     </div>
+</div>
+
+
 
 
 

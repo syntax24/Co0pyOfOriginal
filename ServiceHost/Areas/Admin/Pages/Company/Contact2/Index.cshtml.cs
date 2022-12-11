@@ -15,7 +15,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Contact2
         public Contact2ViewModel searchModel;
         public List<Contact2ViewModel> Contacts;
         private CompanyContext db;
-        public string WorkshopSearch = "false";
+        public string cation2Search = "false";
 
         private readonly IContactApplication2 _contactApplication2;
 
@@ -30,10 +30,12 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Contact2
     
             if (Contacts != null)
             {
-                //if (searchModel.WorkshopIds != 0 || searchModel.EmployeeId != 0)
-                //{
-                //    WorkshopSearch = "true";
-                //}
+              
+
+                if (!string.IsNullOrEmpty(searchModel.NameContact))
+                {
+                    cation2Search = "true";
+                }
             }
         }
         public IActionResult OnGetCreate()
@@ -81,61 +83,26 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Contact2
 
 
 
-        
 
-        //public IActionResult OnGetPrintAll(List<long> ids)
-        //{
-        //    var res = new GroupPrintViewModel2
-        //    {
-        //        ContractList = _contactApplication2.PrintAll(ids)
-        //    };
-        //    //var res = _contractApplication.PrintAll(ids);
-
-        //    return Partial("PrintAll", res);
-        //}
-        public IActionResult OnGetDeActive(long id)
+        public IActionResult OnGetDeActive(long id, string url)
         {
-
-
-            var result = _contactApplication2.DeActive(id);
-
+           var result = _contactApplication2.DeActive(id);
             if (result.IsSuccedded)
-                return RedirectToPage("./Index");
+                return Redirect(url);
             Message = result.Message;
-            return RedirectToPage("./Index");
+            return RedirectToPage(url);
         }
-
-        public IActionResult OnGetIsActive(long id)
+        public IActionResult OnGetIsActive(long id, string url)
         {
-
-
-            var result = _contactApplication2.Active(id);
+           var result = _contactApplication2.Active(id);
             if (result.IsSuccedded)
-                return RedirectToPage("./Index");
+                return Redirect(url);
             Message = result.Message;
-            return RedirectToPage("./Index");
+            return RedirectToPage(url);
         }
-
-        public IActionResult OnGetSign(long id)
-        {
-
-
-            var result = _contactApplication2.Sign(id);
-            return RedirectToPage("./Index");
-
-
-        }
-        public IActionResult OnGetUnSign(long id)
-        {
-
-
-            var result = _contactApplication2.UnSign(id);
-            return RedirectToPage("./Index");
-
-        }
+      
         public IActionResult OnGetGroupDeActive(List<long> ids)
         {
-
             foreach (var item in ids)
             {
                 var result = _contactApplication2.DeActive(item);
@@ -143,8 +110,6 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Contact2
             return RedirectToPage("./Index");
 
         }
-
-
         public IActionResult OnGetGroupReActive(List<long> ids)
         {
 

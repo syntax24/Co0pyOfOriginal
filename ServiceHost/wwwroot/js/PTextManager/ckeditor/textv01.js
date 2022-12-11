@@ -6,7 +6,7 @@ config.removeButtons = 'Save,Source,NewPage,Preview,PasteText,Paste,Copy,Cut,Pas
 const editor = document.getElementById("Description");
 shouldNotGroupWhenFull: true
 CKEDITOR.config.font_defaultLabel = 'Web_Yekan';
-CKEDITOR.config.fontSize_defaultLabel = '20';
+CKEDITOR.config.fontSize_defaultLabel = '18';
 config.format_tags = 'h2;h3;h4;h5;h6;pre;address;div';
 let ed = CKEDITOR.replace(editor, config);
 CKEDITOR.on('dialogDefinition', function (e) {
@@ -20,14 +20,18 @@ ed.addCommand('docImageCommand', {
     }
 });
 
+  
 /*CKEDITOR.dialog.add('docImageCommand', this.path + 'dialogs/abbr.js');*/
 ed.ui.addButton('placeholder', {
-    label: 'ad text',
+    label: 'جستجوی متن',
     size: 500,
     command: 'docImageCommand',
     toolbar: 'insert',
-    icon: '/js/PTextManager/ckeditor/icon/searchtext.png',
+//    icon: '/js/PTextManager/ckeditor/icon/searchtext.png',
 });
-
+//ed.ui.addButton(document.querySelector('#editor'))
+//    .then(editor => {
+//        editor.ui.view.toolbar.items.get(0).label = 'YEAH BUDDY'
+//    });
 
 
