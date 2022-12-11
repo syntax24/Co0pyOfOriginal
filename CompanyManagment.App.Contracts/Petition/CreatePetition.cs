@@ -14,6 +14,7 @@ namespace CompanyManagment.App.Contracts.Petition
         //[Required(ErrorMessage = "فیلد الزامی است")]
         public string TotalPenalty { get; set; }
         public string TotalPenaltyTitles { get; set; }
+        public string TotalPaidAmounts { get; set; }
         public string Description { get; set; }
         public string WorkHistoryDescription { get; set; }
         public int BoardType_Id { get; set; }

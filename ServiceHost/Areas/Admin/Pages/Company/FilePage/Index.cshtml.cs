@@ -566,6 +566,47 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
 
             return Partial("Details", editJob);
         }
+        
+        public IActionResult OnGetFileSummary(long id)
+        {
+            var summary = new FileSummary();
+
+            summary.File = _fileApplication.GetDetails(id);
+            summary.File.ClientFullName = _fileApplication.GetEmployeeFullNameById(summary.File.Reqester);
+            summary.File.OppositePersonFullName = _fileApplication.GetEmployerFullNameById(summary.File.Summoned);
+
+            summary.DiagnosisMasterPetition = _masterPetitionApplication.GetDetails(id, 1) ?? new EditMasterPetition();
+            var masterPetitionId = summary.DiagnosisMasterPetition != null ? summary.DiagnosisMasterPetition.Id : 0;
+            summary.DiagnosisMasterPetition.CreateMasterPenaltyTitle = _masterPenaltyTitleApplication.Search(masterPetitionId);
+            summary.DiagnosisMasterPetition.CreateMasterWorkHistory = _masterWorkHistoryApplication.Search(masterPetitionId);
+
+            summary.File.createDiagnosisBoard = _boardApplication.GetDetails(id, 1) ?? new EditBoard();
+            summary.File.createDiagnosisPS = _proceedingSessionApplication.Search(new ProceedingSessionSearchModel { Board_Id = summary.File.createDiagnosisBoard != null ? summary.File.createDiagnosisBoard.Id : 0 });
+            
+            summary.File.createDiagnosisPetition = _petitionApplication.GetDetails(id, 1) ?? new EditPetition();
+            var petitionId = summary.File.createDiagnosisPetition != null ? summary.File.createDiagnosisPetition.Id : 0;
+            summary.File.createDiagnosisPetition.CreatePenaltyTitle = _penaltyTitleApplication.Search(petitionId);
+            summary.File.createDiagnosisPetition.CreateWorkHistory = _workHistoryApplication.Search(petitionId);
+            summary.File.createDiagnosisPetition.TotalPaidAmounts = summary.File.createDiagnosisPetition.CreatePenaltyTitle.Sum(x => x.PaidAmount !=null ? Int32.Parse(x.PaidAmount.Replace(",", "")) : 0).ToString();
+
+
+            summary.DisputeResolutionMasterPetition = _masterPetitionApplication.GetDetails(id, 2) ?? new EditMasterPetition();
+            masterPetitionId = summary.DisputeResolutionMasterPetition != null ? summary.DisputeResolutionMasterPetition.Id : 0;
+            summary.DisputeResolutionMasterPetition.CreateMasterPenaltyTitle = _masterPenaltyTitleApplication.Search(masterPetitionId);
+            summary.DisputeResolutionMasterPetition.CreateMasterWorkHistory = _masterWorkHistoryApplication.Search(masterPetitionId);
+
+            summary.File.createDisputeResolutionBoard = _boardApplication.GetDetails(id, 2) ?? new EditBoard();
+            summary.File.createDisputeResolutionPS = _proceedingSessionApplication.Search(new ProceedingSessionSearchModel { Board_Id = summary.File.createDisputeResolutionBoard != null ? summary.File.createDisputeResolutionBoard.Id : 0 });
+            
+            summary.File.createDisputeResolutionPetition = _petitionApplication.GetDetails(id, 2) ?? new EditPetition();
+            petitionId = summary.File.createDisputeResolutionPetition != null ? summary.File.createDisputeResolutionPetition.Id : 0;
+            summary.File.createDisputeResolutionPetition.CreatePenaltyTitle = _penaltyTitleApplication.Search(summary.File.createDisputeResolutionPetition != null ? summary.File.createDisputeResolutionPetition.Id : 0);
+            summary.File.createDisputeResolutionPetition.CreateWorkHistory = _workHistoryApplication.Search(summary.File.createDisputeResolutionPetition != null ? summary.File.createDisputeResolutionPetition.Id : 0);
+            summary.File.createDisputeResolutionPetition.TotalPaidAmounts = summary.File.createDisputeResolutionPetition.CreatePenaltyTitle.Sum(x => x.PaidAmount != null ? Int32.Parse(x.PaidAmount.Replace(",", "")) : 0).ToString();
+
+
+            return Partial("FileSummary", summary);
+        }
 
         public JsonResult OnPostCheckUniqueArchiveNo(string archiveNo)
         {
