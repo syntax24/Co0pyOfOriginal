@@ -42,6 +42,7 @@ namespace Company.Domain.File1
         public List<Petition.Petition> PetitionsList { get; private set; }
         public List<MasterPetition.MasterPetition> MasterPetitionsList { get; private set; }
         public List<Evidence.Evidence> EvidencesList { get; set; }
+        public List<FileAlert.FileAlert> FileAlertsList { get; set; }
 
         //public File()
         //{

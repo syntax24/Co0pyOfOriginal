@@ -8,6 +8,7 @@ using CompanyManagment.App.Contracts.Board;
 using CompanyManagment.App.Contracts.Evidence;
 using CompanyManagment.App.Contracts.EvidenceDetail;
 using CompanyManagment.App.Contracts.File1;
+using CompanyManagment.App.Contracts.FileTiming;
 using CompanyManagment.App.Contracts.FileTitle;
 using CompanyManagment.App.Contracts.MasterPenaltyTitle;
 using CompanyManagment.App.Contracts.MasterPetition;
@@ -39,6 +40,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
         private readonly IEvidenceApplication _evidenceApplication;
         private readonly IEvidenceDetailApplication _evidenceDetailApplication;
         private readonly IFileTitleApplication _fileTitleApplication;
+        private readonly IFileTimingApplication _fileTimingApplication;
 
 
         public IndexModel(
@@ -53,7 +55,8 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             IMasterPenaltyTitleApplication masterPenaltyTitleApplication,
             IEvidenceApplication evidenceApplication,
             IEvidenceDetailApplication evidenceDetailApplication,
-            IFileTitleApplication fileTitleApplication
+            IFileTitleApplication fileTitleApplication,
+            IFileTimingApplication fileTimingApplication
          )
         {
             _fileApplication = fileApplication;
@@ -68,6 +71,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             _evidenceApplication = evidenceApplication;
             _evidenceDetailApplication = evidenceDetailApplication;
             _fileTitleApplication = fileTitleApplication;
+            _fileTimingApplication = fileTimingApplication;
         }
 
         public void OnGet(FileSearchModel fileSearchModel)
@@ -558,6 +562,32 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             };
 
             return new JsonResult(res);
+        }
+        
+        public IActionResult OnGetCreateOrEditFileTiming(string type)
+        {
+            var FileTimings = _fileTimingApplication.Search(new FileTimingSearchModel());
+
+            if (FileTimings.Count == 0)
+                FileTimings = Enumerable.Repeat(new EditFileTiming(), 6).ToList();
+
+            return Partial("./CreateOrEditFileTiming", FileTimings);
+        }
+
+        public IActionResult OnPostCreateOrEditFileTiming(List<EditFileTiming> command)
+        {
+            var result = new OperationResult();
+
+            foreach(var item in command)
+            {
+                if (item.Id == 0)
+                    _fileTimingApplication.Create(item);
+
+                else
+                    _fileTimingApplication.Edit(item);
+            }
+
+            return new JsonResult(result.Succcedded());
         }
 
         public IActionResult OnGetDetails(long id)

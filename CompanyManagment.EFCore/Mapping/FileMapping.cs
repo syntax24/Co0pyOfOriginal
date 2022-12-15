@@ -16,6 +16,7 @@ namespace CompanyManagment.EFCore.Mapping
 
             builder.HasMany(x => x.BoardsList).WithOne(x => x.File1).HasForeignKey(x => x.File_Id);
             builder.HasMany(x => x.PetitionsList).WithOne(x => x.File1).HasForeignKey(x => x.File_Id);
+            builder.HasMany(x => x.FileAlertsList).WithOne(x => x.File).HasForeignKey(x => x.File_Id);
         }
     }
 }

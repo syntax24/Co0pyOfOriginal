@@ -5,6 +5,9 @@ using Company.Domain.Contact2Agg;
 using Company.Domain.Evidence;
 using Company.Domain.EvidenceDetail;
 using Company.Domain.File1;
+using Company.Domain.FileAlert;
+using Company.Domain.FileState;
+using Company.Domain.FileTiming;
 using Company.Domain.FileTitle;
 using Company.Domain.MasterPenaltyTitle;
 using Company.Domain.MasterPetition;
@@ -23,6 +26,9 @@ using CompanyManagment.App.Contracts.Contract;
 using CompanyManagment.App.Contracts.Evidence;
 using CompanyManagment.App.Contracts.EvidenceDetail;
 using CompanyManagment.App.Contracts.File1;
+using CompanyManagment.App.Contracts.FileAlert;
+using CompanyManagment.App.Contracts.FileState;
+using CompanyManagment.App.Contracts.FileTiming;
 using CompanyManagment.App.Contracts.FileTitle;
 using CompanyManagment.App.Contracts.MasterPenaltyTitle;
 using CompanyManagment.App.Contracts.MasterPetition;
@@ -87,6 +93,15 @@ namespace PersonalContractingParty.Config
             
             services.AddTransient<IFileTitleApplication, FileTitleApplication>();
             services.AddTransient<IFileTitleRepository, FileTitleRepository>();
+            
+            services.AddTransient<IFileTimingApplication, FileTimingApplication>();
+            services.AddTransient<IFileTimingRepository, FileTimingRepository>();
+            
+            services.AddTransient<IFileStateApplication, FileStateApplication>();
+            services.AddTransient<IFileStateRepository, FileStateRepository>();
+            
+            services.AddTransient<IFileAlertApplication, FileAlertApplication>();
+            services.AddTransient<IFileAlertRepository, FileAlertRepository>();
 
             //----Text-Manager-Project---------------------------------
             services.AddTransient<ISubtitleApplication, SubtitleAppliction>();

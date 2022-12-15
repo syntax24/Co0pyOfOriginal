@@ -330,6 +330,17 @@ function CallBackHandler(data, action, form) {
             break;
 
         default:
+            if (data.isSuccedded) {
+
+                $.Notification.autoHideNotify('success', 'top center', 'پیام سیستم ', data.message);
+
+            }
+            else {
+
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', data.message);
+
+            }
+            break;
     }
 }
 

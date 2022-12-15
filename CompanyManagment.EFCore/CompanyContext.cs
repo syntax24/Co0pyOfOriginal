@@ -10,6 +10,9 @@ using Company.Domain.EmployeeChildrenAgg;
 using Company.Domain.empolyerAgg;
 using Company.Domain.Evidence;
 using Company.Domain.EvidenceDetail;
+using Company.Domain.FileAlert;
+using Company.Domain.FileState;
+using Company.Domain.FileTiming;
 using Company.Domain.FileTitle;
 using Company.Domain.HolidayAgg;
 using Company.Domain.HolidayItemAgg;
@@ -65,6 +68,9 @@ namespace CompanyManagment.EFCore
         public DbSet<Evidence> Evidences { get; set; }
         public DbSet<EvidenceDetail> EvidenceDetails { get; set; }
         public DbSet<FileTitle> FileTitles { get; set; }
+        public DbSet<FileTiming> FileTimings { get; set; }
+        public DbSet<FileState> FileStates { get; set; }
+        public DbSet<FileAlert> FileAlerts { get; set; }
         //-------Main-Project----------------------------
         public DbSet<WorkshopAccount> WorkshopAccounts { get; set; }
         public DbSet<WorkingHoursItems> WorkingHoursItemsSet { get; set; }

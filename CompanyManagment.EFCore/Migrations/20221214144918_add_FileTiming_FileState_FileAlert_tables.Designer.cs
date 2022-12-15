@@ -4,14 +4,16 @@ using CompanyManagment.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CompanyManagment.EFCore.Migrations
 {
     [DbContext(typeof(CompanyContext))]
-    partial class CompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20221214144918_add_FileTiming_FileState_FileAlert_tables")]
+    partial class add_FileTiming_FileState_FileAlert_tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -695,7 +697,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 1L,
-                            CreationDate = new DateTime(2022, 12, 14, 18, 14, 8, 592, DateTimeKind.Local).AddTicks(8310),
+                            CreationDate = new DateTime(2022, 12, 14, 18, 19, 16, 901, DateTimeKind.Local).AddTicks(1160),
                             Deadline = 1,
                             Tips = "	پس از مراجعه موکل و ثبت اولیه پرونده در نرم افزار ، در صورتی که تا پایان زمان مندرج در کادر ، موکل پرونده را تعیین و تکلیف ننماید و شما قادر به ورود به پرونده نباشید ، نرم افزار به شما گزارش میدهد . ",
                             Title = "ثبت اولیه در سیستم"
@@ -703,7 +705,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 2L,
-                            CreationDate = new DateTime(2022, 12, 14, 18, 14, 8, 599, DateTimeKind.Local).AddTicks(2388),
+                            CreationDate = new DateTime(2022, 12, 14, 18, 19, 16, 909, DateTimeKind.Local).AddTicks(9236),
                             Deadline = 1,
                             Tips = "	پس از ارائه دادخواست توسط شما یا موکل ، اگر تا پایان مهلت مندرج در این کادر ، دعوتنامه ای صادر نشده باشد ، نرم افزار به شما گزارش میدهد . ",
                             Title = "انتظار برای دریافت دعوتنامه اول"
@@ -711,7 +713,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 3L,
-                            CreationDate = new DateTime(2022, 12, 14, 18, 14, 8, 599, DateTimeKind.Local).AddTicks(2469),
+                            CreationDate = new DateTime(2022, 12, 14, 18, 19, 16, 909, DateTimeKind.Local).AddTicks(9360),
                             Deadline = 1,
                             Tips = "	پس از شرکت در جلسه اول رسیدگی ، اگر تا پایان مهلت مندرج در کادر ، دعوتنامه جدید یا دادنامه صادر نشده باشد ، نرم افزار به شما گزارش میدهد . ",
                             Title = "انتظار برای دریافت دعوتنامه دوم به بعد یا دادنامه"
@@ -719,7 +721,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 4L,
-                            CreationDate = new DateTime(2022, 12, 14, 18, 14, 8, 599, DateTimeKind.Local).AddTicks(2478),
+                            CreationDate = new DateTime(2022, 12, 14, 18, 19, 16, 909, DateTimeKind.Local).AddTicks(9375),
                             Deadline = 1,
                             Tips = "	پس از صدور دادنامه ، تا قبل از پایان مدت اعتراض مندرج در کادر ، اخطار مهلت اعتراض را نرم افزار به شما گزارش میدهد تا در فرصت مقرر اقدام به ثبت اعتراض نمائید . بدیهیست در صورت عدم ثبت اعتراض در مهلت مقرر دادنامه شما قطعی خواهد شد . ",
                             Title = "مهلت اعتراض به دادنامه"
@@ -727,7 +729,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 5L,
-                            CreationDate = new DateTime(2022, 12, 14, 18, 14, 8, 599, DateTimeKind.Local).AddTicks(2483),
+                            CreationDate = new DateTime(2022, 12, 14, 18, 19, 16, 909, DateTimeKind.Local).AddTicks(9384),
                             Deadline = 1,
                             Tips = "پس از ثبت اعتراض ، در صورتی که تا پایان مهلت مندرج در کادر ، دعوتنامه ای برای شما صادر نگردد ، نرم افزار به شما گزارش میدهد . ",
                             Title = "انتظار برای دریافت دعوتنامه پس از اعتراض"
@@ -735,7 +737,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 6L,
-                            CreationDate = new DateTime(2022, 12, 14, 18, 14, 8, 599, DateTimeKind.Local).AddTicks(2488),
+                            CreationDate = new DateTime(2022, 12, 14, 18, 19, 16, 909, DateTimeKind.Local).AddTicks(9394),
                             Deadline = 1,
                             Tips = "پس از شرکت در جلسه اول رسیدگی ، اگر تا پایان مهلت مندرج در کادر ، دعوتنامه جدید یا دادنامه صادر نشده باشد ، نرم افزار به شما گزارش میدهد .",
                             Title = "انتظار برای دریافت دعوتنامه دوم به بعد یا دادنامه"
