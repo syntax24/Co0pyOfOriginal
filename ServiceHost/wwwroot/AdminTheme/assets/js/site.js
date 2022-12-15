@@ -410,3 +410,45 @@ function removeCall() {
     $('div.call').remove();
 
 }
+
+
+function DeActive(url) {
+    swal({
+        title: "آیا مطمئن هستید میخواهید حذف کنید؟",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#C9302C",
+        confirmButtonText: "بله حذف شود",
+        cancelButtonText: "انصراف ",
+        closeOnConfirm: true
+    },
+        function () {
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (data) {
+                    $('.search').click();
+                }
+            });
+        });
+}
+function IsActive(url) {
+    swal({
+        title: "آیا مطمئن هستید میخواهید آیتم انتخابی را فعال  کنید؟",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#5f8847",
+        confirmButtonText: "بله فعال شود",
+        cancelButtonText: "انصراف ",
+        closeOnConfirm: true
+    },
+        function () {
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (data) {
+                    $('.search').click();
+                }
+            });
+        });
+}

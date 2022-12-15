@@ -11,6 +11,7 @@ namespace Company.Domain.SubtitleAgg
         {
             Subtitle = subtitle;
             OriginalTitle_Id = originalTitle_Id;
+            IsActiveString = "true";
         }
         public string Subtitle { get; private set; }
         public long OriginalTitle_Id { get; private set; }

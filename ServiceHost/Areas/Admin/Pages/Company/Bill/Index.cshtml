@@ -191,6 +191,8 @@
             -ms-transform: scale(1);
             transform: scale(1);
         }
+                                
+
     </style>
 
 }
@@ -309,24 +311,25 @@
                                     i++;
                                 }
 
-                                <td>
-                                    <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
-                                       asp-page="./Edit" asp-route-id="@item.Id">
-                                        <i class="fa faSize fa-edit"></i>
-                                    </a>
+                            <td>
+                                <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
+                                   asp-page="./Edit" asp-route-id="@item.Id">
+                                    <i class="fa faSize fa-edit"></i>
+                                </a>
 
-                                    @if (item.IsActiveString == "true")
-                                    {
 
-                                        <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
+                                @if (item.IsActiveString == "true")
+                                {
+                                    <a permission="20116" id="googleLink" class="btn btn-danger pull-right m-rl-5 fff rad" onclick="DeActive('/Admin/Company/Bill?id=@item.Id&amp;url=@url&amp;handler=DeActive')"><i class="fa faSize fa-trash"></i></a>
+                                }
+                                else
+                                {
+                                    <a permission="20116" onclick="IsActive('/Admin/Company/Bill?id=@item.Id&amp;url=@url&amp;handler=IsActive')" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
 
-                                    }
-                                    else
-                                    {
-                                        <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
-                                    }
+                                }
 
-                                </td>
+
+                            </td>
 
 
 

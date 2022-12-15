@@ -29,11 +29,11 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Module
             Modules = _ModuleApplication.Search(searchModel);
             if (Modules != null)
             {
-
+                if (!string.IsNullOrEmpty(searchModel.NameSubModule))
+                {
                     ModulesSearch = "true";
-
+                }
             }
-
         }
         public IActionResult OnGetCreate()
         {
@@ -85,29 +85,25 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Module
             }
             return RedirectToPage("./Index");
         }
-        public IActionResult OnGetDeActive(long id)
+
+
+        public IActionResult OnGetDeActive(long id, string url)
         {
-
-
             var result = _ModuleApplication.DeActive(id);
-
             if (result.IsSuccedded)
-                return RedirectToPage("./Index");
+                return new JsonResult(url);
+
             Message = result.Message;
-            return RedirectToPage("./Index");
+            return RedirectToPage(url);
         }
-        public IActionResult OnGetIsActive(long id)
+        public IActionResult OnGetIsActive(long id, string url)
         {
-
-
             var result = _ModuleApplication.Active(id);
             if (result.IsSuccedded)
-                return RedirectToPage("./Index");
+                return new JsonResult(url);
             Message = result.Message;
-            return RedirectToPage("./Index");
+            return RedirectToPage(url);
         }
-
-
 
     }
 }

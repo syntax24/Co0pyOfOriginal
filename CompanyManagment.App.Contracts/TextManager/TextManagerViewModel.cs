@@ -24,6 +24,9 @@ namespace CompanyManagment.App.Contracts.TextManager
         public string Chapter { get; set; }
         public string OriginalTitle { get; set; }
         public List<string> ListUseModule { get; set; }
+        public string SubtitleIsActiveString { get; set; }
+        public string ChapterActiveString { get; set; }
+        public string OriginalTitleActiveString { get; set; }
         //public List<string> ListAllModule { get; set; }
         //public List<OriginalTitleViewModel>  originalTitleViewModels { get; set; }
         //public List<SubtitleViewModel>  subtitleViewModels { get; set; }

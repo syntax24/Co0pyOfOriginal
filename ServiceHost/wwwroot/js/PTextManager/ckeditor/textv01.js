@@ -7,8 +7,11 @@ const editor = document.getElementById("Description");
 shouldNotGroupWhenFull: true
 CKEDITOR.config.font_defaultLabel = 'Web_Yekan';
 CKEDITOR.config.fontSize_defaultLabel = '18';
+
 config.format_tags = 'h2;h3;h4;h5;h6;pre;address;div';
+
 let ed = CKEDITOR.replace(editor, config);
+
 CKEDITOR.on('dialogDefinition', function (e) {
     dilogName = e.data.name;
     dialogDefinition = e.data.definition;

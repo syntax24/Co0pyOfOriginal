@@ -11,8 +11,6 @@ namespace Company.Domain.Contact2Agg
         List<Contact2ViewModel> PrintAll(List<long> ids);
         List<Contact2ViewModel> Search(Contact2SearchModel SearchModel);
         List<Contact2ViewModel> GetAllContact();
-        OperationResult Active(long id);
-        OperationResult DeActive(long id);
         OperationResult Sign(long id);
         OperationResult UnSign(long id);
     }

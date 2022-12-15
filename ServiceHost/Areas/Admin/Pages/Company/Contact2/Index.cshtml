@@ -204,7 +204,14 @@
     }
 </style>
 
-}
+
+<div class="row">
+    <div class="col-sm-12 m-r-10">
+        <p class="pull-right">
+            <a id="btnPopModal" href="#showmodal=@Url.Page("/Company/Contact2/Index", "Create")" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-right: 10px "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> تعریف مخاطب  جدید </a>
+        </p>
+    </div>
+</div>
 <div class="row">
     <div class="col-sm-12 m-r-10">
         <input type="hidden" id="sercheCheck" value="@Model.searchModel" />
@@ -250,7 +257,7 @@
                                         </div>
                                     </div>
                                 </div>
-                           </form>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -269,14 +276,14 @@
                     <table id="datatable" class="table table-striped table-bordered">
                         <thead style="background-color: #ecefee">
                             <tr>
-                                <th style="font-size: 10px !important;" class="sizeSet">
+                                <th style="font-size: 10px !important; display: none" class="sizeSet">
                                     <span class="tooltip-container">
-                                        <input class="checkboxtitle" type="checkbox" id="checkSelect" onclick="selectori(this)" />
-                                        <span class="tooltip"> با استفاده از این چک باکس می توانید قراردادها را بصورت گروهی انتخاب کرده و سپس با کلیک بر روی دکمه حذف گروهی  اقدام به حذف  نمایید</span>
+                                        <input class="checkboxtitle" type="checkbox" id="checkSelect" onclick="selectori(this)" checked="checked" />
                                     </span>
                                 </th>
-                                <th style="font-size: 10px !important" class="sizeSet">#</th>
-                                <th style="font-size: 10px !important" class="sizeSet">نام مخاظب</th>
+
+                                <th style="font-size: 10px !important; width: 5% !important ; text-align:center" class="sizeSet">#</th>
+                                <th style="font-size: 10px !important; width: 80% !important ; text-align:center" class="sizeSet">نام مخاظب</th>
                                 <th style="font-size: 10px !important; width: 65px; ">
                                     <span style="float: right;">
                                         <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
@@ -292,43 +299,37 @@
                         <tbody>
                             @foreach (var item in Model.Contacts)
                             {
-                                <tr>
-                                    <td style="font-size: 12px !important; text-align: center">
-                                        <input type="checkbox" name="foo" value="@item.Id" />
-                                    </td>
-                                    <td style="font-size: 12px !important;text-align: center">@i </td>
-                                    <td style="font-family: 'IranText' !important; font-size: 12px !important; text-align: center">
-                                        @item.NameContact
-                                    </td>
-               
-                                    @{
-                                        i++;
+                            <tr>
+                                <td style="font-size: 16px !important; text-align: center;display:none">
+                                    <input type="checkbox" name="foo" value="@item.Id" checked="checked" />
+                                </td>
+                                <td style="font-size: 16px !important; text-align: center">@i </td>
+                                <td style="font-family: 'IranText' !important; font-size: 12px !important; text-align: center">
+                                    @item.NameContact
+                                </td>
+
+                                @{
+                                    i++;
+                                }
+                                <td>
+                                    <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
+                                       href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
+                                        <i class="fa faSize fa-edit"></i>
+                                    </a>
+                                    @if (item.IsActiveString == "true")
+                                    {
+                                        <a permission="20116" id="googleLink" class="btn btn-danger pull-right m-rl-5 fff rad" onclick="DeActive('/Admin/Company/Contact2?id=@item.Id&amp;url=@url&amp;handler=DeActive')"><i class="fa faSize fa-trash"></i></a>
                                     }
-                                    <td>
-                                        <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
-                                           href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
-                                            <i class="fa faSize fa-edit"></i>
-                                        </a>
-                                        @if (item.IsActiveString == "true")
-                                        {
-                                            <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
+                                    else
+                                    {
+                                        <a permission="20116" onclick="IsActive('/Admin/Company/Contact2?id=@item.Id&amp;url=@url&amp;handler=IsActive')" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
 
-                                        }
-                                        else
-                                        {
-                                            <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
-                                        }
+                                    }
 
-                                    </td>
+                                </td>
 
-                                </tr>
-
-
-
-
+                            </tr>
                             }
-
-
 
                         </tbody>
                     </table>
@@ -385,11 +386,12 @@
             }
         }
     </script>
+   
     <script>
-    
+
         function deactiveAll() {
             if (document.getElementById("checkSelect").checked == false) {
-                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ قراردادی انتخاب نشده است ");
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ موردی انتخاب نشده است ");
             } else {
                 if (document.getElementById("sercheCheck").value == "true") {
                     swal({
@@ -428,7 +430,7 @@
     <script>
         function reActiveAll() {
             if (document.getElementById("checkSelect").checked == false) {
-                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ قراردادی انتخاب نشده است ");
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ موردی انتخاب نشده است ");
             } else {
                 if (document.getElementById("sercheCheck").value == "false") {
                     $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی قرارداد حداقل یکی از فیلدهای کارکاه یا پرسنل را انتخاب نموده و سپس جستجو را کلیک کنید ");
@@ -460,42 +462,7 @@
             }
         }
     </script>
-    <script>
 
-        function SignatureSelect() {
 
-            if (document.getElementById("sercheCheck").value == "false") {
-                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی قرارداد حداقل یکی از فیلدهای کارکاه یا پرسنل را انتخاب نموده و سپس جستجو را کلیک کنید ");
-            } else if (document.getElementById("sercheCheck").value == "true") {
-
-                swal({
-                    title: "آیا از امضاء نمودن این قراردادها اطمینان دارید؟",
-                    text: "",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "بله",
-                    cancelButtonText: "خیر",
-                    closeOnConfirm: false
-                }, function (isConfirm) {
-                    if (isConfirm) {
-                        /*    $("a.dell").click();*/
-                        checkboxes2 = document.getElementsByName('unsigned');
-                        var url3b = '';
-                        for (var i2 = 0, n2 = checkboxes2.length; i2 < n2; i2++) {
-
-                            var u2 = '&ids=' + checkboxes2[i2].value;
-                            url3b = url3b + u2;
-                        }
-                        var url2b = '@Url.Page("/Company/Contracts/Index", "GroupSign")';
-                        window.location.href = url2b + url3b;
-                    } else {
-
-                    }
-                });
-            }
-        }
-    </script>
-  
 
 }

@@ -52,7 +52,7 @@
             <div class="row">
                 <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
                     <legend style="top: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> تعریف متن  </legend>
-                    <div class="col-md-12">
+                    <div class="col-md-12" style="border: 1px solid burlywood;border-radius: 11px;margin-bottom: 5px;padding: 10px;">
                         <div class="form-group">
                             <label class="control-label">ماژول ها :</label>
                             <div class="container">
@@ -75,8 +75,9 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
+                                <label asp-for="OriginalTitle_Id" class="control-label">  عنوان: </label>
                                 <select class="form-control select-city" asp-for="OriginalTitle_Id" asp-items='@Model.OriginalTitleViewModels' id="originalTitle1">
-                                    <option value="-1"> بخش را انتخاب کنید ... </option>
+                                    <option value="-1"> عنوان را انتخاب کنید ... </option>
                                 </select>
                                 <span asp-validation-for="OriginalTitle_Id" class="error"></span>
 
@@ -84,6 +85,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
+                                <label asp-for="Subtitle_Id" class="control-label">  بخش: </label>
                                 <select class="form-control select-city" asp-for="Subtitle_Id" asp-items='@Model.SubtitleViewModels' id="subtitle1">
                                     <option value="0"> بخش</option>
                                 </select>
@@ -92,7 +94,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-
+                                <label asp-for="NoteNumber" class="control-label">  فصل: </label>
                                 <select class="form-control select-city" asp-for="Chapter_Id" asp-items='@Model.ChapterViewModels' id="chapter1">
                                     <option value="0"> فصل</option>
                                 </select>
@@ -102,7 +104,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
 
-                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label asp-for="NoteNumber" class="control-label">  ماده: </label>
                                     <input type="text" class="form-control" asp-for="NoteNumber" placeholder="ماده">
                                     <span asp-validation-for="NoteNumber" class="error"></span>
                                 </div>
@@ -111,7 +114,8 @@
                         <div class="col-md-6" style="margin-bottom:20px;">
                             <div class="form-group">
 
-                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label asp-for="NoteNumber" class="control-label">  موضوع: </label>
                                     <input type="text" class="form-control" asp-for="SubjectTextManager" placeholder="موضوع">
                                     <span asp-validation-for="SubjectTextManager" class="error"></span>
                                 </div>
@@ -119,7 +123,8 @@
                         </div>
                         <div class="col-md-6 m-b-30">
                             <div class="form-group">
-                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label asp-for="NumberTextManager" class="control-label">  تاریخ: </label>
                                     <input type="text" class="form-control" asp-for="DateTextManager" placeholder=" تاریخ" onkeyup="validDate1(this)" maxlength="10">
                                     <span id="spanmsg"></span>
                                 </div>
@@ -127,7 +132,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label asp-for="NumberTextManager" class="control-label">  شماره: </label>
                                     <input type="text" class="form-control" asp-for="NumberTextManager" placeholder="شماره">
                                     <span asp-validation-for="NumberTextManager" class="error"></span>
                                 </div>
@@ -135,6 +141,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
+                                
                                 <textarea type="text" class="form-control" placeholder="نگارش متن" asp-for="Description" style=" height: 300px;"></textarea>
                                 <span asp-validation-for="Description" class="error"></span>
                             </div>

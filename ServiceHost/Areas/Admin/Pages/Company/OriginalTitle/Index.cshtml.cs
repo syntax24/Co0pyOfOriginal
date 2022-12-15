@@ -23,9 +23,12 @@ namespace ServiceHost.Areas.Admin.Pages.Company.OriginalTitle
             OriginalTitles = _originalTitleApplication.Search(searchModel);
             if (OriginalTitles != null)
             {
-                
+
+                if (!string.IsNullOrEmpty(searchModel.Title))
+                {
                     OriginalTitleSearch = "true";
-                
+                }
+
             }
 
         } 
@@ -64,7 +67,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.OriginalTitle
             var result = _originalTitleApplication.DeActive(id);
 
             if (result.IsSuccedded)
-                return Redirect(url);
+                 return new JsonResult(url);
             Message = result.Message;
             return RedirectToPage(url);
 
@@ -75,7 +78,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.OriginalTitle
 
             var result = _originalTitleApplication.Active(id);
             if (result.IsSuccedded)
-                return Redirect(url);
+                 return new JsonResult(url);
             Message = result.Message;
             return RedirectToPage(url);
         }

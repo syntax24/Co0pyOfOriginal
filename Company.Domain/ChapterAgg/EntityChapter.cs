@@ -10,6 +10,7 @@ namespace Company.Domain.ChapterAgg
         {
             Chapter = chapter;
             Subtitle_Id = subtitle_Id;
+           IsActiveString = "true";
         }
         public string Chapter { get; private set; }
         public long Subtitle_Id { get; private set; }

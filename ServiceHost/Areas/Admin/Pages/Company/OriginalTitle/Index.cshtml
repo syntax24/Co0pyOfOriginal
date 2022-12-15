@@ -279,8 +279,8 @@
                                     </th>
                                     <th style="width:5%; font-size: 10px !important" class="sizeSet">#</th>
                                     <th style="font-size: 16px !important; text-align: center" class="sizeSet">عنوان</th>
-                 
-                             
+
+
                                     <th style="font-size: 10px !important; width: 65px; ">
                                         <span style="float: right;">
                                             <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
@@ -307,25 +307,23 @@
                                             i++;
                                         }
 
-                                        <td>
+                                    <td>
 
-                                            <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
-                                               href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
-                                                <i class="fa faSize fa-edit"></i>
-                                            </a>
+                                        <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
+                                           href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
+                                            <i class="fa faSize fa-edit"></i>
+                                        </a>
 
-                                            @if (item.IsActiveString == "true")
-                                            {
-
-                                                <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
-
-                                            }
-                                            else
-                                            {
-                                                <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
-                                            }
-
-                                        </td>
+                                       
+                                        @if (item.IsActiveString == "true")
+                                        {
+                                            <a permission="20116" id="googleLink" class="btn btn-danger pull-right m-rl-5 fff rad" onclick="DeActive('/Admin/Company/OriginalTitle?id=@item.Id&amp;url=@url&amp;handler=DeActive')"><i class="fa faSize fa-trash"></i></a>
+                                        }
+                                        else
+                                        {
+                                            <a permission="20116" onclick="IsActive('/Admin/Company/OriginalTitle?id=@item.Id&amp;url=@url&amp;handler=IsActive')" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>{ }
+                                        }
+                                    </td>
                                     </tr>
                                 }
                             </tbody>

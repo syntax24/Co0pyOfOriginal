@@ -12,55 +12,58 @@
           method="post">
         @*<form method="post">*@
         <div class="row">
-            <div class="row" >
+            <div class="row">
                 <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
-                    <div class="row" style="margin: 10px 10px 10px 10px " >
+                    <div class="row" style="margin: 10px 10px 10px 10px ">
                         <br>
                         <div class="col-md-4">
                             <div class="form-group">
+                                <label asp-for="EditBill.Appointed" class="control-label">  انتخاب موکل: </label>
+
                                 <input id="Appointed_Id" asp-for="EditBill.Appointed" class="form-control" placeholder="انتخاب موکل..." style="z-index: 0;" />
                                 <span class="alert-danger" asp-validation-for="EditBill.Appointed"></span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-
+                                <label asp-for="EditBill.ProcessingStage" class="control-label">  مرحله رسیدگی: </label>
                                 <input id="ProcessingStage_Id" asp-for="EditBill.ProcessingStage" class="form-control" placeholder="مرحله رسیدگی..." style="z-index: 0;" />
                                 <span class="alert-danger" asp-validation-for="EditBill.ProcessingStage"></span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
+                                <label asp-for="EditBill.Contact" class="control-label">  انتخاب مخاطب: </label>
                                 <input id="Contact_Id" asp-for="EditBill.Contact" class="form-control" placeholder="انتخاب مخاطب..." style="z-index: 0;" />
                                 <span class="alert-danger" asp-validation-for="EditBill.Contact"></span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-
+                                <label asp-for="EditBill.SubjectBill" class="control-label">  موضوع: </label>
                                 <input asp-for="EditBill.SubjectBill" class="form-control" placeholder="موضوع..." />
                                 <span class="alert-danger" asp-validation-for="EditBill.SubjectBill"></span>
                             </div>
                         </div>
 
                     </div>
-                  
                     <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin-right:20px">ذخیره</button>
                     <a type="button" href="/Admin/Company/Bill" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">برگشت به لیست</a>
                     <div class="col-md-12">
-
                         <div class="form-group">
-                            @*<label asp-for="EditBill.Description" class="control-label">متن لایحه</label>*@
                             <div>
                                 <a id="btnPopModal" href="#showmodal=/Admin/Company/Bill/Edit?handler=Search" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style="display:none"> جستجوی درج متن &nbsp;<i class="fa  fa-search" style="padding-left: 3px; font-size: 14px; color: white !important "></i> </a>
                                 <textarea id="Description" name="EditBill.Description" asp-for="EditBill.Description" class="form-control textarea1"></textarea>
                                 <span asp-validation-for="EditBill.Description" class="text-danger"></span>
                             </div>
-
                             <style>
                                 #cke_376_bottom {
                                     display: none !important
                                 }
+                                .cke_contents_rtl {
+                                    font-family: 'Web_Yekan' !important;
+                                }
+
                             </style>
                         </div>
                     </div>
@@ -93,6 +96,7 @@
             content: url(/js/PTextManager/ckeditor/icon/b_search.png)"جستجوی متن";
             font-weight: 900;
         }
+
     .cke_rtl .cke_toolbar_break {
         clear: inherit;
     }
@@ -101,6 +105,16 @@
         float: left;
     }
 </style>
+
+
+
+
+
+
+
+
+
+
 @section PanelScripts{
     <script src="~/js/PTextManager/jquery-ui/jquery-ui.min.js"></script>
     <script>
@@ -119,7 +133,7 @@
     <script src="~/AdminTheme/assets/js/site.js"></script>
     <script src="~/js/PTextManager/ckeditor/ckeditor.js"></script>
     <script src="~/js/PTextManager/ckeditor/textv01.js"></script>
-  
+
 }
 
 <style>
@@ -179,6 +193,5 @@
         overflow: hidden;
         overflow-y: scroll;
         background: #cbdacf;
-         
     }
 </style>

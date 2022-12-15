@@ -9,7 +9,7 @@ namespace Company.Domain.OriginalTitleAgg
         public EntityOriginalTitle(string title)
         {
             Title = title;
-       
+            IsActiveString = "true";
         }
         public string Title { get; private set; }
         public string IsActiveString { get; set; }

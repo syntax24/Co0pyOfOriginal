@@ -122,7 +122,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Chapter
         {
             var result = _chapterApplication.DeActive(id);
             if (result.IsSuccedded)
-                return Redirect(url);
+                 return new JsonResult(url);
             Message = result.Message;
             return RedirectToPage(url);
         }
@@ -130,7 +130,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Chapter
         {
             var result = _chapterApplication.Active(id);
             if (result.IsSuccedded)
-                return Redirect(url);
+                 return new JsonResult(url);
             Message = result.Message;
             return RedirectToPage(url);
         }
