@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PersonalContractingParty.Config;
+using ServiceHost.Areas.Admin.Pages.Company.FilePage;
 
 namespace ServiceHost
 {
@@ -22,8 +23,8 @@ namespace ServiceHost
             services.AddHttpContextAccessor();
             var connectionString = Configuration.GetConnectionString("MesbahDb");
             PersonalBootstrapper.Configure(services, connectionString);
-         
 
+            services.AddTransient<IndexModel>();
 
             services.AddRazorPages();
 

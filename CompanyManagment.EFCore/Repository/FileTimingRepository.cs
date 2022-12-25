@@ -16,15 +16,15 @@ namespace CompanyManagment.EFCore.Repository
             _context = context;
         }
 
-        //public EditFileTiming GetDetails(long id)
-        //{
-        //    return _context.FileTimings.Select(x => new EditFileTiming
-        //    {
-        //        Id = x.id,
-        //        Deadline = x.Deadline,
-        //        Title = x.Title
-        //    }).FirstOrDefault(x => x.Id == id);
-        //}
+        public FileTimingViewModel GetDetails(long id)
+        {
+            return _context.FileTimings.Select(x => new FileTimingViewModel
+            {
+                Id = x.id,
+                Deadline = x.Deadline,
+                Title = x.Title
+            }).FirstOrDefault(x => x.Id == id);
+        }
 
         public List<EditFileTiming> Search(FileTimingSearchModel searchModel)
         {

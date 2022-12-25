@@ -57,7 +57,7 @@ namespace CompanyManagment.Application
         //    return operation.Succcedded("عنوان با موفقیت حذف شد");
         //}
 
-        public EditFileState GetDetails(long id)
+        public FileStateViewModel GetDetails(long id)
         {
             return _fileStateRepository.GetDetails(id);
         }

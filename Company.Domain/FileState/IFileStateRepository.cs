@@ -11,7 +11,7 @@ namespace Company.Domain.FileState
 {
     public interface IFileStateRepository : IRepository<long, FileState>
     {
-        EditFileState GetDetails(long id);
+        FileStateViewModel GetDetails(long id);
         //void Remove(long id);
         List<EditFileState> Search(FileStateSearchModel searchModel);
     }

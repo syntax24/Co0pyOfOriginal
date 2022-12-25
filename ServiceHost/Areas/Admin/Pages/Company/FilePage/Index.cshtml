@@ -91,6 +91,9 @@
             <p class="pull-left">
                 <a id="btnPopModal" href="#showmodal=@Url.Page("/Company/FilePage/Index", "CreateOrEditFileTiming")" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #448bdb; font-family: 'Web_Yekan' !important; color: #448bdb !important; margin-left: 10px "> <i class="fa fa-calendar" style="padding-right: 3px; font-size: 14px; color: #448bdb !important "></i> زمانبندی </a>
             </p>
+            <p class="pull-left">
+                <a id="btnPopModal" href="@Url.Page("/Company/FilePage/Index", "Alerts")" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #448bdb; font-family: 'Web_Yekan' !important; color: #448bdb !important; margin-left: 10px "> <i class="fa fa-calendar" style="padding-right: 3px; font-size: 14px; color: #448bdb !important "></i> گزارش ها </a>
+            </p>
         </div>
     </div>
 
@@ -117,9 +120,6 @@
                                     <div class="form-group col-sm-12">
                                         <div class="row">
                                             <div class="col-sm-2 pull-right m-b-15">
-                                                @*<div class="form-group">*@
-                                                @*<label class="control-label" asp-for="fileSearchModel.ArchiveNo">شماره بایگانی</label>
-                                                <input class="form-control inpt" asp-for="fileSearchModel.ArchiveNo" style="width: 100%">*@
                                                 <select class="form-control select-city" asp-for="fileSearchModel.ArchiveNo" style="width: 100%">
                                                     <option value="">شماره بایگانی</option>
                                                     
@@ -129,12 +129,8 @@
                                                     }
 
                                                 </select>
-                                                @*</div>*@
                                             </div>
                                             <div class="col-sm-2 pull-right m-b-15">
-                                                @*<div class="form-group">*@
-                                               @* <label class="control-label" asp-for="fileSearchModel.FileClass">کلاسه پرونده</label>
-                                                <input class="form-control inpt" asp-for="fileSearchModel.FileClass" style="width: 100%">*@
                                                 <select class="form-control select-city" asp-for="fileSearchModel.FileClass" style="width: 100%">
                                                     <option value="">کلاسه پرونده</option>
                                                     
@@ -144,21 +140,8 @@
                                                     }
 
                                                 </select>
-                                                @*</div>*@
                                             </div>
-                                            @*<div class="col-sm-2 pull-right m-b-15">
-                                            <div class="form-group">
-                                            <label class="control-label" asp-for="fileSearchModel.HasMandate">درج وکالت نامه</label>
-                                            <select class="form-control select-city" asp-for="fileSearchModel.HasMandate" style="width: 100%">
-                                            <option value="-1">همه</option>
-                                            <option value="0">ندارد</option>
-                                            <option value="1">دارد</option>
-                                            </select>
-                                            </div>
-                                            </div>*@
                                             <div class="col-sm-2 pull-right m-b-15">
-                                                @*<div class="form-group">*@
-                                                @*<label class="control-label" asp-for="fileSearchModel.UserId">اصیل دعوی</label>*@
                                                 <select class="form-control select-city"  asp-for="fileSearchModel.UserId" style="width: 100%">
                                                     <option value="0">اصیل دعوی</option>
 
@@ -168,63 +151,26 @@
                                                     }
 
                                                 </select>
-                                                @*</div>*@
                                             </div>
                                             <div class="col-sm-3 pull-right m-b-15">
-                                                @*<div class="form-group">
-                                                    <label class="control-label" asp-for="fileSearchModel.diagnosisBoard.Branch">  شعبه رسیدگی هیات تشخیص </label>*@
                                                     <input class="form-control inpt" asp-for="fileSearchModel.diagnosisBoard.Branch" style="width: 100%" placeholder="شعبه رسیدگی هیات تشخیص">
-                                                @*</div>*@
                                             </div>
                                             <div class="col-sm-3 pull-right m-b-15">
-                                                @*<div class="form-group">
-                                                    <label class="control-label" asp-for="fileSearchModel.disputeResolutionBoard.Branch">  شعبه رسیدگی هیات حل اختلاف </label>*@
                                                     <input class="form-control inpt" asp-for="fileSearchModel.disputeResolutionBoard.Branch" style="width: 100%" placeholder="شعبه رسیدگی هیات حل اختلاف">
-                                                @*</div>*@
                                             </div>
-                                            @*<div class="col-sm-2 pull-right m-b-15">
-                                            <div class="form-group">
-                                            <label class="control-label" asp-for="fileSearchModel.Reqester"> خواهان </label>
-                                            <select class="form-control select-city" asp-for="fileSearchModel.Reqester" style="width: 100%">
-                                            <option value="-1">همه</option>
-                                            <option value="1">اکبر اکبرزاده</option>
-                                            </select>
-                                            </div>
-                                            </div>
-                                            <div class="col-sm-2 pull-right m-b-15">
-                                            <div class="form-group">
-                                            <label class="control-label" asp-for="fileSearchModel.Summoned"> خوانده </label>
-                                            <select class="form-control select-city" asp-for="fileSearchModel.Summoned" style="width: 100%">
-                                            <option value="-1">همه</option>
-                                            <option value="1">اکبر اکبرزاده</option>
-                                            </select>
-                                            </div>
-                                            </div>*@
+                                           
                                             <div class="col-sm-3 pull-right m-b-15">
-                                                @*<div class="form-group">*@
-                                                @*<label class="control-label" asp-for="fileSearchModel.diagnosisProceedingSession.FromDate">تاریخ رسیدگی هیات تشخیص (از)</label>*@
                                                 <input class="form-control inpt" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: right" asp-for="fileSearchModel.diagnosisProceedingSession.FromDate" placeholder="تاریخ رسیدگی هیات تشخیص (از)">
-                                                @*</div>*@
                                             </div>
                                             <div class="col-sm-3 pull-right m-b-15">
-                                                @*<div class="form-group">*@
-                                                @*<label class="control-label" asp-for="fileSearchModel.diagnosisProceedingSession.ToDate">تاریخ رسیدگی هیات تشخیص (تا)</label>*@
                                                 <input class="form-control inpt" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: right" asp-for="fileSearchModel.diagnosisProceedingSession.ToDate" style="width: 100%" placeholder="تاریخ رسیدگی هیات تشخیص (تا)">
-                                                @*</div>*@
                                             </div>
                                             <div class="col-sm-3 pull-right m-b-15">
-                                                @*<div class="form-group">*@
-                                                @*<label class="control-label" asp-for="fileSearchModel.disputeResolutionProceedingSession.FromDate">تاریخ رسیدگی هیات حل اختلاف (از)</label>*@
                                                 <input class="form-control inpt" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: right" asp-for="fileSearchModel.disputeResolutionProceedingSession.FromDate" placeholder="تاریخ رسیدگی هیات حل اختلاف (از)">
-                                                @*</div>*@
                                             </div>
                                             <div class="col-sm-3 pull-right m-b-15">
-                                                @*<div class="form-group">*@
-                                                    @*<label class="control-label" asp-for="fileSearchModel.disputeResolutionProceedingSession.ToDate">تاریخ رسیدگی هیات حل اختلاف (تا)</label>*@
-                                                    <input class="form-control inpt" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: right" asp-for="fileSearchModel.disputeResolutionProceedingSession.ToDate" placeholder="تاریخ رسیدگی هیات حل اختلاف (تا)">
-                                                @*</div>*@
+                                                <input class="form-control inpt" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: right" asp-for="fileSearchModel.disputeResolutionProceedingSession.ToDate" placeholder="تاریخ رسیدگی هیات حل اختلاف (تا)">
                                             </div>
-
                                             <div class="col-sm-2 pull-right m-b-15">
                                                 <select class="form-control select-city" asp-for="fileSearchModel.Status" style="width: 100%">
                                                     <option value="2">فعال</option>
@@ -232,12 +178,7 @@
                                                     <option value="0">هردو</option>
                                                 </select>
                                             </div>
-                                            @*<div class="col-sm-2 pull-right m-b-15">
-                                            <div class="form-group">
-                                            <label class="control-label" asp-for="fileSearchModel.ProceederReference"> مرجع رسیدگی کننده </label>
-                                            <input class="form-control inpt" asp-for="fileSearchModel.ProceederReference" placeholder="مرجع رسیدگی کننده" style="width: 100%">
-                                            </div>
-                                            </div>*@
+                                            
                                         </div>
 
                                         <div class="row" style="margin-top: 15px">

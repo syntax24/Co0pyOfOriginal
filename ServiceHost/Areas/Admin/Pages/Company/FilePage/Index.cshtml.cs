@@ -8,6 +8,7 @@ using CompanyManagment.App.Contracts.Board;
 using CompanyManagment.App.Contracts.Evidence;
 using CompanyManagment.App.Contracts.EvidenceDetail;
 using CompanyManagment.App.Contracts.File1;
+//using CompanyManagment.App.Contracts.FileAlert;
 using CompanyManagment.App.Contracts.FileTiming;
 using CompanyManagment.App.Contracts.FileTitle;
 using CompanyManagment.App.Contracts.MasterPenaltyTitle;
@@ -89,25 +90,6 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
                 fileSearchModel.disputeResolutionProceedingSession =
                     new ProceedingSessionSearchModel();
 
-            //var files = _fileApplication.Search(fileSearchModel);
-           
-            //viewModels = files;
-
-            //var i = 0; 
-
-            //foreach (var file in files.ToList())
-            //{
-            //    var tempViewModel = new FileViewModel();
-            //    tempViewModel = GetFileDetails(file);
-
-            //    if(FilterFileDetails(tempViewModel, fileSearchModel))
-            //    {
-            //        viewModels[i] = tempViewModel;
-            //        i++;
-            //    }
-            //    else
-            //        viewModels.RemoveAt(i);
-            //}
 
             var allFiles = _fileApplication.Search(new FileSearchModel());
 
@@ -115,9 +97,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             {
                 this.fileSearchModel = new FileSearchModel
                 {
-                    //ArchiveNoList = allFiles.Count != 0 ? allFiles.Select(x => x.ArchiveNo.ToString()).ToList() : null,
-                    //ArchiveNo_FileClassList.ArchiveNo = allFiles.Select(x => x.ArchiveNo.ToString()).ToList(),
-                    ArchiveNo_FileClass_UserIdList = allFiles.Select(x => new ArchiveNo_FileClass_UserIdList { ArchiveNo = x.ArchiveNo.ToString(), FileClass = x.FileClass,  UserId = x.Client == 1 ? x.Reqester : x.Summoned }).ToList(),
+                   ArchiveNo_FileClass_UserIdList = allFiles.Select(x => new ArchiveNo_FileClass_UserIdList { ArchiveNo = x.ArchiveNo.ToString(), FileClass = x.FileClass, UserId = x.Client == 1 ? x.Reqester : x.Summoned }).ToList(),
                     UsersList = _fileApplication.GetAllEmploees().Select(x => new Users { Id = x.Id, FullName = x.EmployeeFullName }).ToList(),
                 };
 
@@ -125,9 +105,6 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             }
             else
             {
-                //this.fileSearchModel.ArchiveNoList = allFiles.Select(x => x.ArchiveNo.ToString()).ToList();
-                //this.fileSearchModel.FileClassList = allFiles.Select(x => x.FileClass).ToList();
-
                 this.fileSearchModel.ArchiveNo_FileClass_UserIdList = allFiles.Select(x => new ArchiveNo_FileClass_UserIdList { ArchiveNo = x.ArchiveNo.ToString(), FileClass = x.FileClass, UserId = x.Client == 1 ? x.Reqester : x.Summoned }).ToList();
                 this.fileSearchModel.UsersList = _fileApplication.GetAllEmploees().Select(x => new Users { Id = x.Id, FullName = x.EmployeeFullName }).ToList();
                 this.fileSearchModel.UsersList.AddRange(_fileApplication.GetAllEmployers().Select(x => new Users { Id = x.Id, FullName = x.FullName }).ToList());
@@ -148,9 +125,9 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             foreach (var file in files.ToList())
             {
                 var tempViewModel = new FileViewModel();
-                tempViewModel = GetFileDetails(file);
+                tempViewModel = _fileApplication.GetFileDetails(file);
 
-                if (FilterFileDetails(tempViewModel, fileSearchModel))
+                if (_fileApplication.FilterFileDetails(tempViewModel, fileSearchModel))
                 {
                     viewModels[i] = tempViewModel;
                     i++;
@@ -162,11 +139,8 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
 
         public IActionResult OnGetCreateFile()
         {
-            //fileSearchModel = new FileSearchModel();
-            //var archiveNo = _fileApplication.GetLastArchiveNumber(fileSearchModel).ArchiveNo;
             var archiveNo = _fileApplication.FindLastArchiveNumber();
-            //archiveNo = archiveNo != 0 ? archiveNo : (long)1;
-
+            
             var createFile = new CreateFile
             {
                 ArchiveNo = archiveNo + 1,
@@ -303,16 +277,6 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
         {
             var file = _fileApplication.GetDetails(fileId);
 
-            if (file.Client == 1)
-            {
-                file.ClientFullName = _fileApplication.GetEmployeeFullNameById(file.Reqester);
-                file.OppositePersonFullName = _fileApplication.GetEmployerFullNameById(file.Summoned);
-            }
-            else
-            {
-                file.ClientFullName = _fileApplication.GetEmployerFullNameById(file.Summoned);
-                file.OppositePersonFullName = _fileApplication.GetEmployeeFullNameById(file.Reqester);
-            }
             var petition = _petitionApplication.GetDetails(fileId, boardTypeId) ?? new EditPetition();
             var workHistories = _workHistoryApplication.Search(petition.Id);
             workHistories =
@@ -338,17 +302,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
         public IActionResult OnPostCreateOrEditPetition(EditPetition command)
         {
             var petitionResult = new OperationResult();
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest();
-
-            //}
-
-            //var result = _fileApplication.Edit(command.FileData);
-
-            //if (!result.IsSuccedded)
-            //    return new JsonResult(result);
-
+            
             if (command.Id == 0)
             {
                 petitionResult = _petitionApplication.Create(command);
@@ -384,16 +338,6 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
         {
             var file = _fileApplication.GetDetails(fileId);
 
-            if (file.Client == 1)
-            {
-                file.ClientFullName = _fileApplication.GetEmployeeFullNameById(file.Reqester);
-                file.OppositePersonFullName = _fileApplication.GetEmployerFullNameById(file.Summoned);
-            }
-            else
-            {
-                file.ClientFullName = _fileApplication.GetEmployerFullNameById(file.Summoned);
-                file.OppositePersonFullName = _fileApplication.GetEmployeeFullNameById(file.Reqester);
-            }
             var masterPetition = _masterPetitionApplication.GetDetails(fileId, boardTypeId) ?? new EditMasterPetition();
             var workHistories = _masterWorkHistoryApplication.Search(masterPetition.Id);
             workHistories =
@@ -465,16 +409,6 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
         {
             var file = _fileApplication.GetDetails(fileId);
 
-            if (file.Client == 1)
-            {
-                file.ClientFullName = _fileApplication.GetEmployeeFullNameById(file.Reqester);
-                file.OppositePersonFullName = _fileApplication.GetEmployerFullNameById(file.Summoned);
-            }
-            else
-            {
-                file.ClientFullName = _fileApplication.GetEmployerFullNameById(file.Summoned);
-                file.OppositePersonFullName = _fileApplication.GetEmployeeFullNameById(file.Reqester);
-            }
             var evidence = _evidenceApplication.GetDetails(fileId, boardTypeId) ?? new EditEvidence();
             var evidenceDetails = _evidenceDetailApplication.Search(evidence.Id);
             evidenceDetails =
@@ -527,7 +461,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
 
             return new JsonResult(evidenceDetail);
         }
-        
+
         public IActionResult OnGetCreateOrEditFileTitle(string type)
         {
             var EditFileTitle = new EditFileTitle();
@@ -563,7 +497,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
 
             return new JsonResult(res);
         }
-        
+
         public IActionResult OnGetCreateOrEditFileTiming(string type)
         {
             var FileTimings = _fileTimingApplication.Search(new FileTimingSearchModel());
@@ -578,7 +512,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
         {
             var result = new OperationResult();
 
-            foreach(var item in command)
+            foreach (var item in command)
             {
                 if (item.Id == 0)
                     _fileTimingApplication.Create(item);
@@ -590,50 +524,9 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             return new JsonResult(result.Succcedded());
         }
 
-        public IActionResult OnGetDetails(long id)
-        {
-            var editJob = _fileApplication.GetDetails(id);
-
-            return Partial("Details", editJob);
-        }
-        
         public IActionResult OnGetFileSummary(long id)
         {
-            var summary = new FileSummary();
-
-            summary.File = _fileApplication.GetDetails(id);
-            summary.File.ClientFullName = _fileApplication.GetEmployeeFullNameById(summary.File.Reqester);
-            summary.File.OppositePersonFullName = _fileApplication.GetEmployerFullNameById(summary.File.Summoned);
-
-            summary.DiagnosisMasterPetition = _masterPetitionApplication.GetDetails(id, 1) ?? new EditMasterPetition();
-            var masterPetitionId = summary.DiagnosisMasterPetition != null ? summary.DiagnosisMasterPetition.Id : 0;
-            summary.DiagnosisMasterPetition.CreateMasterPenaltyTitle = _masterPenaltyTitleApplication.Search(masterPetitionId);
-            summary.DiagnosisMasterPetition.CreateMasterWorkHistory = _masterWorkHistoryApplication.Search(masterPetitionId);
-
-            summary.File.createDiagnosisBoard = _boardApplication.GetDetails(id, 1) ?? new EditBoard();
-            summary.File.createDiagnosisPS = _proceedingSessionApplication.Search(new ProceedingSessionSearchModel { Board_Id = summary.File.createDiagnosisBoard != null ? summary.File.createDiagnosisBoard.Id : 0 });
-            
-            summary.File.createDiagnosisPetition = _petitionApplication.GetDetails(id, 1) ?? new EditPetition();
-            var petitionId = summary.File.createDiagnosisPetition != null ? summary.File.createDiagnosisPetition.Id : 0;
-            summary.File.createDiagnosisPetition.CreatePenaltyTitle = _penaltyTitleApplication.Search(petitionId);
-            summary.File.createDiagnosisPetition.CreateWorkHistory = _workHistoryApplication.Search(petitionId);
-            summary.File.createDiagnosisPetition.TotalPaidAmounts = summary.File.createDiagnosisPetition.CreatePenaltyTitle.Sum(x => x.PaidAmount !=null ? Int32.Parse(x.PaidAmount.Replace(",", "")) : 0).ToString();
-
-
-            summary.DisputeResolutionMasterPetition = _masterPetitionApplication.GetDetails(id, 2) ?? new EditMasterPetition();
-            masterPetitionId = summary.DisputeResolutionMasterPetition != null ? summary.DisputeResolutionMasterPetition.Id : 0;
-            summary.DisputeResolutionMasterPetition.CreateMasterPenaltyTitle = _masterPenaltyTitleApplication.Search(masterPetitionId);
-            summary.DisputeResolutionMasterPetition.CreateMasterWorkHistory = _masterWorkHistoryApplication.Search(masterPetitionId);
-
-            summary.File.createDisputeResolutionBoard = _boardApplication.GetDetails(id, 2) ?? new EditBoard();
-            summary.File.createDisputeResolutionPS = _proceedingSessionApplication.Search(new ProceedingSessionSearchModel { Board_Id = summary.File.createDisputeResolutionBoard != null ? summary.File.createDisputeResolutionBoard.Id : 0 });
-            
-            summary.File.createDisputeResolutionPetition = _petitionApplication.GetDetails(id, 2) ?? new EditPetition();
-            petitionId = summary.File.createDisputeResolutionPetition != null ? summary.File.createDisputeResolutionPetition.Id : 0;
-            summary.File.createDisputeResolutionPetition.CreatePenaltyTitle = _penaltyTitleApplication.Search(summary.File.createDisputeResolutionPetition != null ? summary.File.createDisputeResolutionPetition.Id : 0);
-            summary.File.createDisputeResolutionPetition.CreateWorkHistory = _workHistoryApplication.Search(summary.File.createDisputeResolutionPetition != null ? summary.File.createDisputeResolutionPetition.Id : 0);
-            summary.File.createDisputeResolutionPetition.TotalPaidAmounts = summary.File.createDisputeResolutionPetition.CreatePenaltyTitle.Sum(x => x.PaidAmount != null ? Int32.Parse(x.PaidAmount.Replace(",", "")) : 0).ToString();
-
+            var summary = _fileApplication.GetFileSummary(id);
 
             return Partial("FileSummary", summary);
         }
@@ -651,7 +544,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
                 }
             );
         }
-        
+
         public JsonResult OnPostRemoveMasterPetition(long id)
         {
             _masterPenaltyTitleApplication.RemoveMasterPenaltyTitles(id);
@@ -666,14 +559,14 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
 
             return new JsonResult(fileTitlesList);
         }
-        
+
         public JsonResult OnPostRemoveFileTitle(long id)
         {
             var result = _fileTitleApplication.Remove(id);
 
             return new JsonResult(result);
         }
-        
+
         public JsonResult OnPostRemoveEvidence(long id)
         {
             _evidenceDetailApplication.RemoveEvidenceDetails(id);
@@ -687,7 +580,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             var result = new OperationResult();
             var file = _fileApplication.GetDetails(id);
 
-            switch(file.Status)
+            switch (file.Status)
             {
                 case 1:
 
@@ -706,174 +599,6 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             return new JsonResult(result);
         }
 
-        private FileViewModel GetFileDetails(FileViewModel file)
-        {
-            var viewModel = new FileViewModel();
-            var searchModel = new FileSearchModel();
-
-            if (searchModel.diagnosisBoard == null)
-                searchModel.diagnosisBoard = new BoardSearchModel();
-
-            if (searchModel.diagnosisProceedingSession == null)
-                searchModel.diagnosisProceedingSession = new ProceedingSessionSearchModel();
-
-            if (searchModel.disputeResolutionBoard == null)
-                searchModel.disputeResolutionBoard = new BoardSearchModel();
-
-            if (searchModel.disputeResolutionProceedingSession == null)
-                searchModel.disputeResolutionProceedingSession =
-                    new ProceedingSessionSearchModel();
-
-            viewModel = file;
-
-            searchModel.diagnosisBoard.File_Id = file.Id;
-            searchModel.diagnosisBoard.BoardType_Id = 1;
-            var diagnosisBoard =
-                _boardApplication.Search(searchModel.diagnosisBoard).FirstOrDefault()
-                ?? new EditBoard();
-
-            searchModel.diagnosisProceedingSession.Board_Id = diagnosisBoard.Id;
-            var diagnosisProceedingSessionList = _proceedingSessionApplication.Search(
-                searchModel.diagnosisProceedingSession
-            );
-
-            //var diagnosisPsListCount = _proceedingSessionApplication.Search(searchModel.diagnosisProceedingSession).Count();
-            var diagnosisPsListCount = diagnosisProceedingSessionList.Count();
-            var firstDiagnosisProceedingSession = new EditProceedingSession();
-            var lastDiagnosisProceedingSession = new EditProceedingSession();
-            if (diagnosisProceedingSessionList.Count != 0)
-            {
-                firstDiagnosisProceedingSession = diagnosisProceedingSessionList.First();
-                lastDiagnosisProceedingSession = diagnosisProceedingSessionList.Last();
-            }
-
-            var diagnosisPetition =
-                _petitionApplication.GetDetails(file.Id, 1) ?? new EditPetition();
-
-            searchModel.disputeResolutionBoard.File_Id = file.Id;
-            searchModel.disputeResolutionBoard.BoardType_Id = 2;
-            var disputeResolutionBoard =
-                _boardApplication.Search(searchModel.disputeResolutionBoard).FirstOrDefault()
-                ?? new EditBoard();
-
-            searchModel.disputeResolutionProceedingSession.Board_Id = disputeResolutionBoard.Id;
-            var disputeResolutionProceedingSessionList = _proceedingSessionApplication.Search(
-                searchModel.disputeResolutionProceedingSession
-            );
-
-            var disputeResolutionPsListCount = disputeResolutionProceedingSessionList.Count();
-            var firstDisputeResolutionProceedingSession = new EditProceedingSession();
-            var lastDisputeResolutionProceedingSession = new EditProceedingSession();
-            if (disputeResolutionProceedingSessionList.Count != 0)
-            {
-                firstDisputeResolutionProceedingSession =
-                    disputeResolutionProceedingSessionList.First();
-                lastDisputeResolutionProceedingSession =
-                    disputeResolutionProceedingSessionList.Last();
-            }
-
-            var disputeResolutionPetition =
-                _petitionApplication.GetDetails(file.Id, 2) ?? new EditPetition();
-
-            viewModel.DiagnosisBoard = diagnosisBoard;
-            viewModel.DiagnosisPsCount =
-                firstDiagnosisProceedingSession.Id == lastDiagnosisProceedingSession.Id
-                    ? diagnosisPsListCount
-                    : diagnosisPsListCount - 1;
-            viewModel.FirstDiagnosisPS = firstDiagnosisProceedingSession;
-            viewModel.LastDiagnosisPS = lastDiagnosisProceedingSession;
-            viewModel.DiagnosisPetition = diagnosisPetition;
-
-            viewModel.DisputeResolutionBoard = disputeResolutionBoard;
-            viewModel.DisputeResolutionPsCount =
-                firstDisputeResolutionProceedingSession.Id
-                == lastDisputeResolutionProceedingSession.Id
-                    ? disputeResolutionPsListCount
-                    : disputeResolutionPsListCount - 1;
-            viewModel.FirstDisputeResolutionPS = firstDisputeResolutionProceedingSession;
-            viewModel.LastDisputeResolutionPS = lastDisputeResolutionProceedingSession;
-            viewModel.DisputeResolutionPetition = disputeResolutionPetition;
-
-            var masterPetitions = _masterPetitionApplication.Search(new MasterPetitionSearchModel { File_Id = file.Id }).ToList();
-            viewModel.DiagnosisMasterPetitionId = masterPetitions.Where(x => x.BoardType_Id == 1).FirstOrDefault() != null
-                ? masterPetitions.Where(x => x.BoardType_Id == 1).FirstOrDefault().Id
-                : 0;
-            viewModel.DisputeResolutionMasterPetitionId = masterPetitions.Where(x => x.BoardType_Id == 2).FirstOrDefault() != null
-                ? masterPetitions.Where(x => x.BoardType_Id == 2).FirstOrDefault().Id
-                : 0;
-            
-            var evidences = _evidenceApplication.Search(new EvidenceSearchModel { File_Id = file.Id }).ToList();
-            viewModel.DiagnosisEvidenceId = evidences.Where(x => x.BoardType_Id == 1).FirstOrDefault() != null
-                ? evidences.Where(x => x.BoardType_Id == 1).FirstOrDefault().Id
-                : 0;
-            viewModel.DisputeResolutionEvidenceId = evidences.Where(x => x.BoardType_Id == 2).FirstOrDefault() != null
-                ? evidences.Where(x => x.BoardType_Id == 2).FirstOrDefault().Id
-                : 0;
-
-            return viewModel;
-        }
-
-        private bool CheckValue(string viewModel, string searchModel)
-        {
-            if (!string.IsNullOrEmpty(viewModel) && viewModel.Contains(searchModel))
-                return true;
-
-            return false;
-        }
-
-        private bool FilterFileDetails(FileViewModel tempViewModel, FileSearchModel fileSearchModel)
-        {
-            if (fileSearchModel == null)
-                return true;
-
-            if (fileSearchModel.ArchiveNo != null && !CheckValue(tempViewModel.ArchiveNo.ToString(), fileSearchModel.ArchiveNo))
-                return false;
-
-            if (fileSearchModel.FileClass != null && !CheckValue(tempViewModel.FileClass, fileSearchModel.FileClass))
-                return false;
-
-            if (fileSearchModel.UserId != 0 && !(fileSearchModel.UserId == tempViewModel.Summoned || fileSearchModel.UserId == tempViewModel.Reqester))
-                return false;
-
-            if (fileSearchModel.diagnosisBoard.Branch != null && !CheckValue(tempViewModel.DiagnosisBoard.Branch, fileSearchModel.diagnosisBoard.Branch))
-                return false;
-
-            if (fileSearchModel.disputeResolutionBoard.Branch != null && !CheckValue(tempViewModel.DisputeResolutionBoard.Branch, fileSearchModel.disputeResolutionBoard.Branch))
-                return false;
-
-            if (fileSearchModel.diagnosisProceedingSession.FromDate != null) 
-            {
-                if (tempViewModel.FirstDiagnosisPS.Date == null) 
-                    return false;
-                if (tempViewModel.FirstDiagnosisPS.Date.ToGeorgianDateTime() < fileSearchModel.diagnosisProceedingSession.FromDate.ToGeorgianDateTime())
-                return false;
-            }
-
-            if (fileSearchModel.disputeResolutionProceedingSession.FromDate != null)
-            {
-                if (tempViewModel.FirstDisputeResolutionPS.Date == null)
-                    return false;
-                if (tempViewModel.FirstDisputeResolutionPS.Date.ToGeorgianDateTime() < fileSearchModel.disputeResolutionProceedingSession.FromDate.ToGeorgianDateTime())
-                    return false;
-            }
-            
-            if (fileSearchModel.diagnosisProceedingSession.ToDate != null)
-            {
-                if (tempViewModel.LastDiagnosisPS.Date == null)
-                    return false;
-                if (fileSearchModel.diagnosisProceedingSession.ToDate.ToGeorgianDateTime() < tempViewModel.LastDiagnosisPS.Date.ToGeorgianDateTime())
-                    return false;
-            }
-            
-            if (fileSearchModel.disputeResolutionProceedingSession.ToDate != null)
-            {
-                if (tempViewModel.LastDisputeResolutionPS.Date == null)
-                    return false;
-                if (fileSearchModel.disputeResolutionProceedingSession.ToDate.ToGeorgianDateTime() < tempViewModel.LastDisputeResolutionPS.Date.ToGeorgianDateTime())
-                    return false;
-            }
-
-            return true;
-        }
+        
     }
 }

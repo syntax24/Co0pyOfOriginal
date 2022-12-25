@@ -16,9 +16,9 @@ namespace CompanyManagment.EFCore.Repository
             _context = context;
         }
 
-        public EditFileState GetDetails(long id)
+        public FileStateViewModel GetDetails(long id)
         {
-            return _context.FileStates.Select(x => new EditFileState
+            return _context.FileStates.Select(x => new FileStateViewModel
             {
                 Id = x.id,
                 FileTiming_Id = x.FileTiming_Id,
@@ -41,7 +41,8 @@ namespace CompanyManagment.EFCore.Repository
                 Id = x.id,
                 FileTiming_Id = x.FileTiming_Id,
                 State = x.State,
-                Title = x.Title
+                Title = x.Title,
+                Deadline = _context.FileTimings.Where(y => y.id == x.FileTiming_Id).FirstOrDefault().Deadline
             });
 
             //TODO if

@@ -11,7 +11,7 @@ namespace Company.Domain.FileTiming
 {
     public interface IFileTimingRepository : IRepository<long, FileTiming>
     {
-        //EditFileTiming GetDetails(long id);
+        FileTimingViewModel GetDetails(long id);
         //void Remove(long id);
         List<EditFileTiming> Search(FileTimingSearchModel searchModel);
     }

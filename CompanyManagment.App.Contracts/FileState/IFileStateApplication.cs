@@ -7,6 +7,7 @@ namespace CompanyManagment.App.Contracts.FileState
     {
         OperationResult Create(CreateFileState command);
         OperationResult Edit(EditFileState command);
+        FileStateViewModel GetDetails(long id);
         //OperationResult Remove(long id);
         List<EditFileState> Search(FileStateSearchModel searchModel);
     }

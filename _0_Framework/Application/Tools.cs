@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PersianTools.Core;
+using System;
 using System.Globalization;
 
 namespace _0_Framework_b.Application
@@ -295,6 +296,17 @@ namespace _0_Framework_b.Application
             }
 
             return y2;
+        }
+
+        public static int GetWorkingDaysDifference(DateTime? fromDate, DateTime? toDate)
+        {
+
+            var workingDays = PersianDateExtensions.GetWorkingDays(new PersianDateTime(fromDate.ToFarsi()), new PersianDateTime(toDate.ToFarsi()), true);
+
+            if(fromDate > toDate)
+                workingDays *= -1;
+           
+            return workingDays;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Company.Domain.FileAlert
 {
     public interface IFileAlertRepository : IRepository<long, FileAlert>
     {
-        EditFileAlert GetDetails(long id);
+        FileAlertViewModel GetDetails(long id);
         void Remove(long id);
         List<EditFileAlert> Search(FileAlertSearchModel searchModel);
     }

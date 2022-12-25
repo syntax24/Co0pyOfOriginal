@@ -1,6 +1,7 @@
 ﻿using CompanyManagment.App.Contracts.Board;
 using CompanyManagment.App.Contracts.Petition;
 using CompanyManagment.App.Contracts.ProceedingSession;
+using System;
 
 namespace CompanyManagment.App.Contracts.File1
 {
@@ -33,5 +34,7 @@ namespace CompanyManagment.App.Contracts.File1
         public long DiagnosisEvidenceId { get; set; }
         public long DisputeResolutionEvidenceId { get; set; }
         public int Status { get; set; }
+        public int State { get; set; }
+        public DateTime? StateDate { get; set; }
     }
 }

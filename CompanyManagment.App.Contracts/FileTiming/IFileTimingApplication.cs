@@ -5,6 +5,7 @@ namespace CompanyManagment.App.Contracts.FileTiming
 {
     public interface IFileTimingApplication
     {
+        FileTimingViewModel GetDetails(long id);
         OperationResult Create(CreateFileTiming command);
         OperationResult Edit(EditFileTiming command);
         //OperationResult Remove(long id);

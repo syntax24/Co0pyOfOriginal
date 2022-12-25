@@ -47,6 +47,11 @@ namespace CompanyManagment.Application
             return operation.Succcedded(entityId: fileTiming.id);
         }
 
+        public FileTimingViewModel GetDetails(long id)
+        {
+            return _fileTimingRepository.GetDetails(id);
+        }
+
         //public OperationResult Remove(long id)
         //{
         //    var operation = new OperationResult();
