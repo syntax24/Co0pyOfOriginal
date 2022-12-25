@@ -93,7 +93,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Bill
             var result = _billApplication.DeActive(id);
 
             if (result.IsSuccedded)
-                return Redirect(url);
+                 return new JsonResult(url);
             Message = result.Message;
             return RedirectToPage(url);
 
@@ -105,7 +105,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Bill
 
             var result = _billApplication.Active(id);
             if (result.IsSuccedded)
-                return Redirect(url);
+                 return new JsonResult(url);
             Message = result.Message;
             return RedirectToPage(url);
         }

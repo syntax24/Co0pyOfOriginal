@@ -15,15 +15,7 @@ namespace CompanyManagment.EFCore.Repository
             _context = context;
         }
 
-        public OperationResult Active(long id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public OperationResult DeActive(long id)
-        {
-            throw new System.NotImplementedException();
-        }
+    
 
         public List<Contact2ViewModel> GetAllContact()
         {

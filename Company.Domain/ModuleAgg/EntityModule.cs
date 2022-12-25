@@ -10,7 +10,7 @@ namespace Company.Domain.ModuleAgg
         public EntityModule(string nameSubModule)
         {
             NameSubModule = nameSubModule;
-
+            IsActiveString = "true";
         }
 
         public string NameSubModule { get; private set; }

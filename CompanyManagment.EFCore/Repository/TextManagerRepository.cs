@@ -32,9 +32,9 @@ namespace CompanyManagment.EFCore.Repository
                 Subtitle_Id = x.Subtitle_Id,
                 Chapter_Id = x.Chapter_Id,
                 IsActiveString = x.IsActiveString,
-                OriginalTitle = _context.EntityOriginalTitles .Where(i=>i.id== x.OriginalTitle_Id).Select(t=>t.Title).FirstOrDefault(),
-                Subtitle = _context.EntitySubtitles.Where(i => i.id == x.Subtitle_Id).Select(t => t.Subtitle).FirstOrDefault(),
-                Chapter= _context.EntityChapters.Where(i => i.id == x.Chapter_Id).Select(t => t.Chapter).FirstOrDefault(),
+                OriginalTitle = _context.EntityOriginalTitles.Where(i => i.id == x.OriginalTitle_Id && x.IsActiveString == "true").Select(t => t.Title).FirstOrDefault(),
+                Subtitle = _context.EntitySubtitles.Where(i => i.id == x.Subtitle_Id && x.IsActiveString == "true").Select(t => t.Subtitle).FirstOrDefault(),
+                Chapter = _context.EntityChapters.Where(i => i.id == x.Chapter_Id && x.IsActiveString == "true").Select(t => t.Chapter).FirstOrDefault(),
             }).ToList();
         }
         public EditTextManager GetDetails(long id)
@@ -69,11 +69,18 @@ namespace CompanyManagment.EFCore.Repository
                 Subtitle_Id = x.Subtitle_Id,
                 Chapter_Id = x.Chapter_Id,
                 IsActiveString = x.IsActiveString,
-                OriginalTitle = _context.EntityOriginalTitles.Where(i => i.id == x.OriginalTitle_Id).Select(t => t.Title).FirstOrDefault(),
-                Subtitle = _context.EntitySubtitles.Where(i => i.id == x.Subtitle_Id).Select(t => t.Subtitle).FirstOrDefault(),
-                Chapter = _context.EntityChapters.Where(i => i.id == x.Chapter_Id).Select(t => t.Chapter).FirstOrDefault(),
+                OriginalTitle = _context.EntityOriginalTitles.Where(i => i.id == x.OriginalTitle_Id && x.IsActiveString == "true").Select(t => t.Title).FirstOrDefault(),
+                OriginalTitleActiveString = _context.EntityOriginalTitles.Where(i => i.id == x.OriginalTitle_Id && x.IsActiveString == "true").Select(t => t.IsActiveString).FirstOrDefault(),
+                Subtitle = _context.EntitySubtitles.Where(i => i.id == x.Subtitle_Id && x.IsActiveString == "true").Select(t => t.Subtitle).FirstOrDefault(),
+                SubtitleIsActiveString = _context.EntitySubtitles.Where(i => i.id == x.Subtitle_Id && x.IsActiveString == "true").Select(t => t.IsActiveString).FirstOrDefault(),
+                Chapter = _context.EntityChapters.Where(i => i.id == x.Chapter_Id && x.IsActiveString == "true").Select(t => t.Chapter).FirstOrDefault(),
+                ChapterActiveString = _context.EntityChapters.Where(i => i.id == x.Chapter_Id && x.IsActiveString == "true").Select(t => t.IsActiveString).FirstOrDefault(),
                 ListUseModule = _context.EntityModuleTextManagers.Where(xi => xi.TextManagerId == x.id) .Select(xi => xi.Module.NameSubModule).ToList(),
             });
+            query = query.Where(s => s.OriginalTitleActiveString == "true");
+            query = query.Where(s => s.SubtitleIsActiveString == "true");
+            query = query.Where(s => s.ChapterActiveString == "true");
+
             if (searchModel.OriginalTitle_Id != 0) {
                 query = query.Where(x => x.OriginalTitle_Id == searchModel.OriginalTitle_Id);
                 if (searchModel.IsActiveString == "false")
@@ -92,16 +99,9 @@ namespace CompanyManagment.EFCore.Repository
                 if (string.IsNullOrWhiteSpace(searchModel.IsActiveString) || searchModel.IsActiveString == null || searchModel.IsActiveString == "null")
                     query = query.Where(x => x.IsActiveString == "true");
             }
-            if (searchModel.Subtitle_Id != 0)
-            {   
-                if (searchModel.Chapter_Id != 0) {
-                 query = query.Where(x => x.Chapter_Id == searchModel.Chapter_Id);
-                }
-                else
-                {
-                    query = query.Where(x => x.Subtitle_Id == searchModel.Subtitle_Id);
-                }   
-            }
+       
+
+
             return query.OrderByDescending(x => x.Id).ToList();
         }
         public List<long> GetRelation(long textManagerId)

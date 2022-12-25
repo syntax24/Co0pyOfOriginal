@@ -22,7 +22,7 @@ namespace CompanyManagment.EFCore.Repository
             {
                 Id = x.id,
                 NameSubModule = x.NameSubModule,
-       
+                IsActiveString = x.IsActiveString,
             }).ToList();
         }
 
@@ -32,6 +32,7 @@ namespace CompanyManagment.EFCore.Repository
             return _context.EntityModules.Select(x => new EditModule
             {
                    Id = x.id,
+            
                 NameSubModule = x.NameSubModule
                     
               
@@ -40,20 +41,22 @@ namespace CompanyManagment.EFCore.Repository
 
       
 
-        List<ModuleViewModel> IModuleRepozitory.Search(ModuleSearchModel SearchModel)
+        List<ModuleViewModel> IModuleRepozitory.Search(ModuleSearchModel searchModel)
         {
             var query = _context.EntityModules.Select(x => new ModuleViewModel
             {
                 Id = x.id,
                 NameSubModule = x.NameSubModule,
-         
-
-
+                IsActiveString = x.IsActiveString,
             });
-            if (!string.IsNullOrWhiteSpace(SearchModel.NameSubModule))
-                query = query.Where(x => x.NameSubModule.Contains(SearchModel.NameSubModule));
-     
-
+            if (!string.IsNullOrWhiteSpace(searchModel.NameSubModule))
+                query = query.Where(x => x.NameSubModule.Contains(searchModel.NameSubModule));
+            if (string.IsNullOrWhiteSpace(searchModel.IsActiveString) || searchModel.IsActiveString == null || searchModel.IsActiveString == "null")
+                query = query.Where(x => x.IsActiveString == "true");
+            if (searchModel.IsActiveString == "false")
+                query = query.Where(x => x.IsActiveString == "false");
+            if (searchModel.IsActiveString == "true")
+                query = query.Where(x => x.IsActiveString == "true");
             return query.OrderByDescending(x => x.Id).ToList();
         }
     }

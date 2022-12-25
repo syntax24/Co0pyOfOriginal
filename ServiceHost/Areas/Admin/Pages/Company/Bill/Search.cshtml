@@ -85,14 +85,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    @*<div class="row col-md-12" style="margin: 0px;">
-                            <div class="panel panel-default" style="background: #7dae8b4f;">
-                                <div class="panel-body">
-                                    <label style="font-size: 13px;color: green;width: 86%;margin-right: 9px;"> چنانچه تیک چک باکس روبه رو زده شودمورد انتخابی در فیلدکشویی فصل درنتایج جستجوی متن لایحه اعمال خواهد شد در غیر این صورت همه موارد متون جستجو خواهد شد</label>
-                                    <samp> <input id="checkfilter" type="checkbox" class="form-control " style="width: 31px;position: absolute;top: 0;left: 35px;"></samp>
-                                </div>
-                            </div>
-                        </div>*@
+             
                     <div class="col-md-12" dir="ltr" style="text-align:right;margin-bottom:10px">
                         <span class="alert-danger" id="alertcheckfilter"></span>
                         <label class="control-label"> : جستجو متن لایحه</label>
@@ -100,7 +93,7 @@
                             <span class="input-group-btn">
                                 <button class="btn btn-success btn-rounded " onclick="showMsg()">انتخاب</button>
                             </span>
-                            <input id="DescriptionModal_Id" type="text" name="DescriptionModal_Id" style="text-align: right; font-size: 18px; font-family: 'Web_Yekan'" placeholder="... عبارت مورد نظر را تایپ کنید " class="form-control" />
+                            <textarea id="DescriptionModal_Id" type="text" name="DescriptionModal_Id" style="text-align: right; font-size: 14px; font-family: 'Web_Yekan'; resize: none; height: 34px;" placeholder="... عبارت مورد نظر را تایپ کنید " class="form-control" ></textarea>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -117,17 +110,28 @@
         <button type="button" id="btnmodal" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
     </div>
 </div>
+
+
+
+
+
+
+
+
 <script>
     $(document).ready(function () {
         $('#btnmodal').click(function () {
-            var result = $('#des').val();
-            CKEDITOR.instances["Description"].setData("<h1>" + result + "</h1>");
+            var result = $('#des').val().replaceAll('\n', '<br/>');
+            //CKEDITOR.instances["Description"].setData(result);
+            var oEditor = CKEDITOR.instances.Description;
+            var html = "<a >" + result + "</a>";
+            var newElement = CKEDITOR.dom.element.createFromHtml(html, oEditor.document);
+            oEditor.insertElement(newElement);
+
             $("#des").val("");
             $('#MainModal').modal('hide');
         });
-        $('#DescriptionModal_Id').autocomplete({
-            source: '/Admin/Company/TextManager?handler=DescriptionAll'
-        });
+      
     });
     $(document).ready(function () {
         $('#DescriptionModal_Id').autocomplete({
@@ -141,7 +145,6 @@
                     },
                     success: function (data) {
                         response(data);
-                        console.log(data);
                     }
                 });
             },

@@ -14,26 +14,29 @@
                         <br>
                         <div class="col-md-4">
                             <div class="form-group">
+                                <label asp-for="CreateBill.Appointed" class="control-label">  انتخاب موکل: </label>
+
                                 <input id="Appointed_Id" asp-for="CreateBill.Appointed" class="form-control" placeholder="انتخاب موکل..." style="z-index: 0;" />
                                 <span class="alert-danger" asp-validation-for="CreateBill.Appointed"></span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-
+                                <label asp-for="CreateBill.ProcessingStage" class="control-label">  مرحله رسیدگی: </label>
                                 <input id="ProcessingStage_Id" asp-for="CreateBill.ProcessingStage" class="form-control" placeholder="مرحله رسیدگی..." style="z-index: 0;" />
                                 <span class="alert-danger" asp-validation-for="CreateBill.ProcessingStage"></span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
+                                <label asp-for="CreateBill.Contact" class="control-label">  انتخاب مخاطب: </label>
                                 <input id="Contact_Id" asp-for="CreateBill.Contact" class="form-control" placeholder="انتخاب مخاطب..." style="z-index: 0;" />
                                 <span class="alert-danger" asp-validation-for="CreateBill.Contact"></span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-
+                                <label asp-for="CreateBill.SubjectBill" class="control-label">  موضوع: </label>
                                 <input asp-for="CreateBill.SubjectBill" class="form-control" placeholder="موضوع..." />
                                 <span class="alert-danger" asp-validation-for="CreateBill.SubjectBill"></span>
                             </div>
@@ -95,6 +98,7 @@
     .cke_rtl .cke_toolbar {
         float: left;
     }
+   
 </style>
 
 @section PanelScripts{
@@ -179,4 +183,5 @@
         background: #cbdacf;
     
     }
+
 </style>

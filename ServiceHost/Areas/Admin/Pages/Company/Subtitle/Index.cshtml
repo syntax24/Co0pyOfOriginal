@@ -232,7 +232,7 @@
                                 <form class="form-inline" role="form" method="get" name="search-theme-form" id="search-theme-form" autocomplete="off">
                                     <div class="form-group col-sm-12">
                                         <div class="row">
-                                           
+
                                             <div class="col-sm-3 pull-right">
                                                 <select class="form-control select-city" asp-for="searchModel.OriginalTitle_Id" asp-items="Model.SelectListOriginalTitle" placeholder="عنوان" id="originalTitle" style="width: 100%">
                                                     <option value="0" selected="selected">
@@ -301,8 +301,7 @@
                                         <a class="btn btn-danger pull-right m-rl-5 rad deact" onclick="deactiveAll()">
                                             <i class="fa faSize fa-trash"></i>
                                         </a>
-                         
-                                   </th>
+                                    </th>
 
                                 </tr>
 
@@ -310,38 +309,35 @@
                             <tbody>
                                 @foreach (var item in Model.Subtitles)
                                 {
-                                <tr>
-                                    <td style="font-size: 16px !important; text-align: center;display:none">
-                                        <input type="checkbox" name="foo" value="@item.Id" checked="checked" />
-                                    </td>
-                                    <td style="font-size: 14px !important; text-align: center">@i </td>
-                                    <td style="font-size: 14px !important; text-align: center">@item.OriginalTitle </td>
-                                    <td style="font-size: 14px !important; text-align: center">@item.Subtitle </td>
+                                    <tr>
+                                        <td style="font-size: 16px !important; text-align: center;display:none">
+                                            <input type="checkbox" name="foo" value="@item.Id" checked="checked" />
+                                        </td>
+                                        <td style="font-size: 16px !important; text-align: center">@i </td>
+                                        <td style="font-size: 14px !important; text-align: center">@item.OriginalTitle </td>
+                                        <td style="font-size: 14px !important; text-align: center">@item.Subtitle </td>
 
-                                    @{
-                                        i++;
-                                    }
-
-                                    <td>
-
-                                        <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
-                                           href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
-                                            <i class="fa faSize fa-edit"></i>
-                                        </a>
-
-                                        @if (item.IsActiveString == "true")
-                                        {
-
-                                            <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
-
-                                        }
-                                        else
-                                        {
-                                            <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
+                                        @{
+                                            i++;
                                         }
 
-                                    </td>
-                                </tr>
+                                        <td>
+
+                                            <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
+                                               href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
+                                                <i class="fa faSize fa-edit"></i>
+                                            </a>
+
+                                            @if (item.IsActiveString == "true")
+                                            {
+                                                <a permission="20116" id="googleLink" class="btn btn-danger pull-right m-rl-5 fff rad" onclick="DeActive('/Admin/Company/Subtitle?id=@item.Id&amp;url=@url&amp;handler=DeActive')"><i class="fa faSize fa-trash"></i></a>
+                                            }
+                                            else
+                                            {
+                                                <a permission="20116" onclick="IsActive('/Admin/Company/Subtitle?id=@item.Id&amp;url=@url&amp;handler=IsActive')" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>{ }
+                                            }
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -392,7 +388,6 @@
                 });
         });
     </script>
-
     <script>
         var checkboxes;
         function selectori(source) {
@@ -406,11 +401,13 @@
         function deactiveAll() {
 
             if (document.getElementById("checkSelect").checked == false) {
-                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  متنی انتخاب نشده است ");
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  عنوانی انتخاب نشده است ");
             } else {
-                if (document.getElementById("sercheCheck").value == "true") {
+                if (document.getElementById("sercheCheck").value == "false") {
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان را انتخاب نموده و سپس جستجو را کلیک کنید ");
+                } else if (document.getElementById("sercheCheck").value == "true") {
                     swal({
-                        title: "آیا حذف این  عنوان ها اطمینان دارید؟",
+                        title: "آیا غیرفعال نمودن این  موارد انتخاب شده اطمینان دارید؟",
                         text: "",
                         type: "warning",
                         showCancelButton: true,
@@ -430,9 +427,7 @@
                                     console.log(url3b);
                                 }
                             }
-                            /*  var url1 = '#showmodal=';*/
-                            var url2b = '@Url.Page("/Company/Subtitle/Index", "GroupDeActive")';
-                            /*   var url3 = document.getElementById('yearSend').value;*/
+                            var url2b = '@Url.Page("/Company/OriginalTitle/Index", "GroupDeActive")';
                             window.location.href = url2b + url3b;
                             console.log(url2b);
                         }
@@ -444,15 +439,15 @@
     </script>
     <script>
         function reActiveAll() {
-            console.log(document.getElementById("sercheCheck").value);
+
             if (document.getElementById("checkSelect").checked == false) {
-                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  متن ی انتخاب نشده است ");
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ  بخشی انتخاب نشده است ");
             } else {
                 if (document.getElementById("sercheCheck").value == "false") {
-                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان،متن،بخش را انتخاب نموده و سپس جستجو را کلیک کنید ");
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی  متن  حداقل یکی از فیلدهای عنوان را انتخاب نموده و سپس جستجو را کلیک کنید ");
                 } else if (document.getElementById("sercheCheck").value == "true") {
                     swal({
-                        title: "آیا فعال نمودن این  متن ها اطمینان دارید؟",
+                        title: "آیا فعال نمودن این  موارد انتخاب شده اطمینان دارید؟",
                         text: "",
                         type: "warning",
                         showCancelButton: true,
@@ -472,7 +467,7 @@
                                     console.log(url3b);
                                 }
                             }
-                            var url2b = '@Url.Page("/Company/Subtitle/Index", "GroupReActive")';
+                            var url2b = '@Url.Page("/Company/OriginalTitle/Index", "GroupReActive")';
                             console.log(url2b);
                             window.location.href = url2b + url3b;
                         }

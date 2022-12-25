@@ -48,15 +48,14 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
         {
 
            TextManagers = _textManagerApplication.Search(searchModel);
-            SelectListOriginalTitle = new SelectList(_originalTitleApplication.GetAllOriginalTitle(), "Id", "Title");
-            SelectListSubtitle = new SelectList(_subtitleApplication.GetAllSubtitle(), "Id", "Subtitle");
-            SelectListChapter = new SelectList(_chapterApplication.GetAllChapter(), "Id", "Chapter");
-            ListModule = _moduleApplication.GetAllModule().Select(x => x.NameSubModule).ToArray();
-         
-          
-         
+            SelectListOriginalTitle = new SelectList(_originalTitleApplication.GetAllOriginalTitle().Where(x=>x.IsActiveString=="true"), "Id", "Title");
+            SelectListSubtitle = new SelectList(_subtitleApplication.GetAllSubtitle().Where(x => x.IsActiveString == "true"), "Id", "Subtitle");
+            SelectListChapter = new SelectList(_chapterApplication.GetAllChapter().Where(x => x.IsActiveString == "true"), "Id", "Chapter");
+            ListModule = _moduleApplication.GetAllModule().Where(x => x.IsActiveString == "true").Select(x => x.NameSubModule).ToArray();
+
             if (TextManagers != null)
             {
+               
                 if (searchModel.OriginalTitle_Id != 0)
                 {
                     TextManagerSearch = "true";
@@ -68,12 +67,10 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
         {
             var createTextManager = new CreateTextManager
             {
-                OriginalTitleViewModels = _originalTitleApplication.GetAllOriginalTitle().ToList().Select(x => new SelectListItem { Text = x.Title, Value = x.Id.ToString() }).ToList(),
-                SubtitleViewModels = _subtitleApplication.GetAllSubtitle().ToList().Select(x => new SelectListItem { Text = x.Subtitle, Value = x.Id.ToString() }).ToList(),
-                ChapterViewModels = _chapterApplication.GetAllChapter().ToList().Select(x => new SelectListItem { Text = x.Chapter, Value = x.Id.ToString() }).ToList(),
-
-                drpModule = _moduleApplication.GetAllModule().ToList().Select(x => new SelectListItem { Text = x.NameSubModule, Value = x.Id.ToString() }).ToList()
-
+                OriginalTitleViewModels = _originalTitleApplication.GetAllOriginalTitle().Where(x => x.IsActiveString == "true").ToList().Select(x => new SelectListItem { Text = x.Title, Value = x.Id.ToString() }).ToList(),
+                SubtitleViewModels = _subtitleApplication.GetAllSubtitle().Where(x => x.IsActiveString == "true").ToList().Select(x => new SelectListItem { Text = x.Subtitle, Value = x.Id.ToString() }).ToList(),
+                ChapterViewModels = _chapterApplication.GetAllChapter().Where(x => x.IsActiveString == "true").ToList().Select(x => new SelectListItem { Text = x.Chapter, Value = x.Id.ToString() }).ToList(),
+                drpModule = _moduleApplication.GetAllModule().Where(x => x.IsActiveString == "true").ToList().Select(x => new SelectListItem { Text = x.NameSubModule, Value = x.Id.ToString() }).ToList()
             };
             return Partial("./Create", createTextManager);
         }
@@ -100,10 +97,10 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
                 Subtitle_Id = textManager.Subtitle_Id,
                 Chapter_Id = textManager.Chapter_Id,
                 ModuleIds = ModuleIds.ToArray(),
-                OriginalTitleViewModels = _originalTitleApplication.GetAllOriginalTitle().ToList().Select(x => new SelectListItem { Text = x.Title, Value = x.Id.ToString() }).ToList(),
-                SubtitleViewModels = _subtitleApplication.GetAllSubtitle().ToList().Select(x => new SelectListItem { Text = x.Subtitle, Value = x.Id.ToString() }).ToList(),
-                ChapterViewModels = _chapterApplication.GetAllChapter().ToList().Select(x => new SelectListItem { Text = x.Chapter, Value = x.Id.ToString() }).ToList(),
-                drpModule = _moduleApplication.GetAllModule().ToList().Select(x => new SelectListItem { Text = x.NameSubModule, Value = x.Id.ToString() }).ToList()
+                OriginalTitleViewModels = _originalTitleApplication.GetAllOriginalTitle().Where(x => x.IsActiveString == "true").ToList().Select(x => new SelectListItem { Text = x.Title, Value = x.Id.ToString() }).ToList(),
+                SubtitleViewModels = _subtitleApplication.GetAllSubtitle().Where(x => x.IsActiveString == "true").ToList().Select(x => new SelectListItem { Text = x.Subtitle, Value = x.Id.ToString() }).ToList(),
+                ChapterViewModels = _chapterApplication.GetAllChapter().Where(x => x.IsActiveString == "true").ToList().Select(x => new SelectListItem { Text = x.Chapter, Value = x.Id.ToString() }).ToList(),
+                drpModule = _moduleApplication.GetAllModule().Where(x => x.IsActiveString == "true").ToList().Select(x => new SelectListItem { Text = x.NameSubModule, Value = x.Id.ToString() }).ToList()
             };
             return Partial("Edit", textManagereEdit);
         }
@@ -119,12 +116,12 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
         }
         public IActionResult OnGetSubtitleList(long OriginalTitle_Id)
         {
-            var subtitleList = _subtitleApplication.GetAllSubtitle().Where(d => d.OriginalTitle_Id == OriginalTitle_Id).ToList();
+            var subtitleList = _subtitleApplication.GetAllSubtitle().Where(d => d.OriginalTitle_Id == OriginalTitle_Id && d.IsActiveString == "true").ToList();
             return new JsonResult(subtitleList);
         }
         public IActionResult OnGetChptereList(long Subtitle_Id)
         {
-            var chapterleList = _chapterApplication.GetAllChapter().Where(x => x.Subtitle_Id == Subtitle_Id).ToList().Select(x => new SelectListItem { Text = x.Chapter, Value = x.Id.ToString() }).ToList();
+            var chapterleList = _chapterApplication.GetAllChapter().Where(x => x.Subtitle_Id == Subtitle_Id && x.IsActiveString == "true").ToList().Select(x => new SelectListItem { Text = x.Chapter, Value = x.Id.ToString() }).ToList();
             return new JsonResult(chapterleList);
         }
 
@@ -179,7 +176,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
             var result = _textManagerApplication.DeActive(id);
 
             if (result.IsSuccedded)
-                   return Redirect(url);
+                    return new JsonResult(url);
                   Message = result.Message;
             return RedirectToPage(url);
           
@@ -190,7 +187,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.TextManager
 
             var result = _textManagerApplication.Active(id);
             if (result.IsSuccedded)
-                return Redirect(url);
+                 return new JsonResult(url);
             Message = result.Message;
             return RedirectToPage(url);
         }

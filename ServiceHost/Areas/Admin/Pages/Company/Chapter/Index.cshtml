@@ -325,25 +325,22 @@
                                         i++;
                                     }
 
-                                    <td>
+                                <td>
 
-                                        <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
-                                           href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
-                                            <i class="fa faSize fa-edit"></i>
-                                        </a>
+                                    <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
+                                       href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
+                                        <i class="fa faSize fa-edit"></i>
+                                    </a>
 
-                                        @if (item.IsActiveString == "true")
-                                        {
-
-                                            <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
-
-                                        }
-                                        else
-                                        {
-                                            <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" asp-route-url="@url" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
-                                        }
-
-                                    </td>
+                                    @if (item.IsActiveString == "true")
+                                    {
+                                        <a permission="20116" id="googleLink" class="btn btn-danger pull-right m-rl-5 fff rad" onclick="DeActive('/Admin/Company/Chapter?id=@item.Id&amp;url=@url&amp;handler=DeActive')"><i class="fa faSize fa-trash"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <a permission="20116" onclick="IsActive('/Admin/Company/Chapter?id=@item.Id&amp;url=@url&amp;handler=IsActive')" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>    { }
+                                         }
+                                </td>
                                 </tr>
                             }
                         </tbody>
@@ -481,6 +478,7 @@
             }
         }
     </script>
+
 
     <script>
         $(document).ready(function () {

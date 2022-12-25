@@ -78,17 +78,12 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Contact2
             return new JsonResult(names);
         }
 
-
-
-
-
-
-
         public IActionResult OnGetDeActive(long id, string url)
         {
            var result = _contactApplication2.DeActive(id);
             if (result.IsSuccedded)
-                return Redirect(url);
+                return new JsonResult(url);
+           
             Message = result.Message;
             return RedirectToPage(url);
         }
@@ -96,7 +91,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Contact2
         {
            var result = _contactApplication2.Active(id);
             if (result.IsSuccedded)
-                return Redirect(url);
+                return new JsonResult(url);
             Message = result.Message;
             return RedirectToPage(url);
         }

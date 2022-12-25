@@ -9,7 +9,7 @@ namespace CompanyManagment.App.Contracts.Bill
 {
    public class CreateBill
     {
-        [Required(ErrorMessage = " موضوع لایحه نباید خالی باشد")]
+
         public string SubjectBill { get; set; }
         [Required(ErrorMessage = " متن لایحه نباید خالی باشد")]
         public string Description { get; set; }
