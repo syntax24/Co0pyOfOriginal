@@ -1,0 +1,525 @@
+﻿@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using System.Net.Mime
+@model AccountManagement.Application.Contracts.Role.CreateRole
+@{
+
+
+    <style>
+        .child-check {
+            margin-left: 15px;
+            display: none;
+        }
+
+            .child-check.active {
+                display: block;
+            }
+
+        .level2 {
+            margin-right: 40px;
+        }
+
+        .level3 {
+            margin-right: 80px;
+        }
+
+        .parent {
+            border-radius: 10px 0px 0px 10px;
+            min-width: 220px;
+            text-align: start;
+            margin-right: -4px;
+        }
+
+        .children {
+            min-width: 220px !important;
+            text-align: start;
+            border-radius: 10px;
+            background-color: #898989 !important;
+            border: 1px solid #898989 !important;
+           
+        }
+
+        .parentLevel2 {
+            border-radius: 10px 0px 0px 10px;
+            min-width: 220px !important;
+            text-align: start;
+            background-color: #666666 !important;
+            border: 1px solid #666666 !important;
+            margin-right: -4px;
+        }
+        .ion-plus {
+            position: relative !important;
+            top: 4px !important;
+        }
+        .ion-minus {
+            position: relative !important;
+            top: 4px !important;
+        }
+        .open-close {
+            border-radius: 0px 10px 10px 0px;
+            height: 38px;
+            border-color: #5a5a5a;
+        }
+    </style>
+    @*<link href="~/AdminTheme/bootsrtrapTreeView/bootstrap-treeview.min.css" rel="stylesheet" />
+        <script src="~/AdminTheme/bootsrtrapTreeView/bootstrap-treeview.min.js"></script>*@
+
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title"> ایجاد نقش جدید</h4>
+</div>
+<form asp-page="./Index" asp-page-handler="CreateRole"
+      method="post"
+      data-ajax="true"
+      data-callback=""
+      data-action="Refresh">
+    <div class="modal-body">
+        <div class="row">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label">نام نقش</label>
+                        <input type="text" class="form-control" asp-for="Name">
+                        <span asp-validation-for="Name" class="error"></span>
+                        @*@if (TempData["name"] != null)
+                            {<br /><span class="error">@TempData["name"]</span>}*@
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row">
+                @*<div id="default-tree"></div>*@
+                <div class="container">
+                    <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert; height: 300px; overflow-y: scroll">
+                        <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 180px; text-align: center; "> تعیین سطح دسترسی </legend>
+                        @* بانک اطلاعات *@
+                        <div class="parent-check">
+                            <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+
+                            <label class="btn btn-inverse waves-effect waves-light m-b-5 parent"> <input type="checkbox" value="100" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  بانک اطلاعات </span>&nbsp;</label>
+                            @*طرف حساب*@
+                            <div class="child-check level2">
+                                <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+                                <label class="btn btn-inverse waves-effect waves-light m-b-5  parentLevel2"> <input type="checkbox" disabled="disabled" value="101" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  طرف حساب  </span> </label>
+
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="10110" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  ایجاد طرف حساب حقیقی  </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="10111" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  ایجاد طرف حساب حقوقی  </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10112" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  لیست طرف حساب ها  </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10113" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  جستجوی طرف حساب  </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="10114" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  ویرایش   </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10115" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">   جزئیات  </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10116" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  غیر فعال نمودن  </span>   </label>
+                                </div>
+                            </div>
+                            @*کارقرما*@
+                            <div class="child-check level2">
+                                <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+                                <label class="btn btn-inverse waves-effect waves-light m-b-5  parentLevel2"> <input type="checkbox" disabled="disabled" value="102" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  کارفرما   </span>  </label>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="10210" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  ایجاد کارفرمای حقیقی  </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="10211" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  ایجاد کارفرمای حقوقی  </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10212" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  جستجوی کارفرما </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10213" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  لیست کارفرما ها </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="10214" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  ویرایش  </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10215" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  جزئیات </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10216" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  غیر فعال نمودن  </span>   </label>
+                                </div>
+                            </div>
+                            @*کارگاه*@
+                            <div class="child-check level2">
+                                <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+                                <label class="btn btn-inverse waves-effect waves-light m-b-5  parentLevel2"> <input type="checkbox" disabled="disabled" value="103" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  کارگاه   </span>  </label>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="10310" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  ایجاد کارگاه  </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="10311" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  جستجوی کارگاه  </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10312" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  لیست کارگاه ها </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="10314" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  ویرایش  </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10315" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  جزئیات </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10316" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  غیر فعال نمودن  </span>   </label>
+                                </div>
+                            </div>
+                            @*پرسنل*@
+                            <div class="child-check level2">
+                                <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+                                <label class="btn btn-inverse waves-effect waves-light m-b-5  parentLevel2"> <input type="checkbox" disabled="disabled" value="104" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  پرسنل   </span>  </label>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="10410" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  ایجاد پرسنل  </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="10411" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  جستجوی پرسنل  </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10412" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  لیست پرسنل  </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="10414" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  ویرایش  </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10415" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  جزئیات </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10416" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  غیر فعال نمودن  </span>   </label>
+                                </div>
+                            </div>
+                            @*معرف*@
+                            <div class="child-check level2">
+                                <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+                                <label class="btn btn-inverse waves-effect waves-light m-b-5  parentLevel2"> <input type="checkbox" disabled="disabled" value="105" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  معرف   </span>  </label>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="10510" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  ایجاد معرف  </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="10511" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  جستجوی معرف  </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10512" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  لیست معرف ها </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="10514" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  ویرایش  </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10515" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  جزئیات </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="10516" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  غیر فعال نمودن  </span>   </label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        @* قرارداد و تسویه *@
+                        <div class="parent-check">
+                            <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+
+                            <label class="btn btn-inverse waves-effect waves-light m-b-5 parent"> <input type="checkbox" value="200" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  قرارداد و تسویه </span>&nbsp;</label>
+                            @*قراداد*@
+                            <div class="child-check level2">
+                                <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+                                <label class="btn btn-inverse waves-effect waves-light m-b-5  parentLevel2"> <input type="checkbox" disabled="disabled" value="201" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative"> قرارداد  </span> </label>
+
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="20110" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  ایجاد قرارداد  </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="20111" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  تمدید قرارداد  </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="20112" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  جستجوی قرارداد   </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="20113" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  لیست قراداد ها  </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children "><input type="checkbox" disabled="disabled" value="20114" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  ویرایش   </span>  </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="20115" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">   پرینت قراداد  </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="20116" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  غیر فعال نمودن  </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="20117" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  امضای قراداد  </span>   </label>
+                                </div>
+                                <div class="child-check level3">
+                                    <label class="btn btn-inverse waves-effect waves-light m-b-5 children"><input type="checkbox" disabled="disabled" value="20118" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  چکباکس پرینت یا حذف  </span>   </label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        @* بانک اطلاعات مدیریتی *@
+                        <div class="parent-check">
+                            <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+
+                            <label class="btn btn-inverse waves-effect waves-light m-b-5 parent"> <input type="checkbox" value="300" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative"> بانک اطلاعات مدیریتی  </span>&nbsp;</label>
+                            @*ایجاد عناوین مقادیر سالانه*@
+                            <div class="child-check level2">
+                                <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+                                <label class="btn btn-inverse waves-effect waves-light m-b-5  parentLevel2"> <input type="checkbox" disabled="disabled" value="301" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  عناوین مقادیر سالانه   </span> </label>
+
+
+
+                            </div>
+                            @*مقادیر سالانه*@
+                            <div class="child-check level2">
+                                <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+                                <label class="btn btn-inverse waves-effect waves-light m-b-5  parentLevel2"> <input type="checkbox" disabled="disabled" value="302" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  مقادیر سالانه   </span>  </label>
+
+                            </div>
+                            @*لیست مشاغل*@
+                            <div class="child-check level2">
+                                <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+                                <label class="btn btn-inverse waves-effect waves-light m-b-5  parentLevel2"> <input type="checkbox" disabled="disabled" value="303" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  لیست مشاغل   </span>  </label>
+
+                            </div>
+                            @*تعطیلات رسمی*@
+                            <div class="child-check level2">
+                                <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+                                <label class="btn btn-inverse waves-effect waves-light m-b-5  parentLevel2"> <input type="checkbox" disabled="disabled" value="304" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  تعطیلات رسمی   </span>  </label>
+
+                            </div>
+                            @*ساعت موظفی*@
+                            <div class="child-check level2">
+                                <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+                                <label class="btn btn-inverse waves-effect waves-light m-b-5  parentLevel2"> <input type="checkbox" disabled="disabled" value="305" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">  ساعت موظفی   </span>  </label>
+                            </div>
+                            @* مدیریت کاربران *@
+                            <div class="child-check level2">
+                                <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+                                <label class="btn btn-inverse waves-effect waves-light m-b-5  parentLevel2"> <input type="checkbox" disabled="disabled" value="306" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative">   مدیریت کاربران   </span>  </label>
+                            </div>
+                        </div>
+
+                        @* پرونده *@
+                        <div class="parent-check">
+                            <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+
+                            <label class="btn btn-inverse waves-effect waves-light m-b-5 parent"> <input type="checkbox" value="400" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative"> پرونده  </span>&nbsp;</label>
+                          
+                        </div>
+                        @* مدیریت متن *@
+                        <div class="parent-check">
+                            <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+
+                            <label class="btn btn-inverse waves-effect waves-light m-b-5 parent"> <input type="checkbox" value="500" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative"> مدیریت متن  </span>&nbsp;</label>
+                              
+                        </div>
+                        
+                        @* مدیریت لوایح *@
+                        <div class="parent-check">
+                            <label class="btn btn-icon waves-effect btn-default m-b-5 open-close"><i class="ion-plus"></i> <i class="ion-minus" style="display: none;"></i><input type="checkbox" style="display: none" class="open-btn" /></label>
+
+                            <label class="btn btn-inverse waves-effect waves-light m-b-5 parent"> <input type="checkbox" value="600" class="check-btn"> &nbsp;<span style="bottom: 2px;position: relative"> مدیریت لوایح  </span>&nbsp;</label>
+                              
+                        </div>
+                    </fieldset>
+                    <div id="hiddenInput" style="display: none">
+
+                    </div>
+                </div>
+
+                
+
+            </div>
+
+        </div>
+
+    </div>
+    @*<input type="hidden" asp-for="id" value="id"/>*@
+
+    <div class="modal-footer">
+        <a href="#" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" onclick="saveRole();"> ثبت نقش جدید </a>
+        <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن فرم</button>
+        <button type="submit" id="subm" style="display: none"></button>
+    </div>
+</form>
+
+<script>
+    var checks = document.querySelectorAll("input[class='check-btn']");
+    var checks2 = document.querySelectorAll("input[class='open-btn']");
+
+    for (var i = 0; i < checks.length; i++) {
+        checks[i].addEventListener('change', function () {
+            if (this.checked) {
+                showChildrenChecks(this);
+                this.setAttribute("checked", "checked");
+                this.checked = true;
+            } else {
+                hideChildrenChecks(this);
+                this.removeAttribute("checked", "checked");
+                this.checked = false;
+            }
+        });
+    }
+    for(var i = 0; i < checks2.length; i++){
+        checks2[i].addEventListener( 'change', function() {
+            if(this.checked) {
+                showChildrenChecks2(this);
+                this.setAttribute("checked", "checked");
+                this.checked = true;
+               
+
+            } else {
+                hideChildrenChecks2(this);
+                this.removeAttribute("checked", "checked");
+                this.checked = false;
+            }
+        });
+    }
+
+    function showChildrenChecks(elm) {
+        var pOne = elm.parentNode;
+        var pN = pOne.parentNode;
+        var childCheks = pN.children;
+
+        for (var i = 0; i < childCheks.length; i++) {
+            if (hasClass(childCheks[i], 'child-check')) {
+
+                var ch = childCheks[i].querySelectorAll("input[class='check-btn']");
+                for (var a = 0; a < ch.length; a++) {
+                    var p1 = ch[a].parentNode;
+                    var p2 = p1.parentNode;
+                    /*    p2.classList.add("active");*/
+                
+                    ch[a].setAttribute("checked", "checked");
+                    ch[a].checked = true;
+                    ch[a].removeAttribute("disabled", "disabled");
+
+                }
+
+            }
+        }
+
+
+    }
+
+    function hideChildrenChecks(elm) {
+        var pOne = elm.parentNode;
+        var pN = pOne.parentNode;
+        var childCheks = pN.children;
+
+        for (var i = 0; i < childCheks.length; i++) {
+            if (hasClass(childCheks[i], 'child-check')) {
+
+                var ch = childCheks[i].querySelectorAll("input[class='check-btn']");
+                for (var a = 0; a < ch.length; a++) {
+                    var p1 = ch[a].parentNode;
+                    var p2 = p1.parentNode;
+                    /*  p2.classList.remove("active");*/
+                 
+                    ch[a].removeAttribute("checked", "checked");
+                    ch[a].checked = false;
+                    ch[a].setAttribute("disabled", "disabled");
+
+                }
+
+            }
+
+        }
+
+    }
+    
+    async function showChildrenChecks2(elm) {
+       
+        var pOne = elm.parentNode;
+        var pN = pOne.parentNode;
+        var childCheks = pN.children;
+        var plus = pOne.querySelector("i[class='ion-plus']");
+        var minus = pOne.querySelector("i[class='ion-minus']");
+        for(var i = 0; i < childCheks.length; i++){
+            if (hasClass(childCheks[i], 'child-check')) {
+                plus.style.display = "none";
+                minus.style.display = "";
+                await sleep(i * 10);
+                childCheks[i].classList.add("active");
+                var el = childCheks[i];
+                fadeiin(el, 2000);
+               
+            }
+        }
+
+
+    }
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    function fadeiin(el, time) {
+        el.style.opacity = 0;
+
+        var last = +new Date();
+        var tick = function() {
+            el.style.opacity = +el.style.opacity + (new Date() - last) / time;
+            last = +new Date();
+
+            if (+el.style.opacity < 1) {
+                (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+            }
+        };
+
+        tick();
+    }
+    function hideChildrenChecks2(elm) {
+        var pOne = elm.parentNode;
+        var pN = pOne.parentNode;
+        var childCheks = pN.children;
+        var plus = pOne.querySelector("i[class='ion-plus']");
+        var minus = pOne.querySelector("i[class='ion-minus']");
+        for(var i = 0; i < childCheks.length; i++){
+            if(hasClass(childCheks[i], 'child-check')){
+                childCheks[i].classList.remove("active");
+                minus.style.display = "none";
+                plus.style.display = "";
+                
+            }
+        }
+
+    }
+    function hasClass(elem, className) {
+        return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
+    }
+
+</script>
+<script>
+    function saveRole() {
+        var checks = document.querySelectorAll("input[class='check-btn']");
+
+        for (var i = 0; i < checks.length; i++) {
+            
+                if (checks[i].checked) {
+                    $('#hiddenInput').append(
+                        '<input class="item1" type="hidden" value="' + checks[i].value + '" name="Permissions[' + i + ']"/>'
+
+                    );
+                } else {
+                    $('#hiddenInput').append(
+                        '<input class="item1" type="hidden" value="' + 0 + '" name="Permissions[' + i + ']"/>'
+                    );
+                }
+           
+        }
+
+        $('#subm').click();
+    }
+</script>
+

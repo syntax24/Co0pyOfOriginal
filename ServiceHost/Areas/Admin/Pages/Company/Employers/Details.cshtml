@@ -1,0 +1,291 @@
+﻿@using _0_Framework.Application
+@model CompanyManagment.App.Contracts.Employer.EditEmployer
+@{
+    <style>
+
+        #thh table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh th, td {
+            padding: 10px 20px;
+        }
+
+        #thh th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh td:nth-child(odd) {
+            border-left: 1px solid #fff;
+            width: 40%;
+            text-align: center;
+        }
+
+        #thh td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh th:nth-child(odd) {
+            border-left: 1px solid #fff;
+        }
+
+        #thh tr:nth-child(odd) {
+            background-color: #c1d1f2;
+        }
+
+        #thh tr:nth-child(even) {
+            background-color: rgb(224, 227, 228);
+        }
+
+        #thh tr:hover {
+            background-color: rgb(108, 186, 250);
+        }
+
+        #thh2 table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh2 th, td {
+            padding: 10px 20px;
+        }
+
+        #thh2 th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh2 td:nth-child(odd) {
+            border-left: 1px solid #afafaf;
+            width: 50%;
+            text-align: center;
+        }
+
+        #thh2 td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh2 th:nth-child(odd) {
+            border-left: 1px solid #afafaf;
+        }
+
+        #thh2 tr:nth-child(odd) {
+            background-color: #c1d1f2;
+        }
+
+        #thh2 tr:nth-child(even) {
+            background-color: rgb(224, 227, 228);
+        }
+
+        #thh2 tr:hover {
+            background-color: rgb(108, 186, 250);
+        }
+    </style>
+}
+<div class="modal-header" style="border-bottom: unset">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+</div>
+
+<form asp-page="./Index" asp-page-handler="Details"
+      method="post"
+      data-ajax="true"
+      data-callback=""
+      data-action="Refresh"
+      enctype="multipart/form-data">
+    <div class="modal-body">
+        <div class="row">
+            <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert;">
+                <legend style="margin-bottom: 5px;font-size: large;border-bottom: 0px;color: #505458;width: 40%;text-align: center;">  اطلاعات کارفرمای حقیقی</legend>
+
+                <table id="thh" style="height: 150px;width: 100%">
+                    <tr>
+                        <th>فیلد</th>
+                        <th>اطلاعات</th>
+
+                    </tr>
+
+                    <tr>
+                        <td>نام و نام خانوادگی</td>
+                        <td> @Model.FName @Model.LName</td>
+
+                    </tr>
+
+                    <tr>
+                        <td> جنسیت </td>
+                        <td> @Model.Gender</td>
+
+                    </tr>
+
+                    <tr>
+                        <td> ملیت </td>
+                        <td> @Model.Nationality</td>
+
+                    </tr>
+
+                    <tr>
+                        <td>نام پدر</td>
+                        <td> @Model.FatherName</td>
+
+                    </tr>
+
+                    <tr>
+                        <td>کد ملی</td>
+                        <td> @Model.Nationalcode</td>
+
+                    </tr>
+
+                    <tr>
+                        <td> شماره شناسنامه </td>
+                        <td> @Model.IdNumber </td>
+
+                    </tr>
+
+                    <tr>
+                        <td> محل صدور شناسنامه </td>
+                        <td> @Model.PlaceOfIssue</td>
+
+                    </tr>
+                    <tr>
+                        <td> تاریخ تولد </td>
+                        <td> @Model.DateOfBirth </td>
+
+                    </tr>
+
+                    <tr>
+                        <td> تاریخ صدور شناسنامه </td>
+                        <td> @Model.DateOfIssue</td>
+
+                    </tr>
+
+                    <tr>
+                        <td> شماره تلفن همراه </td>
+                        <td> @Model.Phone</td>
+
+                    </tr>
+
+                    <tr>
+                        <td> شماره تلفن ثابت</td>
+                        <td> @Model.AgentPhone </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>  کد کارفرما </td>
+                        <td> @Model.EmployerNo </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>
+
+                            طرف حساب
+
+
+                        </td>
+                        <td>
+
+                            @foreach (var n in @Model.ContractingParties)
+                            {
+                                if (@Model.ContractingPartyId == n.id)
+                                {
+                                    <span>@n.FName</span><span>@n.LName</span>
+                                }
+                            }
+
+                        </td>
+
+
+                    </tr>
+
+
+
+
+
+                </table>
+
+
+
+
+
+            </fieldset>
+        </div>
+        <div class="row">
+            <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert;">
+                <legend style="margin-bottom: 5px;font-size: large;border-bottom: 0px;color: #505458;width: 40%;text-align: center;">  اطلاعات سامانه های دولتی</legend>
+
+                <table id="thh2" style="height: 150px;width: 100%">
+
+
+
+                    <tr>
+                        <th> نام کاربری اداره کار </th>
+                        <th> رمز عبور اداره کار </th>
+                    </tr>
+
+                    <tr>
+
+                        <td>  @Model.MclsUserName </td>
+                        <td> <i class="md-vpn-key"></i> @Model.MclsPassword </td>
+                    </tr>
+
+                    <tr>
+                        <th dir="ltr"> E Service نام کاربری </th>
+                        <th dir="ltr"> E Service رمز عبور </th>
+
+                    </tr>
+
+                    <tr>
+
+                        <td> @Model.EserviceUserName </td>
+                        <td><i class="md-vpn-key"></i> @Model.EservicePassword </td>
+                    </tr>
+
+                    <tr>
+                        <th> نام کاربری سامانه مالیات </th>
+                        <th> رمز عبور سامانه مالیات </th>
+
+                    </tr>
+
+                    <tr>
+
+                        <td> @Model.TaxOfficeUserName </td>
+                        <td><i class="md-vpn-key"></i> @Model.TaxOfficepassword </td>
+                    </tr>
+
+                    <tr>
+                        <th> نام کاربری سامانه ثنا </th>
+                        <th> رمز عبور سامانه ثنا </th>
+
+                    </tr>
+
+                    <tr>
+
+                        <td> @Model.SanaUserName </td>
+                        <td><i class="md-vpn-key"></i> @Model.SanaPassword </td>
+                    </tr>
+
+
+                </table>
+
+
+
+
+
+            </fieldset>
+        </div>
+
+    </div>
+    <input type="hidden" asp-for="Id" value="@Model.Id" />
+
+    <div class="modal-footer" style="border-top: unset; padding-top: unset">
+
+
+        <button type="button" class="btn btn-warning btn-rounded waves-effect waves-light m-b-10" data-dismiss="modal">بستن فرم</button>
+    </div>
+</form>

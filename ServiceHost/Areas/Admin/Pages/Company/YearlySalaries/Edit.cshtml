@@ -1,0 +1,242 @@
+﻿@using _0_Framework.Application
+@model CompanyManagment.App.Contracts.YearlySalary.EditYearlySalary
+@{
+   
+
+    <style>
+
+        #thh table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh th, td {
+            padding: 10px 20px;
+        }
+
+        #thh th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh td:nth-child(odd) {
+            border-left: 1px solid #fff;
+            width: 40%;
+            text-align: center;
+        }
+
+        #thh td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh th:nth-child(odd) {
+            border-left: 1px solid #fff;
+        }
+
+        #thh tr:nth-child(odd) {
+            background-color: #d7d7d7;
+        }
+
+        #thh tr:nth-child(even) {
+            background-color: rgb(224, 227, 228);
+        }
+
+
+        .modal-dialog {
+            width: 50% !important;
+        }
+
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .modal-footer {
+            border-top: unset !important;
+        }
+
+        .modal .modal-dialog .modal-content .modal-footer {
+            padding-top: unset !important;
+        }
+
+        p {
+            direction: ltr !important;
+            text-align: right !important;
+        }
+
+        input[type=radio]:hover {
+            cursor: pointer;
+        }
+
+        .military {
+            display: none !important;
+        }
+
+        .items {
+            border: 1px solid #c7c7c7;
+            border-radius: 5px;
+            padding: 3px 30px 5px 18px;
+        }
+        .items1 {
+            border: 1px solid #c7c7c7;
+            border-radius: 5px;
+            padding: 3px 30px 5px 18px;
+        }
+        .persianDateInput1 {
+            text-align: center !important;
+        }
+      /*  .error
+        {
+            color:green;
+        }*/
+        /*The field ItemValue must be a number.*/
+
+        .error{
+            color: red;
+        }
+     
+
+    </style>
+
+    @*<script>
+        document.addEventListener("DOMContentLoaded",
+            function() {
+                var elements = document.getElementsByClassName("error");
+                for (var i = 0; i < elements.length; i++) {
+                 
+                        document.getElementsByClassName("error").innerHTML = "test";
+                    
+                };
+
+            });
+    </script>*@
+
+    int i = 0;
+
+}
+
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <body>
+        <form asp-page="./Index" asp-page-handler="Edit" autocomplete="off" id="registration"
+              method="post"
+              data-ajax="true"
+              data-callback=""
+              data-action="Refresh">
+            <div class="modal-body">
+                <div class="row">
+                    <fieldset style="
+                                 border: 1px solid #999797;
+                                 border-radius: 10px;
+                                 padding: revert;
+                             ">
+                        <legend style="margin-bottom: 5px;font-size: large;border-bottom: 0px;color: #505458;width: 150px;text-align: center;"> مقادیر سالانه </legend>
+
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <span>مقادیر </span>
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="StartDate" class="control-label"> از تاریخ </label>
+                                    <input maxlength="10" class="form-control persianDateInput" asp-for="StartDate">
+                                    <span asp-validation-for="StartDate" class="error"></span>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="EndDate" class="control-label"> تا تاریخ </label>
+                                    <input maxlength="10" class="form-control persianDateInput" asp-for="EndDate">
+                                    <span asp-validation-for="EndDate" class="error"></span>
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                        <hr style="border-color: #999797" />
+
+
+                        @for (int m = 0; m <= Model.EditYearlyItemsList.Count-1; m++)
+                        {
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <span>@Model.EditYearlyItemsList[m].ItemName</span>
+                          
+
+                                </div>
+
+                                <div class="col-md-8">
+                                    <div class="form-group">
+
+                                        <input class="form-control" asp-for="@Model.EditYearlyItemsList[m].ItemValue">
+                                        <span asp-validation-for="@Model.EditYearlyItemsList[m].ItemValue" class="error"></span>
+                                        <input type="hidden" asp-for="@Model.EditYearlyItemsList[m].Id" />
+                                        <input type="hidden" asp-for="@Model.EditYearlyItemsList[m].ItemName" />
+                                        <input type="hidden" asp-for="@Model.EditYearlyItemsList[m].ValueType" />
+                                        <input type="hidden" asp-for="@Model.EditYearlyItemsList[m].ParentConnectionId" />
+                                  
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+ 
+                    
+
+                    </fieldset>
+                </div>
+
+            </div>
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
+            <div class="modal-footer">
+
+                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ویرایش</button>
+
+                <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+            </div>
+
+        </form>
+    </body>
+
+</div>
+
+
+
+<script>
+    $("form").removeData("validator");
+
+// change the text on each required attribute
+    $(":input[data-val-required]").attr("data-val-required", "این فیلد نمی تواند خالی باشد");
+    $(":input[data-val-number]").attr("data-val-number", "لطفا فقط عدد وارد کنید");
+
+// reapply the form's validator
+    $.validator.unobtrusive.parse(document);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

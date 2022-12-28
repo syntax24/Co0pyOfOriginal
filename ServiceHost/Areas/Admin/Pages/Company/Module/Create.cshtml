@@ -1,0 +1,105 @@
+﻿
+@model CompanyManagment.App.Contracts.Module.CreateModule
+@{
+}
+@{
+    <style>
+        /* .modal-dialog {
+            width: 94% !important;
+        }*/
+
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .modal-footer {
+            border-top: unset !important;
+        }
+
+        .modal .modal-dialog .modal-content .modal-footer {
+            padding-top: unset !important;
+        }
+
+        p {
+            direction: ltr !important;
+            text-align: right !important;
+        }
+
+        input[type=radio]:hover {
+            cursor: pointer;
+        }
+
+        .error {
+            font-size: 14px !important;
+        }
+    </style>
+
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <form asp-page="./Index" asp-page-handler="Create" id="workshops" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="Refresh"
+          enctype="multipart/form-data">
+        <div class="modal-body">
+            <div class="row">
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> تعریف ماژول  </legend>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control"  placeholder="نام مازول" asp-for="NameSubModule">
+                                <span asp-validation-for="NameSubModule"  class="error"></span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+            <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+        </div>
+
+    </form>
+
+    @*<p id="values">jhkjhk</p>
+    <input placeholder="Enter some text" name="name" />*@
+</div>
+
+@*<div class="ui-widget">
+    <label>Autocomplete Example: </label>
+    <input id="productName" on name="productName" type="text" />
+</div>*@
+
+
+
+
+
+<script>
+
+    //const input = document.querySelector('input');
+    //const log = document.getElementById('values');
+
+    //input.addEventListener('input', updateValue);
+
+    //function updateValue(e) {
+    //    log.textContent = e.target.value;
+    //}
+
+
+
+
+    //$('#productName').autocomplete({
+    //    /**/
+    //    source: '/Admin/TextManagerViews/Module?handler=search22'
+    //    /**/
+    //});
+//$(function () {
+//    $("#productName1").autocomplete({
+//        source: "/Recepcions/BuscarProducto"
+//    });
+//});
+</script>

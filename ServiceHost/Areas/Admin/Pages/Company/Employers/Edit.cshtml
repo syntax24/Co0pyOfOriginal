@@ -1,0 +1,288 @@
+﻿@using _0_Framework.Application
+@model CompanyManagment.App.Contracts.Employer.EditEmployer
+@{
+   
+                                                           
+
+}
+
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <body>
+        <form asp-page="./Index" asp-page-handler="Edit" autocomplete="off"
+              method="post"
+              data-ajax="true"
+              data-callback=""
+              data-action="Refresh">
+            <div class="modal-body">
+                <div class="row">
+                    <fieldset style="
+                                     border: 1px solid #999797;
+                                     border-radius: 10px;
+                                     padding: revert;
+                                 ">
+                        <legend style="margin-bottom: 5px;font-size: large;border-bottom: 0px;color: #505458;width: 53%;text-align: center;">   ویرایش مشخصات کارفرمای حقیقی</legend>
+
+                        <div class="row" style="margin-top: -5px; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #e1dede">
+
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="col-md-4" style="margin-top: 3px">
+                                        جنسیت
+                                    </div>
+                                    <div class="col-md-4">
+                                        مرد <input type="radio" value="مرد" asp-for="Gender">
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        زن <input type="radio" value="زن" asp-for="Gender">
+                                    </div>
+
+                                    <span asp-validation-for="Gender" class="error"></span>
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="col-md-3 " style="margin-top: 3px">
+                                        ملیت
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span>ایرانی</span> <input type="radio" value="ایرانی" asp-for="Nationality" checked="checked">
+
+                                    </div>
+                                    <div class="col-md-5">
+                                        <span>غیر ایرانی</span> <input type="radio" value="غیرایرانی" asp-for="Nationality">
+                                    </div>
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-md-12" dir="rtl" style="padding-left: 2.5%">
+                                <label class="sr-only" asp-for="ContractingPartyId"></label>
+                                <select class="form-control select-city" data-live-search="true" asp-for="ContractingPartyId" asp-items='new SelectList(Model.ContractingParties, "id", "LName")'>
+                                    <option value="">انتخاب طرف حساب</option>
+
+                                </select>
+                                <span asp-validation-for="ContractingPartyId" class="error"></span>
+                            </div>
+
+
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="FName" class="control-label">نام</label>
+                                    <input type="text" class="form-control" asp-for="FName">
+                                    <span asp-validation-for="FName" class="error"></span>
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="LName" class="control-label">نام خانوادگی</label>
+                                    <input type="text" class="form-control" asp-for="LName">
+                                    <span asp-validation-for="LName" class="error"></span>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="FatherName" class="control-label"> نام پدر</label>
+                                    <input type="text" class="form-control" asp-for="FatherName">
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="Nationalcode" class="control-label">کد ملی</label>
+                                    <input type="number" class="form-control" asp-for="Nationalcode">
+                                    <span asp-validation-for="Nationalcode" class="error"></span>
+
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="IdNumber" class="control-label">شماره شناسنامه</label>
+                                    <input type="number" class="form-control" asp-for="IdNumber">
+                                    <span asp-validation-for="IdNumber" class="error"></span>
+
+
+
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="PlaceOfIssue" class="control-label"> محل صدور شناسنامه</label>
+                                    <input type="text" class="form-control" asp-for="PlaceOfIssue">
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div>
+                                    <label asp-for="DateOfBirth" class="control-label">تاریخ تولد</label>
+                                    <input class="form-control persianDateInput" asp-for="DateOfBirth" />
+                                  
+                                    <span asp-validation-for="DateOfBirth" class="error"></span>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="DateOfIssue"  class="control-label"> تاریخ صدور شناسنامه</label>
+                                <input class="form-control persianDateInput" asp-for="DateOfIssue" />
+                           
+                                <span asp-validation-for="DateOfIssue" class="error"></span>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+
+
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="Phone" class="control-label">شماره تلفن همراه</label>
+                                    <input type="number" class="form-control" asp-for="Phone">
+                                    <span asp-validation-for="Phone" class="error"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="AgentPhone" class="control-label">شماره تلفن ثابت</label>
+                                    <input type="number" class="form-control" asp-for="AgentPhone">
+                                    <span asp-validation-for="AgentPhone" class="error"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="EmployerNo" class="control-label"> کد کارفرما </label>
+                                    <input type="text" class="form-control" asp-for="EmployerNo">
+                                    <span asp-validation-for="EmployerNo" class="error"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="MclsUserName" class="control-label">نام کاربری اداره کار</label>
+                                    <input type="text" class="form-control" asp-for="MclsUserName">
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="MclsPassword" class="control-label">رمز عبور اداره کار</label>
+                                    <input type="text" class="form-control" asp-for="MclsPassword">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="EserviceUserName" class="control-label" style="direction: ltr">E Service  نام کاربری </label>
+                                    <input type="text" class="form-control" asp-for="EserviceUserName">
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="EservicePassword" class="control-label" style="direction: ltr">E Service  رمز عبور  </label>
+                                    <input type="text" class="form-control" asp-for="EservicePassword">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="TaxOfficeUserName" class="control-label"> نام کاربری سامانه مالیات </label>
+                                    <input type="text" class="form-control" asp-for="TaxOfficeUserName">
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="TaxOfficepassword" class="control-label">  رمز عبور سامانه مالیات </label>
+                                    <input type="text" class="form-control" asp-for="TaxOfficepassword">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="SanaUserName" class="control-label"> نام کاربری سامانه ثنا </label>
+                                    <input type="text" class="form-control" asp-for="SanaUserName">
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="SanaPassword" class="control-label">  رمز عبور سامانه ثنا </label>
+                                    <input type="text" class="form-control" asp-for="SanaPassword">
+
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+            </div>
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
+            <div class="modal-footer">
+
+                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ویرایش</button>
+
+                <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+            </div>
+
+        </form>
+    </body>
+
+</div>
+
+
+

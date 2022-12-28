@@ -1,0 +1,436 @@
+﻿@model CompanyManagment.App.Contracts.File1.CreateFile
+
+    <style>
+        /* .modal-dialog {
+            width: 94% !important;
+        }*/
+
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .modal-footer {
+            border-top: unset !important;
+        }
+
+        .modal .modal-dialog .modal-content .modal-footer {
+            padding-top: unset !important;
+        }
+
+        p {
+            direction: ltr !important;
+            text-align: right !important;
+        }
+
+        input[type=radio]:hover {
+            cursor: pointer;
+        }
+
+        .error {
+            font-size: 14px !important;
+        }
+    </style>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+    <form asp-page="./Index" asp-page-handler="CreateFile" id="workshops" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="LoadFileEditPage"
+       >
+        <div class="modal-body">
+            <div class="row">
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> ایجاد پرونده جدید </legend>
+
+                    <div class="row col-12 m-b-30">
+                        <div class="col-sm-4">
+                            <a id="btnPopModal-1" href="#showmodal=@Url.Page("/Company/Employees/Index", "Create")" class="col-xs-12 btn btn-success btn-rounded waves-effect waves-light w-100" style=" background-color: #f5f5f5; font-size: 13px; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> ایجاد پرسنل جدید </a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a id="btnPopModal-2" href="#showmodal=@Url.Page("/Company/Employers/Index", "Create")" class="col-xs-12 btn btn-success btn-rounded waves-effect waves-light w-100" style=" background-color: #f5f5f5; font-size: 13px; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> ایجاد کارفرمای حقیقی </a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a id="btnPopModal-3" href="#showmodal=@Url.Page("/Company/Employers/Index", "InsertLegal")" class="col-xs-12 btn btn-success btn-rounded waves-effect waves-light w-100" style=" background-color: #f5f5f5; font-size: 13px; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> ایجاد کارفرمای حقوقی </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="ArchiveNo" class="control-label">  شماره بایگانی </label>
+                                <input type="text" class="form-control" asp-for="ArchiveNo" onfocusout="CheckArchiveNo()">
+                                <span asp-validation-for="ArchiveNo" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="ProceederReference" class="control-label"> مرجع رسیدگی کننده </label>
+                                <input type="text" class="form-control" asp-for="ProceederReference">
+                                <span asp-validation-for="ProceederReference" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="ClientVisitDate" class="control-label">  تاریخ مراجعه موکل </label>
+                                <input type="text" class="form-control date" asp-for="ClientVisitDate" dir="ltr" maxlength="10" onchange="validDate(this);"  onfocusout="CompareDates($(this))" style="width: 100%; text-align: center">
+                                <span asp-validation-for="ClientVisitDate" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Reqester" class="control-label"> خواهان </label>
+                                <select class="form-control select2-tag" asp-for="Reqester" asp-items='new SelectList(Model.Employees, "Id", "EmployeeFullName")'>
+                                    <option value="">انتخاب خواهان ...</option>
+                                    
+                                </select>
+                                <span asp-validation-for="Reqester" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Summoned" class="control-label"> خوانده </label>
+                                <select class="form-control select2-tag" asp-for="Summoned" asp-items='new SelectList(Model.Employers, "Id", "FullName")'>
+                                    <option value="">انتخاب خوانده ...</option>
+
+                                </select>
+                                <span asp-validation-for="Summoned" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Client" class="control-label"> موکل </label>
+                                <select class="form-control select2-tag" asp-for="Client">
+                                    <option value="">لطفا انتخاب کنید ...</option>
+                                    <option value="1">خواهان</option>
+                                    <option value="2">خوانده</option>
+                                </select>
+                                <span asp-validation-for="Client" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="HasMandate" class="control-label"> درج وکالتنامه </label>
+                                <select class="form-control select2-tag" asp-for="HasMandate">
+                                    <option value="">لطفا انتخاب کنید ...</option>
+                                    <option value="2">دارد</option>
+                                    <option value="1">ندارد</option>
+                                </select>
+                                <span asp-validation-for="HasMandate" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="FileClass" class="control-label"> کلاسه پرونده </label>
+                                <input type="text" class="form-control" asp-for="FileClass">
+                                <span asp-validation-for="FileClass" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label"> توضیحات </label>
+                                <textarea class="form-control" asp-for="Description" style="width: 100%"></textarea>
+                                <span asp-validation-for="Description" class="error"></span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            
+            @*<div id="diagnosis" class="row">
+                <fieldset class="m-b-30" style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> هیات تشخیص </legend>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="createDiagnosisBoard.DisputeResolutionPetitionDate" class="control-label"> تاریخ ثبت دادخواست تشخیص </label>
+                                <input type="text" class="form-control" asp-for="createDiagnosisBoard.DisputeResolutionPetitionDate">
+                                <span asp-validation-for="createDiagnosisBoard.DisputeResolutionPetitionDate" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="createDiagnosisBoard.Branch" class="control-label"> شعبه </label>
+                                <input type="text" class="form-control" asp-for="createDiagnosisBoard.Branch">
+                                <span asp-validation-for="createDiagnosisBoard.Branch" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="createDiagnosisBoard.BoardChairman" class="control-label"> نام رییس هیات  </label>
+                                <input type="text" class="form-control" asp-for="createDiagnosisBoard.BoardChairman">
+                                <span asp-validation-for="createDiagnosisBoard.BoardChairman" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 proceedingSession">
+                            <div class="form-group">
+                                <label asp-for="createDiagnosisPS[0].Date" class="control-label"> تاریخ نوبت اول رسیدگی </label>
+                                <input type="text" class="form-control" asp-for="createDiagnosisPS[0].Date">
+                                <span asp-validation-for="createDiagnosisPS[0].Date" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 proceedingSession">
+                            <div class="form-group">
+                                <label asp-for="createDiagnosisPS[0].Time" class="control-label"> ساعت برگزاری جلسه </label>
+                                <input type="text" class="form-control" asp-for="createDiagnosisPS[0].Time">
+                                <span asp-validation-for="createDiagnosisPS[0].Time" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 proceedingSession"></div>
+                        <div class="col-md-8 addProceedingSessionFormButton"></div>
+                        <div class="col-md-4">
+                            <a onclick="addNewFormDiagnosisPS('diagnosis')" class="btn btn-rounded btn-success waves-effect waves-light col-xs-12 m-b-30">+ نوبت جدید برگزاری</a>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="createDiagnosisBoard.ExpertReport" class="control-label"> گزارش کارشناس </label>
+                                <textarea class="form-control" asp-for="createDiagnosisBoard.ExpertReport"></textarea>
+                                <span asp-validation-for="createDiagnosisBoard.ExpertReport" class="error"></span>
+                            </div>
+                        </div>
+                       <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="createPetition.PetitionIssuanceDate" class="control-label"> تاریخ دادنامه </label>
+                                <input type="text" class="form-control" asp-for="createPetition.PetitionIssuanceDate">
+                                <span asp-validation-for="createPetition.PetitionIssuanceDate" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="createPetition.TotalPenalty" class="control-label"> جمع نهایی دادنامه </label>
+                                <input type="text" class="form-control" asp-for="createPetition.TotalPenalty">
+                                <span asp-validation-for="createPetition.TotalPenalty" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#showmodal=@Url.Page("/File/FilePage/Index", "CreatePetition", new { boardTypeId = false })"  class="btn btn-rounded btn-warning waves-effect waves-light col-xs-12 m-t-20">درج دادنامه</a>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="disputeResolution" class="row">
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> هیات حل اختلاف </legend>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="createDisputeResolutionBoard.DisputeResolutionPetitionDate" class="control-label"> تاریخ ثبت دادخواست حل اختلاف </label>
+                                <input type="text" class="form-control" asp-for="createDisputeResolutionBoard.DisputeResolutionPetitionDate">
+                                <span asp-validation-for="createDisputeResolutionBoard.DisputeResolutionPetitionDate" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="createDisputeResolutionBoard.Branch" class="control-label"> شعبه </label>
+                                <input type="text" class="form-control" asp-for="createDisputeResolutionBoard.Branch">
+                                <span asp-validation-for="createDisputeResolutionBoard.Branch" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="createDisputeResolutionBoard.BoardChairman" class="control-label"> نام رییس هیات  </label>
+                                <input type="text" class="form-control" asp-for="createDisputeResolutionBoard.BoardChairman">
+                                <span asp-validation-for="createDisputeResolutionBoard.BoardChairman" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 proceedingSession">
+                            <div class="form-group">
+                                <label asp-for="createDisputeResolutionPS[0].Date" class="control-label"> تاریخ نوبت اول رسیدگی </label>
+                                <input type="text" class="form-control" asp-for="createDisputeResolutionPS[0].Date">
+                                <span asp-validation-for="createDisputeResolutionPS[0].Date" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 proceedingSession">
+                            <div class="form-group">
+                                <label asp-for="createDisputeResolutionPS[0].Time" class="control-label"> ساعت برگزاری جلسه </label>
+                                <input type="text" class="form-control" asp-for="createDisputeResolutionPS[0].Time">
+                                <span asp-validation-for="createDisputeResolutionPS[0].Time" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 proceedingSession"></div>
+                        <div class="col-md-8 addProceedingSessionFormButton"></div>
+                        <div class="col-md-4">
+                            <a onclick="addNewFormDisputeResolutionPS('disputeResolution')" class="btn btn-rounded btn-success waves-effect waves-light col-xs-12 m-b-30">+ نوبت جدید برگزاری</a>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="createDisputeResolutionBoard.ExpertReport" class="control-label"> گزارش کارشناس </label>
+                                <textarea class="form-control" asp-for="createDisputeResolutionBoard.ExpertReport"></textarea>
+                                <span asp-validation-for="createDisputeResolutionBoard.ExpertReport" class="error"></span>
+                            </div>
+                        </div>
+                       <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="createPetition.PetitionIssuanceDate" class="control-label"> تاریخ دادنامه </label>
+                                <input type="text" class="form-control" asp-for="createPetition.PetitionIssuanceDate">
+                                <span asp-validation-for="createPetition.PetitionIssuanceDate" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="createPetition.TotalPenalty" class="control-label"> جمع نهایی دادنامه </label>
+                                <input type="text" class="form-control" asp-for="createPetition.TotalPenalty">
+                                <span asp-validation-for="createPetition.TotalPenalty" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#showmodal=@Url.Page("/File/FilePage/Index", "CreatePetition", new { boardTypeId = true })"  class="btn btn-rounded btn-warning waves-effect waves-light col-xs-12 m-t-20">درج دادنامه</a>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>*@
+        </div>
+        <div class="modal-footer">
+
+            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+
+            <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+        </div>
+
+    </form>
+
+</div>
+
+
+<script>
+
+    $(".select2-tag").select2({
+        language: "fa",
+        dir: "rtl"
+    });
+    
+    //$('#ClientVisitDate').persianDatepicker({
+    //    format: 'YYYY/MM/DD',
+    //    initialValueType: 'persian',
+    //    initialValue: false,
+    //    //'position': [-270, 25],
+    //    autoClose: true,
+
+    //    calendar: {
+    //        persian: {
+    //            leapYearMode: 'astronomical'
+    //        }
+    //    }
+    //});
+    
+    function CheckArchiveNo(){
+
+        const archiveNo = document.getElementById("ArchiveNo").value;
+
+        //console.log(archiveNo);
+        if (archiveNo == "") return;
+        
+        $.ajax({
+            //contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            url: '@Url.Page("./Index", "CheckUniqueArchiveNo")',
+            headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+            data: { "archiveNo" : archiveNo },
+
+            success: function (response) {
+                console.log(response);
+                if (response.stat == false) {
+
+                    $("button[type=submit]").attr('disabled', true)
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', response.message);
+                    //swal("", response.message, "error");
+                }
+                else {
+                    $("button[type=submit]").attr('disabled', false)
+                }
+            },
+            failure: function (response) {
+                console.log(5, response)
+                alert("خطایی رخ داده است. لطفا با مدیر سیستم تماس بگیرید");
+            }
+        });
+
+    }
+
+</Script>                               
+<script>
+    function validDate(inputField) {
+
+        var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (var i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+        let getdate = inputField.value;
+
+        var m1, m2;
+        var y1, y2, y3, y4;
+        var d1, d2;
+        var s1, s2;
+        for (var i = 0; i < getdate.length; i++) {
+            if (i === 0) {
+                y1 = fixNumbers(getdate[i]);
+            }
+            if (i === 1) {
+                y2 = fixNumbers(getdate[i]);
+            }
+            if (i === 2) {
+                y3 = fixNumbers(getdate[i]);
+            }
+            if (i === 3) {
+                y4 = fixNumbers(getdate[i]);
+            }
+            if (i === 4) {
+                s1 = fixNumbers(getdate[i]);
+            }
+            if (i === 5) {
+                m1 = fixNumbers(getdate[i]);
+            }
+            if (i === 6) {
+                m2 = fixNumbers(getdate[i]);
+            }
+            if (i === 7) {
+                s2 = fixNumbers(getdate[i]);
+            }
+            if (i === 8) {
+                d1 = fixNumbers(getdate[i]);
+            }
+            if (i === 9) {
+                d2 = fixNumbers(getdate[i]);
+            }
+
+        }
+        var yRes = y1 + y2 + y3 + y4;
+        var year = parseInt(yRes);
+        var mRes = m1 + m2;
+        var month = parseInt(mRes);
+        var dRes = d1 + d2;
+        var day = parseInt(dRes);
+        var FixResult = yRes + s1 + mRes + s2 + dRes;
+
+
+        var isValid = /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(FixResult);
+
+
+        if (isValid) {
+            inputField.style.backgroundColor = '#a6e9a6';
+            $("button[type=submit]").attr('disabled', false);
+            validCheck = true;
+
+        } else {
+            inputField.style.backgroundColor = '#f94c4c';
+            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را بصورت صحیح وارد کنید");
+            $("button[type=submit]").attr('disabled', true)
+            validCheck = false;
+
+        }
+        return validCheck;
+
+    }
+</script>

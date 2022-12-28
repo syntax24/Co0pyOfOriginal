@@ -1,0 +1,191 @@
+﻿@model List<CompanyManagment.App.Contracts.FileTiming.EditFileTiming>
+
+<style>
+    .panel-title {
+        font-size: 14px;
+        text-transform: uppercase;
+        margin-bottom: 0;
+        margin-top: 0;
+        padding: 5px 7px 5px 7px;
+    }
+
+    .rad {
+        border-radius: 8px !important;
+        /* padding: 10px; */
+        padding: 2px 5px 0px 5px;
+    }
+
+    .faSize {
+        font-size: 18px !important;
+    }
+
+    ..tooltip-container {
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip2-container {
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip {
+            opacity: 0;
+            z-index: 99;
+            color: #fff;
+            width: 355px;
+            display: block;
+            font-size: 14px;
+            font-family: 'IranSans';
+            padding: 5px 10px;
+            border-radius: 3px;
+            text-align: center;
+            /*text-shadow: 1px 1px 2px #111;*/
+            background: #e67e22;
+            border: 1px solid #e67e22;
+            box-shadow: 0 0 3px rgba(0,0,0,0.5);
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+            -ms-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+            -webkit-transform: scale(0);
+            -moz-transform: scale(0);
+            -o-transform: scale(0);
+            -ms-transform: scale(0);
+            transform: scale(0);
+            position: absolute;
+            right: -75px;
+            bottom: 10px;
+        }
+
+        .tooltip:before, .tooltip:after {
+            content: '';
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #e67e22;
+            position: absolute;
+            bottom: -10px;
+            left: 70%;
+        }
+
+        .tooltip-container:hover .tooltip, a:hover .tooltip {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            -o-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+        }
+
+        .tooltip2 {
+            opacity: 0;
+            z-index: 99;
+            color: #fff;
+            width: 220px;
+            display: block;
+            font-size: 14px;
+            font-family: 'IranSans';
+            padding: 5px 10px;
+            border-radius: 3px;
+            text-align: center;
+            /*text-shadow: 1px 1px 2px #111;*/
+            background: #e67e22;
+            border: 1px solid #e67e22;
+            box-shadow: 0 0 3px rgba(0,0,0,0.5);
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+            -ms-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+            -webkit-transform: scale(0);
+            -moz-transform: scale(0);
+            -o-transform: scale(0);
+            -ms-transform: scale(0);
+            transform: scale(0);
+            position: absolute;
+            right: -90px;
+            bottom: 40px;
+        }
+
+        .tooltip2:before, .tooltip2:after {
+            content: '';
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #e67e22;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+        }
+
+        .tooltip2-container:hover .tooltip2, a:hover .tooltip2 {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            -o-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+        }
+</style>
+<link href="~/AdminTheme/assets/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+    <form asp-page="./Index" asp-page-handler="CreateOrEditFileTiming" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback="Message">
+        <div class="modal-body">
+            <div class="row">
+                <fieldset class="m-b-15" style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 170px; text-align: center;"> زمانبندی </legend>
+
+                        @for (var i = 0; i < Model.Count; i++)
+                       {
+                            <input asp-for="@Model[i].Id" hidden>
+                            <div class="row" style="margin: 15px 0">
+                                <div class="col-md-3">
+                                    <div class="form-group m-b-0" dir="rtl">
+                                        <input class="form-control" asp-for="@Model[i].Deadline"/>
+                                        <span asp-validation-for="@Model[i].Deadline" class="error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 tooltip-container">
+                                    <i class="fa fa-question-circle fa-2x" aria-hidden="true" style="top: 2px; position: absolute; color: #6495ed;"></i>
+                                    <span class="tooltip">
+                                        @Model[i].Tips
+                                    </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <p style="margin: 8px 0 0 0">@Model[i].Title</p>
+                                </div>
+                            </div>   
+                       }
+                    
+                </fieldset>
+            </div>
+        </div>
+       <div class="modal-footer">
+            <div style="float: left">
+                <a id="close" class="btn btn-default btn-rounded waves-effect waves-light" data-dismiss="modal">بستن</a>
+                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function() {
+
+        $('.modal-dialog').removeClass('modal-lg');
+    })
+
+    $('.modal').on('hidden.bs.modal', function() {
+        $('.modal-dialog').addClass('modal-lg');
+    });
+
+</script>
+

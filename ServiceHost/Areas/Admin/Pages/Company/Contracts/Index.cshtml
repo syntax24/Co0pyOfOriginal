@@ -1,0 +1,1063 @@
+﻿@page
+@using CompanyManagment.App.Contracts.PersonalContractingParty
+@model ServiceHost.Areas.Admin.Pages.Company.Contracts.IndexModel
+
+@{
+    //string colaps = "in";
+    //string act = "active";
+    int i = 1;
+
+
+}
+
+@{
+    //Layout = "~/Pages/Shared/_Layout.cshtml";
+    Layout = "Shared/_AdminLayout";
+    ViewData["title"] = "قرارداد";
+    <style>
+        .sizeSet {
+            padding: 2px !important;
+            text-align: center !important;
+        }
+        .rad {
+            border-radius: 8px !important;
+            /* padding: 10px; */
+            padding: 2px 5px 0px 5px;
+        }
+        .ionSize {
+            font-size: 20px !important;
+            top: 2px !important;
+            position: relative;
+         
+        }
+        .ionRad {
+            border-radius: 8px !important;
+            padding: 0px 7px 0px 7px !important;
+            background-color: #ff7700 !important;
+            border-color: #ff7700 !important;
+        }
+        .ionRad2 {
+            border-radius: 8px !important;
+            padding: 0px 7px 0px 7px !important;
+            background-color: #7c7a7a !important;
+            border-color: #7c7a7a !important;
+        }
+
+        .faSize {
+            font-size: 22px !important;
+        }
+
+        .thh0 {
+            width: 8px !important;
+        }
+
+        .thh {
+            width: 40px !important;
+        }
+
+        .thh2 {
+            width: 130px !important;
+        }
+
+        .thhNastionalId {
+            width: 30px !important;
+        }
+
+        .inpt {
+            width: 100%;
+            border: 1px solid #c7c7c7;
+        }
+
+        .searchpanel {
+            background-color: #747272;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        .panel-default > .panel-heading {
+            background-color: #950000 !important;
+        }
+
+
+
+
+
+        .tooltip-container {
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip2-container {
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip {
+            opacity: 0;
+            z-index: 99;
+            color: #fff;
+            width: 220px;
+            display: block;
+            font-size: 14px;
+            font-family: 'IranSans';
+            padding: 5px 10px;
+            border-radius: 3px;
+            text-align: center;
+            /*text-shadow: 1px 1px 2px #111;*/
+            background: #e67e22;
+            border: 1px solid #e67e22;
+            box-shadow: 0 0 3px rgba(0,0,0,0.5);
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+            -ms-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+            -webkit-transform: scale(0);
+            -moz-transform: scale(0);
+            -o-transform: scale(0);
+            -ms-transform: scale(0);
+            transform: scale(0);
+            position: absolute;
+            right: -50px;
+            bottom: 40px;
+        }
+
+            .tooltip:before, .tooltip:after {
+                content: '';
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-top: 10px solid #e67e22;
+                position: absolute;
+                bottom: -10px;
+                left: 70%;
+            }
+
+        .tooltip-container:hover .tooltip, a:hover .tooltip {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            -o-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+        }
+
+        .tooltip2 {
+            opacity: 0;
+            z-index: 99;
+            color: #fff;
+            width: 220px;
+            display: block;
+            font-size: 14px;
+            font-family: 'IranSans';
+            padding: 5px 10px;
+            border-radius: 3px;
+            text-align: center;
+            /*text-shadow: 1px 1px 2px #111;*/
+            background: #e67e22;
+            border: 1px solid #e67e22;
+            box-shadow: 0 0 3px rgba(0,0,0,0.5);
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+            -ms-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+            -webkit-transform: scale(0);
+            -moz-transform: scale(0);
+            -o-transform: scale(0);
+            -ms-transform: scale(0);
+            transform: scale(0);
+            position: absolute;
+            right: -90px;
+            bottom: 40px;
+        }
+
+            .tooltip2:before, .tooltip2:after {
+                content: '';
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-top: 10px solid #e67e22;
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+            }
+
+        .tooltip2-container:hover .tooltip2, a:hover .tooltip2 {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            -o-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+        }
+    </style>
+
+
+}
+
+
+
+<div class="row">
+
+
+    <div class="row">
+        <div class="col-sm-12 m-r-10">
+
+            <p class="pull-right">
+                <a permission="20110" id="btnPopModal" href="#showmodal=@Url.Page("/Company/Contracts/Index", "Create")" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-right: 10px "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> ایجاد قرارداد جدید </a>
+
+            </p>
+            <p class="pull-right">
+                <a permission="20111" href="#showmodal=@Url.Page("/Company/Contracts/Index" , "Extension")" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #337ab7; font-family: 'Web_Yekan' !important; color: #337ab7 !important; margin-right: 10px "> <i class="fa fa-copy" style="padding-left: 3px; font-size: 14px; color: #337ab7 !important "></i> تمدید قرارداد </a>
+
+            </p>
+            <input type="hidden" id="sercheCheck" value="@Model.WorkshopSearch" />
+
+            @*href="#showmodal=@Url.Page("./Index", "PrintAll", new {ids = idss})"*@
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div class="col-sm-12">
+        <div permission="20112" class="panel-group panel-group-joined" id="accordion-test">
+
+
+
+            <div class="panel panel-default" style="border-radius: 15px !important; background-color: #fdc0c0; ">
+                <div class="panel-heading" style="background-color: #950000 !important">
+                    <h4 class="panel-title" style="color: #edebeb !important; display: inline;">
+                        <a data-toggle="collapse" data-parent="#accordion-test" href="#collapseOne" class="collapsed" style="display: inline;">
+                            جستجوی قرارداد
+                        </a>
+                    </h4>
+
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in ">
+                    <div class="panel-body" style="padding-top: 15px; padding-bottom: 15px;">
+                        @*===================================================================================================================*@
+
+
+
+
+                        <div class="row">
+
+                            <div class="col-sm-12">
+
+                                <form class="form-inline" role="form" method="get" name="search-theme-form" id="search-theme-form" autocomplete="off">
+                                    <div class="form-group col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-3 pull-right">
+                                                <div class="form-group" style="width: 100% !important; margin: 0 auto;">
+                                                    <select class="form-control select-city" asp-for="SearchModel.EmployerId" asp-items="Model.Employers" style="width: 100% !important">
+                                                        <option value="0"> کارفرما </option>
+
+                                                    </select>
+
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 pull-right">
+                                                <div class="form-group" style="width: 100% !important; margin: 0 auto;">
+
+
+                                                    <select class="form-control select-city" asp-for="SearchModel.WorkshopIds" asp-items="Model.Workshops" style="width: 100% !important">
+                                                        <option value="0">  کارگاه </option>
+
+                                                    </select>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-3 pull-right">
+                                                <div class="form-group" style="width: 100% !important; margin: 0 auto;">
+
+
+                                                    <select class="form-control select-city" asp-for="SearchModel.EmployeeId" asp-items="Model.Employees" style="width: 100% !important">
+                                                        <option value="0"> پرسنل </option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 pull-right">
+                                                <div class="form-group" style="width: 100% !important; margin: 0 auto;">
+
+                                                    <label class="sr-only" asp-for="SearchModel.ContractNo"></label>
+                                                    <input class="form-control inpt" asp-for="SearchModel.ContractNo" placeholder=" شماره قرارداد " style="width: 100%">
+
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                        <hr style=" margin-top: 12px;margin-bottom: 12px;" />
+                                        <div class="row" dir="rtl">
+                                            <div class="col-sm-3 pull-right" dir="rtl">
+                                                <div class="form-group" style="width: 36% !important; margin: 0 auto; font-size: 14px !important;">
+
+                                                    انتخاب تاریخ
+
+                                                </div>
+                                                <div class="form-group" style="width: 30% !important; margin: 0 auto;">
+
+                                                    <select class="form-control " asp-for="SearchModel.Year" asp-items="Model.YearlyList" style="width: 100% !important">
+                                                        <option value=" "> سال </option>
+
+                                                    </select>
+
+                                                </div>
+                                                <div class="form-group" style="width: 30% !important; margin: 0 auto;">
+
+                                                    <select class="form-control" asp-for="SearchModel.Month" style="width: 100% !important">
+                                                        <option value=" "> ماه</option>
+                                                        <option value="01"> فروردین</option>
+                                                        <option value="02"> اردیبهشت</option>
+                                                        <option value="03"> خرداد</option>
+                                                        <option value="04"> تیر</option>
+                                                        <option value="05"> مرداد</option>
+                                                        <option value="06"> شهریور</option>
+                                                        <option value="07"> مهر</option>
+                                                        <option value="08"> آبان</option>
+                                                        <option value="09"> آذر</option>
+                                                        <option value="10"> دی</option>
+                                                        <option value="11"> بهمن</option>
+                                                        <option value="12"> اسفند</option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3 pull-right" dir="rtl">
+                                                <div class="form-group" style="width: 100% !important; margin: 0 auto;">
+                                                    @*<label class="sr-only" asp-for="SearchModel.ContractingPartyID"></label>*@
+
+                                                    <input dir="ltr" maxlength="10" style="text-align: center; width: 100%" placeholder="تاریخ شروع" class="form-control persianDateInputa" asp-for="SearchModel.ContarctStart" />
+
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-3 pull-right" dir="rtl">
+                                                <div class="form-group" style="width: 100% !important; margin: 0 auto;">
+                                                    @*<label class="sr-only" asp-for="SearchModel.ContractingPartyID"></label>*@
+
+                                                    <input dir="ltr" maxlength="10" style="text-align: center;width: 100%" placeholder="تاریخ پایان" class="form-control persianDateInputb" asp-for="SearchModel.ContractEnd" />
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-3 pull-right" dir="rtl">
+                                                <div class="form-group" style="width: 100% !important; margin: 0 auto;">
+                                                    @*<label class="sr-only" asp-for="SearchModel.ContractingPartyID"></label>*@
+
+                                                    <select class="form-control" asp-for="SearchModel.ContractPeriod" style="width: 100% !important">
+                                                        <option value=" "> مدت قرارداد</option>
+                                                        <option value="1"> یک ماهه</option>
+                                                        <option value="2"> دو ماهه</option>
+                                                        <option value="3"> سه ماهه</option>
+                                                        <option value="6"> شش ماهه</option>
+                                                        <option value="12"> یک ساله</option>
+
+                                                    </select>
+
+                                                </div>
+
+                                            </div>
+
+
+
+
+                                        </div>
+
+                                        <div class="row" style="margin-top: 15px">
+
+
+                                            <div class="col-lg-9">
+
+
+
+                                                <label class="sr-only" asp-for="SearchModel.IsActiveString"></label>
+                                                <select id="activing" class="form-control activer" asp-for="SearchModel.IsActiveString" style="background-color: #dddddd; border-radius: 25px; border: 1px solid #bfbfbf;">
+                                                    <option value=""> فعال  </option>
+                                                    <option value="false"> غیرفعال</option>
+                                                    <option value="both"> هردو</option>
+                                                </select>
+
+
+
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light m-b-5 search" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; background-color: #950000; border-color: #950000; font-family: 'Web_Yekan' !important; margin-left: -3px "> <i class="fa fa-search" style="padding-left: 3px; font-size: 14px;"></i> جستجو</button>
+                                                <a class="btn btn-info btn-rounded waves-effect waves-light m-b-5" style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; background-color: #545353; border-color: #545353; font-family: 'Web_Yekan' !important;" asp-page="./Index">مشاهده همه</a>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+
+                                </form>
+
+                            </div>
+
+
+                        </div>
+
+                        @*==================================================================personal=====*@
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div permission="20113" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست قرارداد ها</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12 col-sm-12 col-xs-12">
+                        <table id="datatable" class="table table-striped table-bordered">
+                            <thead style="background-color: #ecefee">
+                                <tr>
+
+                                    <th style="font-size: 10px !important" class="sizeSet">#</th>
+                                    <th permission="20118" style="font-size: 10px !important;" class="sizeSet">
+                                        <span class="tooltip-container">
+                                            <input class="checkboxtitle" type="checkbox" id="checkSelect" onclick="selectori(this)" />
+                                            <span class="tooltip"> با استفاده از این چک باکس می توانید قراردادها را بصورت گروهی انتخاب کرده و سپس با کلیک بر روی دکمه حذف گروهی یا پرینت گروهی اقدام به حذف یا پرینت گروهی نمایید</span>
+                                        </span>
+
+                                    </th>
+                                    <th style="font-size: 10px !important" class="sizeSet">شماره قرارداد</th>
+                                    <th style="font-size: 10px !important" class="sizeSet"> کارفرما </th>
+                                    <th style="font-size: 10px !important" class="sizeSet">کارگاه</th>
+                                    <th style="font-size: 10px !important" class="sizeSet"> پرسنل </th>
+
+                                    <th style="font-size: 10px !important" class="sizeSet">آغاز قرارداد</th>
+                                    <th style="font-size: 10px !important" class="sizeSet">پایان قرارداد</th>
+                                    <th style="font-size: 10px !important" class="sizeSet">نوع قرارداد</th>
+                                    <th style="font-size: 10px !important" class="sizeSet">شماره پرسنلی</th>
+                                    <th permission="20117" style="font-size: 10px !important;" onclick="event.stopPropagation();" class="sizeSet">
+                                        <span class="tooltip2-container">
+                                            <button type="button" style="padding: 5px 7px 0px 7px" class="btn btn-icon waves-effect waves-light btn-success m-b-5" id="checkSign" onclick="SignatureSelect()">
+                                                <i class="ion-checkmark-circled" style="color: #fff; font-size: 17px"></i>
+                                            </button>
+                                            <span class="tooltip2">
+                                                با استفاده از این دکمه می توانید قراردادها را بصورت گروهی امضاء نمایید
+                                            </span>
+                                        </span>
+                                        <span class="tooltip2-container">
+                                            <button type="button" style="padding: 5px 7px 0px 7px" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" id="checkUnSign" onclick="SignatureSelect2()">
+                                                <i class="ion-close-circled" style="color: #fff;font-size: 17px"></i>
+                                            </button>
+                                            <span class="tooltip2">
+                                                با استفاده از این دکمه می توانید امضاء قراردادها را بصورت گروهی حذف نمایید
+                                            </span>
+                                        </span>
+
+
+                                    </th>
+                                    <th style="font-size: 10px !important" >
+                                        <span style="float: right;">
+                                            <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                            <span>&nbsp;</span><span>&nbsp;</span>
+                                            <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                            <span>&nbsp;</span><span>&nbsp;</span>
+                                            <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                            <span>&nbsp;</span><span>&nbsp;</span>
+                                            <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                            <span>&nbsp;</span><span>&nbsp;</span>
+                                            <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                            <span>&nbsp;</span><span>&nbsp;</span>
+                                            <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                            <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                           
+                                        </span>
+                                        <a class="btn btn-info pull-right m-rl-5 rad" onclick="copyLink()">
+                                            <i class="fa faSize fa-print"></i>
+                                        </a>
+
+                                        <span class="act">
+
+                                        </span>
+                                        <a class="btn btn-danger pull-right m-rl-5 rad deact" onclick="deactiveAll()">
+                                            <i class="fa faSize fa-trash"></i>
+                                        </a>
+
+
+
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Contracts)
+                                {
+
+
+                                    <tr>
+
+                                        <td style="font-size: 12px !important;text-align: center">@i </td>
+                                        <td permission="20118" style="font-size: 12px !important; text-align: center">
+                                            <input type="checkbox" name="foo" value="@item.Id" />
+                                        </td>
+                                        <td style="font-family: 'IranText' !important; font-size: 12px !important; text-align: center">
+
+                                            @item.ContractNo
+
+
+
+                                        </td>
+
+                                        <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: right">
+                                            @foreach (var emp in Model.EmployerList)
+                                            {
+                                                if (item.EmployerId == emp.Id)
+                                                {
+                                                    @emp.FullName
+
+                                                }
+                                            }
+
+                                        </td>
+
+                                        <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: right">
+
+                                            @foreach (var wk in Model.WorkshopList)
+                                            {
+                                                if (item.WorkshopIds == wk.Id)
+                                                {
+
+
+                                                    @wk.WorkshopFullName
+
+
+
+
+                                                }
+                                            }
+                                        </td>
+
+                                        <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: right">
+                                            @foreach (var person in Model.EmployeeList)
+                                            {
+                                                if (item.EmployeeId == person.Id)
+                                                {
+
+                                                    @person.EmployeeFullName
+
+                                                }
+                                            }
+
+
+                                        </td>
+
+
+
+
+
+
+                                        <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: center">
+
+                                            @item.ContarctStart
+
+
+
+                                        </td>
+                                        <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: center">
+
+                                            @item.ContractEnd
+
+
+
+                                        </td>
+
+                                        <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: center">
+
+                                            @item.ContractType
+
+
+
+                                        </td>
+
+                                        <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: center">
+
+                                            @item.PersonnelCode
+
+
+
+                                        </td>
+                                        <td permission="20117" style="font-size: 12px !important; text-align: center">
+                                            @if (item.Signature == "1")
+                                            {
+                                                <a asp-page="./Index" name="foo1" asp-page-handler="UnSign" asp-route-id="@item.Id" style="font-size: 20px">
+
+                                                    <i class="ion-checkmark-circled" style="color: #1f9c11"></i>
+                                                    <input type="hidden" value="@item.Id" name="signed" />
+                                                </a>
+
+                                            }
+                                            else
+                                            {
+                                                <a asp-page="./Index" name="foo2" asp-page-handler="Sign" asp-route-id="@item.Id" style="font-size: 20px">
+                                                    <i class="ion-ios7-circle-outline" style="color: #dd3632"></i>
+                                                    <input type="hidden" value="@item.Id" name="unsigned" />
+                                                </a>
+
+                                            }
+
+                                        </td>
+
+                                        @{
+                                            i++;
+                                        }
+                                        <td>
+                                            <a permission="20115"  class="btn btn-inverse pull-right m-rl-5 ionRad2"
+                                               href="#showmodal=@Url.Page("./Index", "CreatePaidLeave", new {employeeId = item.EmployeeId, workshopId = item.WorkshopIds})">
+                                                <i class="ion-briefcase ionSize"></i>
+                                            </a>
+                                            <a permission="20115" class="btn btn-inverse pull-right m-rl-5 ionRad"
+                                               href="#showmodal=@Url.Page("./Index", "CreateSickLeave", new {employeeId = item.EmployeeId, workshopId = item.WorkshopIds})">
+                                                <i class="ion-medkit ionSize"></i>
+                                            </a>
+                                        <a permission="20115" class="btn btn-inverse pull-right m-rl-5 rad"
+                                           href="#showmodal=@Url.Page("./Index", "CreateLeftWork", new {employeeId = item.EmployeeId, workshopId = item.WorkshopIds})">
+                                            <i class="fa faSize  fa-sign-out"></i>
+                                        </a>
+                                        <a permission="20114" class="btn btn-warning pull-right m-rl-5 rad"
+                                           href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
+                                            <i class="fa faSize fa-edit"></i>
+                                        </a>
+                                        <a permission="20115" class="btn btn-info pull-right m-rl-5 rad"
+                                           href="#showmodal=@Url.Page("./Index", "Details", new {Id = item.Id})">
+                                            <i class="fa faSize fa-print"></i>
+                                        </a>
+
+
+
+                                        @if (item.IsActiveString == "true")
+                                        {
+                                            <a permission="20116" id="googleLink" asp-page="./Index" asp-page-handler="DeActive" asp-route-id="@item.Id" class="btn btn-danger pull-right m-rl-5 fff rad"><i class="fa faSize fa-trash"></i></a>
+
+                                        }
+                                        else
+                                        {
+                                            <a permission="20116" asp-page="./Index" asp-page-handler="IsActive" asp-route-id="@item.Id" class="btn btn-success pull-right m-rl-5 rad"><i class="fa faSize fa-rotate-left"></i> </a>
+                                        }
+
+
+                                    </td>   
+
+                                    </tr>
+
+
+
+
+                                }
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@section Script {
+    <script src="~/AdminTheme/assets/js/site.js"></script>
+    <script src="~/adminTheme/assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/adminTheme/assets/datatables/dataTables.bootstrap.js"></script>
+
+    <script>
+ 
+        $('.activer').on('change',
+            function(e) {
+                e.preventDefault();
+                $('.search').click();
+
+            });
+      
+        //var a = window.location.href;
+        //var res = a.split("#")[1];
+        //if (res == "false") {
+        //    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " ابتدا یکی از فیلد های کارگاه، کارفرما، پرسنل را انتخاب نموده و سپس جستجو را بزنید ");
+        //}
+
+    </script>
+    <script>
+
+        if (document.getElementById("activing").selectedIndex == 1) {
+            $('.deact').remove();
+            $('.act').append(
+                ' <a class="btn btn-success pull-right m-rl-5 rad react" onclick="reActiveAll()">' + '<i class="fa faSize fa-rotate-left"></i>' + ' </a>'
+            );
+        }
+        if (document.getElementById("activing").selectedIndex == 2) {
+            $('.deact').remove();
+
+
+        }
+        $('.persianDateInputa').persianDatepicker({
+            format: 'YYYY/MM/DD',
+            initialValueType: 'persian',
+            initialValue: false,
+            /* 'position': [-270, 25],*/
+            autoClose: true,
+
+            calendar: {
+                persian: {
+                    leapYearMode: 'astronomical'
+                }
+            }
+
+        });
+        $('.persianDateInputb').persianDatepicker({
+            format: 'YYYY/MM/DD',
+            initialValueType: 'persian',
+
+            initialValue: false,
+            /*'position': [-270, 25],*/
+            autoClose: true,
+
+            calendar: {
+                persian: {
+                    leapYearMode: 'astronomical'
+                }
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#datatable').dataTable({
+                "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
+            });
+        });
+
+
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#datatable2').dataTable(
+                {
+                    "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
+                });
+        });
+    </script>
+    <script>
+        function selectori(source) {
+            checkboxes = document.getElementsByName('foo');
+            for (var i = 0, n = checkboxes.length; i < n; i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+
+
+    </script>
+    <script>
+        function copyLink() {
+
+
+            if (document.getElementById("checkSelect").checked == false) {
+
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ قراردادی انتخاب نشده است ");
+
+
+            } else {
+                if (document.getElementById("sercheCheck").value == "true") {
+                    checkboxes = document.getElementsByName('foo');
+                    var url3 = '';
+                    for (var i = 0, n = checkboxes.length; i < n; i++) {
+                        if (checkboxes[i].checked == true) {
+                            var u = '&ids=' + checkboxes[i].value;
+                            url3 = url3 + u;
+                        }
+                    }
+                    var url1 = '#showmodal=';
+                    var url2 = '@Url.Page("/Company/Contracts/Index", "PrintAll")';
+
+                    window.location.href = url1 + url2 + url3;
+                } else if (document.getElementById("sercheCheck").value == "false") {
+                    console.log(document.getElementById("sercheCheck").value);
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی قرارداد حداقل یکی از فیلدهای کارکاه یا پرسنل را انتخاب نموده و سپس جستجو را کلیک کنید ");
+                }
+
+
+            }
+
+
+        }
+
+        function deactiveAll() {
+
+
+            if (document.getElementById("checkSelect").checked == false) {
+
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ قراردادی انتخاب نشده است ");
+
+
+            } else {
+                if (document.getElementById("sercheCheck").value == "true") {
+                    swal({
+                        title: "آیا حذف این قراردادها اطمینان دارید؟",
+                        text: "",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "بله",
+                        cancelButtonText: "خیر",
+                        closeOnConfirm: false
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            checkboxes2 = document.getElementsByName('foo');
+                            var url3b = '';
+                            for (var i2 = 0, n2 = checkboxes2.length; i2 < n2; i2++) {
+                                if (checkboxes2[i2].checked == true) {
+                                    var u2 = '&ids=' + checkboxes2[i2].value;
+                                    url3b = url3b + u2;
+                                }
+                            }
+                            /*  var url1 = '#showmodal=';*/
+                            var url2b = '@Url.Page("/Company/Contracts/Index", "GroupDeActive")';
+                            /*   var url3 = document.getElementById('yearSend').value;*/
+                            window.location.href = url2b + url3b;
+                            
+
+                        } 
+
+
+                    });
+                   
+                } else if (document.getElementById("sercheCheck").value == "false") {
+                    console.log(document.getElementById("sercheCheck").value);
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی قرارداد حداقل یکی از فیلدهای کارکاه یا پرسنل را انتخاب نموده و سپس جستجو را کلیک کنید ");
+                }
+
+
+            }
+
+
+        }
+
+
+    </script>
+    <script>
+        function reActiveAll() {
+
+
+            if (document.getElementById("checkSelect").checked == false) {
+
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " هیچ قراردادی انتخاب نشده است ");
+
+
+            } else {
+
+                if (document.getElementById("sercheCheck").value == "false") {
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی قرارداد حداقل یکی از فیلدهای کارکاه یا پرسنل را انتخاب نموده و سپس جستجو را کلیک کنید ");
+                   
+                } else if (document.getElementById("sercheCheck").value == "true") {
+
+                  
+                    swal({
+                        title: "آیا فعال نمودن این قراردادها اطمینان دارید؟",
+                        text: "",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "بله",
+                        cancelButtonText: "خیر",
+                        closeOnConfirm: false
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            checkboxes2 = document.getElementsByName('foo');
+                            var url3b = '';
+                            for (var i2 = 0, n2 = checkboxes2.length; i2 < n2; i2++) {
+                                if (checkboxes2[i2].checked == true) {
+                                    var u2 = '&ids=' + checkboxes2[i2].value;
+                                    url3b = url3b + u2;
+                                }
+                            }
+
+                            var url2b = '@Url.Page("/Company/Contracts/Index", "GroupReActive")';
+
+                            window.location.href = url2b + url3b;
+                           
+
+
+                        } 
+
+
+                    });
+                }
+
+
+            }
+
+
+        }
+    </script>
+    <script>
+        
+        function SignatureSelect() {
+          
+            if (document.getElementById("sercheCheck").value == "false") {
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی قرارداد حداقل یکی از فیلدهای کارکاه یا پرسنل را انتخاب نموده و سپس جستجو را کلیک کنید ");
+            } else if (document.getElementById("sercheCheck").value == "true") {
+
+                swal({   
+                    title: "آیا از امضاء نمودن این قراردادها اطمینان دارید؟",   
+                    text: "",   
+                    type: "warning",   
+                    showCancelButton: true,   
+                    confirmButtonColor: "#DD6B55",   
+                    confirmButtonText: "بله",
+                    cancelButtonText: "خیر",
+                    closeOnConfirm: false 
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        /*    $("a.dell").click();*/
+                        checkboxes2 = document.getElementsByName('unsigned');
+                        var url3b = '';
+                        for (var i2 = 0, n2 = checkboxes2.length; i2 < n2; i2++) {
+
+                            var u2 = '&ids=' + checkboxes2[i2].value;
+                            url3b = url3b + u2;
+
+                        }
+
+                        var url2b = '@Url.Page("/Company/Contracts/Index", "GroupSign")';
+
+                        window.location.href = url2b + url3b;
+          
+                
+                    } else {     
+                       
+                    } 
+                   
+           
+                });
+              
+
+                @*if (res == true) {
+                        checkboxes2 = document.getElementsByName('unsigned');
+                        var url3b = '';
+                        for (var i2 = 0, n2 = checkboxes2.length; i2 < n2; i2++) {
+
+                            var u2 = '&ids=' + checkboxes2[i2].value;
+                            url3b = url3b + u2;
+
+                        }
+
+                        var url2b = '@Url.Page("/Company/Contracts/Index", "GroupSign")';
+
+                        window.location.href = url2b + url3b;
+                    }*@
+
+                @*else if (document.getElementById("checkSign").checked == false) {
+                    signCheckboxes = document.getElementsByName('signed');
+                    var url3h = '';
+                    for (var b = 0, k = signCheckboxes.length; b < k; b++) {
+
+                        var r = '&ids=' + signCheckboxes[b].value;
+                        url3h = url3h + r;
+
+                    }
+
+                    var url2h = '@Url.Page("/Company/Contracts/Index", "GroupUnSign")';
+
+                    window.location.href = url2h + url3h;
+                }*@
+            }
+
+        }
+    </script>
+    <script>
+        function SignatureSelect2() {
+
+            if (document.getElementById("sercheCheck").value == "false") {
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا در قسمت جستجوی قرارداد حداقل یکی از فیلدهای کارکاه یا پرسنل را انتخاب نموده و سپس جستجو را کلیک کنید ");
+            } else if (document.getElementById("sercheCheck").value == "true") {
+
+                swal({
+                    title: "آیا حذف امضاء این قراردادها اطمینان دارید؟",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "بله",
+                    cancelButtonText: "خیر",
+                    closeOnConfirm: false
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        /*    $("a.dell").click();*/
+                        checkboxes2 = document.getElementsByName('signed');
+                        var url3b = '';
+                        for (var i2 = 0, n2 = checkboxes2.length; i2 < n2; i2++) {
+
+                            var u2 = '&ids=' + checkboxes2[i2].value;
+                            url3b = url3b + u2;
+
+                        }
+
+                        var url2b = '@Url.Page("/Company/Contracts/Index", "GroupUnSign")';
+
+                        window.location.href = url2b + url3b;
+
+
+                    } else {
+
+                    }
+
+
+                });
+
+
+           
+            }
+
+        }
+    </script>
+
+
+}
+
+
+
+

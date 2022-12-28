@@ -1,0 +1,401 @@
+﻿@using _0_Framework.Application
+@model CompanyManagment.App.Contracts.Employee.EditEmployee
+@{
+    <style>
+        .modal-dialog {
+            width: 90% !important;
+        }
+
+        #thh table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh th, td {
+            padding: 10px 20px;
+        }
+
+        #thh th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh td:nth-child(odd) {
+            border-left: 1px solid #fff;
+            width: 40%;
+            text-align: center;
+        }
+
+        #thh td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh th:nth-child(odd) {
+            border-left: 1px solid #fff;
+        }
+
+        #thh tr:nth-child(odd) {
+            background-color: #fff4a6;
+        }
+
+        #thh tr:nth-child(even) {
+            background-color: rgb(224, 227, 228);
+        }
+
+        #thh tr:hover {
+            background-color: rgb(108, 186, 250);
+        }
+
+        #thh1 table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh1 th, td {
+            padding: 10px 20px;
+        }
+
+        #thh1 th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh1 td:nth-child(odd) {
+            border-left: 1px solid #afafaf;
+            width: 50%;
+            text-align: center;
+        }
+
+        #thh1 td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh1 th:nth-child(odd) {
+            border-left: 1px solid #afafaf;
+        }
+
+        #thh1 tr:nth-child(odd) {
+            background-color: lightblue;
+        }
+
+        #thh1 tr:nth-child(even) {
+            background-color: rgb(224, 227, 228);
+        }
+
+        #thh1 tr:hover {
+            background-color: rgb(108, 186, 250);
+        }
+
+
+
+
+
+
+        #thh2 table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh2 th, td {
+            padding: 10px 20px;
+        }
+
+        #thh2 th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh2 td:nth-child(odd) {
+            border-left: 1px solid #afafaf;
+            width: 50%;
+            text-align: center;
+        }
+
+        #thh2 td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh2 th:nth-child(odd) {
+            border-left: 1px solid #afafaf;
+        }
+
+        #thh2 tr:nth-child(odd) {
+            background-color: lightblue;
+        }
+
+        #thh2 tr:nth-child(even) {
+            background-color: rgb(224, 227, 228);
+        }
+
+        #thh2 tr:hover {
+            background-color: rgb(108, 186, 250);
+        }
+    </style>
+}
+<div class="modal-header" style="border-bottom: unset">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+</div>
+
+<form asp-page="./Index" asp-page-handler="Details"
+      method="post"
+      data-ajax="true"
+      data-callback=""
+      data-action="Refresh"
+      enctype="multipart/form-data">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert;">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 130px; text-align: center;"> اطلاعات پرسنل</legend>
+
+                    <table id="thh" style="height: 150px; width: 100%">
+                        <tr>
+                            <th>فیلد</th>
+                            <th>اطلاعات</th>
+
+                        </tr>
+
+                        <tr>
+                            <td>نام و نام خانوادگی</td>
+                            <td> @Model.FName @Model.LName</td>
+
+                        </tr>
+
+                        <tr>
+                            <td> جنسیت </td>
+                            <td> @Model.Gender</td>
+
+                        </tr>
+
+                        <tr>
+                            <td> ملیت </td>
+                            <td> @Model.Nationality</td>
+
+                        </tr>
+                        <tr>
+                            <td> وضعیت تاهل </td>
+                            <td> @Model.MaritalStatus </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>نام پدر</td>
+                            <td> @Model.FatherName</td>
+
+                        </tr>
+                        @if (@Model.Gender == "مرد")
+                        {
+                            <tr>
+                                <td> وضعیت نظام وظیفه </td>
+                                <td> @Model.MilitaryService </td>
+
+                            </tr>
+                        }
+
+                        <tr>
+                            <td>کد ملی</td>
+                            <td> @Model.NationalCode</td>
+
+                        </tr>
+
+                        <tr>
+                            <td> شماره شناسنامه </td>
+                            <td> @Model.IdNumber </td>
+
+                        </tr>
+
+                        <tr>
+                            <td> محل صدور شناسنامه </td>
+                            <td> @Model.PlaceOfIssue</td>
+
+                        </tr>
+                        <tr>
+                            <td> تاریخ تولد </td>
+                            <td> @Model.DateOfBirth</td>
+
+                        </tr>
+
+                        <tr>
+                            <td> تاریخ صدور شناسنامه </td>
+                            <td> @Model.DateOfIssue</td>
+
+                        </tr>
+
+                        <tr>
+                            <td> شماره تماس </td>
+                            <td> @Model.Phone</td>
+
+                        </tr>
+
+                        <tr>
+                            <td> سطح تحصیلات </td>
+                            <td> @Model.LevelOfEducation </td>
+
+                        </tr>
+
+                        <tr>
+                            <td> رشته تحصیلی </td>
+                            <td> @Model.FieldOfStudy </td>
+
+                        </tr>
+
+                        <tr>
+                            <td> کد بیمه </td>
+                            <td> @Model.InsuranceCode </td>
+
+                        </tr>
+                        <tr>
+                            <td> سابقه کلی بیمه </td>
+                            <td> سال : @Model.InsuranceHistoryByYear ماه : @Model.InsuranceHistoryByMonth </td>
+
+                        </tr>
+
+                        <tr>
+                            <td> شماره کارت بانکی </td>
+                            <td> @Model.BankCardNumber </td>
+
+                        </tr>
+                        <tr>
+                            <td> شعبه بانک </td>
+                            <td> @Model.BankBranch </td>
+
+                        </tr>
+                        <tr>
+                            <td> استان </td>
+                            <td> @Model.State </td>
+
+                        </tr>
+
+                        <tr>
+                            <td> شهر </td>
+                            <td> @Model.City </td>
+
+                        </tr>
+
+                        <tr>
+                            <td> آدرس </td>
+                            <td> @Model.Address </td>
+
+                        </tr>
+                    </table>
+
+
+
+
+
+                </fieldset>
+            </div>
+            <div class="col-md-6">
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert;">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 145px; text-align: center;"> اطلاعات فرزندان</legend>
+
+                    <table id="thh1" style="height: 150px; width: 100%">
+                        <tr>
+                            <th>فیلد</th>
+                            <th>اطلاعات</th>
+
+                        </tr>
+
+                        <tr>
+                            <td>تعداد فرزندان</td>
+                            <td>@if (@Model.NumberOfChildren != null)
+                                {
+                                    @Model.NumberOfChildren
+                                }
+                                else
+                                {
+                                    <span>0</span>
+                                }
+                                </td>
+
+                        </tr>
+                      
+                        <tr>
+                            <td> تاریخ تولد فرزندان </td>
+                            <td>
+                                <ul style="list-style-type: none;">
+                                    @foreach (var item in @Model.CreateEmployeChildrenList)
+                                    {
+                                        if (@Model.NationalCode == @item.ParentNationalCode)
+                                        {
+                                            <li style="font-family: 'IranText' !important; font-size: 14px !important">@item.DateOfBirth</li>
+                                            <hr style="margin: 0; border-color: #bdbdbd" />                                                                                          
+                                        }
+
+
+                                    }
+                                </ul>
+                            </td>
+
+                        </tr>
+
+                    
+
+                    </table>
+
+
+
+
+
+                </fieldset>
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert;">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 250px; text-align: center;"> اطلاعات کارگاه و شماره پرسنلی</legend>
+
+                    <table id="thh2" style="height: 150px; width: 100%">
+                        <tr>
+                            <th>فیلد</th>
+                            <th>اطلاعات</th>
+
+                        </tr>
+
+                        <tr>
+                            <td> نام کارگاه </td>
+                            <td> </td>
+
+                        </tr>
+
+
+
+                        <tr>
+                            <td> شماره کارگاه </td>
+                            <td> </td>
+
+                        </tr>
+                        <tr>
+                            <td> شماره پرسنلی </td>
+                            <td> </td>
+
+                        </tr>
+
+                    </table>
+
+
+
+
+
+                </fieldset>
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+    <input type="hidden" asp-for="Id" value="@Model.Id" />
+    <div class="modal-footer">
+        <div class="modal-footer" style="border-top: unset; padding-top: unset">
+
+
+            <button type="button" class="btn btn-warning btn-rounded waves-effect waves-light m-b-10" data-dismiss="modal">بستن فرم</button>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,247 @@
+﻿@model CompanyManagment.App.Contracts.Leave.EditLeave
+@{
+
+    int i = 1;
+
+
+}
+@{
+    <style>
+        .panel-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 0;
+            margin-top: 0;
+            padding: 5px 7px 5px 7px;
+        }
+
+        .rad {
+            border-radius: 8px !important;
+            /* padding: 10px; */
+            padding: 2px 5px 0px 5px;
+        }
+
+        .faSize {
+            font-size: 22px !important;
+        }
+    </style>
+
+    <link href="~/AdminTheme/assets/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+    <form asp-page="./Index" asp-page-handler="EditPaidLeave" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="ReloadPaidLeave">
+        <div class="modal-body">
+            <div class="row">
+
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 150px; text-align: center;"> مرخصی استحقاقی </legend>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <fieldset style="border: 1px solid #c3c3c3; background-color: #ddd; border-radius: 10px; padding: 5px 0 5px 0; margin-bottom: 10px; ">
+                                <div class="form-group">
+                                    <div class="col-md-4" style="margin-top: 3px">
+                                        نوع مرخصی  <span style="color: red">*</span>
+                                    </div>
+                                    <div class="col-md-4" id="roozaneh">
+                                        روزانه <input class="roozane" type="radio" value="روزانه" asp-for="PaidLeaveType">
+
+                                    </div>
+                                    <div class="col-md-4" id="saati">
+                                        ساعتی <input class="saati" type="radio" value="ساعتی" asp-for="PaidLeaveType">
+                                    </div>
+
+
+
+
+                                </div>
+                            </fieldset>
+                            <span asp-validation-for="PaidLeaveType" class="error"></span>
+                        </div>
+                    </div>
+
+                    <div class="row m-t-10">
+                        <div class="col-md-5">
+                            <div class="form-group m-b-0" dir="rtl">
+                                <label asp-for="StartLeave" class="control-label m-r-5">تاریخ شروع مرخصی</label>
+                                <input id="startLeave" dir="ltr" maxlength="10" style="text-align: center" class="form-control persianDateInputb" onchange="validDate(this);" asp-for="StartLeave" />
+
+                                <span asp-validation-for="StartLeave" class="error"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group m-b-0" dir="rtl">
+                                <label asp-for="EndLeave" class="control-label m-r-5">تاریخ پایان مرخصی</label>
+                                <input id="endLeave" dir="ltr" maxlength="10" style="text-align: center" class="form-control persianDateInputb" onchange="validDate(this);" asp-for="EndLeave" />
+
+                                <span asp-validation-for="EndLeave" class="error"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group m-b-0" dir="rtl">
+                                <label asp-for="LeaveHourses" class="control-label m-r-5">ساعت</label>
+                                <input id="hours" dir="ltr" maxlength="2" style="text-align: center" class="form-control persianDateInputb" asp-for="LeaveHourses" />
+
+                                <span asp-validation-for="LeaveHourses" class="error"></span>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+                </fieldset>
+
+
+
+            </div>
+
+       
+
+        </div>
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <input type="hidden" asp-for="EmployeeId" />
+        <input type="hidden" asp-for="WorkshopId" />
+        <div class="modal-footer">
+
+            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+
+            <a href="#showmodal=@Url.Page("/Company/Contracts/Index", "CreatePaidLeave", new { employeeId = @Model.EmployeeId, workshopId = @Model.WorkshopId, hd = 1 })" class="btn btn-default btn-rounded waves-effect waves-light m-b-5"> بازگشت</a>
+        </div>
+
+    </form>
+
+
+
+
+  
+
+
+</div>
+
+<script src="~/adminTheme/assets/datatables/jquery.dataTables.min.js"></script>
+<script src="~/adminTheme/assets/datatables/dataTables.bootstrap.js"></script>
+<script>
+    
+    
+    $(document).ready(
+        function () {
+            var saati = $('input:radio[class="saati"]');
+            var roozane = $('input:radio[class="roozane"]');
+            if ($(roozane).is(':checked') && $(roozane).val() == 'روزانه') {
+
+                $("#hours").val('');
+                $("#hours").attr("disabled", "disabled");
+                $("#endLeave").removeAttr("disabled");
+                $("#saati").css("visibility", "hidden");
+            } else if ($(saati).is(':checked') && $(saati).val() == 'ساعتی') {
+
+                $("#endLeave").val('');
+                $("#endLeave").attr("disabled", "disabled");
+                $("#hours").removeAttr("disabled");
+                $("#roozaneh").css("visibility", "hidden");
+            }
+        });
+</script>
+
+
+<script>
+    function validDate(inputField) {
+
+        var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (var i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+        let getdate = inputField.value;
+
+        var m1, m2;
+        var y1, y2, y3, y4;
+        var d1, d2;
+        var s1, s2;
+        for (var i = 0; i < getdate.length; i++) {
+            if (i === 0) {
+                y1 = fixNumbers(getdate[i]);
+            }
+            if (i === 1) {
+                y2 = fixNumbers(getdate[i]);
+            }
+            if (i === 2) {
+                y3 = fixNumbers(getdate[i]);
+            }
+            if (i === 3) {
+                y4 = fixNumbers(getdate[i]);
+            }
+            if (i === 4) {
+                s1 = fixNumbers(getdate[i]);
+            }
+            if (i === 5) {
+                m1 = fixNumbers(getdate[i]);
+            }
+            if (i === 6) {
+                m2 = fixNumbers(getdate[i]);
+            }
+            if (i === 7) {
+                s2 = fixNumbers(getdate[i]);
+            }
+            if (i === 8) {
+                d1 = fixNumbers(getdate[i]);
+            }
+            if (i === 9) {
+                d2 = fixNumbers(getdate[i]);
+            }
+
+        }
+        var yRes = y1 + y2 + y3 + y4;
+        var year = parseInt(yRes);
+        var mRes = m1 + m2;
+        var month = parseInt(mRes);
+        var dRes = d1 + d2;
+        var day = parseInt(dRes);
+        var FixResult = yRes + s1 + mRes + s2 + dRes;
+
+
+        var isValid = /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(FixResult);
+
+
+        if (isValid) {
+            inputField.style.backgroundColor = '#a6e9a6';
+            $("button[type=submit]").attr('disabled', false);
+            validCheck = true;
+
+        } else {
+            inputField.style.backgroundColor = '#f94c4c';
+            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را بصورت صحیح وارد کنید");
+            $("button[type=submit]").attr('disabled', true);
+            validCheck = false;
+
+        }
+        return validCheck;
+
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+
+            window.location.hash = "##";
+        }, 1000);
+    });
+</script>

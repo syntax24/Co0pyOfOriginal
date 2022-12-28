@@ -1,0 +1,74 @@
+﻿/** {
+    margin: 0;
+    padding: 0;
+}*/
+
+.efects {
+    /* width: 99%; */
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    /* min-height: 100vh; */
+    background: #e7e7e7;
+    /* padding: 30px; */
+    margin: 0;
+    margin-top: 30px;
+}
+
+/*.aa {
+    text-decoration: none;
+    color: inherit;
+    font-size: 24px;
+}*/
+
+.dadmehr {
+    font-weight: 700;
+    text-align: center;
+    font-size: 40px;
+   
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #e7e7e7, #958c8c, #e7e7e7);
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    animation: shine 5s linear infinite;
+    position: relative;
+}
+.dadmehrEn {
+    font-weight: 700;
+    text-align: center;
+    font-size: 24px;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #e7e7e7, #5cb75f, #e7e7e7);
+    letter-spacing: 5px;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    animation: shineEn 5s linear infinite;
+    position: relative;
+}
+
+
+@keyframes shine {
+    0% {
+        background-position-x: 500%;
+    }
+
+    100% {
+        background-position-x: -500%;
+    }
+}
+@keyframes shineEn {
+    0% {
+        background-position-x: -500%;
+    }
+
+    100% {
+        background-position-x: 500%;
+    }
+}

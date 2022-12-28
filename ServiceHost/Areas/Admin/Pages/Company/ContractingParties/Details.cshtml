@@ -1,0 +1,181 @@
+﻿@model CompanyManagment.App.Contracts.PersonalContractingParty.EditPersonalContractingParty
+@{
+    <style>
+
+        #thh table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh th, td {
+            padding: 10px 20px;
+        }
+
+        #thh th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh td:nth-child(odd) {
+            border-left: 1px solid #fff;
+            width: 40%;
+            text-align: center;
+        }
+
+        #thh td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh th:nth-child(odd) {
+            border-left: 1px solid #fff;
+        }
+
+        #thh tr:nth-child(odd) {
+            background-color: #ddcadd;
+        }
+
+        #thh tr:nth-child(even) {
+            background-color: rgb(224, 227, 228);
+        }
+
+        #thh tr:hover {
+            background-color: rgb(108, 186, 250);
+        }
+
+        #thh2 table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh2 th, td {
+            padding: 10px 20px;
+        }
+
+        #thh2 th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh2 td:nth-child(odd) {
+            border-left: 1px solid #afafaf;
+            width: 50%;
+            text-align: center;
+        }
+
+        #thh2 td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh2 th:nth-child(odd) {
+            border-left: 1px solid #afafaf;
+        }
+
+        #thh2 tr:nth-child(odd) {
+            background-color: lightblue;
+        }
+
+        #thh2 tr:nth-child(even) {
+            background-color: rgb(224, 227, 228);
+        }
+
+        #thh2 tr:hover {
+            background-color: rgb(108, 186, 250);
+        }
+    </style>
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    
+</div>
+<form asp-page="./Index" asp-page-handler="Details"
+      method="post"
+      data-ajax="true"
+      data-callback=""
+      data-action="Refresh"
+      enctype="multipart/form-data">
+    <div class="modal-body">
+        <div class="row">
+
+
+            <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert;">
+                <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 240px; text-align: center;">  اطلاعات طرف حساب حقیقی</legend>
+
+                <table id="thh" style="height: 150px;width: 100%">
+                    <tr>
+                        <th>فیلد</th>
+                        <th>اطلاعات</th>
+
+                    </tr>
+
+                    <tr>
+                        <td>نام و نام خانوادگی</td>
+                        <td> @Model.FName @Model.LName</td>
+
+                    </tr>
+
+               
+
+                    <tr>
+                        <td>کد ملی</td>
+                        <td> @Model.Nationalcode</td>
+
+                    </tr>
+
+                    <tr>
+                        <td> شماره شناسنامه </td>
+                        <td> @Model.IdNumber </td>
+
+                    </tr>
+
+             
+
+                    <tr>
+                        <td> شماره تلفن  </td>
+                        <td> @Model.Phone</td>
+
+                    </tr>
+
+                    <tr>
+                        <td> شماره تلفن نماینده</td>
+                        <td> @Model.AgentPhone </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>  آدرس  </td>
+                        <td> @Model.Address </td>
+
+                    </tr>
+
+                   
+
+
+
+
+
+                </table>
+
+
+
+
+
+            </fieldset>
+
+
+
+        </div>
+
+    </div>
+    <input type="hidden" asp-for="Id" value="@Model.Id" />
+
+    <div class="modal-footer">
+
+      
+        <button type="button" class="btn btn-warning btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن فرم</button>
+    </div>
+</form>

@@ -1,0 +1,764 @@
+﻿@model CompanyManagment.App.Contracts.File1.EditFile
+@{
+    string[] turns = {"اول", "دوم", "سوم", "چهارم", "پنجم", "ششم", "هفتم", "هشتم", "نهم", "دهم"};
+}
+
+<style>
+        /* .modal-dialog {
+            width: 94% !important;
+        }*/
+
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .modal-footer {
+            border-top: unset !important;
+        }
+
+        .modal .modal-dialog .modal-content .modal-footer {
+            padding-top: unset !important;
+        }
+
+        p {
+            direction: ltr !important;
+            text-align: right !important;
+        }
+
+        input[type=radio]:hover {
+            cursor: pointer;
+        }
+
+        .error {
+            font-size: 14px !important;
+        }
+    </style>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <form asp-page="./Index" asp-page-handler="EditFile" id="workshops" autocomplete="off"
+                method="post"
+                data-ajax="true"
+                data-callback=""
+                data-action="Refresh"
+                enctype="multipart/form-data">
+        <input asp-for="Id" hidden/>
+        <div class="modal-body">
+            <div class="row">
+                <fieldset class="m-b-30" style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> مشخصات پرونده </legend>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="ArchiveNo" class="control-label">  شماره بایگانی </label>
+                                <input type="text" class="form-control" asp-for="ArchiveNo" onfocusout="CheckArchiveNo()">
+                                <span asp-validation-for="ArchiveNo" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="ProceederReference" class="control-label"> مرجع رسیدگی کننده </label>
+                                <input type="text" class="form-control" asp-for="ProceederReference">
+                                <span asp-validation-for="ProceederReference" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="ClientVisitDate" class="control-label">  تاریخ مراجعه موکل </label>
+                                <input type="text" class="form-control date" asp-for="ClientVisitDate"  dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), false, false)" style="width: 100%; text-align: center">
+                                <span asp-validation-for="ClientVisitDate" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Reqester" class="control-label"> خواهان </label>
+                                <select class="form-control select2-tag" asp-for="Reqester" asp-items='new SelectList(Model.Employees, "Id", "EmployeeFullName")'>
+                                    <option value="">انتخاب خواهان ...</option>
+                                    
+                                </select>
+                                <span asp-validation-for="Reqester" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Summoned" class="control-label"> خوانده </label>
+                                <select class="form-control select2-tag" asp-for="Summoned" asp-items='new SelectList(Model.Employers, "Id", "FullName")'>
+                                    <option value="">انتخاب خوانده ...</option>
+
+                                </select>
+                                <span asp-validation-for="Summoned" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Client" class="control-label"> موکل </label>
+                                <select class="form-control select2-tag" asp-for="Client">
+                                    <option value="">لطفا انتخاب کنید ...</option>
+                                    <option value="1">خواهان</option>
+                                    <option value="2">خوانده</option>
+                                </select>
+                                <span asp-validation-for="Client" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="HasMandate" class="control-label"> درج وکالتنامه </label>
+                                <select class="form-control select2-tag" asp-for="HasMandate">
+                                    <option value="2">دارد</option>
+                                    <option value="1">ندارد</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="FileClass" class="control-label"> کلاسه پرونده </label>
+                                <input type="text" class="form-control" asp-for="FileClass">
+                                <span asp-validation-for="FileClass" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label"> توضیحات </label>
+                                <textarea class="form-control" asp-for="Description" style="width: 100%"></textarea>
+                                <span asp-validation-for="Description" class="error"></span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+             <div id="diagnosis" class="row">
+                 <input asp-for="createDiagnosisBoard.Id" hidden/>
+                 <input asp-for="createDiagnosisBoard.File_Id" hidden/>
+                 <input asp-for="createDiagnosisBoard.BoardType_Id" hidden/>
+                <fieldset class="m-b-30" style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> هیات تشخیص </legend>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label asp-for="createDiagnosisBoard.DisputeResolutionPetitionDate" class="control-label"> تاریخ ثبت دادخواست تشخیص </label>
+                                <input type="text" class="form-control date" asp-for="createDiagnosisBoard.DisputeResolutionPetitionDate" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this), false, true)" style="width: 100%; text-align: center">
+                                <span asp-validation-for="createDiagnosisBoard.DisputeResolutionPetitionDate" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"></div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label asp-for="createDiagnosisBoard.Branch" class="control-label"> شعبه </label>
+                                <input type="text" class="form-control" asp-for="createDiagnosisBoard.Branch">
+                                <span asp-validation-for="createDiagnosisBoard.Branch" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label asp-for="createDiagnosisBoard.BoardChairman" class="control-label"> نام رییس هیات  </label>
+                                <input type="text" class="form-control" asp-for="createDiagnosisBoard.BoardChairman">
+                                <span asp-validation-for="createDiagnosisBoard.BoardChairman" class="error"></span>
+                            </div>
+                        </div>
+
+                        @for(var i = 0; i < @Model.createDiagnosisPS.Count; i++)
+                        {
+                            var id = "createDiagnosisPS_" + i + "__Time";
+
+                            <div class="d-flex">
+                                <div class="col-md-5 proceedingSession">
+                                    <div class="form-group">
+                                        <label asp-for="createDiagnosisPS[i].Date" class="control-label dateLabel"> تاریخ نوبت @turns[i] رسیدگی </label>
+                                        <input type="text" class="form-control date" asp-for="createDiagnosisPS[i].Date"  dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this))" style="width: 100%; text-align: center">
+                                        <span asp-validation-for="createDiagnosisPS[i].Date" class="error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 proceedingSession">
+                                    <div class="form-group">
+                                        <label asp-for="createDiagnosisPS[i].Time" class="control-label"> ساعت برگزاری جلسه </label>
+                                        <input type="text" class="form-control" asp-for="createDiagnosisPS[i].Time">
+                                        <span asp-validation-for="createDiagnosisPS[i].Time" class="error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" onclick="removeRow(this, 'diagnosis');">
+                                    <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 28px; cursor: pointer;"></i>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="col-xs-12 proceedingSession"></div>
+                        <div class="col-md-8 addProceedingSessionFormButton"></div>
+                        <div class="col-md-4">
+                            <a onclick="addNewFormDiagnosisPS('diagnosis')" class="btn btn-rounded btn-success waves-effect waves-light col-xs-12 m-b-30">+ نوبت جدید برگزاری</a>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="createDiagnosisBoard.ExpertReport" class="control-label"> گزارش کارشناس </label>
+                                <textarea class="form-control" asp-for="createDiagnosisBoard.ExpertReport"></textarea>
+                                <span asp-validation-for="createDiagnosisBoard.ExpertReport" class="error"></span>
+                            </div>
+                        </div>
+                        @*<div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="createDiagnosisPetition.PetitionIssuanceDate" class="control-label"> تاریخ دادنامه </label>
+                                <input type="text" class="form-control" asp-for="createDiagnosisPetition.PetitionIssuanceDate" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
+                                <span asp-validation-for="createDiagnosisPetition.PetitionIssuanceDate" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="createDiagnosisPetition.TotalPenalty" class="control-label"> جمع نهایی دادنامه </label>
+                                <input type="text" class="form-control" asp-for="createDiagnosisPetition.TotalPenalty" readonly>
+                                <span asp-validation-for="createDiagnosisPetition.TotalPenalty" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#showmodal=@Url.Page("./Index", "CreateOrEditPetition", new { fileId = @Model.Id, boardTypeId = 1 })"  class="btn btn-rounded btn-warning waves-effect waves-light col-xs-12 m-t-20">درج دادنامه</a>
+                        </div>*@
+                    </div>
+                </fieldset>
+            </div>
+            <div id="disputeResolution" class="row">
+                <input asp-for="createDisputeResolutionBoard.Id" hidden/>
+                 <input asp-for="createDisputeResolutionBoard.File_Id" hidden/>
+                 <input asp-for="createDisputeResolutionBoard.BoardType_Id" hidden/>
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> هیات حل اختلاف </legend>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label asp-for="createDisputeResolutionBoard.DisputeResolutionPetitionDate" class="control-label"> تاریخ ثبت دادخواست حل اختلاف </label>
+                                <input type="text" class="form-control date" asp-for="createDisputeResolutionBoard.DisputeResolutionPetitionDate"  dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this))" style="width: 100%; text-align: center">
+                                <span asp-validation-for="createDisputeResolutionBoard.DisputeResolutionPetitionDate" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"></div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label asp-for="createDisputeResolutionBoard.Branch" class="control-label"> شعبه </label>
+                                <input type="text" class="form-control" asp-for="createDisputeResolutionBoard.Branch">
+                                <span asp-validation-for="createDisputeResolutionBoard.Branch" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label asp-for="createDisputeResolutionBoard.BoardChairman" class="control-label"> نام رییس هیات  </label>
+                                <input type="text" class="form-control" asp-for="createDisputeResolutionBoard.BoardChairman">
+                                <span asp-validation-for="createDisputeResolutionBoard.BoardChairman" class="error"></span>
+                            </div>
+                        </div>
+                        @for(var i = 0; i < @Model.createDisputeResolutionPS.Count; i++)
+                        {
+                            var id = "createDisputeResolutionPS_" + i + "__Time";
+
+                            <div class="d-flex">
+                                <div class="col-md-5 proceedingSession">
+                                    <div class="form-group">
+                                        <label asp-for="createDisputeResolutionPS[i].Date" class="control-label dateLabel"> تاریخ نوبت @turns[i] رسیدگی </label>
+                                        <input type="text" class="form-control date" asp-for="createDisputeResolutionPS[i].Date"  dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this))" style="width: 100%; text-align: center">
+                                        <span asp-validation-for="createDisputeResolutionPS[i].Date" class="error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 proceedingSession">
+                                    <div class="form-group">
+                                        <label asp-for="createDisputeResolutionPS[i].Time" class="control-label"> ساعت برگزاری جلسه </label>
+                                        <input type="text" class="form-control" asp-for="createDisputeResolutionPS[i].Time">
+                                        <span asp-validation-for="createDisputeResolutionPS[i].Time" class="error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" onclick="removeRow(this, 'disputeResolution');">
+                                    <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 28px; cursor: pointer;"></i>
+                                </div>
+                            </div>
+                        }
+                        <div class="col-xs-12 proceedingSession"></div>
+                        <div class="col-md-8 addProceedingSessionFormButton"></div>
+                        <div class="col-md-4">
+                            <a onclick="addNewFormDisputeResolutionPS('disputeResolution')" class="btn btn-rounded btn-success waves-effect waves-light col-xs-12 m-b-30">+ نوبت جدید برگزاری</a>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="createDisputeResolutionBoard.ExpertReport" class="control-label"> گزارش کارشناس </label>
+                                <textarea class="form-control" asp-for="createDisputeResolutionBoard.ExpertReport"></textarea>
+                                <span asp-validation-for="createDisputeResolutionBoard.ExpertReport" class="error"></span>
+                            </div>
+                        </div>
+                        @*<div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="createDisputeResolutionPetition.PetitionIssuanceDate" class="control-label"> تاریخ دادنامه </label>
+                                <input type="text" class="form-control" asp-for="createDisputeResolutionPetition.PetitionIssuanceDate"  dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: center">
+                                <span asp-validation-for="createDisputeResolutionPetition.PetitionIssuanceDate" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="createDisputeResolutionPetition.TotalPenalty" class="control-label"> جمع نهایی دادنامه </label>
+                                <input type="text" class="form-control" asp-for="createDisputeResolutionPetition.TotalPenalty" readonly>
+                                <span asp-validation-for="createDisputeResolutionPetition.TotalPenalty" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#showmodal=@Url.Page("./Index", "CreateOrEditPetition", new { fileId = @Model.Id, boardTypeId = 2 })"  class="btn btn-rounded btn-warning waves-effect waves-light col-xs-12 m-t-20">درج دادنامه</a>
+                        </div>*@
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div style="float: left">
+                <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal" onclick="location.reload();">بستن</button>
+                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="float: left">ذخیره</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    
+    $(document).ready(function()  {
+
+        //CreateDatePicker('#ClientVisitDate', null);
+        //CreateDatePicker('#createDiagnosisBoard_DisputeResolutionPetitionDate', null);
+
+        //var i = 0;
+        //$(".proceedingSession").each(function() {
+        //    var minDate = false;
+            
+        //    if(i != 0){
+        //        const prevId = i - 1;
+        //        minDate = $(`#createDiagnosisPS_${prevId}__Date`).val();
+        //    }
+
+        //    CreateDatePicker(`#createDiagnosisPS_${i}__Date`, null, minDate)
+        //    CreateTimePicker(`#createDiagnosisPS_${i}__Time`,false)
+
+        //    i++;
+        //})
+        
+        //CreateDatePicker('#createDisputeResolutionBoard_DisputeResolutionPetitionDate', null);
+        
+        //i = 0;
+        //$(".proceedingSession").each(function() {
+        //    var minDate = false;
+            
+        //    if(i != 0){
+        //        const prevId = i - 1;
+        //        minDate = $(`#createDisputeResolutionPS_${prevId}__Date`).val();
+        //    }
+
+        //    CreateDatePicker(`#createDisputeResolutionPS_${i}__Date`, null, minDate)
+        //    CreateTimePicker(`#createDisputeResolutionPS_${i}__Time`,false)
+
+        //    i++;
+        //})
+    })
+
+    $(".select2-tag").select2({
+        language: "fa",
+        dir: "rtl"
+    });
+    
+    //$('#ClientVisitDate').persianDatepicker({
+    //    format: 'YYYY/MM/DD',
+    //    initialValueType: 'persian',
+    //    initialValue: false,
+    //    //'position': [-270, 25],
+    //    autoClose: true,
+
+    //    calendar: {
+    //        persian: {
+    //            leapYearMode: 'astronomical'
+    //        }
+    //    }
+    //});
+
+    //$('#createDiagnosisBoard_DisputeResolutionPetitionDate').persianDatepicker({
+    //    format: 'YYYY/MM/DD',
+    //    initialValueType: 'persian',
+    //    initialValue: false,
+    //    'position': [-270, 25],
+    //    autoClose: true,
+
+    //    calendar: {
+    //        persian: {
+    //            leapYearMode: 'astronomical'
+    //        }
+    //    }
+    //});
+
+    //$('#createDiagnosisPS_0__Date').persianDatepicker({
+    //    format: 'YYYY/MM/DD',
+    //    initialValueType: 'persian',
+    //    initialValue: false,
+    //    'position': [-270, 25],
+    //    autoClose: true,
+
+    //    calendar: {
+    //        persian: {
+    //            leapYearMode: 'astronomical'
+    //        }
+    //    }
+    //});
+    
+    //$("#createDiagnosisPS_0__Time").persianDatepicker({
+    //    initialValue: false,
+    //    format: 'HH:mm',
+    //    "onlyTimePicker": true,
+        
+    //    "timePicker": {
+    //        "enabled": true,
+    //        "step": 1,
+    //        "hour": {
+    //          "enabled": true,
+    //          "step": null
+    //        },
+    //        "minute": {
+    //          "enabled": true,
+    //          "step": null
+    //        },
+    //        "second": {
+    //          "enabled": false,
+    //          "step": null
+    //        },
+    //        "meridian": {
+    //          "enabled": false,
+    //        }
+    //    }
+    //});
+
+    //$('#createDisputeResolutionBoard_DisputeResolutionPetitionDate').persianDatepicker({
+    //    format: 'YYYY/MM/DD',
+    //    initialValueType: 'persian',
+    //    initialValue: false,
+    //    'position': [-270, 25],
+    //    autoClose: true,
+
+    //    calendar: {
+    //        persian: {
+    //            leapYearMode: 'astronomical'
+    //        }
+    //    }
+    //});
+
+    //$('#createDisputeResolutionPS_0__Date').persianDatepicker({
+    //    format: 'YYYY/MM/DD',
+    //    initialValueType: 'persian',
+    //    initialValue: false,
+    //    'position': [-270, 25],
+    //    autoClose: true,
+
+    //    calendar: {
+    //        persian: {
+    //            leapYearMode: 'astronomical'
+    //        }
+    //    }
+    //});
+    
+    //$("#createDisputeResolutionPS_0__Time").persianDatepicker({
+    //    initialValue: false,
+    //    format: 'HH:mm',
+    //    "onlyTimePicker": true,
+        
+    //    "timePicker": {
+    //        "enabled": true,
+    //        "step": 1,
+    //        "hour": {
+    //          "enabled": true,
+    //          "step": null
+    //        },
+    //        "minute": {
+    //          "enabled": true,
+    //          "step": null
+    //        },
+    //        "second": {
+    //          "enabled": false,
+    //          "step": null
+    //        },
+    //        "meridian": {
+    //          "enabled": false,
+    //        }
+    //    }
+    //});
+
+</script>
+<script>
+    
+    //var DiagnosisPSCounter = @Model.createDiagnosisPS.Count - 1;
+    //var DisputeResolutionPSCounter = @Model.createDisputeResolutionPS.Count - 1;
+    const turns = ['اول', 'دوم', 'سوم', 'چهارم', 'پنجم', 'ششم', 'هفتم', 'هشتم', 'نهم', 'دهم']
+
+    function addNewFormDiagnosisPS(boardType) {
+
+        var DiagnosisPSCounter = ($("#diagnosis .proceedingSession").length - 1) / 2;
+               
+        if (DiagnosisPSCounter >= 9)
+            return;
+
+        sortPS('diagnosis')
+
+        const label = 'تاریخ نوبت ' + turns[DiagnosisPSCounter] + ' رسیدگی';
+         
+        const html = `<div class="row">
+                        <div class="col-md-5 proceedingSession">
+                            <div class="form-group">
+                                <label class="control-label dateLabel" for="createDiagnosisPS_${DiagnosisPSCounter}__Date"> ${label} </label>
+                                <input type="text" class="form-control createDiagnosisPS_Date date" data-val="true" data-val-required="فیلد الزامی است" 
+                                id="createDiagnosisPS_${DiagnosisPSCounter}__Date" name="createDiagnosisPS[${DiagnosisPSCounter}].Date" value=""  dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this))" style="width: 100%; text-align: center">
+                                <span class="error field-validation-valid" data-valmsg-for="createDiagnosisPS[${DiagnosisPSCounter}].Date" 
+                                data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-5 proceedingSession">
+                            <div class="form-group">
+                                <label class="control-label" for="createDiagnosisPS_${DiagnosisPSCounter}__Time"> ساعت برگزاری جلسه </label>
+                                <input type="text" class="form-control" data-val="true" data-val-required="فیلد الزامی است" 
+                                id="createDiagnosisPS_${DiagnosisPSCounter}__Time" name="createDiagnosisPS[${DiagnosisPSCounter}].Time">
+                                <span class="error field-validation-valid" data-valmsg-for="createDiagnosisPS[${DiagnosisPSCounter}].Time" 
+                                data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-2" onclick="removeRow(this, 'diagnosis');">
+                            <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 28px; cursor: pointer;"></i>
+                        </div>
+                    </div>`
+                        
+        $(html).insertBefore("#" + boardType + " .addProceedingSessionFormButton");
+        
+        const prevId = DiagnosisPSCounter - 1;
+        //const minDate = $(`#createDiagnosisPS_${prevId}__Date`).val();
+        
+        //CreateDatePicker(`#createDiagnosisPS_${DiagnosisPSCounter}__Date`, null, minDate)
+        //CreateTimePicker(`#createDiagnosisPS_${DiagnosisPSCounter}__Time`,false);
+
+        //$(`#createDiagnosisPS_${DiagnosisPSCounter}__Time`).persianDatepicker({
+        //    initialValue: false,
+        //    format: 'HH:mm',
+        //    "onlyTimePicker": true,
+            
+        //    "timePicker": {
+        //        "enabled": true,
+        //        "step": 1,
+        //        "hour": {
+        //          "enabled": true,
+        //          "step": null
+        //        },
+        //        "minute": {
+        //          "enabled": true,
+        //          "step": null
+        //        },
+        //        "second": {
+        //          "enabled": false,
+        //          "step": null
+        //        },
+        //        "meridian": {
+        //          "enabled": false,
+        //        }
+        //    }
+
+        //});
+        //$(`#createDiagnosisPS_${DiagnosisPSCounter}__Time`).val(new persianDate().format("HH:mm"));
+
+    }
+    
+    function addNewFormDisputeResolutionPS(boardType) 
+    {
+        var DisputeResolutionPSCounter = ($("#disputeResolution .proceedingSession").length - 1) / 2;
+        
+        if (DisputeResolutionPSCounter >= 9)
+            return;
+
+        sortPS('disputeResolution')
+
+        //DisputeResolutionPSCounter++;
+
+        const label = 'تاریخ نوبت ' + turns[DisputeResolutionPSCounter] + ' رسیدگی';
+        
+        const html = `<div class="row">
+                        <div class="col-md-5 proceedingSession">
+                            <div class="form-group">
+                                <label class="control-label dateLabel" for="createDisputeResolutionPS_${DisputeResolutionPSCounter}__Date"> ${label} </label>
+                                <input type="text" class="form-control date" data-val="true" data-val-required="فیلد الزامی است" 
+                                id="createDisputeResolutionPS_${DisputeResolutionPSCounter}__Date" 
+                                name="createDisputeResolutionPS[${DisputeResolutionPSCounter}].Date" value=""  dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="CompareDates($(this))" style="width: 100%; text-align: center">
+                                <span class="error field-validation-valid" data-valmsg-for="createDisputeResolutionPS[${DisputeResolutionPSCounter}].Date" 
+                                data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-5 proceedingSession">
+                            <div class="form-group">
+                                <label class="control-label" for="createDisputeResolutionPS_${DisputeResolutionPSCounter}__Time"> ساعت برگزاری جلسه </label>
+                                <input type="text" class="form-control" data-val="true" data-val-required="فیلد الزامی است" 
+                                id="createDisputeResolutionPS_${DisputeResolutionPSCounter}__Time" 
+                                name="createDisputeResolutionPS[${DisputeResolutionPSCounter}].Time">
+                                <span class="error field-validation-valid" data-valmsg-for="createDisputeResolutionPS[${DisputeResolutionPSCounter}].Time" 
+                                data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-2" onclick="removeRow(this, 'disputeResolution');">
+                            <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 28px; cursor: pointer;"></i>
+                        </div>
+                    </div>`
+                        
+        $(html).insertBefore("#" + boardType + " .addProceedingSessionFormButton");
+        
+        const prevId = DisputeResolutionPSCounter - 1;
+        //const minDate = $(`#createDisputeResolutionPS_${prevId}__Date`).val();
+        
+        //CreateDatePicker(`#createDisputeResolutionPS_${DisputeResolutionPSCounter}__Date`, null, minDate)
+        //CreateTimePicker(`#createDisputeResolutionPS_${DisputeResolutionPSCounter}__Time`,false);
+        
+        //$(`#createDisputeResolutionPS_${DisputeResolutionPSCounter}__Date`).persianDatepicker({
+        //    format: 'YYYY/MM/DD',
+        //    initialValueType: 'persian',
+        //    initialValue: false,
+        //    'position': [-270, 25],
+        //    autoClose: true,
+
+        //    calendar: {
+        //        persian: {
+        //            leapYearMode: 'astronomical'
+        //        }
+        //    }
+        //});
+        
+        //$(`#createDisputeResolutionPS_${DisputeResolutionPSCounter}__Time`).persianDatepicker({
+        //    initialValue: false,
+        //    format: 'HH:mm',
+        //    "onlyTimePicker": true,
+            
+        //    "timePicker": {
+        //        "enabled": true,
+        //        "step": 1,
+        //        "hour": {
+        //          "enabled": true,
+        //          "step": null
+        //        },
+        //        "minute": {
+        //          "enabled": true,
+        //          "step": null
+        //        },
+        //        "second": {
+        //          "enabled": false,
+        //          "step": null
+        //        },
+        //        "meridian": {
+        //          "enabled": false,
+        //        }
+        //    }
+        //});
+        //$(`#createDisputeResolutionPS_${DisputeResolutionPSCounter}__Time`).val(new persianDate().format("HH:mm"));
+
+    }
+    
+    function CheckArchiveNo(){
+        const archiveNo = document.getElementById("ArchiveNo").value;
+        //console.log(archiveNo);
+        
+        $.ajax({
+            type: "GET",
+            //url: "/Admin/File/FilePage/Index?handler=CheckUniqueArchiveNo",
+            url: '@Url.Page("./Index", "CheckUniqueArchiveNo")',
+            //beforeSend: function (xhr) {
+            //    xhr.setRequestHeader("XSRF-TOKEN",
+            //        $('input:hidden[name="__RequestVerificationToken"]').val());
+            //},
+            data: JSON.stringify({
+                id: parseInt(archiveNo)
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+
+    }
+
+
+    
+    //function checkTime(element){
+
+    //    if(!element.value)
+    //        InsertTime("#" + element.id);
+
+    //}
+
+</Script>
+<script>
+    function validDate(inputField) {
+
+        var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (var i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+        let getdate = inputField.value;
+
+        var m1, m2;
+        var y1, y2, y3, y4;
+        var d1, d2;
+        var s1, s2;
+        for (var i = 0; i < getdate.length; i++) {
+            if (i === 0) {
+                y1 = fixNumbers(getdate[i]);
+            }
+            if (i === 1) {
+                y2 = fixNumbers(getdate[i]);
+            }
+            if (i === 2) {
+                y3 = fixNumbers(getdate[i]);
+            }
+            if (i === 3) {
+                y4 = fixNumbers(getdate[i]);
+            }
+            if (i === 4) {
+                s1 = fixNumbers(getdate[i]);
+            }
+            if (i === 5) {
+                m1 = fixNumbers(getdate[i]);
+            }
+            if (i === 6) {
+                m2 = fixNumbers(getdate[i]);
+            }
+            if (i === 7) {
+                s2 = fixNumbers(getdate[i]);
+            }
+            if (i === 8) {
+                d1 = fixNumbers(getdate[i]);
+            }
+            if (i === 9) {
+                d2 = fixNumbers(getdate[i]);
+            }
+
+        }
+        var yRes = y1 + y2 + y3 + y4;
+        var year = parseInt(yRes);
+        var mRes = m1 + m2;
+        var month = parseInt(mRes);
+        var dRes = d1 + d2;
+        var day = parseInt(dRes);
+        var FixResult = yRes + s1 + mRes + s2 + dRes;
+
+
+        var isValid = /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(FixResult);
+
+
+        if (isValid) {
+            inputField.style.backgroundColor = '#a6e9a6';
+            $("button[type=submit]").attr('disabled', false);
+            validCheck = true;
+
+        } else {
+            inputField.style.backgroundColor = '#f94c4c';
+            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را بصورت صحیح وارد کنید");
+            $("button[type=submit]").attr('disabled', true)
+            validCheck = false;
+
+        }
+        return validCheck;
+
+    }
+</script>

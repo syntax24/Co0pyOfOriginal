@@ -1,0 +1,408 @@
+﻿@page
+@using CompanyManagment.App.Contracts.PersonalContractingParty
+@using _0_Framework.Application
+@using Microsoft.CodeAnalysis.CSharp.Syntax
+@model ServiceHost.Areas.Admin.Pages.Company.YearlySalaries.IndexModel
+
+@{
+    //string colaps = "in";
+    //string act = "active";
+    int i = 1;
+    int titleCounter = 1;
+
+
+
+}
+
+@{
+    Layout = "Shared/_AdminLayout";
+    ViewData["title"] = "مقادیر سالانه";
+    <style>
+        .thh0 {
+            width: 8px !important;
+        }
+
+        .thh {
+            width: 40px !important;
+        }
+
+        .thh2 {
+            width: 130px !important;
+        }
+
+        .thhNastionalId {
+            width: 30px !important;
+        }
+
+        .inpt {
+            width: 100%;
+            border: 1px solid #c7c7c7;
+        }
+
+        .searchpanel {
+            background-color: #747272;
+        }
+        select {
+            cursor: pointer;
+        }
+    </style>
+}
+@*@section Styles
+    {
+
+        <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
+    }*@
+<div class="row">
+
+
+    <div class="row">
+        <div class="col-md-12 m-r-10">
+
+            <p class="pull-right">
+                <a id="btnPopModal" href="#showmodal=@Url.Page("/Company/YearlySalaries/Index", "Create")" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important;  "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> ایجاد مقادیر جدید </a>
+
+            </p>
+
+        </div>
+    </div>
+
+
+    <div class="col-lg-12">
+        <div class="panel-group panel-group-joined" id="accordion-test">
+
+
+
+            <div class="panel panel-default" style="border-radius: 15px !important;">
+                <div class="panel-heading" style="background-color: #545353 !important">
+                    <h4 class="panel-title" style="color: #edebeb !important; display: inline;">
+                        <a data-toggle="collapse" data-parent="#accordion-test" href="#collapseOne" class="collapsed" style="display: inline;">
+                            جستجوی مقادیر سالانه
+                        </a>
+                    </h4>
+
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in ">
+                    <div class="panel-body" style="padding-top: 15px; padding-bottom: 15px;">
+                        @*===================================================================================================================*@
+
+
+
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                <form class="form-inline" role="form" method="get" autocomplete="off">
+                                    <div class="form-group col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-6 pull-right">
+                                                <label class="sr-only" asp-for="SearchModel.year"></label>
+                                                <input class="form-control inpt" autocomplete="off" asp-for="SearchModel.year" placeholder="  سال " style="width: 100%">
+                                            </div>
+
+
+
+                                        </div>
+
+
+                                        <div class="row" style="margin-top: 15px">
+
+
+                                            <div class="col-lg-9">
+
+
+
+
+
+
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; background-color: #950000; border-color: #950000; font-family: 'Web_Yekan' !important; margin-left: -3px"> <i class="fa fa-search" style="padding-left: 3px; font-size: 14px;"></i> جستجو</button>
+                                                <a class="btn btn-info btn-rounded waves-effect waves-light m-b-5" style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; background-color: #545353; border-color: #545353; font-family: 'Web_Yekan' !important;" asp-page="./Index">مشاهده همه</a>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+
+                                </form>
+
+                            </div>
+
+
+                        </div>
+
+                        @*==================================================================personal=====*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست مقادیر</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <table id="datatable" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+
+
+                                    <th style="font-size: 10px !important">#</th>
+
+                                    <th style="font-size: 10px !important">سال</th>
+                                    <th style="font-size: 10px !important"> از تاریخ </th>
+
+                                    <th style="font-size: 10px !important"> تا تاریخ </th>
+
+                                    @foreach (var item in Model.TitleList)
+                                    {
+                                        if (item != null)
+                                        {
+                                            <th style="font-size: 10px !important"> @item</th>
+
+
+                                            {
+                                                titleCounter++;
+                                            }
+
+                                        }
+
+                                    }
+                                    @*@for (titleCounter = 0; titleCounter <= Model.TitleList.Count && Model.TitleList != null; titleCounter++)
+                                        {
+                                            <th style="font-size: 10px !important"> @Model.TitleList[titleCounter] @titleCounter</th>
+                                        }*@
+                                    <th style="font-size: 10px !important">عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.YearlySalaries)
+                                {
+
+
+                                    <tr>
+                                        @*<td style="display: none">@item.Year </td>*@
+                                        <td style="font-size: 12px !important;text-align: center">@i </td>
+
+                                        <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: center">
+
+                                            @item.Year
+
+
+
+                                        </td>
+
+                                        <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: center">
+
+                                            @item.StartDate
+
+
+                                        </td>
+                                        <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: center">
+
+                                            @item.EndDate
+
+
+                                        </td>
+                                        @{ int itemCounter = 0;}
+                                        @foreach (var it in Model.YearlysalaryItemss)
+                                        {
+
+                                            if (it.YearlySalaryId == item.Id && itemCounter < titleCounter - 1)
+                                            {
+
+
+                                                <td style="font-family: 'IranText' !important; font-size: 12px !important; text-align: center">
+                                                    @if (it.ValueType == "Percentage")
+                                                    {@it.ItemValue <spna>%</spna>}
+                                                else
+                                                {@it.ItemValue.ToMoney()}
+                                                </td>
+                                                {
+                                                    itemCounter++;
+                                                }
+
+
+
+
+                                            }
+
+
+                                        }
+
+
+                                        @{
+                                            int minus = titleCounter - itemCounter;
+                                            if (itemCounter < titleCounter)
+                                            {
+                                                for (int s = 1; s <= minus - 1; s++)
+                                                {
+                                                    <td style="font-family: 'IranText' !important; font-size: 12px !important; text-align: center">-</td>
+                                                }
+                                            }
+                                        }
+
+
+
+
+
+
+
+
+
+
+                                        @{
+                                            i++;
+                                        }
+
+                                        <td style="float: unset">
+
+                                            <div class="row">
+
+                                                <div class="col-md-12" style="text-align: center">
+
+                                                    <a class="btn btn-warning pull-in"
+                                                       href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                </div>
+
+
+                                            </div>
+
+
+
+
+
+                                        </td>
+
+                                    </tr>
+
+
+
+
+                                }
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@section Script {
+    <script src="~/AdminTheme/assets/js/site3.js"></script>
+    <script src="~/adminTheme/assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/adminTheme/assets/datatables/dataTables.bootstrap.js"></script>
+
+    @*<script src="~/lib/select2/js/select2.js"></script>
+        <script src="~/lib/select2/js/i18n/fa.js"></script>
+        <script>
+            $(document).ready(function () {
+                $(".select-city").select2({
+                    language: "fa",
+                    dir: "rtl"
+                });
+            })
+        </script>*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datatable').dataTable({
+                "lengthMenu": [[50, 25, 10, 100, -1], [50, 25, 10, 100, "All"]]
+            });
+        });
+
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#datatable2').dataTable(
+                {
+                    "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
+                });
+        });
+    </script>
+    <script>
+        $('.persianDateInputy').persianDatepicker({
+            format: 'YYYY',
+            initialValueType: 'persian',
+            initialValue: false,
+
+
+            autoClose: true
+        });
+    </script>
+    @*<script>
+            $("#myTab a").click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+
+            });
+
+            $("#myTab2 a").click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+
+            });
+            // store the currently selected tab in the hash value
+            $("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
+                var id = $(e.target).attr("href").substr(1);
+                window.location.hash = id;
+            });
+
+            // on load of the page: switch to the currently selected tab
+            var hash = window.location.hash;
+            $('#myTab a[href="' + hash + '"]').tab('show', 'active');
+            var hash2 = window.location.hash;
+            $('#myTab2 a[href="' + hash2 + '"]').tab('show', 'active');
+
+
+
+
+        </script>*@
+
+
+
+
+}
+
+
+
+

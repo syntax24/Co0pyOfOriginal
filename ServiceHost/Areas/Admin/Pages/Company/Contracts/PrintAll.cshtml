@@ -1,0 +1,490 @@
+﻿@model CompanyManagment.App.Contracts.Contract.GroupPrintViewModel
+@{
+    <style>
+        .modal .modal-dialog .modal-content {
+            background-color: white !important;
+        }
+        .container2 {
+            height: 297mm;
+            padding-top: 15px;
+        }
+        .container2:last-of-type {
+            height: 280mm;
+        }
+        .modal-dialog {
+            max-width: 100%;
+            width: 22.4cm;
+        }
+        /*  @@page {
+            size: 7in 9.25in;
+            margin: 27mm 16mm 27mm 16mm;
+        }*/
+        @@page {
+            size: A4;
+            margin: 0mm;
+            page-break-after: auto;
+        }
+
+        @@media screen {
+            #printSection {
+                display: none;
+            }
+        }
+
+        .print:last-child {
+            page-break-after: auto !important;
+        }
+
+        @@media print {
+
+            body * {
+                visibility: hidden;
+                page-break-after: auto;
+            }
+
+            html, body {
+                height: 100%;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: hidden;
+        
+            }
+
+            #printSection, #printSection * {
+                visibility: visible;
+                page-break-after: auto;
+            }
+
+            footer {
+                page-break-after: auto;
+                display: none;
+            }
+
+            header {
+                display: none;
+            }
+
+            #printSection {
+                position: absolute;
+                left: 0;
+                page-break-after: auto;
+                top: 0;
+            }
+
+            .head {
+                background-color: #cccccc !important;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .radio-info input[type="radio"]:checked + label::after {
+                background-color: black !important;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+
+        .col-xs-4, .col-xs-3, .col-xs-9,
+        .col-xs-2, .col-xs-10, .col-xs-6,
+        .col-xs-8, .col-xs-5, .col-xs-7,
+        .col-xs-offset-1 {
+            float: right !important;
+        }
+
+        h5, h6 {
+            margin: 5px 0px !important;
+        }
+
+        body {
+            font-size: 11px;
+        }
+
+        .radio {
+            display: inline-block;
+            margin-top: -10px !important;
+        }
+
+            .radio input[type=radio] {
+                position: unset !important;
+            }
+
+        textarea.form-control {
+            height: 100px !important;
+        }
+
+        .fontBold {
+            font-family: IranYekanEXBold !important;
+        }
+
+        .fontNumber {
+            font-family: IranText !important;
+        }
+
+        .modal-body {
+            height: 99%;
+        }
+
+        .row {
+            margin-right: -10px !important;
+            margin-left: -10px !important;
+        }
+    </style>
+}
+<div class="modal-header" style="border-bottom: unset">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+</div>
+
+<form asp-page="./Index" asp-page-handler="PrintAll"
+      method="post"
+      data-ajax="true"
+      data-callback=""
+      data-action="Refresh"
+      enctype="multipart/form-data">
+    <div class="modal-footer" style="border-top: unset; padding: 1px 15px 10px;">
+
+        <button id="btnPrint" type="button" class="btn btn-success btn-rounded waves-effect waves-light">پرینت قرارداد </button>
+        <button type="button" class="btn btn-warning btn-rounded waves-effect waves-light m-b-10" data-dismiss="modal">بستن فرم</button>
+    </div>
+    <div class="modal-body print" id="printThis">
+
+        @foreach (var item in @Model.ContractList)
+        {
+            <div class="container container2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset style="border: 1px solid black; padding: revert; border-radius: 10px; height: 28cm; padding: 2mm">
+                            <div class="row" dir="rtl">
+                                <div class="col-xs-4 d-inline-block"><fieldset style="border: 1px solid black; border-radius: 10px; padding: 5px; margin-top: 5px; width: 62%;">شماره قرارداد :<span>&nbsp;</span> @item.ContractNo</fieldset></div>
+                                <div class="col-xs-4 d-inline-block text-center"><h4>قرارداد کار</h4></div>
+                                <div class="col-xs-4 d-inline-block"></div>
+                            </div>
+                            <div class="row text-center">
+                                <h5>این قرارداد به موجب ماده 10 قانون کار جمهوری اسلامی ایران بین کارفرما و کارگر منعقد می گردد</h5>
+                            </div>
+                            <div class="row m-t-5">
+                                <fieldset class="head" style="background-color: #ccc; border: 1px solid black; border-radius: 10px 10px 0px 0px; padding: 3px; margin: 4px 10px 0px 10px;"><h6 style="padding-right: 5px;">مشخصات کارفرما</h6></fieldset>
+                                <fieldset style="border: 1px solid black; border-top: 0px; border-radius: 0px 0px 10px 10px; padding: 3px; margin: 0px 10px;">
+                                    <div class="row" style="padding: 4px;">
+                                        <div class="col-xs-2 fontBold">آقای/خانم/شرکت :</div>
+                                        <div class="col-xs-10">
+                                            <div class="row">
+
+                                                @foreach (var Employer in item.Employers)
+                                                {
+
+                                                    if (Employer.NationalId == "*" || Employer.RegisterId == "*")
+                                                    {
+                                                        <div class="col-xs-4">@Employer.FullName</div>
+                                                        <div class="col-xs-4"><span class="fontBold">کـــــد مـــلی</span> : <span class="fontNumber"> @Employer.Nationalcode</span></div>
+                                                        <div class="col-xs-4">
+                                                            <span class="fontBold">شماره شناسنامه </span> :
+                                                            <span class="fontNumber">
+                                                                @Employer.IdNumber
+                                                            </span>
+                                                        </div>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="col-xs-4">@Employer.FullName </div>
+                                                        <div class="col-xs-4 "><span class="fontBold">شناسه ملی </span> : <span class="fontNumber">@Employer.NationalId</span></div>
+                                                        <div class="col-xs-4"><span class="fontBold">شماره ثـــــــــبــت </span> : <span class="fontNumber">@Employer.RegisterId</span></div>
+
+                                                    }
+
+                                                }
+
+
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="row" style="padding: 4px">
+
+                                        @foreach (var Wk in item.Workshops)
+                                        {
+
+                                            <div class="col-xs-6"><span class="fontBold">نــــــام کـــــــارگـــاه</span> : <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span> <span>@Wk.WorkshopName</span> </div>
+                                            <div class="col-xs-2"></div>
+                                            <div class="col-xs-4">
+                                                <span class="fontBold" style="margin-right: 41px;">کــــد کـــارگـاهـی</span> : <span>&nbsp;</span>
+                                                <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>@Wk.ArchiveCode</span>
+                                            </div>
+
+                                        }
+
+
+                                    </div>
+                                    <div class="row" style="padding: 4px">
+
+                                        @foreach (var wk2 in item.Workshops)
+                                        {
+
+                                            <div class="col-xs-12"><span class="fontBold">بــــــه نــــــشـــانـی</span> : <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span> <span>@wk2.Address</span> </div>
+
+                                        }
+
+
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="row m-t-5">
+                                <fieldset class="head" style="background-color: #ccc; border: 1px solid black; border-radius: 10px 10px 0px 0px; padding: 3px; margin: 4px 10px 0px 10px;"><h6 style="padding-right: 5px;">مشخصات پرسنل</h6></fieldset>
+                                <fieldset style="border: 1px solid black; border-top: 0px; border-radius: 0px 0px 10px 10px; padding: 3px; margin: 0px 10px; height: 3cm">
+                                    @foreach (var emloyee in item.Employees)
+                                    {
+                                        <div class="row" style="padding: 4px;">
+                                            <div class="col-xs-10">
+                                                <div class="row" style="padding: 4px;">
+                                                    <div class="col-xs-4"><span class="fontBold">آقــا/خــانم</span> : <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span> <span>@emloyee.EmployeeFullName</span></div>
+                                                    <div class="col-xs-4"><span class="fontBold"> کد ملی</span> : <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span> <span class="fontNumber">@emloyee.NationalCode</span></div>
+                                                    <div class="col-xs-4"><span class="fontBold">شماره شناسنامه</span> : <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span> <span class="fontNumber">@emloyee.IdNumber</span></div>
+                                                </div>
+                                                <div class="row" style="padding: 4px;">
+                                                    <div class="col-xs-4"><span class="fontBold">تاریخ تولد </span> : <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span> <span class="fontNumber">@emloyee.DateOfBirth</span></div>
+                                                    <div class="col-xs-4"><span class="fontBold"> نام پدر </span> : <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span> <span>@emloyee.FatherName</span></div>
+                                                    <div class="col-xs-4"><span class="fontBold">میزان تحصیـلات </span> : <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span> <span>@emloyee.FieldOfStudy</span></div>
+                                                </div>
+                                                <div class="row" style="padding: 4px;">
+                                                    <div class="col-xs-8"><span class="fontBold"> بـه نـشانی </span> : <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span> <span>@emloyee.Address</span></div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <span style="width: 2cm; height: 2.5cm; border: 1px solid #999595; border-radius: 7px; position: absolute; left: 15px;">
+                                                    <h5 style="text-align: center; margin-top: 20px !important; color: #a5a9a9 !important; line-height: 1.5;">
+                                                        عکس<br /> پرسنل
+                                                    </h5>
+                                                </span>
+                                            </div>
+
+                                        </div>
+
+
+
+
+                                    }
+                                </fieldset>
+                            </div>
+                            <div class="row m-t-5">
+                                <fieldset class="head" style="background-color: #ccc; border: 1px solid black; border-radius: 10px 10px 0px 0px; padding: 3px; margin: 4px 10px 0px 10px;"><h6 style="padding-right: 5px;">مدت و نوع قرارداد </h6></fieldset>
+                                <fieldset style="border: 1px solid black; border-top: 0px; border-radius: 0px 0px 10px 10px; padding: 3px; margin: 0px 10px;">
+                                    <div class="row" style="padding: 4px;">
+                                        <div class="col-xs-4">
+                                            <span class="fontBold"> نوع قرارداد </span> : <span>&nbsp;</span><span>&nbsp;</span>
+
+                                            <span class="radio-info">
+                                                @if (item.ContractType == "دائم")
+                                                {
+                                                    <input style="vertical-align: sub;" type="radio" id="inlineRadio3" name="@item.Id" checked="checked">
+                                                    <label for="inlineRadio3"> دائم </label>
+                                                }
+                                                else
+                                                {
+                                                    <input style="vertical-align: sub;" type="radio" id="inlineRadio3" name="@item.Id">
+                                                    <label for="inlineRadio3"> دائم </label>
+                                                }
+
+
+                                            </span><span>&nbsp;</span><span>&nbsp;</span>
+                                            <span class="radio-info">
+                                                @if (item.ContractType == "موقت")
+                                                {
+                                                    <input style="vertical-align: sub;" type="radio" id="inlineRadio3" name="@item.Id" checked="checked">
+                                                    <label for="inlineRadio3"> موقت </label>
+                                                }
+                                                else
+                                                {
+                                                    <input style="vertical-align: sub;" type="radio" id="inlineRadio3" name="@item.Id">
+                                                    <label for="inlineRadio3"> موقت </label>
+                                                }
+
+                                            </span><span>&nbsp;</span><span>&nbsp;</span>
+                                            <span class="radio-info">
+                                                @if (item.ContractType == "معین")
+                                                {
+                                                    <input style="vertical-align: sub;" type="radio" id="inlineRadio3" name="@item.Id" checked="checked">
+                                                    <label for="inlineRadio3"> معین </label>
+                                                }
+                                                else
+                                                {
+                                                    <input style="vertical-align: sub;" type="radio" id="inlineRadio3" name="@item.Id">
+                                                    <label for="inlineRadio3"> معین </label>
+                                                }
+
+                                            </span>
+
+
+                                        </div>
+                                        <div class="col-xs-8" style="margin-top: 3px;">
+                                            <span class="fontBold">نوع کار یا حرفه یا حجم کار یا وظیفه ای که کارگر به آن اشتغال می یابد</span> :
+                                            <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                            <span>@item.JobType</span>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding: 4px;">
+                                        <div class="col-xs-4">
+                                            <span class="fontBold">تاریخ انعقاد قرارداد</span> :
+                                            <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                            <span class="fontNumber">@item.SetContractDate</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="row" style="padding: 4px;">
+                                        <div class="col-xs-8">
+                                            <span class="fontBold">مـــدت قـــــــــــرارداد</span> :
+                                            <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                            <span class="fontNumber">@item.ContarctStart</span><span>&nbsp;</span><span>&nbsp;</span>
+                                            <span>الی</span><span>&nbsp;</span><span>&nbsp;</span>
+                                            <span class="fontNumber">@item.ContractEnd</span><span>&nbsp;</span><span>&nbsp;</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="row" style="padding: 4px;">
+                                        <div class="col-xs-4">
+                                            <span class="fontBold">ساعت کار در هفته</span> :
+                                            <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                            <span class="fontNumber">@item.WorkingHoursWeekly</span>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="row" style="padding: 4px; padding-right: 15px">
+                                        <span class="fontBold">
+                                            @if (item.WorkshopAddress2 != null)
+                                            {<span>محـل انــجـام کـار 1</span>}
+                                            else
+                                            {<span>محـل انــــجـام کـــار </span>}
+                                        </span> : <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                        <span>@item.WorkshopAddress1</span>
+
+                                    </div>
+                                    @if (item.WorkshopAddress2 != null)
+                                    {
+                                        <div class="row" style="padding: 4px; padding-right: 15px">
+                                            <span class="fontBold">محـل انــجـام کـار 2</span> : <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+                                            <span>@item.WorkshopAddress2</span>
+
+                                        </div>
+                                    }
+
+                                </fieldset>
+                            </div>
+                            <div class="row m-t-5">
+                                <fieldset class="head" style="background-color: #ccc; border: 1px solid black; border-radius: 10px 10px 0px 0px; padding: 3px; margin: 4px 10px 0px 10px;"><h6 style="padding-right: 5px;">حق السعی </h6></fieldset>
+                                <fieldset style="border: 1px solid black; border-top: 0px; border-radius: 0px 0px 10px 10px; padding: 3px; margin: 0px 10px;">
+                                    <div class="row" style="padding: 7px;">
+                                        <div class="col-xs-3">
+                                            <span class="fontBold"> مزد روزانه : </span>
+
+
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <span>@item.DayliWage</span><span>&nbsp;</span><span>ریال</span>
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <span class="fontBold"> حق عائله مندی : </span>
+
+
+                                        </div>
+                                        <div class="col-xs-4">
+                                            @if (item.FamilyAllowance != "0")
+                                            {
+                                                <span>@item.FamilyAllowance</span><span>&nbsp;</span><span>ریال</span>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding: 7px;">
+                                        <div class="col-xs-3">
+                                            <span class="fontBold"> کمک هزینه اقلام مصرفی خواربار : </span>
+
+
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <span>@item.ConsumableItems</span><span>&nbsp;</span><span>ریال</span>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding: 7px;">
+                                        <div class="col-xs-3">
+                                            <span class="fontBold"> کمک هزینه مسکن : </span>
+
+
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <span>@item.HousingAllowance</span><span>&nbsp;</span><span>ریال</span>
+                                        </div>
+                                    </div>
+
+
+                                </fieldset>
+                            </div>
+                            <div class="row m-t-5">
+                                <fieldset class="head" style="background-color: #ccc; border: 1px solid black; border-radius: 10px 10px 0px 0px; padding: 3px; margin: 4px 10px 0px 10px;"><h6 style="padding-right: 5px;"> شروط و توضیحات </h6></fieldset>
+                                <fieldset style="border: 1px solid black; border-top: 0px; border-radius: 0px 0px 10px 10px; padding: 3px; margin: 0px 10px;">
+
+
+                                    <textarea class="form-control" style="height: 80px;"></textarea>
+
+
+
+                                </fieldset>
+                            </div>
+
+                            <div class="row m-t-5" style="padding: 1px 10px 1px 10px ;">
+                                <p style="margin-bottom: 2px !important">بیمه : به موجب ماده 148 قانون کار، کارفرما مکلف است کارگر را نزد سازمان تامین اجتماعی بیمه نماید.</p>
+                                <p style="margin-bottom: 2px !important">یک نسخه از این قرارداد در ید کارگر می باشد و هر یک از نسخه های قرارداد، اعتبار و حکم واحد دارند.</p>
+                                <p style="text-align: justify; margin-bottom: 2px !important">
+                                    مبلغ مزد روزانه در این قرارداد بر اساس قوانین کار می باشد و هیچگونه ارتباطی با تنظیم و ارسال لیست بیمه سازمان تامین اجتماعی ندارد. سازمان تامین اجتماعی
+                                    بر اساس بخشنامه های درون سازمانی مقادیری را برای ارسال لیست بیمه در اختیار کارفرما قرار میدهد (لیست مشاغل مقطوع) که خارج از قوانین کار می باشد.
+                                </p>
+                            </div>
+                            <div class="row m-t-5" style="padding: 1px 10px 1px 0px;">
+                                <div class="col-xs-6 text-center"><h5>مهر/امضاء/اثر انگشت کارفرما</h5></div>
+                                <div class="col-xs-6 text-center"><h5>امضاء/اثر انگشت کارگر</h5></div>
+                            </div>
+
+
+
+                        </fieldset>
+                    </div>
+
+                </div>
+            </div>
+
+
+         }
+
+
+
+
+    </div>
+
+
+
+</form>
+<script>
+    document.getElementById("btnPrint").onclick = function () {
+        printElement(document.getElementById("printThis"));
+    }
+
+    function printElement(elem) {
+        var domClone = elem.cloneNode(true);
+
+        var $printSection = document.getElementById("printSection");
+
+        if (!$printSection) {
+            $printSection = document.createElement("div");
+            $printSection.id = "printSection";
+            document.body.appendChild($printSection);
+        }
+
+        $printSection.innerHTML = "";
+        $printSection.appendChild(domClone);
+        window.print();
+    }
+</script>

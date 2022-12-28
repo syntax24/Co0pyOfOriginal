@@ -1,0 +1,226 @@
+﻿@model CompanyManagment.App.Contracts.Bill.ViewSearchTextManager
+@{
+}
+@{
+    <style>
+
+        .ui-autocomplete-input {
+            border: none;
+            font-size: 14px;
+            width: 100%;
+            /*   height: 24px;*/
+            margin-bottom: 5px;
+            padding-top: 2px;
+            /*  border: 1px solid #DDD !important;*/
+            padding-top: 0px !important;
+            z-index: 1511;
+            position: relative;
+        }
+
+        .ui-autocomplete {
+            position: absolute;
+            top: 100%;
+            /*       top: 341.617px !important;*/
+            left: 0;
+            z-index: 1051 !important;
+            float: left;
+            display: none;
+            min-width: 160px;
+            _width: 160px;
+            padding: 4px 0;
+            margin: 2px 0 0 0;
+            list-style: none;
+            background-color: #ffffff;
+            border-color: #ccc;
+            border-color: rgba(0, 0, 0, 0.2);
+            border-style: solid;
+            border-width: 1px;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+            -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            -webkit-background-clip: padding-box;
+            -moz-background-clip: padding;
+            background-clip: padding-box;
+            *border-right-width: 2px;
+            *border-bottom-width: 2px;
+        }
+
+        .select2-selection__rendered {
+            font-size: 12px;
+        }
+    </style>
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <div class="modal-body">
+        <div class="row">
+            <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> جستجو  </legend>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control select-city" asp-items='@Model.SelectListOriginalTitle' id="originalTitle1">
+                                <option value="-1"> عنوان را انتخاب کنید ... </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control select-city" id="subtitle1">
+                                <option value="0"> بخش</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <select class="form-control select-city" id="chapter1">
+                                <option value="0"> فصل</option>
+                            </select>
+                            <input type="hidden" id="resultsubtitle" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+             
+                    <div class="col-md-12" dir="ltr" style="text-align:right;margin-bottom:10px">
+                        <span class="alert-danger" id="alertcheckfilter"></span>
+                        <label class="control-label"> : جستجو متن لایحه</label>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success btn-rounded " onclick="showMsg()">انتخاب</button>
+                            </span>
+                            <textarea id="DescriptionModal_Id" type="text" name="DescriptionModal_Id" style="text-align: right; font-size: 14px; font-family: 'Web_Yekan'; resize: none; height: 34px;" placeholder="... عبارت مورد نظر را تایپ کنید " class="form-control" ></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group ">
+                            <textarea type="text" class="form-control" placeholder=" نتایج جستجو از بانک اطلاعاتی لایحه" style=" height: 400px;" id="des"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+        </div>
+    </div>
+    <div class="modal-footer ">
+        <button type="button" id="btnmodal" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#btnmodal').click(function () {
+            var result = $('#des').val().replaceAll('\n', '<br/>');
+            //CKEDITOR.instances["Description"].setData(result);
+            var oEditor = CKEDITOR.instances.Description;
+            var html = "<a >" + result + "</a>";
+            var newElement = CKEDITOR.dom.element.createFromHtml(html, oEditor.document);
+            oEditor.insertElement(newElement);
+
+            $("#des").val("");
+            $('#MainModal').modal('hide');
+        });
+      
+    });
+    $(document).ready(function () {
+        $('#DescriptionModal_Id').autocomplete({
+            source: function (request, response) {
+                var chaptervalue = document.getElementById("chapter1").value;
+                $.ajax({
+                    url: '/Admin/Company/TextManager?handler=DescriptionAll',
+                    data: {
+                        term: request.term,
+                        Id: chaptervalue,
+                    },
+                    success: function (data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 3
+        });
+    });
+</script>
+<script>
+
+    function showMsg() {
+        $("#des").empty();
+        var descriptionModalInput = document.getElementById('DescriptionModal_Id').value;
+        document.getElementById('des').value = descriptionModalInput;
+    }
+    var url = null;
+    jQuery(document).ready(function ($) {
+        $.ui.autocomplete.prototype._renderItem = function (ul, item) {
+            var t = String(item.value).replace(
+                new RegExp(this.term, "gi"),
+                "<strong  style='font-size:12px;color:red'>$&</strong>");
+            return $("<li></li>")
+                .data("item.autocomplete", item)
+                .append("<div>" + t + "</div>")
+                .appendTo(ul);
+        };
+
+    });
+
+</script>
+<script>
+    $(document).ready(function () {
+        $("#originalTitle1").change(function () {
+            $("#subtitle1").empty();
+            $("#chapter1").empty();
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/Company/TextManager?handler=SubtitleList',
+                dataType: 'json',
+                data: { OriginalTitle_Id: $("#originalTitle1").val() },
+                success: function (result) {
+                    $("#subtitle1").append(' <option  value="' + -1 + '">' +
+                        "نام بخش را انتخاب کنید" + '</option>');
+                    $("#chapter1").append(' <option value="' + -1 + '">' +
+                        "فصل را انتخاب کنید" + '</option>');
+                    $.each(result, function (i, result) {
+                        $("#subtitle1").append(' <option value="' + result.id + '">' +
+                            result.subtitle + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Error');
+                }
+            });
+            return false;
+        });
+        $("#subtitle1").change(function () {
+            $("#chapter1").empty();
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/Company/TextManager?handler=ChptereList',
+                dataType: 'json',
+                data: { Subtitle_Id: $("#subtitle1").val() },
+                success: function (results) {
+                    $("#chapter1").append(' <option value="' + -1 + '">' +
+                        "فصل را انتخاب کنید" + '</option>');
+                    $.each(results, function (i, result) {
+                        $("#chapter1").append(' <option value="' + result.value + '">' +
+                            result.text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('ffff');
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
