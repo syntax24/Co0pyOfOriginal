@@ -113,16 +113,8 @@ namespace CompanyManagment.Application
         {
             var file = _fileRepository.GetDetails(id);
 
-            if (file.Client == 1)
-            {
-                file.ClientFullName = GetEmployeeFullNameById(file.Reqester);
-                file.OppositePersonFullName = GetEmployerFullNameById(file.Summoned);
-            }
-            else
-            {
-                file.ClientFullName = GetEmployerFullNameById(file.Summoned);
-                file.OppositePersonFullName = GetEmployeeFullNameById(file.Reqester);
-            }
+            file.ClientFullName = GetFileClientFullName(file.Id);
+            file.OppositePersonFullName = GetFileOppositePersonFullName(file.Id);
 
             return file;
         }
@@ -153,14 +145,46 @@ namespace CompanyManagment.Application
             return _fileRepository.GetEmployerFullNameById(id);
         }
 
-        public List<EmployeeViewModel> GetAllEmploees()
+        public List<EmployeeViewModel> GetAllEmploees(bool filter = true)
         {
-            return _fileRepository.GetAllEmploees();
+            var employees = _fileRepository.GetAllEmploees();
+
+            if (!filter)
+                return employees;
+
+            var allEmployees = new List<EmployeeViewModel>(employees);
+            var files = _fileRepository.Search(new FileSearchModel());
+            var filesUsers = files.Select(x => new { Id = x.Reqester }).ToList();
+            filesUsers.AddRange(files.Select(x => new { Id = x.Summoned }).ToList());
+
+            foreach(var employee in allEmployees)
+            {
+                if(filesUsers.Where(x => x.Id == employee.Id).FirstOrDefault() == null)
+                    employees.Remove(employee);
+            }
+
+            return employees;
         }
 
-        public List<EmployerViewModel> GetAllEmployers()
+        public List<EmployerViewModel> GetAllEmployers(bool filter = true)
         {
-            return _fileRepository.GetAllEmployers();
+            var employers = _fileRepository.GetAllEmployers();
+
+            if (!filter)
+                return employers;
+
+            var allEmployers = new List<EmployerViewModel>(employers);
+            var files = _fileRepository.Search(new FileSearchModel());
+            var filesUsers = files.Select(x => new { Id = x.Reqester }).ToList();
+            filesUsers.AddRange(files.Select(x => new { Id = x.Summoned }).ToList());
+
+            foreach (var employer in allEmployers)
+            {
+                if (filesUsers.Where(x => x.Id == employer.Id).FirstOrDefault() == null)
+                    employers.Remove(employer);
+            }
+
+            return employers;
         }
 
         public FileViewModel GetFileDetails(FileViewModel file)
@@ -266,6 +290,9 @@ namespace CompanyManagment.Application
             viewModel.DisputeResolutionEvidenceId = evidences.Where(x => x.BoardType_Id == 2).FirstOrDefault() != null
                 ? evidences.Where(x => x.BoardType_Id == 2).FirstOrDefault().Id
                 : 0;
+
+            viewModel.ClientFullName = GetFileClientFullName(viewModel.Id);
+            viewModel.OppositePersonFullName = GetFileOppositePersonFullName(viewModel.Id);
 
             return viewModel;
         }
@@ -421,12 +448,53 @@ namespace CompanyManagment.Application
             return summary;
         }
 
+        private string GetFileClientFullName(long fileId)
+        {
+            var file = _fileRepository.GetDetails(fileId);
+            var clientFullName = "";
+
+            if (file.Client == 1)
+                clientFullName = GetEmployeeFullNameById(file.Reqester);
+
+            else
+                clientFullName = GetEmployerFullNameById(file.Summoned);
+             
+
+            return clientFullName;
+        }
+        
+        private string GetFileOppositePersonFullName(long fileId)
+        {
+            var file = _fileRepository.GetDetails(fileId);
+            var oppositePersonFullName = "";
+
+            if (file.Client == 1)
+                oppositePersonFullName = GetEmployerFullNameById(file.Summoned);
+
+            else
+                oppositePersonFullName = GetEmployeeFullNameById(file.Reqester);
+
+
+            return oppositePersonFullName;
+        }
+
         private bool CheckValue(string viewModel, string searchModel)
         {
             if (!string.IsNullOrEmpty(viewModel) && viewModel.Contains(searchModel))
                 return true;
 
             return false;
+        }
+
+        public FileViewModel GetFileDetailsByBoardId(long boardId)
+        {
+            var board = _boardApplication.GetDetails(boardId);
+
+            var file = Search(new FileSearchModel { Id = board.File_Id }).FirstOrDefault();
+
+            return GetFileDetails(file);
+
+            //return file;
         }
     }
 }

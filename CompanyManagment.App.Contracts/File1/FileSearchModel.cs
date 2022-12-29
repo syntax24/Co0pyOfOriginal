@@ -7,6 +7,7 @@ namespace CompanyManagment.App.Contracts.File1
     public class FileSearchModel
     {
 
+        public long Id { get; set; }
         public string ArchiveNo { get; set; }
 
         //public string ClientVisitDate { get; set; }

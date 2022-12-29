@@ -19,6 +19,8 @@ namespace CompanyManagment.App.Contracts.File1
         public string Description { get; set; }
         public string ReqesterFullname { get; set; }
         public string SummonedFullname { get; set; }
+        public string ClientFullName { get; set; }
+        public string OppositePersonFullName { get; set; }
         public EditBoard DiagnosisBoard { get; set; }
         public EditBoard DisputeResolutionBoard { get; set; }
         public int DiagnosisPsCount { get; set; }

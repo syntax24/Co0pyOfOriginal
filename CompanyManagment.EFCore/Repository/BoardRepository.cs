@@ -58,6 +58,11 @@ namespace CompanyManagment.EFCore.Repository
             }).Where(x => x.File_Id == searchModel.File_Id && x.BoardType_Id == searchModel.BoardType_Id);
 
             //TODO if
+            //if (searchModel.Id != 0) 
+            //{
+            //    query = query.Where(x => x.Id == searchModel.Id);
+            //}
+
             if (!string.IsNullOrEmpty(searchModel.Branch))
             {
                 query = query.Where(x => x.Branch.Contains(searchModel.Branch));
