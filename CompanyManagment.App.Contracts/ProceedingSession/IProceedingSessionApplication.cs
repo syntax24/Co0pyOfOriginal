@@ -11,5 +11,6 @@ namespace CompanyManagment.App.Contracts.ProceedingSession
         List<EditProceedingSession> Search(ProceedingSessionSearchModel searchModel);
         OperationResult CreateProceedingSessions(List<EditProceedingSession> proceedingSessions, long boardId);
         void RemoveProceedingSessions(long boardId);
+        public List<ProceedingSessionViewModel> FilterSessions(ProceedingSessionSearchModel searchModel);
     }
 }

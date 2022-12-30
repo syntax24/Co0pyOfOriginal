@@ -115,7 +115,7 @@
                                             </div>
                                             <div class="col-sm-2 pull-right m-b-15">
                                                 <select class="form-control select-city"  asp-for="searchModel.UserId" style="width: 100%">
-                                                    <option value="0">اصیل دعوی</option>
+                                                    <option value="0">موکل</option>
 
                                                     @foreach (var item in @Model.searchModel.UsersList)
                                                     {
@@ -147,7 +147,7 @@
 
                                             <div class="col-lg-3">
                                                 <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; background-color: #950000; border-color: #950000; font-family: 'Web_Yekan' !important; margin-left: -3px"> <i class="fa fa-search" style="padding-left: 3px; font-size: 14px;"></i> جستجو</button>
-                                                <a class="btn btn-info btn-rounded waves-effect waves-light m-b-5" style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; background-color: #545353; border-color: #545353; font-family: 'Web_Yekan' !important;" asp-page="./Index">مشاهده همه</a>
+                                                <a class="btn btn-info btn-rounded waves-effect waves-light m-b-5" style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; background-color: #545353; border-color: #545353; font-family: 'Web_Yekan' !important;" asp-page="./Alerts">مشاهده همه</a>
                                             </div>
                                         </div>
                                     </div>

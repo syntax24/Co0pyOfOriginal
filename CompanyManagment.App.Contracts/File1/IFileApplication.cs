@@ -13,6 +13,7 @@ namespace CompanyManagment.App.Contracts.File1
         EditFile GetDetails(long id);
         FileSummary GetFileSummary(long id);
         FileViewModel GetFileDetails(FileViewModel file);
+        FileViewModel GetFileDetailsByBoardId(long boardId);
         int GetFileState(FileViewModel file);
         DateTime? GetFileStateDate(FileViewModel file);
         List<FileViewModel> Search(FileSearchModel searchModel);
@@ -21,8 +22,8 @@ namespace CompanyManagment.App.Contracts.File1
         long FindLastArchiveNumber();
         string GetEmployeeFullNameById(long id);
         string GetEmployerFullNameById(long id);
-        List<EmployeeViewModel> GetAllEmploees();
-        List<EmployerViewModel> GetAllEmployers();
+        List<EmployeeViewModel> GetAllEmploees(bool filter = true);
+        List<EmployerViewModel> GetAllEmployers(bool filter = true);
         //bool CheckValue(string viewModel, string searchModel);
     }
 }

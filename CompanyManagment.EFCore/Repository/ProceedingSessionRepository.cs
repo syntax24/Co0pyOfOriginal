@@ -28,27 +28,54 @@ namespace File.EfCore.Repository
 
         public List<EditProceedingSession> Search(ProceedingSessionSearchModel searchModel)
         {
-            var query = _context.ProceedingSessions.Select(x => new EditProceedingSession
+            var query = _context.ProceedingSessions.Select(x => new 
             {
                 Id = x.id,
-                Date = x.Date.ToFarsi(),
+                Date = x.Date,
                 Time = x.Time,
-                Board_Id = x.Board_Id
-            }).Where(x => x.Board_Id == searchModel.Board_Id);
+                Board_Id = x.Board_Id,
+                Status = x.Status
+            });
 
             //TODO if
 
-            if(!string.IsNullOrEmpty(searchModel.FromDate))
+            if(searchModel.Id != 0)
             {
-                query = query.Where(x => x.Date.ToGeorgianDateTime() >= searchModel.FromDate.ToGeorgianDateTime());
+                query = query.Where(x => x.Id == searchModel.Id);
             }
             
-            if(!string.IsNullOrEmpty(searchModel.ToDate))
+            if(searchModel.Board_Id != 0)
             {
-                query = query.Where(x => x.Date.ToGeorgianDateTime() <= searchModel.ToDate.ToGeorgianDateTime());
+                query = query.Where(x => x.Board_Id == searchModel.Board_Id);
+            }
+            
+            if(searchModel.Status != 0)
+            {
+                query = query.Where(x => x.Status == searchModel.Status);
             }
 
-            return query.ToList();
+            if(!string.IsNullOrEmpty(searchModel.FromDate))
+            {
+                query = query.Where(x => x.Date >= searchModel.FromDate.ToGeorgianDateTime());
+            }
+
+            if (!string.IsNullOrEmpty(searchModel.ToDate))
+            {
+                query = query.Where(x => x.Date <= searchModel.ToDate.ToGeorgianDateTime());
+            }
+            
+            if (!string.IsNullOrEmpty(searchModel.Time))
+            {
+                query = query.Where(x => x.Time == searchModel.Time);
+            }
+
+            return query.Select(x => new EditProceedingSession {
+                Id = x.Id,
+                Date = x.Date.ToFarsi(),
+                Time = x.Time,
+                Board_Id = x.Board_Id,
+                Status = x.Status
+            }).ToList();
         }
     }
 }

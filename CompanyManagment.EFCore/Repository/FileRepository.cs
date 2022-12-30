@@ -52,8 +52,13 @@ namespace CompanyManagment.EFCore.Repository
                 Status = x.Status
             });
 
+            if (searchModel.Id != 0)
+            {
+                query = query.Where(x => x.Id == searchModel.Id);
+            }
+
             //TODO if
-            if(searchModel.ArchiveNo != null && int.Parse(searchModel.ArchiveNo) != -1)
+            if (searchModel.ArchiveNo != null && int.Parse(searchModel.ArchiveNo) != -1)
             {
                 query = query.Where(x => x.ArchiveNo == int.Parse(searchModel.ArchiveNo));
             }

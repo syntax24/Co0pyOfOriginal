@@ -18,7 +18,7 @@ using CompanyManagment.App.Contracts.PenaltyTitle;
 using CompanyManagment.App.Contracts.Petition;
 using CompanyManagment.App.Contracts.ProceedingSession;
 using CompanyManagment.App.Contracts.WorkHistory;
-
+using MD.PersianDateTime;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -77,6 +77,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
 
         public void OnGet(FileSearchModel fileSearchModel)
         {
+            
             if (fileSearchModel.diagnosisBoard == null)
                 fileSearchModel.diagnosisBoard = new BoardSearchModel();
 
@@ -97,17 +98,17 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             {
                 this.fileSearchModel = new FileSearchModel
                 {
-                   ArchiveNo_FileClass_UserIdList = allFiles.Select(x => new ArchiveNo_FileClass_UserIdList { ArchiveNo = x.ArchiveNo.ToString(), FileClass = x.FileClass, UserId = x.Client == 1 ? x.Reqester : x.Summoned }).ToList(),
-                    UsersList = _fileApplication.GetAllEmploees().Select(x => new Users { Id = x.Id, FullName = x.EmployeeFullName }).ToList(),
+                   ArchiveNo_FileClass_UserIdList = allFiles.Select(x => new CompanyManagment.App.Contracts.File1.ArchiveNo_FileClass_UserIdList { ArchiveNo = x.ArchiveNo.ToString(), FileClass = x.FileClass, UserId = x.Client == 1 ? x.Reqester : x.Summoned }).ToList(),
+                    UsersList = _fileApplication.GetAllEmploees().Select(x => new CompanyManagment.App.Contracts.File1.Users { Id = x.Id, FullName = x.EmployeeFullName }).ToList(),
                 };
 
-                this.fileSearchModel.UsersList.AddRange(_fileApplication.GetAllEmployers().Select(x => new Users { Id = x.Id, FullName = x.FullName }).ToList());
+                this.fileSearchModel.UsersList.AddRange(_fileApplication.GetAllEmployers().Select(x => new CompanyManagment.App.Contracts.File1.Users { Id = x.Id, FullName = x.FullName }).ToList());
             }
             else
             {
-                this.fileSearchModel.ArchiveNo_FileClass_UserIdList = allFiles.Select(x => new ArchiveNo_FileClass_UserIdList { ArchiveNo = x.ArchiveNo.ToString(), FileClass = x.FileClass, UserId = x.Client == 1 ? x.Reqester : x.Summoned }).ToList();
-                this.fileSearchModel.UsersList = _fileApplication.GetAllEmploees().Select(x => new Users { Id = x.Id, FullName = x.EmployeeFullName }).ToList();
-                this.fileSearchModel.UsersList.AddRange(_fileApplication.GetAllEmployers().Select(x => new Users { Id = x.Id, FullName = x.FullName }).ToList());
+                this.fileSearchModel.ArchiveNo_FileClass_UserIdList = allFiles.Select(x => new CompanyManagment.App.Contracts.File1.ArchiveNo_FileClass_UserIdList { ArchiveNo = x.ArchiveNo.ToString(), FileClass = x.FileClass, UserId = x.Client == 1 ? x.Reqester : x.Summoned }).ToList();
+                this.fileSearchModel.UsersList = _fileApplication.GetAllEmploees().Select(x => new CompanyManagment.App.Contracts.File1.Users { Id = x.Id, FullName = x.EmployeeFullName }).ToList();
+                this.fileSearchModel.UsersList.AddRange(_fileApplication.GetAllEmployers().Select(x => new CompanyManagment.App.Contracts.File1.Users { Id = x.Id, FullName = x.FullName }).ToList());
             }
 
 
@@ -144,8 +145,8 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             var createFile = new CreateFile
             {
                 ArchiveNo = archiveNo + 1,
-                Employees = _fileApplication.GetAllEmploees(),
-                Employers = _fileApplication.GetAllEmployers()
+                Employees = _fileApplication.GetAllEmploees(false),
+                Employers = _fileApplication.GetAllEmployers(false)
             };
 
 
@@ -172,12 +173,16 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
                 _boardApplication.GetDetails(editFile.Id, 1)
                 ?? new EditBoard { File_Id = editFile.Id, BoardType_Id = 1 };
 
-            var PsSearchModel = new ProceedingSessionSearchModel { Board_Id = diagnosisBoard.Id };
-            var diagnosisPS = _proceedingSessionApplication.Search(PsSearchModel);
-            diagnosisPS =
-                diagnosisPS.Count != 0
-                    ? diagnosisPS
-                    : new List<EditProceedingSession> { new EditProceedingSession() };
+            var diagnosisPS = new List<EditProceedingSession> { new EditProceedingSession() };
+            if (diagnosisBoard.Id != 0)
+            { 
+                var PsSearchModel = new ProceedingSessionSearchModel { Board_Id = diagnosisBoard.Id };
+                diagnosisPS = _proceedingSessionApplication.Search(PsSearchModel);
+            }
+            //diagnosisPS =
+            //    diagnosisPS.Count != 0
+            //        ? diagnosisPS
+            //        : new List<EditProceedingSession> { new EditProceedingSession() };
 
             var diagnosisPetition = _petitionApplication.GetDetails(editFile.Id, 1);
 
@@ -185,12 +190,16 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
                 _boardApplication.GetDetails(editFile.Id, 2)
                 ?? new EditBoard { File_Id = editFile.Id, BoardType_Id = 2 };
 
-            PsSearchModel.Board_Id = disputeResolutionBoard.Id;
-            var disputeResolutionPS = _proceedingSessionApplication.Search(PsSearchModel);
-            disputeResolutionPS =
-                disputeResolutionPS.Count != 0
-                    ? disputeResolutionPS
-                    : new List<EditProceedingSession> { new EditProceedingSession() };
+            var disputeResolutionPS = new List<EditProceedingSession> { new EditProceedingSession() };
+            if(disputeResolutionBoard.Id != 0)
+            {
+                var PsSearchModel = new ProceedingSessionSearchModel { Board_Id = disputeResolutionBoard.Id };
+                disputeResolutionPS = _proceedingSessionApplication.Search(PsSearchModel);
+            }
+            //disputeResolutionPS =
+            //    disputeResolutionPS.Count != 0
+            //        ? disputeResolutionPS
+            //        : new List<EditProceedingSession> { new EditProceedingSession() };
 
             var disputeResolutionPetition = _petitionApplication.GetDetails(editFile.Id, 2);
 
