@@ -1,0 +1,1741 @@
+﻿@using _0_Framework.Application
+@using CompanyManagment.App.Contracts.Contract
+@using PersianTools.Core
+@model CompanyManagment.App.Contracts.Contract.ExtensionViewModel
+
+
+@{
+
+
+
+
+
+
+    <style>
+        .sendSelectDate {
+            border-color: #ff4e4e !important;
+            background-color: #ffe4e4 !important;
+        }
+        .modal-dialog {
+            width: 90% !important;
+        }
+
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .modal-footer {
+            border-top: unset !important;
+        }
+
+        .modal .modal-dialog .modal-content .modal-footer {
+            padding-top: unset !important;
+        }
+
+        /*  p {
+                direction: ltr !important;
+                text-align: right !important;
+            }*/
+
+        input[type=radio]:hover {
+            cursor: pointer;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #dfdfdf;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: brown;
+            border-radius: 5px;
+        }
+        /* .se .select2-container {
+                width: 75% !important;
+            }*/
+
+        /*  .se .select2-container--default .select2-selection--single {
+                border-radius: 0px 22px 22px 0px !important;
+                border: 1px solid #a5a3a3 !important;
+            }*/
+
+        hr {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border-top: 1px solid #d3d3d3;
+        }
+
+        .checkbox + .checkbox, .radio + .radio {
+            margin-top: 0px !important;
+        }
+
+        .radio {
+            margin-top: 0px !important;
+        }
+        /* .radio {
+                        margin: 5px 20px 5px 20px !important;
+                    }*/
+        /*    .form-control {
+                        width: 75% !important;
+                        display: inline-block;
+                    }
+            */
+        /*----------------------------*/
+        #EmployerFullName table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #EmployerFullName th, td {
+            padding: 10px 20px;
+        }
+
+        #EmployerFullName td:nth-child(odd) {
+            border-bottom: 1px solid #fff;
+            background-color: #bed3ca;
+            text-align: right;
+        }
+
+        #EmployerFullName tr:hover {
+            background-color: rgb(108, 186, 250);
+        }
+
+
+
+
+
+
+
+        #thh table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh th, td {
+            padding: 10px 20px;
+        }
+
+        #thh th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh td:nth-child(odd) {
+            border-left: 1px solid #fff;
+            width: 40%;
+            text-align: center;
+        }
+
+        #thh td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh th:nth-child(odd) {
+            border-left: 1px solid #fff;
+        }
+
+        #thh tr:nth-child(even) {
+            background-color: #bed3ca;
+        }
+
+        #thh tr {
+            background-color: rgb(224, 227, 228);
+        }
+
+        #thh tr:hover {
+            background-color: rgb(108, 186, 250);
+        }
+
+        #thh2 table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh2 th, td {
+            padding: 10px 20px;
+        }
+
+        #thh2 th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh2 td:nth-child(odd) {
+            border-left: 1px solid #fff;
+            width: 40%;
+            text-align: center;
+        }
+
+        #thh2 td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh2 th:nth-child(odd) {
+            border-left: 1px solid #fff;
+        }
+
+        #thh2 tr:nth-child(odd) {
+            background-color: #dcdbaf;
+        }
+
+        #thh2 tr:nth-child(even) {
+            background-color: rgb(224, 227, 228);
+        }
+
+        #thh2 tr:hover {
+            background-color: rgb(108, 186, 250);
+        }
+
+        .buttonInside {
+            position: relative;
+        }
+
+        #btnOk {
+            position: absolute;
+            left: 12px;
+            top: 32px;
+            padding: 6px;
+            color: #464646 !important;
+            border-radius: 8px 0px 0px 8px;
+            border-top: 0px;
+            border-bottom: 0px;
+            border-left: 0px;
+            background-color: #ededed;
+            border-color: #c9c4c4;
+            font-size: 11px;
+            font-family: 'IranSans' !important;
+        }
+    </style>
+
+}
+@{
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/adminTheme/assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/adminTheme/assets/datatables/dataTables.bootstrap.js"></script>
+    <script src="~/lib/select2/js/select2.js"></script>
+    <script src="~/lib/select2/js/i18n/fa.js"></script>
+    <link href="~/AdminTheme/assets/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+
+    <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
+}
+@{
+
+}
+<div class="row">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+
+</div>
+
+<div class="modal-body">
+
+    <div class="row">
+        <div class="col-md-12">
+            <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert;">
+                <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> تمدید قرارداد </legend>
+
+                <form id="my_form" asp-page="./Index" asp-page-handler="Extension2" autocomplete="off"
+                      method="get"
+                      data-ajax="true"
+                      data-ajax-method="get"
+                      data-ajax-update="#panel"
+                      data-ajax-mode="replace"
+                      data-ajax-url="@Url.Page("./Index","Extension2")">
+
+                    <div class="row">
+
+
+                        <div class="col-md-4">
+                            <label> نام کارگاه </label>
+                            <div class="form-group se" dir="rtl">
+
+                                <select id="getWorkshopWithName1" onchange="loadWorkshopWithName()" class="form-control select-city2" asp-for="WorkshopIds" asp-items='new SelectList(Model.Workshops, "Id", "WorkshopFullName")'>
+                                    <option value="WorkshopIds"> انتخاب کارگاه </option>
+
+                                </select>
+
+                                @*<a class="btn btn-info btn-rounded waves-effect waves-light" style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; background-color: #257212; border-color: #545353; font-size: 14px; margin-right: -3px; font-family: 'IranSans' !important;" onclick="show()">تایید</a>*@
+                            </div>
+                            <span asp-validation-for="WorkshopIds" class="error"></span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>کد بایگانی کارگاه</label>
+                            <div class="form-group se" dir="rtl">
+
+                                <select id="workshopwithcode" onchange="loadWorkshopWithcode()" class="form-control select-city2" asp-for="WorkshopIds" asp-items='new SelectList(Model.Workshops, "Id", "ArchiveCode")'>
+                                    <option value="WorkshopIds"> انتخاب کد کارگاه </option>
+
+                                </select>
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>نام پرسنل</label>
+                            <div class="form-group se" dir="rtl">
+
+                                <select id="sendEmployeeid" class="form-control select-city2" asp-for="EmployeeId" asp-items='new SelectList(Model.Employees, "Id", "EmployeeFullName")'>
+                                    <option value="0"> انتخاب پرسنل </option>
+
+                                </select>
+
+
+                            </div>
+                            <span asp-validation-for="EmployeeId" class="error"></span>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="row" dir="rtl">
+                        <div class="col-sm-4 pull-right" dir="rtl">
+                            <span class="form-group" style="width: 30% !important; display: inline-block; font-size: 14px !important;">
+
+                                انتخاب تاریخ
+
+                            </span>
+                            <span class="form-group" style="width: 30% !important; display: inline-block">
+
+                                <select class="form-control" id="sendYearly" asp-for="Year" asp-items='new SelectList(Model.YearlySalaries, "Year", "Year")' style="width: 100% !important">
+                                    <option value="0"> سال </option>
+
+                                </select>
+
+                            </span>
+                            <span class="form-group" style="width: 33% !important; display: inline-block">
+
+                                <select class="form-control" id="sendMonth" asp-for="Month" style="width: 100% !important">
+                                    <option value="0"> ماه</option>
+                                    <option value="01"> فروردین</option>
+                                    <option value="02"> اردیبهشت</option>
+                                    <option value="03"> خرداد</option>
+                                    <option value="04"> تیر</option>
+                                    <option value="05"> مرداد</option>
+                                    <option value="06"> شهریور</option>
+                                    <option value="07"> مهر</option>
+                                    <option value="08"> آبان</option>
+                                    <option value="09"> آذر</option>
+                                    <option value="10"> دی</option>
+                                    <option value="11"> بهمن</option>
+                                    <option value="12"> اسفند</option>
+                                </select>
+
+                            </span>
+                        </div>
+
+                        <div class="col-sm-4 pull-right" dir="rtl">
+                            <div class="form-group" id="start1" style="width: 100% !important; margin: 0 auto;">
+
+
+                                <input dir="ltr" id="sendStart" onchange="startValidcheck(this);" maxlength="10" style="text-align: center; width: 100%" placeholder="تاریخ شروع" class="form-control" asp-for="ContarctStart" />
+
+
+
+                            </div>
+
+                        </div>
+                        <div class="col-sm-4 pull-right" dir="rtl">
+                            <div class="form-group" id="end1" style="width: 100% !important; margin: 0 auto;">
+
+
+                                <input dir="ltr" id="sendEnd" onchange="endValidcheck(this);" maxlength="10" style="text-align: center;width: 100%" placeholder="تاریخ پایان" class="form-control" asp-for="ContractEnd" />
+
+                            </div>
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+                    <div class="row" dir="rtl">
+                        <div class="col-md-1 pull-left">
+                            <a class="btn btn-success btn-rounded waves-effect waves-light" onclick="sendData()" style="float: left;">انتخاب</a>
+                            <input type="submit" form="my_form" value="Search" name="Search" id="select" style="display: none" />
+                        </div>
+
+                        <div class="col-md-11">
+                            <span id="montAndYearError"></span>
+                        </div>
+                    </div>
+
+
+                    <hr style=" margin-top: 12px;margin-bottom: 12px;" />
+
+
+                    <div class="row" dir="rtl">
+                        <div class="col-sm-4 pull-right" dir="rtl">
+                            <span class="form-group byStep" style="width: 30% !important; display: inline-block; font-size: 14px !important;">
+
+                                انتخاب تاریخ
+
+                            </span>
+                            <span class="form-group" style="width: 30% !important; display: inline-block">
+
+                                <select class="form-control byStep" id="sendYear2" asp-for="ConvertYear" asp-items='new SelectList(Model.YearlySalaries, "Year", "Year")' style="width: 100% !important">
+                                    <option value="0"> سال </option>
+
+                                </select>
+
+                            </span>
+                            <span class="form-group" style="width: 33% !important; display: inline-block">
+
+                                <select class="form-control byStep" id="sendMonth2" asp-for="ConvertMonth" style="width: 100% !important">
+                                    <option value="0"> ماه</option>
+                                    <option value="01"> فروردین</option>
+                                    <option value="02"> اردیبهشت</option>
+                                    <option value="03"> خرداد</option>
+                                    <option value="04"> تیر</option>
+                                    <option value="05"> مرداد</option>
+                                    <option value="06"> شهریور</option>
+                                    <option value="07"> مهر</option>
+                                    <option value="08"> آبان</option>
+                                    <option value="09"> آذر</option>
+                                    <option value="10"> دی</option>
+                                    <option value="11"> بهمن</option>
+                                    <option value="12"> اسفند</option>
+                                </select>
+
+                            </span>
+                        </div>
+
+                        <div class="col-sm-4 pull-right" dir="rtl">
+                            <div class="form-group" style="width: 100% !important; margin: 0 auto;">
+
+
+                                <input dir="ltr" onchange="startValidcheck2(this);" maxlength="10" id="sendContractStart2" style="text-align: center; width: 100%" placeholder="تاریخ شروع" class="form-control byStep" name="ConvertContractStart" />
+
+
+
+                            </div>
+
+                        </div>
+                        <div class="col-sm-4 pull-right" dir="rtl">
+                            <div class="form-group" style="width: 100% !important; margin: 0 auto;">
+
+
+                                <input dir="ltr" onchange="endValidcheck2(this);" maxlength="10" id="sendContractEnd2" style="text-align: center;width: 100%" placeholder="تاریخ پایان" class="form-control byStep" name="ConvertContractEnd" />
+
+                            </div>
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+
+                    <div class="row" dir="rtl" style="margin-bottom: 10px">
+                        <div class="col-md-1 pull-left">
+                            <a class="btn btn-success btn-rounded waves-effect waves-light byStepButton" onclick="Convert()" style="float: left;"><span>&nbsp;</span>تبدیل<span>&nbsp;</span></a>
+
+                        </div>
+
+                        <div class="col-md-11" style="max-height: 150px; overflow-y: scroll; direction: ltr; ">
+                            <span id="alarm"></span>
+                            <span id="convertError" style="direction: rtl"></span>
+                        </div>
+                    </div>
+
+                </form>
+
+
+                <form asp-page="./Index" asp-page-handler="Extension3" autocomplete="off" id="sub"
+                      method="post"
+                      data-ajax="true"
+                      data-ajax-method="post"
+                      data-ajax-url="@Url.Page("./Index","Check")"
+                      data-callback=""
+                      data-action="Refresh">
+
+
+
+
+                    <div class="row">
+
+                        <div class="col-sm-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست قرارداد ها</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-sm-12 col-xs-12" style="max-height: 300px; overflow-y: scroll; direction: ltr; max-width: 99%;">
+                                            <table id="datatable" class="table table-striped table-bordered" style="direction: rtl">
+                                                <thead style="background-color: #ecefee">
+                                                    <tr>
+
+                                                        <th style="font-size: 10px !important" class="sizeSet">#</th>
+                                                        <th style="font-size: 10px !important" class="sizeSet decorCheckbox">
+                                                            <input class="checkboxtitle" type="checkbox" id="checkSelect1" disabled="disabled" />
+                                                        </th>
+
+                                                        <th style="font-size: 10px !important" class="sizeSet">شماره قرارداد</th>
+                                                        <th style="font-size: 10px !important" class="sizeSet"> کارفرما </th>
+                                                        <th style="font-size: 10px !important" class="sizeSet">کارگاه</th>
+                                                        <th style="font-size: 10px !important" class="sizeSet"> پرسنل </th>
+
+                                                        <th style="font-size: 10px !important" class="sizeSet">آغاز قرارداد</th>
+                                                        <th style="font-size: 10px !important" class="sizeSet">پایان قرارداد</th>
+
+                                                        <th style="font-size: 10px !important" class="sizeSet"> - </th>
+                                                        <th style="font-size: 10px !important" class="sizeSet"> - </th>
+                                                        <th style="font-size: 10px !important" class="sizeSet"> - </th>
+
+
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="panel">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <input type="hidden" class="sendConvertYear" name="ConvertYear" />
+                    <input type="hidden" class="sendConvertMonth" name="ConvertMonth" />
+                    <input type="hidden" class="sendContarctStart" name="ContarctStart" />
+                    <input type="hidden" class="sendContractEnd" name="ContractEnd" />
+                    <input type="hidden" class="sendConvertContractStart" name="ConvertContractStart" />
+                    <input type="hidden" class="sendConvertContractEnd" name="ConvertContractEnd" />
+                    <div id="listOfContract" style="display: none">
+
+                    </div>
+
+                    @*<input type="hidden" asp-for="id" value="id"/>*@
+                    <div class="modal-footer" style="margin-bottom: 10px">
+
+                        <a href="#" onclick="final()" class="btn btn-success btn-rounded waves-effect waves-light final">ثبت نهایی</a>
+
+                        <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+
+                        <input type="submit" id="sendFinaly" form="sub" value="fine" name="fine" style="display: none" />
+
+
+                    </div>
+
+                </form>
+            </fieldset>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+<script>
+
+    $('.final').attr('disabled', 'disabled');
+    $('.final').css("background-color", "gray");
+    $('.byStep').attr('disabled', 'disabled');
+    $('.byStep').css("background-color", "unset");
+    $('.byStepButton').attr('disabled', 'disabled');
+    $('.byStepButton').css("background-color", "gray");
+    $('#sendYearly').click(function () {
+        if ($('#sendYearly').val() != "0") {
+            $('#sendStart').attr('disabled', 'disabled');
+            $('#sendEnd').attr('disabled', 'disabled');
+            $('#sendStart').val("");
+            $('#sendEnd').val("");
+            $('#sendStart').css("background-color", "unset");
+            $('#sendEnd').css("background-color", "unset");
+
+        } else {
+            $('#sendStart').removeAttr('disabled');
+            $('#sendEnd').removeAttr('disabled');
+            $('#sendStart').css("background-color", "white");
+            $('#sendEnd').css("background-color", "white");
+        }
+
+    });
+    $('#sendMonth').click(function () {
+        if ($('#sendMonth').val() != "0") {
+            $('#sendStart').attr('disabled', 'disabled');
+            $('#sendEnd').attr('disabled', 'disabled');
+            $('#sendStart').val("");
+            $('#sendEnd').val("");
+            $('#sendStart').css("background-color", "unset");
+            $('#sendEnd').css("background-color", "unset");
+
+
+        } else {
+            $('#sendStart').removeAttr('disabled');
+            $('#sendEnd').removeAttr('disabled');
+            $('#sendStart').css("background-color", "white");
+            $('#sendEnd').css("background-color", "white");
+        }
+
+    });
+    $('#sendYear2').click(function () {
+        if ($('#sendYear2').val() != "0") {
+            $('#sendContractStart2').attr('disabled', 'disabled');
+            $('#sendContractEnd2').attr('disabled', 'disabled');
+            $('#sendContractStart2').val("");
+            $('#sendContractEnd2').val("");
+            $('#sendContractStart2').css("background-color", "unset");
+            $('#sendContractEnd2').css("background-color", "unset");
+
+        } else {
+            $('#sendContractStart2').removeAttr('disabled');
+            $('#sendContractEnd2').removeAttr('disabled');
+            $('#sendContractStart2').css("background-color", "white");
+            $('#sendContractEnd2').css("background-color", "white");
+        }
+
+    });
+    $('#sendMonth2').click(function () {
+        if ($('#sendMonth2').val() != "0") {
+            $('#sendContractStart2').attr('disabled', 'disabled');
+            $('#sendContractEnd2').attr('disabled', 'disabled');
+            $('#sendContractStart2').val("");
+            $('#sendContractEnd2').val("");
+            $('#sendContractStart2').css("background-color", "unset");
+            $('#sendContractEnd2').css("background-color", "unset");
+
+        } else {
+            $('#sendContractStart2').removeAttr('disabled');
+            $('#sendContractEnd2').removeAttr('disabled');
+            $('#sendContractStart2').css("background-color", "white");
+            $('#sendContractEnd2').css("background-color", "white");
+        }
+
+    });
+
+
+</script>
+
+<script>
+    function final() {
+
+
+
+        var checkboxId = document.getElementsByName("cheking");
+        for (var i = 0, n = checkboxId.length; i < n; i++) {
+            if (checkboxId[i].checked) {
+                $('#listOfContract').append(
+
+                    '<input class="item1" type="hidden" value="' + checkboxId[i].value + '" name="ContractsId[' + i + ']"/>'
+
+                );
+            } else {
+                $('#listOfContract').append(
+
+                    '<input class="item1" type="hidden" value="' + 0 + '" name="ContractsId[' + i + ']"/>'
+
+                );
+            }
+
+        }
+        if ($('.formStep').val() == "convert") {
+            $('.sendConvertYear').val($('#sendYear2').val());
+            $('.sendConvertMonth').val($('#sendMonth2').val());
+            $('.sendContarctStart').val($('#sendContractStart2').val());
+            $('.sendContractEnd').val($('#sendContractEnd2').val());
+            $('.sendConvertContractStart').val($('#sendContractStart2').val());
+            $('.sendConvertContractEnd').val($('#sendContractEnd2').val());
+            $('#sub').submit();
+        
+
+        } else {
+            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "ابتدا تبدیل را انجام دهید");
+        }
+
+    }
+
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $(".select-city2").select2({
+            language: "fa",
+            dir: "rtl"
+        });
+
+    })
+
+
+
+</script>
+
+<script>
+    async function loadWorkshopWithName() {
+        var myArray = document.getElementById('getWorkshopWithName1');
+        let intext = myArray.options[myArray.selectedIndex].value;
+        var listArray = [];
+
+        @foreach (var items in Model.Workshops)
+            {
+
+                @:listArray.push({ WorkshopName: "@items.WorkshopName", Id: @items.Id, ArchiveCode: "@items.ArchiveCode"});
+
+
+
+            }
+
+        for (var i = 0; i < listArray.length; i++) {
+            if (listArray[i].Id == intext) {
+
+
+                document.getElementById("select2-workshopwithcode-container").innerHTML = listArray[i].ArchiveCode;
+
+            }
+
+        }
+    }
+
+
+</script>
+<script>
+    async  function loadWorkshopWithcode() {
+        var listArray = [];
+        var myArray = document.getElementById('workshopwithcode');
+        let intext = myArray.options[myArray.selectedIndex].value;
+
+        @foreach (var items in Model.Workshops)
+                {
+
+                     @:listArray.push({ Id: @items.Id, ArchiveCode: "@items.ArchiveCode", WorkshopFullName: "@items.WorkshopFullName"  });
+
+                }
+
+        for (var i = 0; i < listArray.length; i++) {
+            if (listArray[i].Id == intext) {
+
+
+                document.getElementById("select2-getWorkshopWithName1-container").innerHTML = listArray[i].WorkshopFullName;
+
+            }
+
+        }
+    }
+</script>
+
+
+<script>
+    var start1valid = false;
+    var end1valid = false;
+    function startValidcheck(inputField) {
+
+        var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (var i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+        let getdate = inputField.value;
+
+        var m1, m2;
+        var y1, y2, y3, y4;
+        var d1, d2;
+        var s1, s2;
+        for (var i = 0; i < getdate.length; i++) {
+            if (i === 0) {
+                y1 = fixNumbers(getdate[i]);
+            }
+            if (i === 1) {
+                y2 = fixNumbers(getdate[i]);
+            }
+            if (i === 2) {
+                y3 = fixNumbers(getdate[i]);
+            }
+            if (i === 3) {
+                y4 = fixNumbers(getdate[i]);
+            }
+            if (i === 4) {
+                s1 = fixNumbers(getdate[i]);
+            }
+            if (i === 5) {
+                m1 = fixNumbers(getdate[i]);
+            }
+            if (i === 6) {
+                m2 = fixNumbers(getdate[i]);
+            }
+            if (i === 7) {
+                s2 = fixNumbers(getdate[i]);
+            }
+            if (i === 8) {
+                d1 = fixNumbers(getdate[i]);
+            }
+            if (i === 9) {
+                d2 = fixNumbers(getdate[i]);
+            }
+
+        }
+        var yRes = y1 + y2 + y3 + y4;
+        var year = parseInt(yRes);
+        var mRes = m1 + m2;
+        var month = parseInt(mRes);
+        var dRes = d1 + d2;
+        var day = parseInt(dRes);
+        var FixResult = yRes + s1 + mRes + s2 + dRes;
+        var test = checkEnValid(inputField.value);
+
+        var isValid = /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(FixResult);
+
+
+        if (isValid) {
+            inputField.style.backgroundColor = '#a6e9a6';
+            start1valid = true;
+
+
+            $('#sendYearly').attr('disabled', 'disabled');
+            $('#sendMonth').attr('disabled', 'disabled');
+            $('#sendYearly').val("0");
+            $('#sendMonth').val("0");
+            $('#sendYearly').css("background-color", "unset");
+            $('#sendMonth').css("background-color", "unset");
+
+
+
+
+
+
+        } else {
+
+            if (inputField.value != "") {
+                inputField.style.backgroundColor = '#f94c4c';
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را بصورت صحیح وارد کنید");
+                start1valid = false;
+            }
+            if (inputField.value == "") {
+                $('#sendStart').css("background-color", "white");
+                $('#montAndYearError').append(
+
+                    '<h5 class="cvError2" style="color: red; display: none">okStart</h5>'
+
+                );
+            }
+            if (inputField.value == "" && $('.cvError2').html() == "okEnd") {
+
+                $('#sendYearly').removeAttr('disabled');
+                $('#sendMonth').removeAttr('disabled');
+                $('#sendYearly').css("background-color", "white");
+                $('#sendMonth').css("background-color", "white");
+
+                $('#sendEnd').removeClass('sendSelectDate');
+                $('#sendStart').removeClass('sendSelectDate');
+                $('.cvError2').remove();
+            }
+            start1valid = false;
+
+
+
+        }
+        return start1valid;
+
+    }
+
+    function endValidcheck(inputField) {
+
+        var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (var i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+        let getdate = inputField.value;
+
+        var m1, m2;
+        var y1, y2, y3, y4;
+        var d1, d2;
+        var s1, s2;
+        for (var i = 0; i < getdate.length; i++) {
+            if (i === 0) {
+                y1 = fixNumbers(getdate[i]);
+            }
+            if (i === 1) {
+                y2 = fixNumbers(getdate[i]);
+            }
+            if (i === 2) {
+                y3 = fixNumbers(getdate[i]);
+            }
+            if (i === 3) {
+                y4 = fixNumbers(getdate[i]);
+            }
+            if (i === 4) {
+                s1 = fixNumbers(getdate[i]);
+            }
+            if (i === 5) {
+                m1 = fixNumbers(getdate[i]);
+            }
+            if (i === 6) {
+                m2 = fixNumbers(getdate[i]);
+            }
+            if (i === 7) {
+                s2 = fixNumbers(getdate[i]);
+            }
+            if (i === 8) {
+                d1 = fixNumbers(getdate[i]);
+            }
+            if (i === 9) {
+                d2 = fixNumbers(getdate[i]);
+            }
+
+        }
+        var yRes = y1 + y2 + y3 + y4;
+        var year = parseInt(yRes);
+        var mRes = m1 + m2;
+        var month = parseInt(mRes);
+        var dRes = d1 + d2;
+        var day = parseInt(dRes);
+        var FixResult = yRes + s1 + mRes + s2 + dRes;
+        var test = checkEnValid(inputField.value);
+
+        var isValid = /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(FixResult);
+
+
+        if (isValid && test) {
+            inputField.style.backgroundColor = '#a6e9a6';
+            end1valid = true;
+
+            $('#sendYearly').attr('disabled', 'disabled');
+            $('#sendMonth').attr('disabled', 'disabled');
+            $('#sendYearly').val("0");
+            $('#sendMonth').val("0");
+            $('#sendYearly').css("background-color", "unset");
+            $('#sendMonth').css("background-color", "unset");
+
+        } else {
+
+            if (inputField.value != "") {
+                inputField.style.backgroundColor = '#f94c4c';
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را بصورت صحیح وارد کنید");
+                end1valid = false;
+            }
+            if (inputField.value == "") {
+                $('#sendEnd').css("background-color", "white");
+                $('#montAndYearError').append(
+
+                    '<h5 class="cvError2" style="color: red; display: none">okEnd</h5>'
+
+                );
+
+            }
+            if (inputField.value == "" && $('.cvError2').html() == "okStart") {
+
+                $('#sendYearly').removeAttr('disabled');
+                $('#sendMonth').removeAttr('disabled');
+                $('#sendYearly').css("background-color", "white");
+                $('#sendMonth').css("background-color", "white");
+                $('#sendEnd').removeClass('sendSelectDate');
+                $('#sendStart').removeClass('sendSelectDate');
+                $('.cvError2').remove();
+
+            }
+        }
+        return end1valid;
+
+    }
+    function checkEnValid(fixDate) {
+
+        persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (var i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+        let getdate = fixDate;
+        var result;
+        var m1, m2;
+        var y1, y2, y3, y4;
+        var d1, d2;
+        for (var i = 0; i < getdate.length; i++) {
+            if (i === 0) {
+                y1 = fixNumbers(getdate[i]);
+            }
+            if (i === 1) {
+                y2 = fixNumbers(getdate[i]);
+            }
+            if (i === 2) {
+                y3 = fixNumbers(getdate[i]);
+            }
+            if (i === 3) {
+                y4 = fixNumbers(getdate[i]);
+            }
+            if (i === 5) {
+                m1 = fixNumbers(getdate[i]);
+            }
+            if (i === 6) {
+                m2 = fixNumbers(getdate[i]);
+            }
+            if (i === 8) {
+                d1 = fixNumbers(getdate[i]);
+            }
+            if (i === 9) {
+                d2 = fixNumbers(getdate[i]);
+            }
+
+        }
+        var yRes = y1 + y2 + y3 + y4;
+        var year = parseInt(yRes);
+        var mRes = m1 + m2;
+        var month = parseInt(mRes);
+        var dRes = d1 + d2;
+        var day = parseInt(dRes);
+        var recevedDate = yRes + "/" + mRes + "/" + day;
+        if (month <= 6) {
+            result = yRes + "/" + mRes + "/31";
+        }
+        else if (month > 6 && month < 12) {
+            result = yRes + "/" + mRes + "/30";
+        } else if (month === 12) {
+            switch (year) {
+            case 1346: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1350: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1354: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1358: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1362: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1366: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1370: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1375: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1379: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1383: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1387: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1391: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1395: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1399: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1403: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1408: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1412: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1416: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1420: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1424: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1428: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1432: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1436: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1441: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1445: result = yRes + "/" + mRes + "/30";
+                break;
+            default: result = yRes + "/" + mRes + "/29";
+
+            }
+
+
+        }
+
+
+        if (result == recevedDate) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+    async function sendData() {
+        var checkSendWorkshop = false;
+
+        if (!isNaN($('#getWorkshopWithName1').val())) {
+
+            checkSendWorkshop = true;
+        } else if (!isNaN($('#workshopwithcode').val())) {
+
+            checkSendWorkshop = true;
+        }
+
+
+
+
+        if (checkSendWorkshop == true) {
+            if ($('#sendMonth').val() != "0" && $('#sendYearly').val() == "0") {
+                $('#sendYearly').addClass('sendSelectDate');
+                $('#montAndYearError').append(
+
+                    '<h5 class="cvError" style="color: red;">لطفا سال را انتخاب کنید</h5>'
+
+                );
+                $('#sendYearly').click(function () {
+                    if ($('#sendYearly').val() != "0") {
+                        $('#sendYearly').removeClass('sendSelectDate');
+                        $('.cvError').remove();
+                    }
+                    if ($('#sendMonth').val() == "0" && $('#sendYearly').val() == "0") {
+                        $('#sendYearly').removeClass('sendSelectDate');
+                        $('#sendMonth').removeClass('sendSelectDate');
+                        $('.cvError').remove();
+                    }
+
+                });
+            } else if ($('#sendMonth').val() == "0" && $('#sendYearly').val() != "0") {
+                $('#sendMonth').addClass('sendSelectDate');
+                $('#montAndYearError').append(
+
+                    '<h5 class="cvError" style="color: red;">لطفا ماه را انتخاب کنید</h5>'
+
+                );
+                $('#sendMonth').click(function () {
+                    if ($('#sendMonth').val() != "0") {
+                        $('#sendMonth').removeClass('sendSelectDate');
+                        $('.cvError').remove();
+                    }
+                    if ($('#sendMonth').val() == "0" && $('#sendYearly').val() == "0") {
+                        $('#sendYearly').removeClass('sendSelectDate');
+                        $('#sendMonth').removeClass('sendSelectDate');
+                        $('.cvError').remove();
+                    }
+
+                });
+            } else {
+                if ($('#sendStart').val() != "" && $('#sendEnd').val() == "") {
+                    $('#sendEnd').addClass('sendSelectDate');
+                    $('#montAndYearError').append(
+
+                        '<h5 class="cvError" style="color: red; margin-right: 80%;">لطفا تاریخ پایان را وارد کنید</h5>'
+
+                    );
+                    $('#sendEnd').on('change', function () {
+                        if ($('#sendEnd').val() != "") {
+                            $('#sendEnd').removeClass('sendSelectDate');
+                            $('.cvError').remove();
+                        }
+                     
+
+                    });
+                } else if ($('#sendStart').val() == "" && $('#sendEnd').val() != "") {
+                    $('#sendStart').addClass('sendSelectDate');
+                    $('#montAndYearError').append(
+                        '<h5 class="cvError" style="color: red; margin-right: 45%;">لطفا تاریخ شروع را وارد کنید</h5>'
+                    );
+                    $('#sendStart').on('change',
+                        function () {
+                            if ($('#sendStart').val() != "") {
+                                $('#sendStart').removeClass('sendSelectDate');
+                                $('.cvError').remove();
+                            }
+                        
+
+                        });
+                } else if ($('#sendStart').val() != "" && $('#sendEnd').val() != "" && start1valid == false) {
+
+                }else if ($('#sendStart').val() != "" && $('#sendEnd').val() != "" && end1valid == false) {
+
+                }
+                else {
+                    $('.formStep').remove();
+                    $('.ConvertErr').remove();
+
+                    $('#convertError').append(
+
+                        '<input type="hidden" class="formStep" value="select" name="FormStep"/>'
+
+
+                    );
+                    $('#select').click();
+                    $('.byStep').removeAttr('disabled');
+                    $('.byStepButton').removeAttr('disabled');
+                    $('.byStep').css({ 'background-color': '' });
+                    $('.byStepButton').css({ 'background-color': '' });
+                    $('.final').attr('disabled', 'disabled');
+                    $('.final').css("background-color", "gray");
+                }
+
+                /* window.location.href = url1 + url2 + u2 + u3 + u4 + u5 + u6 + u7;*/
+
+            }
+        } else {
+            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " انتخاب کارگاه اجباری است ");
+        }
+
+
+    }
+
+</script>
+<script>
+    var validCheck = false;
+    var validChek0 = false;
+    var start2checkNull = false;
+    var end2checkNull = false;
+
+    function startValidcheck2(inputField) {
+
+        var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (var i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+        let getdate = inputField.value;
+
+        var m1, m2;
+        var y1, y2, y3, y4;
+        var d1, d2;
+        var s1, s2;
+        for (var i = 0; i < getdate.length; i++) {
+            if (i === 0) {
+                y1 = fixNumbers(getdate[i]);
+            }
+            if (i === 1) {
+                y2 = fixNumbers(getdate[i]);
+            }
+            if (i === 2) {
+                y3 = fixNumbers(getdate[i]);
+            }
+            if (i === 3) {
+                y4 = fixNumbers(getdate[i]);
+            }
+            if (i === 4) {
+                s1 = fixNumbers(getdate[i]);
+            }
+            if (i === 5) {
+                m1 = fixNumbers(getdate[i]);
+            }
+            if (i === 6) {
+                m2 = fixNumbers(getdate[i]);
+            }
+            if (i === 7) {
+                s2 = fixNumbers(getdate[i]);
+            }
+            if (i === 8) {
+                d1 = fixNumbers(getdate[i]);
+            }
+            if (i === 9) {
+                d2 = fixNumbers(getdate[i]);
+            }
+
+        }
+        var yRes = y1 + y2 + y3 + y4;
+        var year = parseInt(yRes);
+        var mRes = m1 + m2;
+        var month = parseInt(mRes);
+        var dRes = d1 + d2;
+        var day = parseInt(dRes);
+        var FixResult = yRes + s1 + mRes + s2 + dRes;
+
+
+        var isValid = /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(FixResult);
+        if (inputField.value != "") {
+            start2checkNull = true;
+        } else {
+            start2checkNull = false;
+        }
+
+        if (isValid) {
+            inputField.style.backgroundColor = '#a6e9a6';
+            validChek0 = true;
+
+
+            $('#sendYear2').attr('disabled', 'disabled');
+            $('#sendMonth2').attr('disabled', 'disabled');
+            $('#sendYear2').val("0");
+            $('#sendMonth2').val("0");
+            $('#sendYear2').css("background-color", "unset");
+            $('#sendMonth2').css("background-color", "unset");
+
+
+
+
+
+
+        } else {
+
+            if (inputField.value != "") {
+                inputField.style.backgroundColor = '#f94c4c';
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را بصورت صحیح وارد کنید");
+                validChek0 = false;
+            }
+            if (inputField.value == "") {
+                $('#sendContractStart2').css("background-color", "white");
+                $('#montAndYearError').append(
+
+                    '<h5 class="cvError3" style="color: red; display: none">okStart2</h5>'
+
+                );
+
+            }
+            if (inputField.value == "" && $('.cvError3').html() == "okEnd2") {
+
+                $('#sendYear2').removeAttr('disabled');
+                $('#sendMonth2').removeAttr('disabled');
+                $('#sendYear2').css("background-color", "white");
+                $('#sendMonth2').css("background-color", "white");
+                $('#sendContractEnd2').removeClass('sendSelectDate');
+                $('#sendContractStart2').removeClass('sendSelectDate');
+                $('.cvError3').remove();
+            }
+
+            validChek0 = false;
+
+
+
+        }
+        return validChek0;
+
+    }
+
+    function endValidcheck2(inputField) {
+
+        var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (var i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+        let getdate = inputField.value;
+
+        var m1, m2;
+        var y1, y2, y3, y4;
+        var d1, d2;
+        var s1, s2;
+        for (var i = 0; i < getdate.length; i++) {
+            if (i === 0) {
+                y1 = fixNumbers(getdate[i]);
+            }
+            if (i === 1) {
+                y2 = fixNumbers(getdate[i]);
+            }
+            if (i === 2) {
+                y3 = fixNumbers(getdate[i]);
+            }
+            if (i === 3) {
+                y4 = fixNumbers(getdate[i]);
+            }
+            if (i === 4) {
+                s1 = fixNumbers(getdate[i]);
+            }
+            if (i === 5) {
+                m1 = fixNumbers(getdate[i]);
+            }
+            if (i === 6) {
+                m2 = fixNumbers(getdate[i]);
+            }
+            if (i === 7) {
+                s2 = fixNumbers(getdate[i]);
+            }
+            if (i === 8) {
+                d1 = fixNumbers(getdate[i]);
+            }
+            if (i === 9) {
+                d2 = fixNumbers(getdate[i]);
+            }
+
+        }
+        var yRes = y1 + y2 + y3 + y4;
+        var year = parseInt(yRes);
+        var mRes = m1 + m2;
+        var month = parseInt(mRes);
+        var dRes = d1 + d2;
+        var day = parseInt(dRes);
+        var FixResult = yRes + s1 + mRes + s2 + dRes;
+        var test = checkEnValid(inputField.value);
+
+        var isValid = /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(FixResult);
+        if (inputField.value != "") {
+            end2checkNull = true;
+        } else {
+            end2checkNull = false;
+        }
+
+        if (isValid && test) {
+            inputField.style.backgroundColor = '#a6e9a6';
+            validCheck = true;
+
+            $('#sendYear2').attr('disabled', 'disabled');
+            $('#sendMonth2').attr('disabled', 'disabled');
+            $('#sendYear2').val("0");
+            $('#sendMonth2').val("0");
+            $('#sendYear2').css("background-color", "unset");
+            $('#sendMonth2').css("background-color", "unset");
+
+        } else {
+
+            if (inputField.value != "") {
+                inputField.style.backgroundColor = '#f94c4c';
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را بصورت صحیح وارد کنید");
+                validCheck = false;
+            }
+            if (inputField.value == "") {
+                $('#sendContractEnd2').css("background-color", "white");
+                $('#montAndYearError').append(
+
+                    '<h5 class="cvError3" style="color: red; display: none">okEnd2</h5>'
+
+                );
+
+            }
+            if (inputField.value == "" && $('.cvError3').html() == "okStart2") {
+
+                $('#sendYear2').removeAttr('disabled');
+                $('#sendMonth2').removeAttr('disabled');
+                $('#sendYear2').css("background-color", "white");
+                $('#sendMonth2').css("background-color", "white");
+                $('#sendContractEnd2').removeClass('sendSelectDate');
+                $('#sendContractStart2').removeClass('sendSelectDate');
+                $('.cvError3').remove();
+                validCheck = false;
+            }
+        }
+        return validCheck;
+
+    }
+    function checkEnValid(fixDate) {
+
+        persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (var i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+        let getdate = fixDate;
+        var result;
+        var m1, m2;
+        var y1, y2, y3, y4;
+        var d1, d2;
+        for (var i = 0; i < getdate.length; i++) {
+            if (i === 0) {
+                y1 = fixNumbers(getdate[i]);
+            }
+            if (i === 1) {
+                y2 = fixNumbers(getdate[i]);
+            }
+            if (i === 2) {
+                y3 = fixNumbers(getdate[i]);
+            }
+            if (i === 3) {
+                y4 = fixNumbers(getdate[i]);
+            }
+            if (i === 5) {
+                m1 = fixNumbers(getdate[i]);
+            }
+            if (i === 6) {
+                m2 = fixNumbers(getdate[i]);
+            }
+            if (i === 8) {
+                d1 = fixNumbers(getdate[i]);
+            }
+            if (i === 9) {
+                d2 = fixNumbers(getdate[i]);
+            }
+
+        }
+        var yRes = y1 + y2 + y3 + y4;
+        var year = parseInt(yRes);
+        var mRes = m1 + m2;
+        var month = parseInt(mRes);
+        var dRes = d1 + d2;
+        var day = parseInt(dRes);
+        var recevedDate = yRes + "/" + mRes + "/" + day;
+        if (month <= 6)
+        {
+            result = yRes + "/" + mRes + "/31";
+        }
+        else if (month > 6 && month < 12)
+        {
+            result = yRes + "/" + mRes + "/30";
+        }else if(month === 12) {
+            switch (year) {
+            case 1346: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1350: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1354: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1358: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1362: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1366: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1370: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1375: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1379: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1383: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1387: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1391: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1395: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1399: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1403: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1408: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1412: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1416: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1420: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1424: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1428: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1432: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1436: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1441: result = yRes + "/" + mRes + "/30";
+                break;
+            case 1445: result = yRes + "/" + mRes + "/30";
+                break;
+            default: result = yRes + "/" + mRes + "/29";
+
+            }
+            
+           
+        } 
+
+
+        if (result == recevedDate) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
+
+    async function Convert() {
+        var checkSendWorkshop = false;
+
+        if (!isNaN($('#getWorkshopWithName1').val())) {
+
+            checkSendWorkshop = true;
+        } else if (!isNaN($('#workshopwithcode').val())) {
+
+            checkSendWorkshop = true;
+        }
+        if (checkSendWorkshop == true) {
+            if ($('#sendMonth2').val() != "0" && $('#sendYear2').val() == "0") {
+                $('#sendYear2').addClass('sendSelectDate');
+                $('#convertError').append(
+
+                    '<h5 class="cvError" style="color: red;">لطفا سال را انتخاب کنید</h5>'
+
+                );
+                $('#sendYear2').click(function () {
+                    if ($('#sendYear2').val() != "0") {
+                        $('#sendYear2').removeClass('sendSelectDate');
+                        $('.cvError').remove();
+                    }
+                    if ($('#sendMonth2').val() == "0" && $('#sendYear2').val() == "0") {
+                        $('#sendYear2').removeClass('sendSelectDate');
+                        $('#sendMonth2').removeClass('sendSelectDate');
+                        $('.cvError').remove();
+                    }
+
+                });
+            } else if ($('#sendMonth2').val() == "0" && $('#sendYear2').val() != "0") {
+                $('#sendMonth2').addClass('sendSelectDate');
+                $('#convertError').append(
+
+                    '<h5 class="cvError" style="color: red;">لطفا ماه را انتخاب کنید</h5>'
+
+                );
+                $('#sendMonth2').click(function () {
+                    if ($('#sendMonth2').val() != "0") {
+                        $('#sendMonth2').removeClass('sendSelectDate');
+                        $('.cvError').remove();
+                    }
+                    if ($('#sendMonth2').val() == "0" && $('#sendYear2').val() == "0") {
+                        $('#sendYear2').removeClass('sendSelectDate');
+                        $('#sendMonth2').removeClass('sendSelectDate');
+                        $('.cvError').remove();
+                    }
+
+                });
+            } else {
+
+                if ($('#sendMonth').val() != "0" && $('#sendYearly').val() == "0") {
+                    $('#sendYearly').addClass('sendSelectDate');
+                    $('#montAndYearError').append(
+
+                        '<h5 class="cvError" style="color: red;">لطفا سال را انتخاب کنید</h5>'
+
+                    );
+                    $('#sendYearly').click(function () {
+                        if ($('#sendYearly').val() != "0") {
+                            $('#sendYearly').removeClass('sendSelectDate');
+                            $('.cvError').remove();
+                        }
+                        if ($('#sendMonth').val() == "0" && $('#sendYearly').val() == "0") {
+                            $('#sendYearly').removeClass('sendSelectDate');
+                            $('#sendMonth').removeClass('sendSelectDate');
+                            $('.cvError').remove();
+                        }
+
+                    });
+                } else if ($('#sendMonth').val() == "0" && $('#sendYearly').val() != "0") {
+                    $('#sendMonth').addClass('sendSelectDate');
+                 
+                    $('#montAndYearError').append(
+
+                        '<h5 class="cvError" style="color: red;">لطفا ماه را انتخاب کنید</h5>'
+
+                    );
+                    $('#sendMonth').click(function () {
+                        if ($('#sendMonth').val() != "0") {
+                            $('#sendMonth').removeClass('sendSelectDate');
+                            $('.cvError').remove();
+                        }
+                        if ($('#sendMonth').val() == "0" && $('#sendYearly').val() == "0") {
+                            $('#sendYearly').removeClass('sendSelectDate');
+                            $('#sendMonth').removeClass('sendSelectDate');
+                            $('.cvError').remove();
+                        }
+
+                    });
+                } else {
+                    if ($('#sendContractStart2').val() != "" && $('#sendContractEnd2').val() == "") {
+                        $('#sendContractEnd2').addClass('sendSelectDate');
+                        $('#convertError').append(
+
+                            '<h5 class="cvError" style="color: red;margin-right: 80%">لطفا تاریخ پایان را وارد کنید</h5>'
+
+                        );
+                        $('#sendContractEnd2').on('change', function (e) {
+                            if ($('#sendContractEnd2').val() != "") {
+                                $('#sendContractEnd2').removeClass('sendSelectDate');
+                                $('.cvError').remove();
+                            }
+                            if ($('#sendContractEnd2').val() == "" && $('#sendContractStart2').val() == "") {
+                                $('#sendContractEnd2').removeClass('sendSelectDate');
+                                $('#sendContractStart2').removeClass('sendSelectDate');
+                                $('.cvError').remove();
+                            }
+
+                        });
+                    } else if ($('#sendContractStart2').val() == "" && $('#sendContractEnd2').val() != "") {
+                        $('#sendContractStart2').addClass('sendSelectDate');
+                        $('#convertError').append(
+                            '<h5 class="cvError" style="color: red;margin-right:45%">لطفا تاریخ شروع را وارد کنید</h5>'
+                        );
+                        $('#sendStart2').on('change',
+                            function (e) {
+                                if ($('#sendContractStart2').val() != "") {
+                                    $('#sendContractStart2').removeClass('sendSelectDate');
+                                    $('.cvError').remove();
+                                }
+                                if ($('#sendContractEnd2').val() == "" && $('#sendContractStart2').val() == "") {
+                                    $('#sendContractEnd2').removeClass('sendSelectDate');
+                                    $('#sendContractStart2').removeClass('sendSelectDate');
+                                    $('.cvError').remove();
+                                }
+
+                            });
+                    } else if ($('#sendContractStart2').val() != "" && $('#sendContractEnd2').val() != "" && validCheck == false) {
+
+                    } else if ($('#sendContractStart2').val() != "" && $('#sendContractEnd2').val() != "" && validChek0 == false) {
+
+                    }
+                    else {
+                        $('.formStep').remove();
+
+
+                        $('#convertError').append(
+
+                            '<input type="hidden" class="formStep" value="convert" name="FormStep"/>'
+
+                        );
+
+                        $('.cvError').remove();
+                        $('.ConvertErr').remove();
+                        $('.final').removeAttr('disabled');
+                        $('.final').css({ 'background-color': '' });
+                
+                        $('#select').click();
+                    }
+                }
+
+                  
+
+            }
+
+
+
+        }else {
+            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " انتخاب کارگاه اجباری است ");
+        }
+    } 
+
+</script>
+
+
+
+
+
+
+
+
+

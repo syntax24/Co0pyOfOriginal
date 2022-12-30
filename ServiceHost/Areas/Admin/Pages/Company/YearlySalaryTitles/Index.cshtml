@@ -1,0 +1,244 @@
+﻿@page
+@using CompanyManagment.App.Contracts.PersonalContractingParty
+@using _0_Framework.Application
+@using Microsoft.CodeAnalysis.CSharp.Syntax
+@model ServiceHost.Areas.Admin.Pages.Company.YearlySalaryTitles.IndexModel
+
+@{
+    //string colaps = "in";
+    //string act = "active";
+    int i = 1;
+
+}
+
+@{
+    Layout = "Shared/_AdminLayout";
+    ViewData["title"] = " عناوین مقادیر سالانه ";
+    <style>
+        .thh0 {
+          
+        }
+
+        .thh {
+            padding: 5px 7px !important;
+            background-color: #f5f5f5;
+            border-color: #0f9500;
+            font-family: 'Web_Yekan' !important;
+            color: #0f9500 !important;
+            margin-left: 2px !important;
+        }
+
+        .thh2 {
+            width: 130px !important;
+        }
+
+        .thhNastionalId {
+            width: 30px !important;
+        }
+
+        .inpt {
+            width: 100%;
+            border: 1px solid #c7c7c7;
+        }
+
+        .searchpanel {
+            background-color: #747272;
+        }
+        .panel-default > .panel-heading {
+            background-color: #f5f5f5 !important;
+        }
+    </style>
+}
+@*@section Styles
+    {
+
+        <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
+    }*@
+<div class="row">
+
+
+    @*<div class="row">
+            <div class="col-md-12 m-r-10">
+
+                <p class="pull-right">
+                    <a id="btnPopModal" href="#showmodal=@Url.Page("/Company/YearlySalaryTitles/Index", "Create")" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important;  "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> ایجاد عناوین مقادیر سالانه </a>
+
+                </p>
+
+            </div>
+        </div>*@
+
+
+    @*<div class="col-lg-12">
+        <div class="panel-group panel-group-joined" id="accordion-test">
+
+            <div class="panel panel-default" style="border-radius: 15px !important;">
+                <div class="panel-heading" style="background-color: #545353 !important">
+                    <h4 class="panel-title" style="color: #edebeb !important; display: inline;">
+                        <a data-toggle="collapse" data-parent="#accordion-test" href="#collapseOne" class="collapsed" style="display: inline;">
+                            لیست عناوین مقادیر سالانه
+                        </a>
+                    </h4>
+
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in ">
+                    <div class="panel-body" style="padding-top: 15px; padding-bottom: 15px;">
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>*@
+
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: #545353 !important">
+                <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست عناوین مقادیر سالانه</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-12">
+
+                    @foreach (var item in Model.TitleViewModels)
+                    {
+                        <div style="border-bottom: 1px solid #cdcbcb; margin-bottom: 5px">
+                            @if (item.Title1 != null)
+                            {
+                                <span class="thh btn btn-success btn-rounded waves-effect waves-light m-b-5"> @item.Title1</span>
+                            }
+                            @if (item.Title2 != null)
+                            {
+                                <span class="thh btn btn-success btn-rounded waves-effect waves-light m-b-5"> @item.Title2</span>
+                            }
+                            @if (item.Title3 != null)
+                            {
+                                <span class="thh btn btn-success btn-rounded waves-effect waves-light m-b-5"> @item.Title3</span>
+                            }
+                            @if (item.Title4 != null)
+                            {
+                                <span class="thh btn btn-success btn-rounded waves-effect waves-light m-b-5"> @item.Title4</span>
+                            }
+                            @if (item.Title5 != null)
+                            {
+                                <span class="thh btn btn-success btn-rounded waves-effect waves-light m-b-5"> @item.Title5</span>
+                            }
+                            @if (item.Title6 != null)
+                            {
+                                <span class="thh btn btn-success btn-rounded waves-effect waves-light m-b-5"> @item.Title6</span>
+                            }
+                            @if (item.Title7 != null)
+                            {
+                                <span class="thh btn btn-success btn-rounded waves-effect waves-light m-b-5"> @item.Title7</span>
+                            }
+                            @if (item.Title8 != null)
+                            {
+                                <span class="thh btn btn-success btn-rounded waves-effect waves-light m-b-5"> @item.Title8</span>
+                            }
+                            @if (item.Title9 != null)
+                            {
+                                <span class="thh btn btn-success btn-rounded waves-effect waves-light m-b-5"> @item.Title9</span>
+                            }
+                            @if (item.Title10 != null)
+                            {
+                                <span class="thh btn btn-success btn-rounded waves-effect waves-light m-b-5"> @item.Title10</span>
+                            }
+                            @if (item.Title1 != null)
+                            {
+                                <a class="btn btn-warning pull-left"
+                                   href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            }
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@section Script {
+    <script src="~/AdminTheme/assets/js/site.js"></script>
+    <script src="~/adminTheme/assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/adminTheme/assets/datatables/dataTables.bootstrap.js"></script>
+
+    @*<script src="~/lib/select2/js/select2.js"></script>
+        <script src="~/lib/select2/js/i18n/fa.js"></script>
+        <script>
+            $(document).ready(function () {
+                $(".select-city").select2({
+                    language: "fa",
+                    dir: "rtl"
+                });
+            })
+        </script>*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datatable').dataTable({
+                "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
+            });
+        });
+
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#datatable2').dataTable(
+                {
+                    "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
+                });
+        });
+    </script>
+    <script>
+        $('.persianDateInputy').persianDatepicker({
+            format: 'YYYY',
+            initialValueType: 'persian',
+            initialValue: false,
+
+
+            autoClose: true
+        });
+    </script>
+    @*<script>
+            $("#myTab a").click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+
+            });
+
+            $("#myTab2 a").click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+
+            });
+            // store the currently selected tab in the hash value
+            $("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
+                var id = $(e.target).attr("href").substr(1);
+                window.location.hash = id;
+            });
+
+            // on load of the page: switch to the currently selected tab
+            var hash = window.location.hash;
+            $('#myTab a[href="' + hash + '"]').tab('show', 'active');
+            var hash2 = window.location.hash;
+            $('#myTab2 a[href="' + hash2 + '"]').tab('show', 'active');
+
+
+
+
+        </script>*@
+
+
+
+
+}
+
+
+
+

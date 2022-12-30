@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Razor.Language.Intermediate
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -209,7 +210,7 @@
     </script>
   
 
-    <div id="MainModal" class="modal fade"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+    <div id="MainModal" class="modal fade"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
    
         <div class="modal-dialog">
             <div class="modal-content" id="ModalContent">
@@ -317,7 +318,7 @@
           
             $(".sdf1").slideDown(350);
             /*$(".wav").addClass("subdrop");*/
-            $(this).closest("li").addClass('active');
+            $(this).parentsUntil("#sidebar-menu > ul > li > a").addClass('active');
         };
     });
     $('.clik2').filter(function() {
@@ -325,7 +326,7 @@
            
             $(".sdf2").slideDown(350);
           /*  $(".wav").addClass("subdrop");*/
-            $(this).closest("li").addClass('active');
+            $(this).parentsUntil("#sidebar-menu > ul > li > a").addClass('active');
         };
     });
     $('.clik3').filter(function () {
@@ -333,7 +334,7 @@
 
             $(".sdf3").slideDown(350);
            /* $(".wav").addClass("subdrop");*/
-            $(this).closest("li").addClass('active');
+            $(this).parentsUntil("#sidebar-menu > ul > li > a").addClass('active');
         };
     });
     $('.clik4').filter(function () {
@@ -385,8 +386,6 @@
            
     //    }
     //});
-
-    
 </script>
 
 </body>

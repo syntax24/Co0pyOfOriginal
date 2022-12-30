@@ -1,4 +1,9 @@
-﻿using Company.Domain.WorkingHoursItemsAgg;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Company.Domain.WorkingHoursItemsAgg;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

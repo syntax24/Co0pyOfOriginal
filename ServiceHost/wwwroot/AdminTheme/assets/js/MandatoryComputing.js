@@ -1513,9 +1513,11 @@ function clickCompute() {
         $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ شروع به کار را مشخص کنید");
         ErrorCheck = true;
     } else {
-        document.getElementById('getWorkDateHide').value = document.getElementById('getWorkDate').value;
+        /*document.getElementById('getWorkDateHide').value = document.getElementById('getWorkDate').value;*/
     }
     if (ErrorCheck == false && timeValid == true) {
+        var e = document.getElementById('getWorkshopWithName');
+        document.getElementById('sendWorkshopId').value = e.value;
         document.getElementById('fomeSend').click();
     }
 }

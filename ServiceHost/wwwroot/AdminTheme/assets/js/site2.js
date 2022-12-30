@@ -106,6 +106,54 @@ function CallBackHandler(data, action, form) {
             alert(data.Message);
          
             break;
+        case "ReloadLeftWork":
+            if (data.isSuccedded) {
+                var items2 = [];
+                $.each(data, function (key, val) {
+                    items2.push({ id: key, vall: val })
+
+                });
+
+              
+                window.location.href = "#showmodal=/Admin/Company/Contracts?employeeId=" + items2[2].vall + "&employeeName=" + items2[3].vall + "&handler=CreateLeftWork";
+                setTimeout(function () {
+                   
+                    window.location.hash = "##";
+                }, 2000);
+                $.Notification.autoHideNotify('success', 'top center', 'پیام سیستم ', data.message);
+               
+            } else {
+                /*alert(data.message);*/
+
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', data.message);
+
+            }
+           /* window.location.hash = "##";*/
+            break;
+        case "DeletLeftWork":
+            if (data.isSuccedded) {
+                var items2 = [];
+                $.each(data, function (key, val) {
+                    items2.push({ id: key, vall: val })
+
+                });
+
+
+                window.location.href = "#showmodal=/Admin/Company/Contracts?employeeId=" + items2[2].vall + "&employeeName=" + items2[3].vall + "&handler=CreateLeftWork";
+                setTimeout(function () {
+
+                    window.location.hash = "##";
+                }, 2000);
+                $.Notification.autoHideNotify('success', 'top center', 'پیام سیستم ', data.message);
+
+            } else {
+                /*alert(data.message);*/
+
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', data.message);
+
+            }
+            /* window.location.hash = "##";*/
+            break;
         case "Refresh":
             if (data.isSuccedded) {
                 

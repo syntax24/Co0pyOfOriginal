@@ -99,6 +99,69 @@ $(document).ready(function () {
 
 function CallBackHandler(data, action, form) {
     switch (action) {
+        case "ReloadLeftWork":
+            if (data.isSuccedded) {
+                var items2 = [];
+                $.each(data, function (key, val) {
+                    items2.push({ id: key, vall: val })
+                   
+                });
+
+                $.Notification.autoHideNotify('success', 'top center', 'پیام سیستم ', data.message);
+                setTimeout(function () {
+                    window.location.href = "#showmodal=/Admin/Company/Contracts?employeeId=" + items2[2].vall + "&workshopId=" + items2[3].vall +"&handler=CreateLeftWork";
+                    
+                }, 1000);
+                window.location.hash = "##";
+            } else {
+                /*alert(data.message);*/
+
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', data.message);
+
+            }
+            break;
+        case "ReloadSickLeave":
+            if (data.isSuccedded) {
+                var items2 = [];
+                $.each(data, function (key, val) {
+                    items2.push({ id: key, vall: val })
+
+                });
+
+                $.Notification.autoHideNotify('success', 'top center', 'پیام سیستم ', data.message);
+                setTimeout(function () {
+                    window.location.href = "#showmodal=/Admin/Company/Contracts?employeeId=" + items2[2].vall + "&workshopId=" + items2[3].vall + "&handler=CreateSickLeave";
+
+                }, 1000);
+                window.location.hash = "##";
+            } else {
+                /*alert(data.message);*/
+
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', data.message);
+
+            }
+            break;
+        case "ReloadPaidLeave":
+            if (data.isSuccedded) {
+                var items2 = [];
+                $.each(data, function (key, val) {
+                    items2.push({ id: key, vall: val })
+
+                });
+
+                $.Notification.autoHideNotify('success', 'top center', 'پیام سیستم ', data.message);
+                setTimeout(function () {
+                    window.location.href = "#showmodal=/Admin/Company/Contracts?employeeId=" + items2[2].vall + "&workshopId=" + items2[3].vall + "&handler=CreatePaidLeave";
+
+                }, 1000);
+                window.location.hash = "##";
+            } else {
+                /*alert(data.message);*/
+
+                $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', data.message);
+
+            }
+            break;
         case "Message":
             alert(data.Message);
             break;
@@ -410,7 +473,6 @@ function removeCall() {
     $('div.call').remove();
 
 }
-
 
 function DeActive(url) {
     swal({

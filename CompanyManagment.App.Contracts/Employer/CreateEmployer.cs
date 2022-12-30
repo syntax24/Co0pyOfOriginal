@@ -6,7 +6,7 @@ namespace CompanyManagment.App.Contracts.Employer
 {
     public class CreateEmployer
     {
-        [Required(ErrorMessage = "این مقدار نمی تواند خالی باشد")]
+        //[Required(ErrorMessage = "این مقدار نمی تواند خالی باشد")]
         public string FName { get; set; }
 
         [Required(ErrorMessage = "این مقدار نمی تواند خالی باشد")]
@@ -16,14 +16,14 @@ namespace CompanyManagment.App.Contracts.Employer
         [Required(ErrorMessage = "لطفا طرف حساب این کارفرما را انتخاب کنید")]
         public long ContractingPartyId { get;  set; }
 
-        [Required(ErrorMessage = "لطفا جنسیت را تعیین نمایید")]
+        //[Required(ErrorMessage = "لطفا جنسیت را تعیین نمایید")]
         public string Gender { get; set; }
 
-        [Required(ErrorMessage = "این مقدار نمی تواند خالی باشد")]
+        //[Required(ErrorMessage = "این مقدار نمی تواند خالی باشد")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "لطفا فقط عدد وارد کنید")]
         public string Nationalcode { get; set; }
 
-        [Required(ErrorMessage = "این مقدار نمی تواند خالی باشد")]
+        //[Required(ErrorMessage = "این مقدار نمی تواند خالی باشد")]
         [MaxLength(12)]
         [MinLength(1)]
         [RegularExpression("^[0-9]*$", ErrorMessage = "لطفا فقط عدد وارد کنید")]
@@ -42,15 +42,15 @@ namespace CompanyManagment.App.Contracts.Employer
         public string PlaceOfIssue { get; set; }
 
 
-        [Required(ErrorMessage = "این مقدار نمی تواند خالی باشد")]
+        //[Required(ErrorMessage = "این مقدار نمی تواند خالی باشد")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "لطفا فقط عدد وارد کنید")]
         public string RegisterId { get; set; }
 
-        [Required(ErrorMessage = "این مقدار نمی تواند خالی باشد")]
+        //[Required(ErrorMessage = "این مقدار نمی تواند خالی باشد")]
         [RegularExpression("[0-9]{11}", ErrorMessage = "لطفا فقط عدد 11 رقمی وارد کنید")]
         public string NationalId { get; set; }
 
-        [Required(ErrorMessage = "این مقدار نمی تواند خالی باشد")]
+        //[Required(ErrorMessage = "این مقدار نمی تواند خالی باشد")]
         public string EmployerLName { get; set; }
 
         public string IsLegal { get; set; }

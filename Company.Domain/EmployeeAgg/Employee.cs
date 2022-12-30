@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using _0_Framework.Domain;
 using Company.Domain.ContractAgg;
 using Company.Domain.EmployeeChildrenAgg;
+using Company.Domain.LeftWorkAgg;
 
 namespace Company.Domain.EmployeeAgg
 {
@@ -14,7 +18,8 @@ namespace Company.Domain.EmployeeAgg
             string phone, string address, string state, string city,
             string maritalStatus, string militaryService, string levelOfEducation, string fieldOfStudy,
             string bankCardNumber, string bankBranch, string insuranceCode, string insuranceHistoryByYear,
-            string insuranceHistoryByMonth, string numberOfChildren,string officePhone)
+            string insuranceHistoryByMonth, string numberOfChildren,string officePhone,
+            string mclsUserName, string mclsPassword, string eserviceUserName, string eservicePassword, string taxOfficeUserName, string taxOfficepassword, string sanaUserName, string sanaPassword)
         {
             FName = fName;
             LName = lName;
@@ -48,7 +53,18 @@ namespace Company.Domain.EmployeeAgg
             InsuranceHistoryByMonth = insuranceHistoryByMonth;
             NumberOfChildren = numberOfChildren;
             OfficePhone = officePhone;
+
+            MclsUserName = mclsUserName;
+            MclsPassword = mclsPassword;
+            EserviceUserName = eserviceUserName;
+            EservicePassword = eservicePassword;
+            TaxOfficeUserName = taxOfficeUserName;
+            TaxOfficepassword = taxOfficepassword;
+            SanaUserName = sanaUserName;
+            SanaPassword = sanaPassword;
         }
+
+ 
 
         public string FName { get; private set; }
         public string LName { get; private set; }
@@ -82,13 +98,31 @@ namespace Company.Domain.EmployeeAgg
         public string InsuranceHistoryByMonth { get; private set; }
         public string NumberOfChildren { get; private set; }
         public string OfficePhone { get; private set; }
+
+        public string MclsUserName { get; private set; }
+
+        public string MclsPassword { get; private set; }
+
+        public string EserviceUserName { get; private set; }
+
+        public string EservicePassword { get; private set; }
+
+        public string TaxOfficeUserName { get; private set; }
+
+        public string TaxOfficepassword { get; private set; }
+
+        public string SanaUserName { get; private set; }
+        public string SanaPassword { get; private set; }
+
         public List<EmployeeChildren> EmployeeChildrenList { get; private set; }
         public List<Contract> Contracts { get; private set; }
+        public List<LeftWork> LeftWorks { get; set; }
 
         public Employee()
         {
             EmployeeChildrenList = new List<EmployeeChildren>();
             Contracts = new List<Contract>();
+            LeftWorks = new List<LeftWork>();
         }
 
         public void Edit(string fName, string lName, string fatherName,
@@ -97,7 +131,8 @@ namespace Company.Domain.EmployeeAgg
             string phone, string address, string state, string citi,
             string maritalStatus, string militaryService, string levelOfEducation, string fieldOfStudy,
             string bankCardNumber, string bankBranch, string insuranceCode, string insuranceHistoryByYear,
-            string insuranceHistoryByMonth, string numberOfChildren, string officePhone)
+            string insuranceHistoryByMonth, string numberOfChildren, string officePhone,
+            string mclsUserName, string mclsPassword, string eserviceUserName, string eservicePassword, string taxOfficeUserName, string taxOfficepassword, string sanaUserName, string sanaPassword)
         {
             FName = fName;
             LName = lName;
@@ -129,6 +164,14 @@ namespace Company.Domain.EmployeeAgg
             InsuranceHistoryByMonth = insuranceHistoryByMonth;
             NumberOfChildren = numberOfChildren;
             OfficePhone = OfficePhone;
+            MclsUserName = mclsUserName;
+            MclsPassword = mclsPassword;
+            EserviceUserName = eserviceUserName;
+            EservicePassword = eservicePassword;
+            TaxOfficeUserName = taxOfficeUserName;
+            TaxOfficepassword = taxOfficepassword;
+            SanaUserName = sanaUserName;
+            SanaPassword = sanaPassword;
         }
 
         public void Active()

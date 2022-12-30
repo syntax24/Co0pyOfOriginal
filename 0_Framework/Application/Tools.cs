@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
+
 namespace _0_Framework.Application
 {
     public static class Tools
@@ -296,5 +297,101 @@ namespace _0_Framework.Application
 
             return y2;
         }
+
+
+        public static int FindeKabiseh(this string date)
+        {
+            int y2 = 365;
+            var year = Convert.ToInt32(date.Substring(0, 4));
+            
+           
+                switch (year)
+                {
+                    case 1346:
+                        y2 = 367;
+                        break;
+                    case 1350:
+                        y2 = 367;
+                        break;
+                    case 1354:
+                        y2 = 367;
+                        break;
+                    case 1358:
+                        y2 = 367;
+                        break;
+                    case 1362:
+                        y2 = 367;
+                        break;
+                    case 1366:
+                        y2 = 367;
+                        break;
+                    case 1370:
+                        y2 = 367;
+                        break;
+                    case 1375:
+                        y2 = 367;
+                        break;
+                    case 1379:
+                        y2 = 367;
+                        break;
+                    case 1383:
+                        y2 = 367;
+                        break;
+                    case 1387:
+                        y2 = 367;
+                        break;
+                    case 1391:
+                        y2 = 367;
+                        break;
+                    case 1395:
+                        y2 = 367;
+                        break;
+                    case 1399:
+                        y2 = 367;
+                        break;
+                    case 1403:
+                        y2 = 367;
+                        break;
+                    case 1408:
+                        y2 = 367;
+                        break;
+                    case 1412:
+                        y2 = 367;
+                        break;
+                    case 1416:
+                        y2 = 367;
+                        break;
+                    case 1420:
+                        y2 = 367;
+                        break;
+                    case 1424:
+                        y2 = 367;
+                        break;
+                    case 1428:
+                        y2 = 367;
+                        break;
+                    case 1432:
+                        y2 = 367;
+                        break;
+                    case 1436:
+                        y2 = 367;
+                        break;
+                    case 1441:
+                        y2 = 367;
+                        break;
+                    case 1445:
+                        y2 = 367;
+                        break;
+
+                    default:
+                        y2 = 366;
+                        break;
+
+                }
+          
+
+            return y2;
+        }
+
     }
 }

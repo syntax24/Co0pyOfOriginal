@@ -1,0 +1,153 @@
+﻿@model CompanyManagment.App.Contracts.LeftWork.EditLeftWork
+@{
+}
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+    <form asp-page="./Index" asp-page-handler="EditLeftWork" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="ReloadLeftWork">
+        <div class="modal-body">
+            <div class="row">
+
+                <fieldset style="border: 1px solid #999797; height: 120px; border-radius: 10px; padding: revert">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px;text-align: center;">ویرایش </legend>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group m-b-0" dir="rtl">
+                                <label asp-for="StartWorkDate" class="control-label m-r-5">تاریخ شروع به کار</label>
+                                <input id="endDate" dir="ltr" maxlength="10" style="text-align: center" class="form-control persianDateInputb" onchange="validDate(this);" asp-for="StartWorkDate" />
+
+                                <span asp-validation-for="StartWorkDate" class="error"></span>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group m-b-0" dir="rtl">
+                                <label asp-for="LeftWorkDate" class="control-label m-r-5">تاریخ ترک کار</label>
+                                <input id="endDate" dir="ltr" maxlength="10" style="text-align: center" class="form-control persianDateInputb" onchange="validDate(this);" asp-for="LeftWorkDate" />
+
+                                <span asp-validation-for="LeftWorkDate" class="error"></span>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+                </fieldset>
+
+
+
+            </div>
+
+
+
+        </div>
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <input type="hidden" asp-for="EmployeeId" />
+        <input type="hidden" asp-for="WorkshopId" />
+        <input type="hidden" asp-for="WorkshopName" />
+        <input type="hidden" asp-for="EmployeeFullName" />
+        <div class="modal-footer">
+
+            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+            <a href="#showmodal=@Url.Page("/Company/Contracts/Index", "CreateLeftWork", new { employeeId = @Model.EmployeeId, workshopId = @Model.WorkshopId, hd = 1 })" class="btn btn-default btn-rounded waves-effect waves-light m-b-5"> بازگشت</a>
+           
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+    function validDate(inputField) {
+
+        var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (var i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+        let getdate = inputField.value;
+
+        var m1, m2;
+        var y1, y2, y3, y4;
+        var d1, d2;
+        var s1, s2;
+        for (var i = 0; i < getdate.length; i++) {
+            if (i === 0) {
+                y1 = fixNumbers(getdate[i]);
+            }
+            if (i === 1) {
+                y2 = fixNumbers(getdate[i]);
+            }
+            if (i === 2) {
+                y3 = fixNumbers(getdate[i]);
+            }
+            if (i === 3) {
+                y4 = fixNumbers(getdate[i]);
+            }
+            if (i === 4) {
+                s1 = fixNumbers(getdate[i]);
+            }
+            if (i === 5) {
+                m1 = fixNumbers(getdate[i]);
+            }
+            if (i === 6) {
+                m2 = fixNumbers(getdate[i]);
+            }
+            if (i === 7) {
+                s2 = fixNumbers(getdate[i]);
+            }
+            if (i === 8) {
+                d1 = fixNumbers(getdate[i]);
+            }
+            if (i === 9) {
+                d2 = fixNumbers(getdate[i]);
+            }
+
+        }
+        var yRes = y1 + y2 + y3 + y4;
+        var year = parseInt(yRes);
+        var mRes = m1 + m2;
+        var month = parseInt(mRes);
+        var dRes = d1 + d2;
+        var day = parseInt(dRes);
+        var FixResult = yRes + s1 + mRes + s2 + dRes;
+
+
+        var isValid = /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(FixResult);
+
+
+        if (isValid) {
+            inputField.style.backgroundColor = '#a6e9a6';
+            $("button[type=submit]").attr('disabled', false);
+            validCheck = true;
+
+        } else {
+            inputField.style.backgroundColor = '#f94c4c';
+            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را بصورت صحیح وارد کنید");
+            $("button[type=submit]").attr('disabled', true)
+            validCheck = false;
+
+        }
+        return validCheck;
+
+    }
+</script>

@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using _0_Framework.Application;
 using _0_Framework.Domain;
 using Company.Domain.ContarctingPartyAgg;
 using Company.Domain.ContractAgg;
+using Company.Domain.WorkshopAgg;
 using Company.Domain.WorkshopEmployerAgg;
 
 namespace Company.Domain.empolyerAgg
@@ -71,11 +76,13 @@ namespace Company.Domain.empolyerAgg
         //public List<Workshop> Workshops { get; private set; }
         public List<Contract> Contracts { get; private set; }
         public List<WorkshopEmployer> WorkshopEmployers { get; set; }
+        public List<Workshop> WorkshopsList { get; set; }
         public Employer()
         {
             //Workshops = new List<Workshop>();
             Contracts = new List<Contract>();
             WorkshopEmployers = new List<WorkshopEmployer>();
+            WorkshopsList = new List<Workshop>();
         }
 
         public Employer(string fName, string lName, long contractingPartyId,string gender, string nationalcode, string idNumber, string nationality, string fatherName,

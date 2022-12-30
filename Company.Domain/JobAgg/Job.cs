@@ -1,5 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using _0_Framework.Domain;
+using CompanyManagment.App.Contracts.Employer;
 using Contract = Company.Domain.ContractAgg.Contract;
 
 namespace Company.Domain.JobAgg

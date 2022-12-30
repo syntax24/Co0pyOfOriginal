@@ -382,6 +382,14 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Property<DateTime>("DateOfIssue")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("EservicePassword")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("EserviceUserName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<string>("FName")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -396,7 +404,6 @@ namespace CompanyManagment.EFCore.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
@@ -436,17 +443,23 @@ namespace CompanyManagment.EFCore.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<string>("MclsPassword")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("MclsUserName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<string>("MilitaryService")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("NationalCode")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Nationality")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -466,7 +479,23 @@ namespace CompanyManagment.EFCore.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("SanaPassword")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("SanaUserName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<string>("State")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("TaxOfficeUserName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("TaxOfficepassword")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -614,192 +643,6 @@ namespace CompanyManagment.EFCore.Migrations
                     b.ToTable("Files");
                 });
 
-            modelBuilder.Entity("Company.Domain.FileAlert.FileAlert", b =>
-                {
-                    b.Property<long>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AdditionalDeadline")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("FileState_Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("File_Id")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("FileState_Id");
-
-                    b.HasIndex("File_Id");
-
-                    b.ToTable("File_Alerts");
-                });
-
-            modelBuilder.Entity("Company.Domain.FileState.FileState", b =>
-                {
-                    b.Property<long>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("FileTiming_Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("State")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("FileTiming_Id");
-
-                    b.ToTable("File_States");
-
-                    b.HasData(
-                        new
-                        {
-                            id = 1L,
-                            CreationDate = new DateTime(2022, 12, 27, 18, 51, 1, 386, DateTimeKind.Local).AddTicks(2494),
-                            FileTiming_Id = 1L,
-                            State = 1,
-                            Title = "کلاسه پرونده ثبت نشده است"
-                        },
-                        new
-                        {
-                            id = 2L,
-                            CreationDate = new DateTime(2022, 12, 27, 18, 51, 1, 391, DateTimeKind.Local).AddTicks(2092),
-                            FileTiming_Id = 1L,
-                            State = 2,
-                            Title = "وکالت نامه پرونده ثبت نشده است"
-                        },
-                        new
-                        {
-                            id = 3L,
-                            CreationDate = new DateTime(2022, 12, 27, 18, 51, 1, 391, DateTimeKind.Local).AddTicks(2166),
-                            FileTiming_Id = 2L,
-                            State = 3,
-                            Title = "دعوتنامه ای برای جلسات دادگاه تشخیص صادر نشده است"
-                        },
-                        new
-                        {
-                            id = 4L,
-                            CreationDate = new DateTime(2022, 12, 27, 18, 51, 1, 391, DateTimeKind.Local).AddTicks(2174),
-                            FileTiming_Id = 3L,
-                            State = 4,
-                            Title = "دعوتنامه جدید یا دادنامه تشخیص صادر نشده است"
-                        },
-                        new
-                        {
-                            id = 5L,
-                            CreationDate = new DateTime(2022, 12, 27, 18, 51, 1, 391, DateTimeKind.Local).AddTicks(2179),
-                            FileTiming_Id = 4L,
-                            State = 5,
-                            Title = "اعتراض برای پرونده ثبت نشده است"
-                        },
-                        new
-                        {
-                            id = 6L,
-                            CreationDate = new DateTime(2022, 12, 27, 18, 51, 1, 391, DateTimeKind.Local).AddTicks(2186),
-                            FileTiming_Id = 5L,
-                            State = 6,
-                            Title = "دعوتنامه ای برای جلسات دادگاه تجدیدنظر صادر نشده است"
-                        },
-                        new
-                        {
-                            id = 7L,
-                            CreationDate = new DateTime(2022, 12, 27, 18, 51, 1, 391, DateTimeKind.Local).AddTicks(2190),
-                            FileTiming_Id = 6L,
-                            State = 7,
-                            Title = "دعوتنامه جدید یا دادنامه تجدیدنظر صادر نشده است"
-                        });
-                });
-
-            modelBuilder.Entity("Company.Domain.FileTiming.FileTiming", b =>
-                {
-                    b.Property<long>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Deadline")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Tips")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("File_Timings");
-
-                    b.HasData(
-                        new
-                        {
-                            id = 1L,
-                            CreationDate = new DateTime(2022, 12, 27, 18, 51, 1, 394, DateTimeKind.Local).AddTicks(7189),
-                            Deadline = 1,
-                            Tips = "	پس از مراجعه موکل و ثبت اولیه پرونده در نرم افزار ، در صورتی که تا پایان زمان مندرج در کادر ، موکل پرونده را تعیین و تکلیف ننماید و شما قادر به ورود به پرونده نباشید ، نرم افزار به شما گزارش میدهد . ",
-                            Title = "ثبت اولیه در سیستم"
-                        },
-                        new
-                        {
-                            id = 2L,
-                            CreationDate = new DateTime(2022, 12, 27, 18, 51, 1, 394, DateTimeKind.Local).AddTicks(8723),
-                            Deadline = 1,
-                            Tips = "	پس از ارائه دادخواست توسط شما یا موکل ، اگر تا پایان مهلت مندرج در این کادر ، دعوتنامه ای صادر نشده باشد ، نرم افزار به شما گزارش میدهد . ",
-                            Title = "انتظار برای دریافت دعوتنامه اول"
-                        },
-                        new
-                        {
-                            id = 3L,
-                            CreationDate = new DateTime(2022, 12, 27, 18, 51, 1, 394, DateTimeKind.Local).AddTicks(8752),
-                            Deadline = 1,
-                            Tips = "	پس از شرکت در جلسه اول رسیدگی ، اگر تا پایان مهلت مندرج در کادر ، دعوتنامه جدید یا دادنامه صادر نشده باشد ، نرم افزار به شما گزارش میدهد . ",
-                            Title = "انتظار برای دریافت دعوتنامه دوم به بعد یا دادنامه"
-                        },
-                        new
-                        {
-                            id = 4L,
-                            CreationDate = new DateTime(2022, 12, 27, 18, 51, 1, 394, DateTimeKind.Local).AddTicks(8757),
-                            Deadline = 1,
-                            Tips = "	پس از صدور دادنامه ، تا قبل از پایان مدت اعتراض مندرج در کادر ، اخطار مهلت اعتراض را نرم افزار به شما گزارش میدهد تا در فرصت مقرر اقدام به ثبت اعتراض نمائید . بدیهیست در صورت عدم ثبت اعتراض در مهلت مقرر دادنامه شما قطعی خواهد شد . ",
-                            Title = "مهلت اعتراض به دادنامه"
-                        },
-                        new
-                        {
-                            id = 5L,
-                            CreationDate = new DateTime(2022, 12, 27, 18, 51, 1, 394, DateTimeKind.Local).AddTicks(8761),
-                            Deadline = 1,
-                            Tips = "پس از ثبت اعتراض ، در صورتی که تا پایان مهلت مندرج در کادر ، دعوتنامه ای برای شما صادر نگردد ، نرم افزار به شما گزارش میدهد . ",
-                            Title = "انتظار برای دریافت دعوتنامه پس از اعتراض"
-                        },
-                        new
-                        {
-                            id = 6L,
-                            CreationDate = new DateTime(2022, 12, 27, 18, 51, 1, 394, DateTimeKind.Local).AddTicks(8765),
-                            Deadline = 1,
-                            Tips = "پس از شرکت در جلسه اول رسیدگی ، اگر تا پایان مهلت مندرج در کادر ، دعوتنامه جدید یا دادنامه صادر نشده باشد ، نرم افزار به شما گزارش میدهد .",
-                            Title = "انتظار برای دریافت دعوتنامه دوم به بعد یا دادنامه"
-                        });
-                });
-
             modelBuilder.Entity("Company.Domain.FileTitle.FileTitle", b =>
                 {
                     b.Property<long>("id")
@@ -888,6 +731,92 @@ namespace CompanyManagment.EFCore.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Jobs");
+                });
+
+            modelBuilder.Entity("Company.Domain.LeaveAgg.Leave", b =>
+                {
+                    b.Property<long>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmployeeFullName")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("EndLeave")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LeaveHourses")
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
+
+                    b.Property<string>("LeaveType")
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("PaidLeaveType")
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<DateTime>("StartLeave")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("WorkshopId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("WorkshopName")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Leave");
+                });
+
+            modelBuilder.Entity("Company.Domain.LeftWorkAgg.LeftWork", b =>
+                {
+                    b.Property<long>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmployeeFullName")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("LeftWorkDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartWorkDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("WorkshopId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("WorkshopName")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("WorkshopId");
+
+                    b.ToTable("LeftWork");
                 });
 
             modelBuilder.Entity("Company.Domain.MandatoryHoursAgg.MandatoryHours", b =>
@@ -1208,9 +1137,6 @@ namespace CompanyManagment.EFCore.Migrations
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
 
                     b.Property<string>("Time")
                         .HasColumnType("nvarchar(max)");
@@ -1728,7 +1654,6 @@ namespace CompanyManagment.EFCore.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -1741,12 +1666,10 @@ namespace CompanyManagment.EFCore.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("IdNumber")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -1754,7 +1677,6 @@ namespace CompanyManagment.EFCore.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("IsLegal")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
@@ -1772,17 +1694,14 @@ namespace CompanyManagment.EFCore.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("NationalId")
-                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Nationalcode")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Nationality")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -1795,7 +1714,6 @@ namespace CompanyManagment.EFCore.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("RegisterId")
-                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
@@ -1820,6 +1738,21 @@ namespace CompanyManagment.EFCore.Migrations
                     b.HasIndex("ContractingPartyId");
 
                     b.ToTable("Employers");
+                });
+
+            modelBuilder.Entity("EmployerWorkshop", b =>
+                {
+                    b.Property<long>("EmployersListid")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("WorkshopsListid")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("EmployersListid", "WorkshopsListid");
+
+                    b.HasIndex("WorkshopsListid");
+
+                    b.ToTable("EmployerWorkshop");
                 });
 
             modelBuilder.Entity("Company.Domain.Board.Board", b =>
@@ -1940,36 +1873,6 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Navigation("Evidence");
                 });
 
-            modelBuilder.Entity("Company.Domain.FileAlert.FileAlert", b =>
-                {
-                    b.HasOne("Company.Domain.FileState.FileState", "FileState")
-                        .WithMany("FileAlertsList")
-                        .HasForeignKey("FileState_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Company.Domain.File1.File1", "File")
-                        .WithMany("FileAlertsList")
-                        .HasForeignKey("File_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("File");
-
-                    b.Navigation("FileState");
-                });
-
-            modelBuilder.Entity("Company.Domain.FileState.FileState", b =>
-                {
-                    b.HasOne("Company.Domain.FileTiming.FileTiming", "FileTiming")
-                        .WithMany("FileStates")
-                        .HasForeignKey("FileTiming_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FileTiming");
-                });
-
             modelBuilder.Entity("Company.Domain.HolidayItemAgg.HolidayItem", b =>
                 {
                     b.HasOne("Company.Domain.HolidayAgg.Holiday", "Holidayss")
@@ -1979,6 +1882,25 @@ namespace CompanyManagment.EFCore.Migrations
                         .IsRequired();
 
                     b.Navigation("Holidayss");
+                });
+
+            modelBuilder.Entity("Company.Domain.LeftWorkAgg.LeftWork", b =>
+                {
+                    b.HasOne("Company.Domain.EmployeeAgg.Employee", "Employee")
+                        .WithMany("LeftWorks")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Company.Domain.WorkshopAgg.Workshop", "Workshop")
+                        .WithMany("LeftWorks")
+                        .HasForeignKey("WorkshopId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Workshop");
                 });
 
             modelBuilder.Entity("Company.Domain.MasterPenaltyTitle.MasterPenaltyTitle", b =>
@@ -2182,6 +2104,21 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Navigation("ContractingParty");
                 });
 
+            modelBuilder.Entity("EmployerWorkshop", b =>
+                {
+                    b.HasOne("Company.Domain.empolyerAgg.Employer", null)
+                        .WithMany()
+                        .HasForeignKey("EmployersListid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Company.Domain.WorkshopAgg.Workshop", null)
+                        .WithMany()
+                        .HasForeignKey("WorkshopsListid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Company.Domain.Board.Board", b =>
                 {
                     b.Navigation("ProceedingSessionsList");
@@ -2213,6 +2150,8 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Navigation("Contracts");
 
                     b.Navigation("EmployeeChildrenList");
+
+                    b.Navigation("LeftWorks");
                 });
 
             modelBuilder.Entity("Company.Domain.Evidence.Evidence", b =>
@@ -2226,21 +2165,9 @@ namespace CompanyManagment.EFCore.Migrations
 
                     b.Navigation("EvidencesList");
 
-                    b.Navigation("FileAlertsList");
-
                     b.Navigation("MasterPetitionsList");
 
                     b.Navigation("PetitionsList");
-                });
-
-            modelBuilder.Entity("Company.Domain.FileState.FileState", b =>
-                {
-                    b.Navigation("FileAlertsList");
-                });
-
-            modelBuilder.Entity("Company.Domain.FileTiming.FileTiming", b =>
-                {
-                    b.Navigation("FileStates");
                 });
 
             modelBuilder.Entity("Company.Domain.HolidayAgg.Holiday", b =>
@@ -2302,6 +2229,8 @@ namespace CompanyManagment.EFCore.Migrations
             modelBuilder.Entity("Company.Domain.WorkshopAgg.Workshop", b =>
                 {
                     b.Navigation("Contracts2");
+
+                    b.Navigation("LeftWorks");
 
                     b.Navigation("WorkshopEmployers");
                 });

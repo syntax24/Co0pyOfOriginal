@@ -1,10 +1,14 @@
-﻿namespace CompanyManagment.App.Contracts.Workshop
+﻿using System.Collections.Generic;
+using CompanyManagment.App.Contracts.Employee;
+using CompanyManagment.App.Contracts.Employer;
+
+namespace CompanyManagment.App.Contracts.Workshop
 {
     public class WorkshopViewModel
     {
         public long Id { get; set; }
         public string WorkshopName { get; set; }
-
+   
         public string WorkshopSureName { get; set; }
         public string WorkshopFullName { get; set; }
         public string InsuranceCode { get; set; }
@@ -31,5 +35,7 @@
         public long  EmpId { get; set; }
         public string ContractTerm { get; set; }
         public string IsActiveString { get; set; }
+        public List<EmployerViewModel> EmpList { get; set; }
+        public List<EmployeeViewModel> EmployeeList { get; set; }
     }
 }

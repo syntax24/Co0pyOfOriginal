@@ -1,4 +1,10 @@
-﻿using Company.Domain.EmployeeAgg;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Company.Domain.EmployeeAgg;
+using Company.Domain.empolyerAgg;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,10 +19,10 @@ namespace CompanyManagment.EFCore.Mapping
 
             builder.Property(x => x.FName).HasMaxLength(255).IsRequired();
             builder.Property(x => x.LName).HasMaxLength(255).IsRequired();
-            builder.Property(x => x.Gender).HasMaxLength(10).IsRequired();
-            builder.Property(x => x.NationalCode).HasMaxLength(10).IsRequired();
+            builder.Property(x => x.Gender).HasMaxLength(10);
+            builder.Property(x => x.NationalCode).HasMaxLength(10);
             builder.Property(x => x.IdNumber).HasMaxLength(20);
-            builder.Property(x => x.Nationality).HasMaxLength(50).IsRequired();
+            builder.Property(x => x.Nationality).HasMaxLength(50);
             builder.Property(x => x.FatherName).HasMaxLength(255);
             builder.Property(x => x.DateOfBirth);
             builder.Property(x => x.DateOfIssue);
@@ -37,6 +43,14 @@ namespace CompanyManagment.EFCore.Mapping
             builder.Property(x => x.InsuranceHistoryByMonth).HasMaxLength(10);
             builder.Property(x => x.NumberOfChildren).HasMaxLength(10);
             builder.Property(x => x.OfficePhone).HasMaxLength(50);
+            builder.Property(x => x.MclsUserName).HasMaxLength(100);
+            builder.Property(x => x.MclsPassword).HasMaxLength(100);
+            builder.Property(x => x.EserviceUserName).HasMaxLength(100);
+            builder.Property(x => x.EservicePassword).HasMaxLength(100);
+            builder.Property(x => x.TaxOfficeUserName).HasMaxLength(100);
+            builder.Property(x => x.TaxOfficepassword).HasMaxLength(100);
+            builder.Property(x => x.SanaUserName).HasMaxLength(100);
+            builder.Property(x => x.SanaPassword).HasMaxLength(100);
 
 
 
@@ -46,6 +60,10 @@ namespace CompanyManagment.EFCore.Mapping
                 .HasForeignKey(x => x.EmployeeId);
 
             builder.HasMany(x => x.Contracts)
+                .WithOne(x => x.Employee)
+                .HasForeignKey(x => x.EmployeeId);
+
+            builder.HasMany(x => x.LeftWorks)
                 .WithOne(x => x.Employee)
                 .HasForeignKey(x => x.EmployeeId);
 

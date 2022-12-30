@@ -1,0 +1,220 @@
+﻿@using _0_Framework.Application
+@model CompanyManagment.App.Contracts.Holiday.EditHoliday
+@{
+  
+
+  
+    <style>
+        .modal-dialog {
+            width: 80% !important;
+        }
+        .select2-container {
+            width: 100% !important;
+        }
+        .modal-footer {
+            border-top: unset !important;
+        }
+
+        .modal .modal-dialog .modal-content .modal-footer {
+            padding-top: unset !important;
+        }
+        p{
+            direction: ltr !important;
+            text-align: right !important;
+        }
+
+        input[type=radio]:hover {
+            cursor:pointer;
+        }
+    </style>
+
+
+}
+
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+    <form asp-page="./Index" asp-page-handler="Edit" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="Refresh"
+          enctype="multipart/form-data">
+        <div class="modal-body">
+            <div class="row">
+
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> ایجاد تعطیلات  </legend>
+
+
+                    <div class="row">
+                        <div class="col-md-6 project_defualt">
+                            <div class="form-group">
+                                <label asp-for="Year" class="control-label">  سال </label>
+                                <input disabled="disabled" type="text" style="text-align: center" value="@Model.Year" class="form-control" asp-for="Year">
+                                <input type="hidden" asp-for="Year" value="@Model.Year" />
+
+
+                            </div>
+
+                            <hr style="color: dimgray" />
+                            @for (int a = 0; a <= Model.PersiandatesList.Count - 1; a++)
+                            {
+                                <div class="form-group aline2" style="margin-bottom: 30px;">
+
+                                    <input onchange="validateHM(this);" style="text-align: center; position: absolute; width: 94%;direction: ltr" type="text" value="@Model.PersiandatesList[a]" class="form-control item2" asp-for="@Model.PersiandatesList[a]">
+                                    <span style="position: relative; top: 8px;"><a href="#" class="remove_project_input" style="padding:5px;"><i style="color: red;" class="ion-close-circled"></i></a> </span>
+
+
+                                </div>
+                            }
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group aline" style="padding: unset !important; margin-bottom: 8px !important">
+                                <label class="control-label" style="visibility: hidden;">  سال </label>
+                                <input type="text" maxlength="10" id="sendDate" style="text-align: center; direction: ltr" class="items itemborder form-control" />
+
+                            </div>
+
+                            <div class="aline form-group" style="padding: unset !important; margin-bottom: 1px !important">
+                                <span class="add_project_file" style="margin-right: 25%">
+                                    <button id="add" type="button" onclick="copyLink()" class="btn btn-default btn-rounded waves-effect waves-light " style="margin-right: 10px; font-size: 12px;"><i class="fa fa-user-plus" style="padding-left: 3px; font-size: 12px;"></i>افزودن تعطیلات</button>
+                                </span>
+                            </div>
+                            <hr style="color: dimgray" />
+                            <div class="row project_images">
+                                <div class="row" style="display: none">
+                                    <div class="col-md-12 aline" style="padding: 15px;">
+                                        <span class="items" style="font-family: IranText;"><a href="#" class="remove_project_file" style="padding:5px;margin-right: 25%;"><i style="color: red;" class="ion-close-circled"></i></a> ' + title +' </span>
+                                        <input class="item1" type="hidden" value="" asp-for="@Model.PersiandatesList2[0]" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+         
+                    </div>
+
+
+
+                </fieldset>
+
+
+
+
+            </div>
+
+        </div>
+    
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <div class="modal-footer">
+
+            <button id="saveChange" type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+
+            <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+        </div>
+
+    </form>
+    
+
+</div>
+<script>
+
+    // Remove parent of 'remove' link when link is clicked.
+    $('.project_images').on('click', '.remove_project_file', function (e) {
+        e.preventDefault();
+
+        $(this).closest('div.aline').remove();
+        var inp = $(this).closest('div.aline').find('.item1');
+        inp.val('');
+        $(this).closest('div.aline').css("display", "none");
+    });
+    $('.project_defualt').on('click', '.remove_project_input', function (e) {
+        e.preventDefault();
+
+        /*$(this).closest('div.aline2').remove();*/
+        var inp = $(this).closest('div.aline2').find('.item2');
+        inp.val('');
+        $(this).closest('div.aline2').css("display", "none");
+
+
+    });
+
+    function copyLink() {
+
+        var result = document.getElementById("sendDate").value;
+
+        if (result !== "") {
+
+            var isValid = /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(result);
+            console.log(isValid);
+            switch (isValid) {
+                case true:
+
+                    var title = $(".items").val();
+                    var a = ($(".item1").length) / 1;
+
+                    $(".project_images").append(
+
+                        ' <div class="row">'
+                        + '<div class="col-md-12 aline" style="padding: 15px;">'
+                        + '<span class="items" style="font-family: IranText;"><a href="#" class="remove_project_file" style="padding:5px;margin-right: 25%;"><i style="color: red;" class="ion-close-circled"></i></a> ' + title + ' </span>'
+                        + '<input class="item1" type="hidden" value="' + title + '" name="PersiandatesList2[' + a + ']"/>'
+                        + '</div>'
+                        + '</div>');
+                    $(".itemborder").val("");
+
+                    break;
+
+                case false:
+
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', " لطفا تاریخ را بصورت صحیح وارد کنید - مثال : 1400/01/01");
+                    break;
+
+                default:
+            }
+
+        } else {
+            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را وارد کنید ");
+        }
+
+
+
+
+    }
+    var validCheck;
+    function validateHM(inputField) {
+      
+        var isValid = /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(inputField.value);
+        var isValid2 = inputField.value;
+
+        if (isValid || !isNaN(isValid2)) {
+            inputField.style.backgroundColor = '#a6e9a6';
+            validCheck = true;
+    
+        } else {
+            inputField.style.backgroundColor = '#f94c4c';
+            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را بصورت صحیح وارد کنید");
+            validCheck = false;
+      
+        }
+        return isValid;
+
+    }
+
+    $('#saveChange').on('click', function (e) {
+
+
+        if (validCheck === false) {
+            e.preventDefault();
+        }
+
+
+    });
+
+</script>
+

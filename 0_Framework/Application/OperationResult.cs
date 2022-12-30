@@ -1,19 +1,21 @@
-﻿namespace _0_Framework.Application
-{
+﻿using System;
 
+namespace _0_Framework.Application
+{
+            
     public class OperationResult
     {
-        public long EntityId { get; set; }
+      
         public bool IsSuccedded { get; set; }
         public string Message { get; set; }
+   
 
         public OperationResult()
         {
             IsSuccedded = false;
         }
-        public OperationResult Succcedded(string message = "عملیات با موفقیت انجام شد", long entityId = -1)
+        public OperationResult Succcedded(string message ="عملیات با موفقیت انجام شد")
         {
-            EntityId = entityId;
             IsSuccedded = true;
             Message = message;
             return this;
@@ -26,7 +28,7 @@
             return this;
         }
 
-
+       
     }
 }
 

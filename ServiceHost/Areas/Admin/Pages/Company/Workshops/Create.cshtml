@@ -1,0 +1,447 @@
+﻿@using _0_Framework.Application
+@using System.Linq
+@model CompanyManagment.App.Contracts.Workshop.CreateWorkshop
+@{
+    
+
+    <link href="~/AdminTheme/amirb/jspc-peach.css" rel="stylesheet" />
+
+    @*<link href="~/lib/select2/css/select2.css" rel="stylesheet" />*@
+
+    <style>
+        .modal-dialog {
+            width: 94% !important;
+        }
+
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .modal-footer {
+            border-top: unset !important;
+        }
+
+        .modal .modal-dialog .modal-content .modal-footer {
+            padding-top: unset !important;
+        }
+
+        p {
+            direction: ltr !important;
+            text-align: right !important;
+        }
+
+        input[type=radio]:hover {
+            cursor: pointer;
+        }
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border: solid #9d9a9a 1px;
+            border-radius: 10px !important;
+           
+        }
+        .select2-container--default .select2-selection--multiple {
+            background-color: white;
+            border: 1px solid #aaa;
+            border-radius: 10px;
+            cursor: text;
+        }
+    </style>
+
+}
+
+
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+    <form asp-page="./Index" asp-page-handler="Create" id="workshops" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="Refresh"
+          enctype="multipart/form-data">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <fieldset style="border: 1px solid #999797; height: 605px; border-radius: 10px; padding: revert">
+                        <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> مشخصات کارگاه</legend>
+
+                        <div class="row">
+
+                            <div class="form-group col-md-12" dir="rtl" style="padding-left: 2.5%">
+                                <label asp-for="@Model.EmployerIdList">
+                                    انتخاب کارفرما <span style="color: red">*</span>
+                                </label>
+                                <select id="copy" class="form-control select-city" multiple asp-for="@Model.EmployerIdList" asp-items='new SelectList(Model.Employers, "Id", "FullName")'>
+                                    @*<option value="@Model.EmployerIdList"> انتخاب کارفرما </option*@>
+                                    
+
+                                </select>
+                                <span asp-validation-for="Employers" class="error"></span>
+                            </div>
+                       
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="WorkshopName" class="control-label">
+                                         نام کارگاه <span style="color: red">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" asp-for="WorkshopName">
+                                    <span asp-validation-for="WorkshopName" class="error"></span>
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="WorkshopSureName" class="control-label"> نام مستعار کارگاه </label>
+                                    <input type="text" class="form-control" asp-for="WorkshopSureName">
+                                    <span asp-validation-for="WorkshopSureName" class="error"></span>
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="ArchiveCode" class="control-label">
+                                         شماره بایگانی <span style="color: red">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" asp-for="ArchiveCode">
+                                    <span asp-validation-for="ArchiveCode" class="error"></span>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="InsuranceCode" class="control-label">کد کارگاهی بیمه </label>
+                                    <input type="text" class="form-control" asp-for="InsuranceCode">
+                                    <span asp-validation-for="InsuranceCode" class="error"></span>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="TypeOfOwnership" class="control-label"> نوع مالکیت </label>
+                                    <input type="text" class="form-control" asp-for="TypeOfOwnership">
+                                    <span asp-validation-for="TypeOfOwnership" class="error"></span>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="AgentName" class="control-label">
+                                         نام و نام خانوادگی نماینده <span style="color: red">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" asp-for="AgentName">
+                                    <span asp-validation-for="AgentName" class="error"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="AgentPhone" class="control-label">شماره تلفن نماینده</label>
+                                    <input type="text" class="form-control" asp-for="AgentPhone">
+                                    <span asp-validation-for="AgentPhone" class="error"></span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group" dir="rtl">
+
+                                    <label asp-for="State" class="control-label"> نام استان</label>
+                                    @*<input type="text" value="" id="pcal1" class="pdate form-control" />
+                    <input type="hidden" value="" id="hide" asp-for="DateOfBirth">
+                    <span asp-validation-for="DateOfBirth" class="error"></span>*@
+
+
+                                    <select class="form-control select-city" asp-for="State" name="state" onChange="iranwebsv(this.value);">
+                                        <option value="">انتخاب استان</option>
+                                        <option value="تهران"> تهران </option>
+                                        <option value="گیلان"> گیلان </option>
+                                        <option value="آذربایجان شرقی"> آذربایجان شرقی</option>
+                                        <option value="خوزستان"> خوزستان </option>
+                                        <option value="فارس"> فارس</option>
+                                        <option value="اصفهان"> اصفهان</option>
+                                        <option value="خراسان رضوی">خراسان رضوی </option>
+                                        <option value="قزوین"> قزوین</option>
+                                        <option value="سمنان"> سمنان </option>
+                                        <option value="قم"> قم</option>
+                                        <option value="مرکزی"> مرکزی</option>
+                                        <option value="زنجان"> زنجان</option>
+                                        <option value="مازندران"> مازندران</option>
+                                        <option value="گلستان"> گلستان</option>
+                                        <option value="اردبیل"> اردبیل </option>
+                                        <option value="آذربایجان غربی"> آذربایجان غربی</option>
+                                        <option value="همدان"> همدان </option>
+                                        <option value="کردستان"> کردستان </option>
+                                        <option value="کرمانشاه"> کرمانشاه </option>
+                                        <option value="لرستان"> لرستان</option>
+                                        <option value="بوشهر"> بوشهر</option>
+                                        <option value="کرمان"> کرمان</option>
+                                        <option value="هرمزگان"> هرمزگان</option>
+                                        <option value="چهارمحال و بختیاری"> چهارمحال و بختیاری</option>
+                                        <option value="یزد"> یزد</option>
+                                        <option value="سیستان و بلوچستان"> سیستان و بلوچستان</option>
+                                        <option value="ایلام"> ایلام</option>
+                                        <option value="کهگلویه و بویراحمد"> کهگلویه و بویراحمد</option>
+                                        <option value="خراسان شمالی"> خراسان شمالی</option>
+                                        <option value="خراسان جنوبی"> خراسان جنوبی</option>
+                                        <option value="البرز"> البرز</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" dir="rtl">
+                               
+
+                                    <label class="control-label"> نام شهر</label>
+                                    <select class="form-control select-city" name="cityy" id="city">
+                                        <option value="" placeholder="انتخاب شهر"> </option>
+                                    </select>
+                                    <input type="hidden" value="" id="hide2" asp-for="City">
+                                </div>
+
+
+                            </div>
+
+
+
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="form-group col-md-12" style="padding-left: 3%;">
+                                @*<label asp-for="Address">آدرس</label>*@
+                                <textarea class="form-control" asp-for="Address" placeholder="آدرس"></textarea>
+                                <span asp-validation-for="Address" class="text-danger"></span>
+
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div  style="padding-right: 5px">
+                                    <p class="pull-right">
+                                        <a href="#showmodal=@Url.Page("/Company/Employers/Index", "Create")" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; border-top-left-radius: 0px; border-bottom-left-radius: 0px "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i>  </a>
+
+                                    </p>
+                                    <p class="pull-right">
+                                        <a href="#showmodal=@Url.Page("/Company/Employers/Index", "InsertLegal")" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #1d92e5; font-family: 'Web_Yekan' !important; color: #1d92e5 !important; border-top-right-radius: 0px; border-bottom-right-radius: 0px "> <i class="fa fa-group" style="padding-left: 3px; font-size: 14px; color: #1d92e5 !important "></i>  </a>
+
+                                    </p>
+                                </div>
+
+
+                            </div>
+                           
+                        </div>
+
+                       
+
+                    </fieldset>
+                </div>
+
+                <div class="col-md-6">
+
+
+                    <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert;">
+                        <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 185px; text-align: center;">   نحوه انجام امور قرارداد  </legend>
+                        <div class="row m-b-10">
+                           
+                            <div class="col-md-12">
+                                <label asp-for="@Model.AccountsList">
+                                    تعیین دسترسی 
+                                </label>
+                                <select class="form-control select-city2" multiple asp-for="@Model.AccountIdsList" asp-items='new SelectList(Model.AccountsList, "Id", "Fullname")'>
+                                </select>
+
+                            </div>
+                            
+                        </div>
+                        <div class="form-group">
+                            <span asp-validation-for="TypeOfContract" class="error"></span>
+                            <fieldset style="border: 1px solid #c9c9c9; border-radius: 5px; margin-bottom: 10px; padding: revert;">
+                                <p>
+                                    <label> مدت قرارداد </label>
+                                    <div class="row" dir="ltr">
+
+                                        <div class="col-md-2">
+                                            <span>
+                                                <span dir="rtl">1 ماهه</span>  <input type="radio" value="1" asp-for="ContractTerm" checked>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <span>
+                                                <span dir="rtl">2 ماهه</span>  <input type="radio" value="2" asp-for="ContractTerm">
+                                            </span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <span>
+                                                <span dir="rtl">3 ماهه</span>  <input type="radio" value="3" asp-for="ContractTerm">
+                                            </span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <span>
+                                                <span dir="rtl">6 ماهه</span> <input type="radio" value="6" asp-for="ContractTerm">
+                                            </span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <span>
+                                                <span dir="rtl">1 ساله</span>  <input type="radio" value="12" asp-for="ContractTerm">
+                                            </span>
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                    </div>
+                                </p>
+                            </fieldset>
+                            <p>
+                                قرارداد و تصفیه حساب بصورت استاندارد <input type="radio" value="a" asp-for="TypeOfContract" checked>
+                            </p>
+                            <p>
+                                قرارداد و تصفیه حساب بدون محاسبه سنوات <input type="radio" value="b" asp-for="TypeOfContract">
+                            </p>
+                            <p>
+                                قرارداد و تصفیه حساب بدون محاسبه عیدی <input type="radio" value="c" asp-for="TypeOfContract">
+                            </p>
+
+                           
+                            <p>
+                                قرارداد و تصفیه حساب بدون محاسبه عیدی و سنوات <input type="radio" value="d" asp-for="TypeOfContract">
+                            </p>
+                        </div>
+
+
+
+                    </fieldset>
+
+
+                    <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert;">
+                        <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 195px; text-align: center;"> نحوه انجام امور بیمه ای</legend>
+                        <div class="form-group">
+                            <span asp-validation-for="TypeOfInsuranceSend" class="error"></span>
+                            <p>
+                                ارسال لیست بیمه عادی <input type="radio" value="ارسال لیست بیمه عادی" asp-for="TypeOfInsuranceSend">
+                            </p>
+
+                            <p>
+                                ارسال لیست بیمه مشمول کمک دولت زیر 5 نفر <input type="radio" value="ارسال لیست بیمه مشمول کمک دولت زیر 5 نفر" asp-for="TypeOfInsuranceSend">
+                            </p>
+                            <p>
+                                ارسال لیست بیمه مشمول کمک دولت بالای 5 نفر <input type="radio" value="ارسال لیست بیمه مشمول کمک دولت بالای 5 نفر" asp-for="TypeOfInsuranceSend">
+                            </p>
+                            <p>
+                                ارسال لیست بیمه بصورت خانوادگی <input type="radio" value="ارسال لیست بیمه بصورت خانوادگی" asp-for="TypeOfInsuranceSend">
+                            </p>
+                            <p>
+                                ارسال لیست بیمه پیمانکاری <input type="radio" value="ارسال لیست بیمه پیمانکاری" asp-for="TypeOfInsuranceSend">
+                            </p>
+                            <p>
+                                عدم ارسال لیست بیمه <input type="radio" value="عدم ارسال لیست بیمه" asp-for="TypeOfInsuranceSend">
+                            </p>
+                        </div>
+
+
+                    </fieldset>
+
+
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+        @*<input type="hidden" asp-for="id" value="id"/>*@
+        <div class="modal-footer">
+
+            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" onclick="sum()">ذخیره</button>
+
+            <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+        </div>
+
+    </form>
+
+</div>
+
+
+
+
+
+
+
+<script language="javascript" src="~/AdminTheme/js/city.js"></script>
+<script>
+    function sum() {
+
+
+        var y = document.getElementById('city');
+        var City = y.options[y.selectedIndex].text;
+
+        document.getElementById('hide2').value = City;
+
+
+    }
+
+
+</script>
+@*<script type="text/javascript">
+    var listArray = [];
+    async function show() {
+        var myArray = document.getElementById('copy');
+        let intext = myArray.options[myArray.selectedIndex].value;
+       
+
+        
+        @foreach (var items in Model.Employers)
+        {
+
+            @:listArray.push({ LName: "@items.LName", Id: @items.Id });
+
+
+
+        }
+        for (var i = 0; i < listArray.length; i++) {
+            if (listArray[i].Id == intext) {
+                document.getElementById("past").innerHTML = listArray[i].LName;
+            }
+           
+        }
+
+    }
+
+   
+</script>*@
+@*<script src="~/lib/select2/js/select2.js"></script>
+    <script src="~/lib/select2/js/i18n/fa.js"></script>*@
+
+
+
+

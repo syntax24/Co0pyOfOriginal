@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using _0_Framework.Domain;
+using Company.Domain.empolyerAgg;
+using CompanyManagment.App.Contracts.Employer;
 using CompanyManagment.App.Contracts.Workshop;
 
 namespace Company.Domain.WorkshopAgg
@@ -13,6 +15,7 @@ namespace Company.Domain.WorkshopAgg
         List<long> GetWorkshopAccountRelation(long workshopid);
         void EmployerWorkshop(long workshopid, long employerid);
         void WorkshopAccounts(List<long> AccountIds, long workshopId);
+        WorkshopViewModel GetWorkshopInfo(long id);
         void RemoveOldRelation(long workshopid);
         List<WorkshopViewModel> Search(WorkshopSearchModel searchModel);
     }

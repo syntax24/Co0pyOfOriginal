@@ -12,7 +12,7 @@ namespace CompanyManagment.EFCore.Mapping
             builder.HasKey(x => x.id);
             builder.Property(x => x.NoteNumber);
             builder.Property(x => x.NumberTextManager);
-    
+        
            }
     }
 }

@@ -18,14 +18,14 @@ namespace CompanyManagment.App.Contracts.Employee
         public string DateOfIssue { get; set; }
 
         public string PlaceOfIssue { get; set; }
-        [Required(ErrorMessage = "این مقدار نمی تواند خالی باشد")]
+        //[Required(ErrorMessage = "این مقدار نمی تواند خالی باشد")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "لطفا فقط عدد وارد کنید")]
         public string NationalCode { get; set; }
 
         [RegularExpression("^[0-9]*$", ErrorMessage = "لطفا فقط عدد وارد کنید")]
         public string IdNumber { get; set; }
 
-        [Required(ErrorMessage = "لطفا جنسیت را تعیین نمایید")]
+        //[Required(ErrorMessage = "لطفا جنسیت را تعیین نمایید")]
         public string Gender { get; set; }
 
         public string Nationality { get; set; }
@@ -38,7 +38,7 @@ namespace CompanyManagment.App.Contracts.Employee
         public string City { get; set; }
         public string State { get; set; }
 
-        [Required(ErrorMessage = "لطفا وضعیت تاهل را تعیین نمایید")]
+        //[Required(ErrorMessage = "لطفا وضعیت تاهل را تعیین نمایید")]
         public string MaritalStatus { get; set; }
         public string MilitaryService { get; set; }
         public string LevelOfEducation { get; set; }
@@ -65,6 +65,20 @@ namespace CompanyManagment.App.Contracts.Employee
 
         [RegularExpression("^[0][0-9]*$", ErrorMessage = "لطفا فقط شماره تلفن معتبر وارد کنید")]
         public string OfficePhone { get; set; }
+        public string MclsUserName { get; set; }
+
+        public string MclsPassword { get; set; }
+
+        public string EserviceUserName { get; set; }
+
+        public string EservicePassword { get; set; }
+
+        public string TaxOfficeUserName { get; set; }
+
+        public string TaxOfficepassword { get; set; }
+
+        public string SanaUserName { get; set; }
+        public string SanaPassword { get; set; }
         public List<EmployeeChildernViewModel> CreateEmployeChildrenList { get; set; }
         public List<EmployeeChildernViewModel> EditEmployeChildrenList { get; set; }
 

@@ -300,7 +300,8 @@ namespace _0_Framework_b.Application
 
         public static int GetWorkingDaysDifference(DateTime? fromDate, DateTime? toDate)
         {
-            var workingDays = PersianDateExtensions.GetWorkingDays((DateTime)fromDate, (DateTime)toDate, true);
+
+            var workingDays = PersianDateExtensions.GetWorkingDays(new PersianDateTime(fromDate.ToFarsi()), new PersianDateTime(toDate.ToFarsi()), true);
 
             if(fromDate > toDate)
                 workingDays *= -1;

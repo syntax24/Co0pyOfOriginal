@@ -1,5 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using _0_Framework.Domain;
+using Company.Domain.YearlySalaryAgg;
 using CompanyManagment.App.Contracts.YearlySalaryItems;
 
 namespace Company.Domain.YearlySalaryItemsAgg

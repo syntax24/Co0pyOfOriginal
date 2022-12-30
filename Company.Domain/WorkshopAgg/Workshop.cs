@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using _0_Framework.Domain;
 using Company.Domain.ContractAgg;
+using Company.Domain.empolyerAgg;
+using Company.Domain.LeftWorkAgg;
+using Company.Domain.WorkshopAccountAgg;
 using Company.Domain.WorkshopEmployerAgg;
-
+using CompanyManagment.App.Contracts.Employer;
 
 
 namespace Company.Domain.WorkshopAgg
@@ -15,8 +18,16 @@ namespace Company.Domain.WorkshopAgg
             ContractTerm = contractTerm;
             Contracts2 = new List<Contract>();
             WorkshopEmployers = new List<WorkshopEmployer>();
-         
+            LeftWorks = new List<LeftWork>();
+            EmployersList = new List<Employer>();
 
+
+        }
+
+        public Workshop()
+        {
+            WorkshopEmployers = new List<WorkshopEmployer>();
+            EmployersList = new List<Employer>();
         }
         public Workshop(string workshopName,string workshopSureName, string insuranceCode, string typeOfOwnership, string archiveCode, string agentName, string agentPhone, 
             string state, string city, string address, string typeOfInsuranceSend, string typeOfContract, string contractTerm)
@@ -92,6 +103,8 @@ namespace Company.Domain.WorkshopAgg
 
         public List<Contract> Contracts2 { get; set; }
         public List<WorkshopEmployer> WorkshopEmployers { get; set; }
+        public List<LeftWork> LeftWorks { get; set; }
+        public List<Employer> EmployersList { get; set; }
 
 
       

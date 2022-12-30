@@ -1,0 +1,265 @@
+﻿@model CompanyManagment.App.Contracts.Contract.ExtensionViewModel
+@{
+
+    int i = 1;
+    int b = 0;
+
+
+
+}
+
+
+
+
+
+
+
+
+    @if (Model.Contracts != null)
+    {
+        @foreach (var item in Model.Contracts)
+        {
+
+
+            <tr>
+                @if (item.RedColor)
+                {
+                    <input type="hidden" name="redColor" />
+                }
+                @if (item.MoreThanOneMonth && item.Waiting == false)
+                {
+                    <input type="hidden" value="@item.EmployeeName" name="MoreThanOneMonth" />
+                }
+                else if (item.Waiting && item.MoreThanOneMonth == false)
+                {
+                    <input type="hidden" value="@item.EmployeeName" name="Waiting" />
+                }
+                else if (item.Waiting && item.MoreThanOneMonth)
+                {
+                    <input type="hidden" value="@item.EmployeeName" name="MixWatingAndMore" />
+                }
+             
+                <td style="font-size: 12px !important; text-align: center">
+                    @i  
+                </td>
+               
+                    <td style="font-size: 12px !important; text-align: center">
+                        @if (@Model.FormStep == "convert")
+                        {
+                            @if (item.Extension)
+                            {
+
+                                <input type="checkbox" name="cheking" value="@item.Id" checked="checked"/>
+
+
+                                b++;
+                            }
+                            else
+                            {
+                                @if (item.RedColor)
+                                {
+                                    <input type="checkbox" value="@item.Id" disabled="disabled"/>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" name="cheking" value="@item.Id"/>
+                                }
+
+                            }
+
+
+                        }
+                    </td>
+              
+                <td style="font-family: 'IranText' !important; font-size: 12px !important; text-align: center">
+
+                    @item.ContractNo
+
+
+
+                </td>
+
+                <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: right">
+                    @*@foreach (var emp in Model.Employers)
+                    {
+                        if (item.EmployerId == emp.Id)
+                        {
+                            @emp.FullName
+
+                        }
+                    }*@
+                    @item.EmployerName
+                </td>
+
+                <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: right">
+
+                    @item.WorkshopName
+                </td>
+
+                <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: right">
+               
+                    @item.EmployeeName
+
+                </td>
+
+
+
+
+
+
+                <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: center">
+
+                    @item.ContarctStart
+
+
+
+                </td>
+                <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: center">
+                   
+                    @if (item.LaterThanEnd)
+                    {
+                       <span style="visibility: hidden">####/##/##</span>
+                    }
+                    else
+                    {
+                        @item.ContractEnd
+                    }
+                  
+
+
+
+                </td>
+
+                <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: center">
+                    @if (item.RedColor == false)
+                    {
+                        <span style="color: #1e88e5;">
+                           
+                                @item.NextMonthStart
+                         
+
+                        </span>
+
+                    }
+
+                    @if (@item.NextMonthStart == null)
+                    {
+                        <span style="visibility: hidden">####/##/##</span>
+                    }
+
+
+
+                </td>
+                <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: center">
+                    @if (item.RedColor == false)
+                    {
+                        <span style="color: #1e88e5;">
+
+
+
+                            @item.NextMonthEnd
+
+                        </span>
+
+                    }
+                    @if (@item.NextMonthEnd == null)
+                    {
+                       
+                            <span style="visibility: hidden">####/##/##</span>
+                       
+
+                    }
+
+
+
+
+
+                </td>
+                <td style="font-family: 'IranSans' !important; font-size: 12px !important; text-align: center">
+                   
+                        @if (item.LaterThanEnd)
+                        {
+                            @item.ContractEnd
+                        }
+                        else
+                        {
+                            <span style="visibility: hidden">####/##/##</span>
+                        }
+
+                    
+                </td>
+
+                @{
+                    i++;
+
+                }
+
+
+            </tr>
+
+
+
+
+
+
+        }
+    }
+
+
+
+
+<script>
+    //var redCheck = $('.redColor').val();
+    //if (redCheck == true) {
+    //    console.log("ok");
+    //    $('.redColor').closest('tr').css("background", "red");
+    //}
+
+
+    var checkboxes = document.getElementsByName('redColor');
+    for (var i = 0, n = checkboxes.length; i < n; i++) {
+        checkboxes[i].parentNode.style.background = "#ff8f8d";
+    }
+    var checkboxes = document.getElementsByName('Waiting');
+    for (var i = 0, n = checkboxes.length; i < n; i++) {
+        checkboxes[i].parentNode.style.background = "#ffcd40";
+    }
+    var checkboxes = document.getElementsByName('MoreThanOneMonth');
+    for (var i = 0, n = checkboxes.length; i < n; i++) {
+        checkboxes[i].parentNode.style.background = "#cbff7c";
+    }
+    var checkboxes = document.getElementsByName('MixWatingAndMore');
+    for (var i = 0, n = checkboxes.length; i < n; i++) {
+        checkboxes[i].parentNode.style.background = "#ffcd40";
+    }
+    var checkboxes2 = document.getElementsByName('MixWatingAndMore');
+    for (var s = 0, m = checkboxes2.length; s < m; s++) {
+        $('#alarm').append(
+
+            '<h5 style="color:red; direction: rtl;" class="ConvertErr"><span>  مدت قرارد </span>  <span>&nbsp;</span><span>' + checkboxes2[s].value + '</span> <span>&nbsp;</span><span> بیش از یک ماه است</span></h5>'
+            + '<h5 style="color: #ffa12c; direction: rtl;" class="ConvertErr"><span> از آخرین قرارداد </span>  <span>&nbsp;</span><span>' + checkboxes2[s].value + '</span> <span>&nbsp;</span><span> تا تاریخ تبدیل انتخاب شده هیچ قراردادی وجود ندارد</span></h5>'
+        );
+    }
+    var checkboxes2 = document.getElementsByName('MoreThanOneMonth');
+    for (var b = 0, m = checkboxes2.length; b < m; b++) {
+        $('#alarm').append(
+
+            '<h5 style="color:red; direction: rtl;" class="ConvertErr"><span>  مدت قرارد </span>  <span>&nbsp;</span><span>' + checkboxes2[b].value + '</span> <span>&nbsp;</span><span> بیش از یک ماه است</span></h5>'
+
+        );
+    }
+
+    var checkboxes3 = document.getElementsByName('Waiting');
+    for (var a = 0, f = checkboxes3.length; a < f; a++) {
+        $('#alarm').append(
+
+            '<h5 style="color: #ffa12c; direction: rtl;" class="ConvertErr"><span> از آخرین قرارداد </span>  <span>&nbsp;</span><span>' + checkboxes3[a].value + '</span> <span>&nbsp;</span><span> تا تاریخ تبدیل انتخاب شده هیچ قراردادی وجود ندارد</span></h5>'
+
+        );
+    }
+    /*ff8f8d*/
+</script>
+
+
+
+

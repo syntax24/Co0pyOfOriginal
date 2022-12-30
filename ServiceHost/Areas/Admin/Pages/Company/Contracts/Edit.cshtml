@@ -1,0 +1,1800 @@
+﻿@using _0_Framework.Application
+@using CompanyManagment.App.Contracts.Contract
+@using PersianTools.Core
+@model CompanyManagment.App.Contracts.Contract.EditContract
+@*@inject CompanyManagment.App.Contracts.Contract.ComputingViewModel computingViewModel;*@
+@{
+
+
+    <link href="~/AdminTheme/assets/css/TypoGraphy.css" rel="stylesheet" />
+    @*<link href="~/AdminTheme/assets/css/mdtimepicker.css" rel="stylesheet" />*@
+
+
+    <style>
+        .modal-dialog {
+            width: 98% !important;
+        }
+
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .modal-footer {
+            border-top: unset !important;
+        }
+
+        .modal .modal-dialog .modal-content .modal-footer {
+            padding-top: unset !important;
+        }
+
+        p {
+            direction: ltr !important;
+            text-align: right !important;
+        }
+
+        input[type=radio]:hover {
+            cursor: pointer;
+        }
+
+        div span.week {
+            border-radius: 5px;
+            padding: 2px 8px;
+            margin-right: 15px;
+        }
+
+        #shanbeh, #yekshanbeh, #doshanbeh, #seshanbeh, #cheharshanbeh, #panjshanbeh, #jomeh {
+            width: 80px;
+        }
+
+        #Sh1, #Sh2, #Sh3, #Sh4, #Sh5, #Sh6, #Sh7, #Sh8 {
+            width: 80px;
+            margin-right: 30%;
+        }
+        /* .se .select2-container {
+            width: 75% !important;
+        }*/
+        /*  .se .select2-container--default .select2-selection--single {
+            border-radius: 0px 22px 22px 0px !important;
+            border: 1px solid #a5a3a3 !important;
+        }*/
+        hr {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border-top: 1px solid #d3d3d3;
+        }
+
+        .checkbox + .checkbox, .radio + .radio {
+            margin-top: 0px !important;
+        }
+
+        .radio {
+            margin-top: 0px !important;
+        }
+        /* .radio {
+                    margin: 5px 20px 5px 20px !important;
+                }*/
+        /*    .form-control {
+                    width: 75% !important;
+                    display: inline-block;
+                }
+        */
+        /*----------------------------*/
+        #EmployerFullName table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #EmployerFullName th, td {
+            padding: 10px 20px;
+        }
+
+        #EmployerFullName td:nth-child(odd) {
+            border-bottom: 1px solid #fff;
+            background-color: #bed3ca;
+            text-align: right;
+        }
+
+        #EmployerFullName tr:hover {
+            background-color: rgb(108, 186, 250);
+        }
+
+
+
+
+
+
+
+        #thh table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh th, td {
+            padding: 10px 20px;
+        }
+
+        #thh th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh td:nth-child(odd) {
+            border-left: 1px solid #fff;
+            width: 40%;
+            text-align: center;
+        }
+
+        #thh td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh th:nth-child(odd) {
+            border-left: 1px solid #fff;
+        }
+
+        #thh tr:nth-child(even) {
+            background-color: #bed3ca;
+        }
+
+        #thh tr {
+            background-color: rgb(224, 227, 228);
+        }
+
+            #thh tr:hover {
+                background-color: rgb(108, 186, 250);
+            }
+
+        #thh2 table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh2 th, td {
+            padding: 10px 20px;
+        }
+
+        #thh2 th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh2 td:nth-child(odd) {
+            border-left: 1px solid #fff;
+            width: 40%;
+            text-align: center;
+        }
+
+        #thh2 td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh2 th:nth-child(odd) {
+            border-left: 1px solid #fff;
+        }
+
+        #thh2 tr:nth-child(odd) {
+            background-color: #dcdbaf;
+        }
+
+        #thh2 tr:nth-child(even) {
+            background-color: rgb(224, 227, 228);
+        }
+
+        #thh2 tr:hover {
+            background-color: rgb(108, 186, 250);
+        }
+
+        .buttonInside {
+            position: relative;
+        }
+
+        #btnOk {
+            position: absolute;
+            left: 12px;
+            top: 32px;
+            padding: 6px;
+            color: #464646 !important;
+            border-radius: 8px 0px 0px 8px;
+            border-top: 0px;
+            border-bottom: 0px;
+            border-left: 0px;
+            background-color: #ededed;
+            border-color: #c9c4c4;
+            font-size: 11px;
+            font-family: 'IranSans' !important;
+        }
+
+        .time {
+            width: 10%;
+            text-align: center;
+            direction: ltr;
+            border-radius: 5px;
+            border: 1px solid #47c848 !important;
+        }
+
+        .time2 {
+            width: 32%;
+            text-align: center;
+            direction: ltr;
+            border-radius: 5px;
+            border: 1px solid #47c848 !important;
+        }
+
+        .fild {
+            border: 1px solid #878686;
+            background-color: #e7e7e7;
+            border-radius: 10px;
+            padding: 15px 0 15px 0;
+            display: inline;
+            float: left;
+            width: 100%;
+            margin: 5px 0px;
+        }
+
+        .fild2 {
+            border: 1px solid #878686;
+            background-color: #d9d9d9;
+            border-radius: 10px;
+            padding: 10px 0 10px 0;
+            display: inline;
+            float: left;
+            width: 80%;
+            margin-left: 15px;
+        }
+
+        .fild3 {
+            border: 1px solid #878686;
+            background-color: #e7e7e7;
+            border-radius: 10px;
+            display: inline;
+            float: left;
+            width: 100%;
+        }
+
+        #btnCompute {
+            border-radius: 10px;
+            background-color: #30a331;
+        }
+
+        .call {
+            background-color: #d2dbd2;
+            border-radius: 5px;
+            margin-bottom: 3px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+    </style>
+
+}
+
+
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+    <form asp-page="./Index" asp-page-handler="Edit" id="contract" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="Refresh"
+          enctype="multipart/form-data">
+        <div class="modal-body">
+
+            @*کارگاه و پرسنل*@
+
+            <div class="row">
+                <div class="col-md-6">
+                    <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert;">
+                        <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> انتخاب کارگاه</legend>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label> نام کارگاه </label>
+                                <div class="form-group se" dir="rtl">
+
+                                    <select id="getWorkshopWithName" onchange="loadWorkshopWithName()" class="form-control select-city" asp-for="WorkshopIds" asp-items='new SelectList(Model.Workshops, "Id", "WorkshopFullName")'>
+                                        <option value="WorkshopIds"> انتخاب کارگاه </option>
+
+                                    </select>
+
+                                    @*<a class="btn btn-info btn-rounded waves-effect waves-light" style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; background-color: #257212; border-color: #545353; font-size: 14px; margin-right: -3px; font-family: 'IranSans' !important;" onclick="show()">تایید</a>*@
+                                </div>
+                                <span asp-validation-for="WorkshopIds" class="error"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>کد بایگانی کارگاه</label>
+                                <div class="form-group se" dir="rtl">
+
+                                    <select id="getWorkshopWithCode" onchange="loadWorkshopWithCode()" class="form-control select-city" asp-for="WorkshopIds" asp-items='new SelectList(Model.Workshops, "Id", "ArchiveCode")'>
+                                        <option value="WorkshopIds"> انتخاب کد کارگاه </option>
+
+                                    </select>
+
+
+                                </div>
+                                <span asp-validation-for="EmployerId" class="error"></span>
+                            </div>
+
+
+
+
+                        </div>
+
+                        <table id="EmployerFullName" style="height: 120px; width: 100%;">
+                            <tr>
+                                <td style="width: 100%; height: 120px; display: block; overflow-y: auto;padding: 5px;"> <span id="FullName"></span></td>
+                                @*<td style="width: 33%; background-color: #bed3ca;"> <span id="NationalId"></span></td>
+                                    <td style="width: 33%"> <span id="IdNumber"></span></td>*@
+                            </tr>
+
+                        </table>
+
+
+
+
+
+                        <table id="thh" style="width: 100%;">
+
+
+
+
+                            <tr>
+                                <td> کد کارگاهی بیمه  </td>
+                                <td> <span id="InsurancCode"></span></td>
+
+                            </tr>
+
+
+                            <tr style="height: 80px">
+                                <td> آدرس </td>
+                                <td>
+                                    <span id="State"></span><span>-</span><span id="City"></span>
+
+                                    <div id="Address"></div>
+                                </td>
+
+                            </tr>
+
+
+
+
+                        </table>
+
+
+                    </fieldset>
+                </div>
+                @*بخش پرسنل*@
+                <div class="col-md-6">
+
+
+                    <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert;">
+                        <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;">  انتخاب پرسنل  </legend>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>نام پرسنل</label>
+                                <div class="form-group se" dir="rtl">
+
+                                    <select id="getPersonnel" onchange="loadPersonnel()" class="form-control select-city" asp-for="EmployeeId" asp-items='@Model.EmployeeSelectList'>
+                                        <option value="0"> انتخاب پرسنل </option>
+
+                                    </select>
+
+
+                                </div>
+                                <span asp-validation-for="EmployeeId" class="error"></span>
+                            </div>
+
+
+
+                        </div>
+
+
+                        <table id="thh2" style="height: 150px;width: 100%">
+
+
+                            <tr>
+                                <td id="ff1">نام پدر </td>
+
+                                <td> <span id="FatherName"></span> </td>
+
+                            </tr>
+
+                            <tr>
+                                <td> کد ملی </td>
+                                <td> <span id="PersonnelNationalCode"></span></td>
+
+                            </tr>
+
+                            <tr>
+                                <td> شماره شناسنامه </td>
+                                <td> <span id="PersonnelIdNumber"></span></td>
+
+                            </tr>
+
+                            <tr>
+                                <td>تاریخ تولد  </td>
+                                <td> <span id="PersonnelDateOfBirth"></span></td>
+
+                            </tr>
+
+                            <tr style="height: 80px">
+                                <td> آدرس </td>
+                                <td>
+                                    <span id="PersonnelState"></span><span>-</span><span id="PersonnelCity"></span>
+
+                                    <div id="PersonnelAddress"></div>
+                                </td>
+
+
+                            </tr>
+
+
+
+
+                        </table>
+                    </fieldset>
+
+
+
+
+
+
+                </div>
+
+            </div>
+
+            @*تاریخ و ساعت کار*@
+            <div class="row">
+                <div class="col-md-6">
+                    <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert; height: 668px">
+                        <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 80px; text-align: center;"> قرارداد</legend>
+                        <div class="row">
+                            <div class="col-md-6" style="border-left: 1px solid #b5aeae">
+                                <div class="form-group m-b-0">
+                                    <div>
+
+                                        <p class="control-label" onchange="validDate(this);" style="background-color: #d9d9d9">تاریخ انعقاد قرارداد</p>
+
+
+                                        <input id="setContract" maxlength="10" style="text-align: center" class="form-control persianDateInput1" asp-for="SetContractDate" />
+
+                                        <span asp-validation-for="SetContractDate" class="error"></span>
+
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <p style="padding-left: 15px; background-color: #d9d9d9">نوع قرارداد</p>
+                                <div class="row">
+                                    <div class="radio radio-info col-xs-4">
+                                        <input type="radio" id="inlineRadio3" value="معین" asp-for="ContractType">
+                                        <label for="inlineRadio3"> معین </label>
+                                    </div>
+                                    <div class="radio radio-info col-xs-4">
+                                        <input type="radio" id="inlineRadio1" value="موقت" asp-for="ContractType" checked>
+                                        <label for="inlineRadio1"> موقت </label>
+                                    </div>
+                                    <div class="radio radio-info col-xs-4">
+                                        <input type="radio" id="inlineRadio2" value="دائم" asp-for="ContractType">
+                                        <label for="inlineRadio2"> دائم </label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-xs-12">
+
+                                <fieldset style="background-color: #d9d9d9">
+                                    <p style="background-color: #cdcccc; text-align: center !important">مدت قرارداد</p>
+                                    <div class="row">
+
+
+                                        <div class="col-xs-1"></div>
+                                        <div class="radio radio-info col-xs-2">
+                                            <input type="radio" id="Radio5" value="12" asp-for="ContractPeriod">
+                                            <label for="Radio5"> یک ساله </label>
+                                        </div>
+                                        <div class="radio radio-info col-xs-2">
+                                            <input type="radio" id="Radio4" value="6" asp-for="ContractPeriod">
+                                            <label for="Radio4"> شش ماهه </label>
+                                        </div>
+                                        <div class="radio radio-info col-xs-2">
+                                            <input type="radio" id="Radio3" value="3" asp-for="ContractPeriod">
+                                            <label for="Radio3"> سه ماهه </label>
+                                        </div>
+                                        <div class="radio radio-info col-xs-2">
+                                            <input type="radio" id="Radio2" value="2" asp-for="ContractPeriod">
+                                            <label for="Radio2"> دو ماهه </label>
+                                        </div>
+                                        <div class="radio radio-info col-xs-2">
+                                            <input type="radio" id="Radio1" value="1" asp-for="ContractPeriod" checked>
+                                            <label for="Radio1"> یک ماهه </label>
+                                        </div>
+                                        <div class="col-xs-1"></div>
+
+
+                                    </div>
+
+                                </fieldset>
+
+
+
+
+
+
+                            </div>
+
+                        </div>
+                        <hr />
+                        <div class="row">
+
+                            <div class="col-xs-6">
+                                <div class="form-group m-b-0" dir="rtl">
+
+
+                                    <p class="control-label" style="background-color: #d9d9d9">تاریخ پایان قرارداد</p>
+
+
+                                    <input id="endDate" dir="ltr" maxlength="10" style="text-align: center" class="form-control persianDateInputb" asp-for="ContractEnd" />
+
+                                    <span asp-validation-for="ContractEnd" class="error"></span>
+
+
+
+
+
+
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group m-b-0" dir="rtl">
+                                    <div class="=buttonInside">
+
+                                        <p class="control-label" style="background-color: #d9d9d9">تاریخ شروع قرارداد</p>
+
+
+                                        <input maxlength="10" dir="ltr" id="dateStart" style="text-align: center;" class="form-control persianDateInputa" asp-for="ContarctStart" />
+                                        <a id="btnOk" class="btn btn-info btn-rounded waves-effect waves-light" onclick="DateComputing()">تایید</a>
+                                        <span asp-validation-for="ContarctStart" class="error"></span>
+
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <p class="control-label" style="background-color: #d9d9d9"> شغل</p>
+                                <div class="form-group" dir="rtl">
+
+                                    <select id="job" class="form-control select-city" asp-for="@Model.JobTypeId" asp-items='new SelectList(Model.Jobs, "Id", "JobName")'>
+                                        @*<option value="0"> انتخاب شغل  </option>*@
+
+                                    </select>
+
+
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <p class="control-label" style="background-color: #d9d9d9">مبلغ توافق شده</p>
+                                <div class="form-group">
+
+                                    <input type="text" value="0" class="form-control" asp-for="AgreementSalary">
+                                    <span asp-validation-for="AgreementSalary" class="error"></span>
+
+
+                                </div>
+                                <div class="form-group m-b-0" dir="rtl">
+
+                                    <input type="hidden" asp-for="DayliWage" id="sendDayliWage" />
+                                    <input type="hidden" asp-for="ConsumableItems" id="sendConsumableItems" />
+                                    <input type="hidden" asp-for="HousingAllowance" id="sendHousingAllowance" />
+                                    <input type="hidden" asp-for="FamilyAllowance" id="sendFamilyAllowance" />
+                                    <input type="hidden" asp-for="WorkingHoursWeekly" id="sendWorkingHoursWeekly" />
+                                    <input type="hidden" asp-for="JobType" id="sendJobType" />
+
+
+                                    <input id="yearlySalary" type="hidden" value="" asp-for="YearlySalaryId" />
+                                    <input id="employerId" value="" type="hidden" asp-for="EmployerId" />
+                                    <input id="archiveCode" value="" type="hidden" asp-for="ArchiveCode" />
+
+                                    @*<input type="hidden" id="dayliwage" style="text-align: center" class="form-control" asp-for="DayliWage" />*@
+
+
+
+
+
+
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group m-b-0" dir="rtl">
+
+
+                                    <p class="control-label" style="background-color: #d9d9d9">تاریخ شروع به کار</p>
+
+
+                                    <input id="getWorkDateDisable" dir="ltr" maxlength="10" style="text-align: center" disabled="disabled" class="form-control" />
+                                    <input type="hidden" id="getWorkDate" asp-for="GetWorkDate" />
+                                    <span asp-validation-for="GetWorkDate" class="error"></span>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group m-b-0" dir="rtl">
+
+
+                                    <p class="control-label" style="background-color: #d9d9d9">تاریخ شروع به کار بیمه </p>
+
+
+                                    <input disabled="disabled" id="InsurancWotkDate" maxlength="10" style="text-align: center" class="form-control persianDateInputb" />
+
+                                    @*<span asp-validation-for="GetWorkDate" class="error"></span>*@
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-xs-12 m-t-5">
+                                <p asp-for="WorkshopAddress1" style="background-color: #d9d9d9">محل انجام کار 1</p>
+                                <textarea id="adres" class="form-control" asp-for="WorkshopAddress1"></textarea>
+                                <span asp-validation-for="WorkshopAddress1" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <p asp-for="WorkshopAddress1" style="background-color: #d9d9d9">محل انجام کار 2</p>
+                                <textarea class="form-control" asp-for="WorkshopAddress2"></textarea>
+                                <span asp-validation-for="WorkshopAddress2" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+              
+                @*ساعت کار*@
+                <!--<div class="col-md-6">
+                    <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert; height: 668px;">
+                        <legend style="margin-bottom: 5px; font-size: 15px; border-bottom: 0px; color: #505458; width: 105px; text-align: center;"> ساعت کار</legend>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <fieldset id="NormalShift" class="fild3">
+                                    <legend style="margin-bottom: 5px; font-size: 15px; border-bottom: 0px; color: #505458; width: 90px; text-align: center;"> کارکرد عادی</legend>
+
+                                    <label id="RadioSh1">
+
+                                        <span id="Sh1" class="btn btn-default btn-rounded waves-effect waves-light week shiftColor">تک شیفت</span>
+                                    </label>
+                                    <label id="RadioSh2">
+
+                                        <span id="Sh2" class="btn btn-default btn-rounded waves-effect waves-light week shiftColor">دو شیفت </span>
+                                    </label>
+
+                                </fieldset>
+                            </div>
+                            <div class="col-md-3">
+                                <fieldset class="fild3" id="RotatingShift">
+                                    <legend style="margin-bottom: 5px; font-size: 15px; border-bottom: 0px; color: #505458; width: 105px; text-align: center;"> کارکرد چرخشی</legend>
+
+                                    <label id="RadioSh3">
+
+                                        <span id="Sh3" class="btn btn-default btn-rounded waves-effect waves-light week shiftColor"> روزانه</span>
+                                    </label>
+                                    <label id="RadioSh4">
+
+                                        <span id="Sh4" class="btn btn-default btn-rounded waves-effect waves-light week shiftColor"> هفتگی </span>
+                                    </label>
+
+
+                                </fieldset>
+                            </div>
+                            <div class="col-md-6">
+                                <fieldset class="fild3" id="ComplexShift">
+                                    <legend style="margin-bottom: 5px; font-size: 15px; border-bottom: 0px; color: #505458; width: 100px; text-align: center;"> کارکرد مختلط</legend>
+                                    <div class="col-md-6">
+                                        <label id="RadioSh5">
+
+                                            <span id="Sh5" class="btn btn-default btn-rounded waves-effect waves-light week shiftColor"> 12-24 </span>
+                                        </label>
+                                        <label id="RadioSh6">
+
+                                            <span id="Sh6" class="btn btn-default btn-rounded waves-effect waves-light week shiftColor"> 24-24 </span>
+                                        </label>
+
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <label id="RadioSh7">
+
+                                            <span id="Sh7" class="btn btn-default btn-rounded waves-effect waves-light week shiftColor"> 12-36 </span>
+                                        </label>
+                                        <label id="RadioSh8">
+
+                                            <span id="Sh8" class="btn btn-default btn-rounded waves-effect waves-light week shiftColor"> 24-48 </span>
+                                        </label>
+
+
+                                    </div>
+
+
+                                </fieldset>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                <fieldset class="fild" id="ComplexFildset" style="display: none; height: 250px">
+                                    <div class="row">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-6">
+                                            <span class="col-md-6">
+                                                <label class="control-label"> ساعت شروع </label>
+                                                <input maxlength="5" style="width: 70%" class="time" id="StartComplex" onchange="validateHM(this);" type="text" placeholder=":" />
+
+                                            </span>
+                                            <span class="col-md-6">
+                                                <label class="control-label"> ساعت پایان </label>
+                                                <input maxlength="5" style="width: 70%" class="time" id="EndComplex" onchange="validateHM2(this);" type="text" placeholder=":" />
+
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                    </div>
+                                    <div class="row efects">
+                                        <p class="dadmehr">دادمهرگستر </p><br />
+                                        <p class="dadmehrEn">DadmehrGostar</p>
+                                    </div>
+
+                                </fieldset>
+
+
+
+
+                                <fieldset class="fild" id="OneAndTowShifts">-->
+                                    @*shanbeh*@
+                                    <!--<div class="row">
+                                        <label for="f">
+                                            <input style="display: none" id="f" type="checkbox" asp-for="shanbeh" />
+                                            <span id="shanbeh" class="btn btn-default btn-rounded waves-effect waves-light week">شنبه</span>
+                                        </label>
+                                        <span id="shanbehRow3">
+                                            <span id="shanbehRow2">
+                                                <span id="shanbehRow1">
+                                                    <span style="margin-right: 5px">
+                                                        <input maxlength="5" class="time one" id="SingleShift1" onchange="validateSingleShift1(this);" type="text" asp-for="SingleShift1" placeholder=":" />
+
+                                                    </span>
+                                                    <span style="margin-right: 5px">
+                                                        <input maxlength="5" class="time one" id="SingleShift2" onchange="validateSingleShift2(this);" type="text" asp-for="SingleShift2" placeholder=":" />
+
+                                                    </span>
+                                                    <span style="margin-right: 5px">
+                                                        <select id="restTime" asp-for="RestTime" onchange="CopyRestTime(this);" class="rest" style="background-color: #ededed; border-radius: 15px; border: 1px solid #bfbfbf;">
+                                                            <option value="0"> 0 </option>
+                                                            <option value="01"> 1 </option>
+                                                            <option value="02"> 2 </option>
+                                                            <option value="03"> 3 </option>
+                                                            <option value="04"> 4 </option>
+                                                            <option value="05"> 5 </option>
+                                                            <option value="06"> 6 </option>
+                                                        </select>
+
+
+                                                    </span>
+                                                </span>
+
+
+
+                                                <span style="margin-right: 5px;">
+                                                    <input maxlength="5" id="TowShifts1" class="time tow" onchange="validateTowShifts1(this);" type="text" asp-for="TowShifts1" placeholder=":" />
+
+                                                </span>
+                                                <span style="margin-right: 5px">
+                                                    <input maxlength="5" id="TowShifts2" class="time tow" onchange="validateTowShifts2(this);" type="text" asp-for="TowShifts2" placeholder=":" />
+
+                                                </span>
+                                            </span>
+                                            <span style="margin-right: 5px; margin-left: 15px; visibility: hidden">
+
+
+
+                                            </span>
+                                            <span style="margin-right: 5px">
+                                                <input maxlength="5" id="ThreeShift1" class="time three" onchange="validateHM(this);" type="text" asp-for="ThreeShift1" placeholder=":" />
+
+                                            </span>
+                                            <span style="margin-right: 5px">
+                                                <input maxlength="5" id="ThreeShift2" class="time three" onchange="validateHM(this);" type="text" asp-for="ThreeShift2" placeholder=":" />
+
+                                            </span>
+                                        </span>
+
+                                    </div>-->
+
+                                    @*yekshanbeh*@
+
+                                    <!--<div class="row">
+                                        <label for="f1">
+                                            <input style="display: none" id="f1" type="checkbox" asp-for="yekshanbeh" />
+                                            <span id="yekshanbeh" class="btn btn-default btn-rounded waves-effect waves-light week">یکشنبه</span>
+                                        </label>
+                                        <span id="yekshanbehRow3">
+                                            <span id="yekshanbehRow2">
+                                                <span id="yekshanbehRow1">
+                                                    <span style="margin-right: 5px">
+                                                        <input maxlength="5" class="time one" id="SingleShift1Yekshanbeh" onchange="validateHM(this);" type="text" asp-for="SingleShift1Yekshanbeh" placeholder=":" />
+
+                                                    </span>
+                                                    <span style="margin-right: 5px">
+                                                        <input maxlength="5" class="time one" id="SingleShift2Yekshanbeh" onchange="validateHM(this);" type="text" asp-for="SingleShift2Yekshanbeh" placeholder=":" />
+
+                                                    </span>
+                                                    <span style="margin-right: 5px">
+                                                        <select id="RestTimeYekshanbeh" class="rest" asp-for="RestTimeYekshanbeh" style="background-color: #ededed; border-radius: 15px; border: 1px solid #bfbfbf;">
+                                                            <option value="0"> 0 </option>
+                                                            <option value="01"> 1 </option>
+                                                            <option value="02"> 2 </option>
+                                                            <option value="03"> 3 </option>
+                                                            <option value="04"> 4 </option>
+                                                            <option value="05"> 5 </option>
+                                                            <option value="06"> 6 </option>
+                                                        </select>
+
+
+                                                    </span>
+                                                </span>
+                                                <span style="margin-right: 5px;">
+                                                    <input maxlength="5" id="TowShifts1Yekshanbeh" class="time tow" onchange="validateHM(this);" type="text" asp-for="TowShifts1Yekshanbeh" placeholder=":" />
+
+                                                </span>
+                                                <span style="margin-right: 5px">
+                                                    <input maxlength="5" id="TowShifts2Yekshanbeh" class="time tow" onchange="validateHM(this);" type="text" asp-for="TowShifts2Yekshanbeh" placeholder=":" />
+
+                                                </span>
+                                            </span>
+                                            <span style="margin-right: 5px; margin-left: 15px; visibility: hidden">
+
+
+
+                                            </span>
+                                            <span style="margin-right: 5px">
+                                                <input maxlength="5" id="ThreeShift1Yekshanbeh" class="time three" onchange="validateHM(this);" type="text" asp-for="ThreeShift1Yekshanbeh" placeholder=":" />
+
+                                            </span>
+                                            <span style="margin-right: 5px">
+                                                <input maxlength="5" id="ThreeShift2Yekshanbeh" class="time three" onchange="validateHM(this);" type="text" asp-for="ThreeShift2Yekshanbeh" placeholder=":" />
+
+                                            </span>
+                                        </span>
+
+                                    </div>-->
+
+                                    @*doshanbeh*@
+                                    <!--<div class="row">
+                                        <label for="f2">
+                                            <input style="display: none" id="f2" type="checkbox" asp-for="doshanbeh" />
+                                            <span id="doshanbeh" class="btn btn-default btn-rounded waves-effect waves-light week">دوشنبه</span>
+                                        </label>
+                                        <span id="doshanbehRow3">
+                                            <span id="doshanbehRow2">
+                                                <span id="doshanbehRow1">
+                                                    <span style="margin-right: 5px">
+                                                        <input maxlength="5" class="time one" id="SingleShift1Doshanbeh" onchange="validateHM(this);" type="text" asp-for="SingleShift1Doshanbeh" placeholder=":" />
+
+                                                    </span>
+                                                    <span style="margin-right: 5px">
+                                                        <input maxlength="5" class="time one" id="SingleShift2Doshanbeh" onchange="validateHM(this);" type="text" asp-for="SingleShift2Doshanbeh" placeholder=":" />
+
+                                                    </span>
+                                                    <span style="margin-right: 5px">
+                                                        <select id="RestTimeDoshanbeh" class="rest" asp-for="RestTimeDoshanbeh" style="background-color: #ededed; border-radius: 15px; border: 1px solid #bfbfbf;">
+                                                            <option value="0"> 0 </option>
+                                                            <option value="01"> 1 </option>
+                                                            <option value="02"> 2 </option>
+                                                            <option value="03"> 3 </option>
+                                                            <option value="04"> 4 </option>
+                                                            <option value="05"> 5 </option>
+                                                            <option value="06"> 6 </option>
+                                                        </select>
+
+
+                                                    </span>
+                                                </span>
+
+                                                <span style="margin-right: 5px;">
+                                                    <input maxlength="5" id="TowShifts1Doshanbeh" class="time tow" onchange="validateHM(this);" type="text" asp-for="TowShifts1Doshanbeh" placeholder=":" />
+
+                                                </span>
+                                                <span style="margin-right: 5px">
+                                                    <input maxlength="5" id="TowShifts2Doshanbeh" class="time tow" onchange="validateHM(this);" type="text" asp-for="TowShifts2Doshanbeh" placeholder=":" />
+
+                                                </span>
+                                            </span>
+                                            <span style="margin-right: 5px; margin-left: 15px; visibility: hidden">
+
+
+
+                                            </span>
+                                            <span style="margin-right: 5px">
+                                                <input maxlength="5" id="ThreeShift1Doshanbeh" class="time three" onchange="validateHM(this);" type="text" asp-for="ThreeShift1Doshanbeh" placeholder=":" />
+
+                                            </span>
+                                            <span style="margin-right: 5px">
+                                                <input maxlength="5" id="ThreeShift2Doshanbeh" class="time three" onchange="validateHM(this);" type="text" asp-for="ThreeShift2Doshanbeh" placeholder=":" />
+
+                                            </span>
+                                        </span>
+
+                                    </div>-->
+
+
+                                    @*seshanbeh*@
+                                    <!--<div class="row">
+                                        <label for="f3">
+                                            <input style="display: none" id="f3" type="checkbox" asp-for="seshanbeh" />
+                                            <span id="seshanbeh" class="btn btn-default btn-rounded waves-effect waves-light week">سه شنبه</span>
+                                        </label>
+                                        <span id="seshanbehRow3">
+                                            <span id="seshanbehRow2">
+                                                <span id="seshanbehRow1">
+                                                    <span style="margin-right: 5px">
+                                                        <input maxlength="5" class="time one" id="SingleShift1Seshanbeh" onchange="validateHM(this);" type="text" asp-for="SingleShift1Seshanbeh" placeholder=":" />
+
+                                                    </span>
+                                                    <span style="margin-right: 5px">
+                                                        <input maxlength="5" class="time one" id="SingleShift2Seshanbeh" onchange="validateHM(this);" type="text" asp-for="SingleShift2Seshanbeh" placeholder=":" />
+
+                                                    </span>
+                                                    <span style="margin-right: 5px">
+                                                        <select id="RestTimeSeshanbeh" class="rest" asp-for="RestTimeSeshanbeh" style="background-color: #ededed; border-radius: 15px; border: 1px solid #bfbfbf;">
+                                                            <option value="0"> 0 </option>
+                                                            <option value="01"> 1 </option>
+                                                            <option value="02"> 2 </option>
+                                                            <option value="03"> 3 </option>
+                                                            <option value="04"> 4 </option>
+                                                            <option value="05"> 5 </option>
+                                                            <option value="06"> 6 </option>
+                                                        </select>
+
+
+                                                    </span>
+                                                </span>
+
+                                                <span style="margin-right: 5px;">
+                                                    <input maxlength="5" id="TowShifts1Seshanbeh" class="time tow" onchange="validateHM(this);" type="text" asp-for="TowShifts1Seshanbeh" placeholder=":" />
+
+                                                </span>
+                                                <span style="margin-right: 5px">
+                                                    <input maxlength="5" id="TowShifts2Seshanbeh" class="time tow" onchange="validateHM(this);" type="text" asp-for="TowShifts2Seshanbeh" placeholder=":" />
+
+                                                </span>
+                                            </span>
+                                            <span style="margin-right: 5px; margin-left: 15px; visibility: hidden">
+
+
+
+                                            </span>
+                                            <span style="margin-right: 5px">
+                                                <input maxlength="5" id="ThreeShift1Seshanbeh" class="time three" onchange="validateHM(this);" type="text" asp-for="ThreeShift1Seshanbeh" placeholder=":" />
+
+                                            </span>
+                                            <span style="margin-right: 5px">
+                                                <input maxlength="5" id="ThreeShift2Seshanbeh" class="time three" onchange="validateHM(this);" type="text" asp-for="ThreeShift2Seshanbeh" placeholder=":" />
+
+                                            </span>
+                                        </span>
+
+                                    </div>-->
+
+                                    @*cheharshanbeh*@
+                                    <!--<div class="row">
+                                        <label for="f4">
+                                            <input style="display: none" id="f4" type="checkbox" asp-for="cheharshanbeh" />
+                                            <span id="cheharshanbeh" class="btn btn-default btn-rounded waves-effect waves-light week">چهارشنبه</span>
+                                        </label>
+                                        <span id="cheharshanbehRow3">
+                                            <span id="cheharshanbehRow2">
+                                                <span id="cheharshanbehRow1">
+                                                    <span style="margin-right: 5px">
+                                                        <input maxlength="5" class="time one" id="SingleShift1Cheharshanbeh" onchange="validateHM(this);" type="text" asp-for="SingleShift1Cheharshanbeh" placeholder=":" />
+
+                                                    </span>
+                                                    <span style="margin-right: 5px">
+                                                        <input maxlength="5" class="time one" id="SingleShift2Cheharshanbeh" onchange="validateHM(this);" type="text" asp-for="SingleShift2Cheharshanbeh" placeholder=":" />
+
+                                                    </span>
+                                                    <span style="margin-right: 5px">
+                                                        <select id="RestTimeCheharshanbeh" class="rest" asp-for="RestTimeCheharshanbeh" style="background-color: #ededed; border-radius: 15px; border: 1px solid #bfbfbf;">
+                                                            <option value="0"> 0 </option>
+                                                            <option value="01"> 1 </option>
+                                                            <option value="02"> 2 </option>
+                                                            <option value="03"> 3 </option>
+                                                            <option value="04"> 4 </option>
+                                                            <option value="05"> 5 </option>
+                                                            <option value="06"> 6 </option>
+                                                        </select>
+
+
+                                                    </span>
+                                                </span>
+
+                                                <span style="margin-right: 5px;">
+                                                    <input maxlength="5" id="TowShifts1Cheharshanbeh" class="time tow" onchange="validateHM(this);" type="text" asp-for="TowShifts1Cheharshanbeh" placeholder=":" />
+
+                                                </span>
+                                                <span style="margin-right: 5px">
+                                                    <input maxlength="5" id="TowShifts2Cheharshanbeh" class="time tow" onchange="validateHM(this);" type="text" asp-for="TowShifts2Cheharshanbeh" placeholder=":" />
+
+                                                </span>
+                                            </span>
+                                            <span style="margin-right: 5px; margin-left: 15px; visibility: hidden">
+
+
+
+                                            </span>
+                                            <span style="margin-right: 5px">
+                                                <input maxlength="5" id="ThreeShift1Cheharshanbeh" class="time three" onchange="validateHM(this);" type="text" asp-for="ThreeShift1Cheharshanbeh" placeholder=":" />
+
+                                            </span>
+                                            <span style="margin-right: 5px">
+                                                <input maxlength="5" id="ThreeShift2Cheharshanbeh" class="time three" onchange="validateHM(this);" type="text" asp-for="ThreeShift2Cheharshanbeh" placeholder=":" />
+
+                                            </span>
+                                        </span>
+
+                                    </div>-->
+
+                                    @*panjshanbeh*@
+                                    <!--<div class="row">
+                                        <label for="f5">
+                                            <input style="display: none" id="f5" type="checkbox" asp-for="pangshanbeh" />
+                                            <span id="panjshanbeh" class="btn btn-default btn-rounded waves-effect waves-light week">پنجشنبه</span>
+                                        </label>
+                                        <span id="panjshanbehRow3">
+                                            <span id="panjshanbehRow2">
+                                                <span id="panjshanbehRow1">
+                                                    <span style="margin-right: 5px">
+                                                        <input maxlength="5" class="time one" id="SingleShift1Panjshanbeh" onchange="validateHM(this);" type="text" asp-for="SingleShift1Panjshanbeh" placeholder=":" />
+
+                                                    </span>
+                                                    <span style="margin-right: 5px">
+                                                        <input maxlength="5" class="time one" id="SingleShift2Panjshanbeh" onchange="validateHM(this);" type="text" asp-for="SingleShift2Panjshanbeh" placeholder=":" />
+
+                                                    </span>
+                                                    <span style="margin-right: 5px">
+                                                        <select id="RestTimePanjshanbeh" class="rest" asp-for="RestTimePanjshanbeh" style="background-color: #ededed; border-radius: 15px; border: 1px solid #bfbfbf;">
+                                                            <option value="0"> 0 </option>
+                                                            <option value="01"> 1 </option>
+                                                            <option value="02"> 2 </option>
+                                                            <option value="03"> 3 </option>
+                                                            <option value="04"> 4 </option>
+                                                            <option value="05"> 5 </option>
+                                                            <option value="06"> 6 </option>
+                                                        </select>
+
+
+                                                    </span>
+                                                </span>
+
+                                                <span style="margin-right: 5px;">
+                                                    <input maxlength="5" id="TowShifts1Panjshanbeh" class="time tow" onchange="validateHM(this);" type="text" asp-for="TowShifts1Panjshanbeh" placeholder=":" />
+
+                                                </span>
+                                                <span style="margin-right: 5px">
+                                                    <input maxlength="5" id="TowShifts2Panjshanbeh" class="time tow" onchange="validateHM(this);" type="text" asp-for="TowShifts2Panjshanbeh" placeholder=":" />
+
+                                                </span>
+                                            </span>
+                                            <span style="margin-right: 5px; margin-left: 15px; visibility: hidden">
+
+
+
+                                            </span>
+                                            <span style="margin-right: 5px">
+                                                <input maxlength="5" id="ThreeShift1Panjshanbeh" class="time three" onchange="validateHM(this);" type="text" asp-for="ThreeShift1Panjshanbeh" placeholder=":" />
+
+                                            </span>
+                                            <span style="margin-right: 5px">
+                                                <input maxlength="5" id="ThreeShift2Panjshanbeh" class="time three" onchange="validateHM(this);" type="text" asp-for="ThreeShift2Panjshanbeh" placeholder=":" />
+
+                                            </span>
+                                        </span>
+
+                                    </div>-->
+
+                                    @*jomeh*@
+                                    <!--<div class="row">
+                                        <label for="f6">
+                                            <input style="display: none" id="f6" type="checkbox" asp-for="jomeh" />
+                                            <span id="jomeh" style="background-color: #bfbfbf;" class="btn btn-default btn-rounded waves-effect waves-light week">جمعه</span>
+                                        </label>
+                                        <span id="jomehRow3">
+                                            <span id="jomehRow2">
+                                                <span id="jomehRow1">
+                                                    <span style="margin-right: 5px">
+                                                        <input maxlength="5" class="time" id="SingleShift1Jomeh" onchange="validateHM(this);" type="text" asp-for="SingleShift1Jomeh" placeholder=":" />
+
+                                                    </span>
+                                                    <span style="margin-right: 5px">
+                                                        <input maxlength="5" class="time" id="SingleShift2Jomeh" onchange="validateHM(this);" type="text" asp-for="SingleShift2Jomeh" placeholder=":" />
+
+                                                    </span>
+                                                    <span style="margin-right: 5px">
+                                                        <select id="RestTimeJomeh" class="rest" asp-for="RestTimeJomeh" style="background-color: #ededed; border-radius: 15px; border: 1px solid #bfbfbf;">
+                                                            <option value="0"> 0 </option>
+                                                            <option value="01"> 1 </option>
+                                                            <option value="02"> 2 </option>
+                                                            <option value="03"> 3 </option>
+                                                            <option value="04"> 4 </option>
+                                                            <option value="05"> 5 </option>
+                                                            <option value="06"> 6 </option>
+                                                        </select>
+
+
+                                                    </span>
+                                                </span>
+
+                                                <span style="margin-right: 5px;">
+                                                    <input maxlength="5" id="TowShifts1Jomeh" class="time" onchange="validateHM(this);" type="text" asp-for="TowShifts1Jomeh" placeholder=":" />
+
+                                                </span>
+                                                <span style="margin-right: 5px">
+                                                    <input maxlength="5" id="TowShifts2Jomeh" class="time" onchange="validateHM(this);" type="text" asp-for="TowShifts2Jomeh" placeholder=":" />
+
+                                                </span>
+                                            </span>
+                                            <span style="margin-right: 5px; margin-left: 15px; visibility: hidden">
+
+
+
+                                            </span>
+                                            <span style="margin-right: 5px">
+                                                <input maxlength="5" id="ThreeShift1Jomeh" class="time" onchange="validateHM(this);" type="text" asp-for="ThreeShift1Jomeh" placeholder=":" />
+
+                                            </span>
+                                            <span style="margin-right: 5px">
+                                                <input maxlength="5" id="ThreeShift2Jomeh" class="time" onchange="validateHM(this);" type="text" asp-for="ThreeShift2Jomeh" placeholder=":" />
+
+                                            </span>
+                                        </span>
+
+                                    </div>
+
+                                </fieldset>
+                            </div>
+                        </div>
+                        <input type="hidden" id="sendShiftWorkToCreate" asp-for="ShiftWork">
+                        <input type="hidden" id="sendNumberOfWorkingDays" asp-for="NumberOfWorkingDays">
+                        <input type="hidden" id="sendNumberOfFriday" asp-for="NumberOfFriday">
+                        <input type="hidden" id="sendTotalHoursesH" asp-for="TotalHoursesH">
+                        <input type="hidden" id="sendTotalHoursesM" asp-for="TotalHoursesM">
+                        <input type="hidden" id="sendOverTimeWorkH" asp-for="OverTimeWorkH">
+                        <input type="hidden" id="sendOverTimeWorkM" asp-for="OverTimeWorkM">
+                        <input type="hidden" id="sendOverNightWorkH" asp-for="OverNightWorkH">
+                        <input type="hidden" id="sendOverNightWorkM" asp-for="OverNightWorkM">
+                        <input type="hidden" id="sendWeeklyWorkingTime" asp-for="WeeklyWorkingTime">-->
+
+                        @*شنبه*@
+                        <!--<input type="hidden" id="sendSingleShift1b" asp-for="SingleShift1" />
+                        <input type="hidden" id="sendSingleShift2b" asp-for="SingleShift2" />
+
+                        <input type="hidden" id="sendRestTimeb" asp-for="RestTime" />
+
+                        <input type="hidden" id="sendTowShifts1b" asp-for="TowShifts1" />
+                        <input type="hidden" id="sendTowShifts2b" asp-for="TowShifts2" />
+
+                        <input type="hidden" id="sendThreeShift1b" asp-for="ThreeShift1" />
+                        <input type="hidden" id="sendThreeShift2b" asp-for="ThreeShift2" />-->
+
+                        @*یکشنبه*@
+
+                        <!--<input type="hidden" id="sendSingleShift1Yekshanbehb" asp-for="SingleShift1Yekshanbeh" />
+                        <input type="hidden" id="sendSingleShift2Yekshanbehb" asp-for="SingleShift2Yekshanbeh" />
+
+                        <input type="hidden" id="sendRestTimeYekshanbehb" asp-for="RestTimeYekshanbeh" />
+
+                        <input type="hidden" id="sendTowShifts1Yekshanbehb" asp-for="TowShifts1Yekshanbeh" />
+                        <input type="hidden" id="sendTowShifts2Yekshanbehb" asp-for="TowShifts2Yekshanbeh" />
+
+                        <input type="hidden" id="sendThreeShift1Yekshanbehb" asp-for="ThreeShift1Yekshanbeh" />
+                        <input type="hidden" id="sendThreeShift2Yekshanbehb" asp-for="ThreeShift2Yekshanbeh" />-->
+
+                        @*دوشنبه*@
+
+                        <!--<input type="hidden" id="sendSingleShift1Doshanbehb" asp-for="SingleShift1Doshanbeh" />
+                        <input type="hidden" id="sendSingleShift2Doshanbehb" asp-for="SingleShift2Doshanbeh" />
+
+                        <input type="hidden" id="sendRestTimeDoshanbehb" asp-for="RestTimeDoshanbeh" />
+
+                        <input type="hidden" id="sendTowShifts1Doshanbehb" asp-for="TowShifts1Doshanbeh" />
+                        <input type="hidden" id="sendTowShifts2Doshanbehb" asp-for="TowShifts2Doshanbeh" />
+
+                        <input type="hidden" id="sendThreeShift1Doshanbehb" asp-for="ThreeShift1Doshanbeh" />
+                        <input type="hidden" id="sendThreeShift2Doshanbehb" asp-for="ThreeShift2Doshanbeh" />-->
+
+                        @*سه شنبه*@
+
+                        <!--<input type="hidden" id="sendSingleShift1Seshanbehb" asp-for="SingleShift1Seshanbeh" />
+                        <input type="hidden" id="sendSingleShift2Seshanbehb" asp-for="SingleShift2Seshanbeh" />
+
+                        <input type="hidden" id="sendRestTimeSeshanbehb" asp-for="RestTimeSeshanbeh" />
+
+                        <input type="hidden" id="sendTowShifts1Seshanbehb" asp-for="TowShifts1Seshanbeh" />
+                        <input type="hidden" id="sendTowShifts2Seshanbehb" asp-for="TowShifts2Seshanbeh" />
+
+                        <input type="hidden" id="sendThreeShift1Seshanbehb" asp-for="ThreeShift1Seshanbeh" />
+                        <input type="hidden" id="sendThreeShift2Seshanbehb" asp-for="ThreeShift2Seshanbeh" />-->
+
+                        @*چهارشنیه*@
+
+                        <!--<input type="hidden" id="sendSingleShift1Cheharshanbehb" asp-for="SingleShift1Cheharshanbeh" />
+                        <input type="hidden" id="sendSingleShift2Cheharshanbehb" asp-for="SingleShift2Cheharshanbeh" />
+
+                        <input type="hidden" id="sendRestTimeCheharshanbehb" asp-for="RestTimeCheharshanbeh" />
+
+                        <input type="hidden" id="sendTowShifts1Cheharshanbehb" asp-for="TowShifts1Cheharshanbeh" />
+                        <input type="hidden" id="sendTowShifts2Cheharshanbehb" asp-for="TowShifts2Cheharshanbeh" />
+
+                        <input type="hidden" id="sendThreeShift1Cheharshanbehb" asp-for="ThreeShift1Cheharshanbeh" />
+                        <input type="hidden" id="sendThreeShift2Cheharshanbehb" asp-for="ThreeShift2Cheharshanbeh" />-->
+
+                        @*پنج شنبه*@
+
+                        <!--<input type="hidden" id="sendSingleShift1Panjshanbehb" asp-for="SingleShift1Panjshanbeh" />
+                        <input type="hidden" id="sendSingleShift2Panjshanbehb" asp-for="SingleShift2Panjshanbeh" />
+
+                        <input type="hidden" id="sendRestTimePanjshanbehb" asp-for="RestTimePanjshanbeh" />
+
+                        <input type="hidden" id="sendTowShifts1Panjshanbehb" asp-for="TowShifts1Panjshanbeh" />
+                        <input type="hidden" id="sendTowShifts2Panjshanbehb" asp-for="TowShifts2Panjshanbeh" />
+
+                        <input type="hidden" id="sendThreeShift1Panjshanbehb" asp-for="ThreeShift1Panjshanbeh" />
+                        <input type="hidden" id="sendThreeShift2Panjshanbehb" asp-for="ThreeShift2Panjshanbeh" />-->
+
+                        @*جمعه*@
+
+                        <!--<input type="hidden" id="sendSingleShift1Jomehb" asp-for="SingleShift1Jomeh" />
+                        <input type="hidden" id="sendSingleShift2Jomehb" asp-for="SingleShift2Jomeh" />
+
+                        <input type="hidden" id="sendRestTimeJomehb" asp-for="RestTimeJomeh" />
+
+                        <input type="hidden" id="sendTowShifts1Jomehb" asp-for="TowShifts1Jomeh" />
+                        <input type="hidden" id="sendTowShifts2Jomehb" asp-for="TowShifts2Jomeh" />
+
+                        <input type="hidden" id="sendThreeShift1Jomehb" asp-for="ThreeShift1Jomeh" />
+                        <input type="hidden" id="sendThreeShift2Jomehb" asp-for="ThreeShift2Jomeh" />-->
+
+
+                        @*Complex*@
+                        <!--<input type="hidden" id="Start1224b" asp-for="Start1224" />
+                        <input type="hidden" id="End1224b" asp-for="End1224" />
+
+                        <input type="hidden" id="Start1236b" asp-for="Start1236" />
+                        <input type="hidden" id="End1236b" asp-for="End1236" />
+
+                        <input type="hidden" id="Start2424b" asp-for="Start2424" />
+                        <input type="hidden" id="End2424b" asp-for="End2424" />
+
+                        <input type="hidden" id="Start2448b" asp-for="Start2448" />
+                        <input type="hidden" id="End2448b" asp-for="End2448" />
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <fieldset class="fild" style="height: 235px">
+                                    <span>
+                                        <span id="testCall"></span>
+
+
+
+                                    </span>
+
+                                </fieldset>
+                                <a id="btnCompute" class="btn btn-block btn-success btn-rounded waves-effect waves-light" onclick="clickCompute()">محاسبه</a>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>-->
+            </div>
+
+        </div>
+        @*<input type="hidden" asp-for="id" value="id"/>*@
+        <div class="modal-footer">
+
+            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" form="contract" onclick="sum()">ذخیره</button>
+
+            <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+
+        </div>
+
+    </form>
+    <div style="display: none;">
+        <form asp-page="./Index" asp-page-handler="Computing" id="compute" autocomplete="off"
+              method="post"
+              data-ajax="true"
+              data-callback=""
+              data-action="Compute"
+              enctype="multipart/form-data">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert;">
+                        <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> انتخاب کارگاه</legend>
+
+                        <input type="hidden" id="sendMandatoryStatus" asp-for="MandatoryStatus" />
+                        <input type="hidden" id="date1Hide" asp-for="ContarctStart" />
+                        <input type="hidden" id="date2Hide" asp-for="ContractEnd" />
+                        <input type="hidden" id="RadioSh" asp-for="ShiftWork">
+                        <input type="hidden" id="getWorkDateHide" asp-for="GetWorkDateHide" />
+                        <input type="hidden" id="sendEmployeeid" asp-for="EmployeeId" />
+                        <input type="hidden" id="sendWorkshopId" asp-for="WorkshopIds" />
+
+
+                        <input type="hidden" id="a0" asp-for="shanbeh" />
+                        <input type="hidden" id="a1" asp-for="yekshanbeh" />
+                        <input type="hidden" id="a2" asp-for="doshanbeh" />
+                        <input type="hidden" id="a3" asp-for="seshanbeh" />
+                        <input type="hidden" id="a4" asp-for="cheharshanbeh" />
+                        <input type="hidden" id="a5" asp-for="pangshanbeh" />
+                        <input type="hidden" id="a6" asp-for="jomeh" />
+                        @*شنبه*@
+                        <input type="hidden" id="sendSingleShift1" asp-for="SingleShift1" />
+                        <input type="hidden" id="sendSingleShift2" asp-for="SingleShift2" />
+
+                        <input type="hidden" id="sendRestTime" asp-for="RestTime" />
+
+                        <input type="hidden" id="sendTowShifts1" asp-for="TowShifts1" />
+                        <input type="hidden" id="sendTowShifts2" asp-for="TowShifts2" />
+
+                        <input type="hidden" id="sendThreeShift1" asp-for="ThreeShift1" />
+                        <input type="hidden" id="sendThreeShift2" asp-for="ThreeShift2" />
+
+                        @*یکشنبه*@
+
+                        <input type="hidden" id="sendSingleShift1Yekshanbeh" asp-for="SingleShift1Yekshanbeh" />
+                        <input type="hidden" id="sendSingleShift2Yekshanbeh" asp-for="SingleShift2Yekshanbeh" />
+
+                        <input type="hidden" id="sendRestTimeYekshanbeh" asp-for="RestTimeYekshanbeh" />
+
+                        <input type="hidden" id="sendTowShifts1Yekshanbeh" asp-for="TowShifts1Yekshanbeh" />
+                        <input type="hidden" id="sendTowShifts2Yekshanbeh" asp-for="TowShifts2Yekshanbeh" />
+
+                        <input type="hidden" id="sendThreeShift1Yekshanbeh" asp-for="ThreeShift1Yekshanbeh" />
+                        <input type="hidden" id="sendThreeShift2Yekshanbeh" asp-for="ThreeShift2Yekshanbeh" />
+
+                        @*دوشنبه*@
+
+                        <input type="hidden" id="sendSingleShift1Doshanbeh" asp-for="SingleShift1Doshanbeh" />
+                        <input type="hidden" id="sendSingleShift2Doshanbeh" asp-for="SingleShift2Doshanbeh" />
+
+                        <input type="hidden" id="sendRestTimeDoshanbeh" asp-for="RestTimeDoshanbeh" />
+
+                        <input type="hidden" id="sendTowShifts1Doshanbeh" asp-for="TowShifts1Doshanbeh" />
+                        <input type="hidden" id="sendTowShifts2Doshanbeh" asp-for="TowShifts2Doshanbeh" />
+
+                        <input type="hidden" id="sendThreeShift1Doshanbeh" asp-for="ThreeShift1Doshanbeh" />
+                        <input type="hidden" id="sendThreeShift2Doshanbeh" asp-for="ThreeShift2Doshanbeh" />
+
+                        @*سه شنبه*@
+
+                        <input type="hidden" id="sendSingleShift1Seshanbeh" asp-for="SingleShift1Seshanbeh" />
+                        <input type="hidden" id="sendSingleShift2Seshanbeh" asp-for="SingleShift2Seshanbeh" />
+
+                        <input type="hidden" id="sendRestTimeSeshanbeh" asp-for="RestTimeSeshanbeh" />
+
+                        <input type="hidden" id="sendTowShifts1Seshanbeh" asp-for="TowShifts1Seshanbeh" />
+                        <input type="hidden" id="sendTowShifts2Seshanbeh" asp-for="TowShifts2Seshanbeh" />
+
+                        <input type="hidden" id="sendThreeShift1Seshanbeh" asp-for="ThreeShift1Seshanbeh" />
+                        <input type="hidden" id="sendThreeShift2Seshanbeh" asp-for="ThreeShift2Seshanbeh" />
+
+                        @*چهارشنیه*@
+
+                        <input type="hidden" id="sendSingleShift1Cheharshanbeh" asp-for="SingleShift1Cheharshanbeh" />
+                        <input type="hidden" id="sendSingleShift2Cheharshanbeh" asp-for="SingleShift2Cheharshanbeh" />
+
+                        <input type="hidden" id="sendRestTimeCheharshanbeh" asp-for="RestTimeCheharshanbeh" />
+
+                        <input type="hidden" id="sendTowShifts1Cheharshanbeh" asp-for="TowShifts1Cheharshanbeh" />
+                        <input type="hidden" id="sendTowShifts2Cheharshanbeh" asp-for="TowShifts2Cheharshanbeh" />
+
+                        <input type="hidden" id="sendThreeShift1Cheharshanbeh" asp-for="ThreeShift1Cheharshanbeh" />
+                        <input type="hidden" id="sendThreeShift2Cheharshanbeh" asp-for="ThreeShift2Cheharshanbeh" />
+
+                        @*پنج شنبه*@
+
+                        <input type="hidden" id="sendSingleShift1Panjshanbeh" asp-for="SingleShift1Panjshanbeh" />
+                        <input type="hidden" id="sendSingleShift2Panjshanbeh" asp-for="SingleShift2Panjshanbeh" />
+
+                        <input type="hidden" id="sendRestTimePanjshanbeh" asp-for="RestTimePanjshanbeh" />
+
+                        <input type="hidden" id="sendTowShifts1Panjshanbeh" asp-for="TowShifts1Panjshanbeh" />
+                        <input type="hidden" id="sendTowShifts2Panjshanbeh" asp-for="TowShifts2Panjshanbeh" />
+
+                        <input type="hidden" id="sendThreeShift1Panjshanbeh" asp-for="ThreeShift1Panjshanbeh" />
+                        <input type="hidden" id="sendThreeShift2Panjshanbeh" asp-for="ThreeShift2Panjshanbeh" />
+
+                        @*جمعه*@
+
+                        <input type="hidden" id="sendSingleShift1Jomeh" asp-for="SingleShift1Jomeh" />
+                        <input type="hidden" id="sendSingleShift2Jomeh" asp-for="SingleShift2Jomeh" />
+
+                        <input type="hidden" id="sendRestTimeJomeh" asp-for="RestTimeJomeh" />
+
+                        <input type="hidden" id="sendTowShifts1Jomeh" asp-for="TowShifts1Jomeh" />
+                        <input type="hidden" id="sendTowShifts2Jomeh" asp-for="TowShifts2Jomeh" />
+
+                        <input type="hidden" id="sendThreeShift1Jomeh" asp-for="ThreeShift1Jomeh" />
+                        <input type="hidden" id="sendThreeShift2Jomeh" asp-for="ThreeShift2Jomeh" />
+
+
+                        @*Complex*@
+                        <input type="hidden" id="Start1224" asp-for="Start1224" />
+                        <input type="hidden" id="End1224" asp-for="End1224" />
+
+                        <input type="hidden" id="Start1236" asp-for="Start1236" />
+                        <input type="hidden" id="End1236" asp-for="End1236" />
+
+                        <input type="hidden" id="Start2424" asp-for="Start2424" />
+                        <input type="hidden" id="End2424" asp-for="End2424" />
+
+                        <input type="hidden" id="Start2448" asp-for="Start2448" />
+                        <input type="hidden" id="End2448" asp-for="End2448" />
+                    </fieldset>
+                </div>
+
+
+
+            </div>
+
+
+            @*<input type="hidden" asp-for="id" value="id"/>*@
+            <div class="modal-footer">
+
+                <button type="submit" id="fomeSend" class="btn btn-success btn-rounded waves-effect waves-light" form="compute" value="Computing" name="Computing">ذخیره</button>
+
+                <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+
+            </div>
+
+        </form>
+    </div>
+
+
+
+</div>
+
+
+
+<script>
+    $('.persianDateInput1').persianDatepicker({
+        format: 'YYYY/MM/DD',
+        initialValueType: 'persian',
+        initialValue: false,
+        'position': [-270, 25],
+        autoClose: true,
+        inline: true,
+        calendar: {
+            persian: {
+                leapYearMode: 'astronomical'
+            }
+        }
+    });
+    $('.persianDateInputa').persianDatepicker({
+        format: 'YYYY/MM/DD',
+        initialValueType: 'persian',
+        initialValue: false,
+        'position': [-270, 25],
+        autoClose: true,
+
+        calendar: {
+            persian: {
+                leapYearMode: 'astronomical'
+            }
+        }
+
+    });
+    $('.persianDateInputb').persianDatepicker({
+        format: 'YYYY/MM/DD',
+        initialValueType: 'persian',
+
+        initialValue: false,
+        'position': [-270, 25],
+        autoClose: true,
+
+        calendar: {
+            persian: {
+                leapYearMode: 'astronomical'
+            }
+        }
+    });
+    /*    var p = $('.persianDateInputa').innerHTML;*/
+
+</script>
+
+
+@*<script src="~/AdminTheme/assets/js/dateCompute.js"></script>
+    <script src="~/AdminTheme/assets/js/MandatoryComputing.js"></script>*@
+
+<script>
+
+    $(document).ready(function () {
+
+        /*document.getElementById("job").options.selectedIndex = 0;*/
+
+      /*  loadWorkshopWithName();*/
+       /* loadPersonnel();*/
+
+    });
+
+
+</script>
+
+<script type="text/javascript">
+
+    async function loadWorkshopWithName() {
+        loadPersonnel();
+        //const nameId = document.getElementById("getWorkshopWithName").value;
+        //const codeId = document.getElementById("getWorkshopWithCode").value;
+
+
+
+        var myArray = document.getElementById('getWorkshopWithName');
+        let intext = myArray.options[myArray.selectedIndex].value;
+
+        var listArray = [];
+        var EmployerArray = [];
+
+        var workshopEmployer = [];
+
+
+        @foreach (var items in Model.WorkshopEmployerList)
+        {
+            @:workshopEmployer.push({EmployerId: @items.EmployerId, WorkshopId: @items.WorkshopId});
+        }
+
+        @foreach (var items in Model.Employers)
+            {
+
+                @:EmployerArray.push({ FullName: "@items.FullName", Id: @items.Id, NationalId: "@items.NationalId", Nationalcode: "@items.Nationalcode", IdNumber: "@items.IdNumber", RegisterId: "@items.RegisterId" });
+
+
+
+            }
+
+            @foreach (var items in Model.Workshops)
+            {
+
+                @:listArray.push({ WorkshopName: "@items.WorkshopName", Id: @items.Id, InsuranceCode: "@items.InsuranceCode", ArchiveCode: "@items.ArchiveCode", State: "@items.State", City: "@items.City", Address: "@items.Address", WorkshopFullName: "@items.WorkshopFullName" });
+
+
+
+            }
+        for (var i = 0; i < listArray.length; i++) {
+            if (listArray[i].Id == intext) {
+
+                document.getElementById("InsurancCode").innerHTML = listArray[i].InsuranceCode;
+                document.getElementById("State").innerHTML = listArray[i].State;
+                document.getElementById("City").innerHTML = listArray[i].City;
+                document.getElementById("Address").innerHTML = listArray[i].Address;
+                document.getElementById("select2-getWorkshopWithCode-container").innerHTML = listArray[i].ArchiveCode;
+                document.getElementById("archiveCode").value = listArray[i].ArchiveCode;
+                document.getElementById("adres").innerHTML = listArray[i].State + "-" + listArray[i].City + "-" + listArray[i].Address ;
+
+                removeR();
+
+            }
+
+        }
+
+        for (var a = 0; a < workshopEmployer.length; a++) {
+            if (workshopEmployer[a].WorkshopId == intext) {
+                //document.getElementById("NationalId").innerHTML = workshopEmpoyer[a].WorkshopId;
+                //document.getElementById("IdNumber").innerHTML = workshopEmpoyer[a].EmployerId;
+
+                for (var e = 0; e < EmployerArray.length; e++) {
+                    if (EmployerArray[e].Id == workshopEmployer[a].EmployerId) {
+                        document.getElementById("employerId").value = EmployerArray[e].Id;
+
+                        if (EmployerArray[e].NationalId === "*" || EmployerArray[e].RegisterId == "*") {
+                            $('#FullName').append(
+                                '<div class="r" style="background-color: #b5c9c0;padding: 3px;border-radius: 5px;margin-bottom:3px;"> <span> کارفرما  </span> : <span>' + EmployerArray[e].FullName + '</span> <span style="padding-right:20px;">کد ملی </span> : <span>' + EmployerArray[e].Nationalcode + '</span> <span style="padding-right:20px;">شماره شناسنامه </span> : <span>' + EmployerArray[e].IdNumber + '</span></div>'
+
+                            );
+                            //document.getElementById("NationalId").innerHTML = EmployerArray[a].Nationalcode;
+                            //document.getElementById("CodeStatus").innerHTML = "کد ملی";
+                        } else {
+                            $('#FullName').append(
+                                '<div class="r" style="background-color: #b5c9c0;padding: 3px;border-radius: 5px;margin-bottom:3px;"> <span> کارفرما  </span> : <span>' + EmployerArray[e].FullName + '</span> <span style="padding-right:20px;">شناسه ملی </span> : <span>' + EmployerArray[e].NationalId + '</span> <span style="padding-right:20px;">شماره ثبت </span> : <span>' + EmployerArray[e].RegisterId + '</span></div>'
+                            );
+                            //document.getElementById("NationalId").innerHTML = EmployerArray[a].NationalId;
+                            //document.getElementById("CodeStatus").innerHTML = "شناسه ملی";
+                        }
+
+
+
+                    }
+                }
+
+
+
+
+                //document.getElementById("FullName").innerHTML = EmployerArray[a].FullName;
+                //document.getElementById("employerId").value = EmployerArray[a].Id;
+
+
+            }
+
+        }
+
+
+
+    }
+
+
+</script>
+
+<script type="text/javascript">
+    var checkWithNameNull = document.getElementById("getWorkshopWithName").value;
+
+    async function loadWorkshopWithCode() {
+
+
+
+
+        var listArray = [];
+        var EmployerArray = [];
+        var workshopEmployer = [];
+        var myArray = document.getElementById('getWorkshopWithCode');
+        var withName = document.getElementById("getWorkshopWithName");
+        let intext = myArray.options[myArray.selectedIndex].value;
+        withName.options[withName.selectedIndex].value = intext;
+           @foreach (var items in Model.Workshops)
+            {
+
+                @:listArray.push({Id: @items.Id, WorkshopFullName: "@items.WorkshopFullName"  });
+
+
+
+            }
+
+        for (var i = 0; i < listArray.length; i++) {
+            if (listArray[i].Id == intext) {
+
+
+                document.getElementById("select2-getWorkshopWithName-container").innerHTML = listArray[i].WorkshopFullName;
+
+            }
+
+        }
+
+
+        loadWorkshopWithName();
+
+
+
+    }
+
+
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        /*document.getElementById("job").options.selectedIndex = 0;*/
+
+        /*  loadWorkshopWithName();*/
+         loadPersonnel();
+
+    });
+    async function loadPersonnel() {
+        const id = document.getElementById("getPersonnel").value;
+        const workshopId = document.getElementById("getWorkshopWithName").value;
+
+        if (workshopId == "WorkshopIds") {
+            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ',"ابتدا کارگاه را انتخاب نمایید");
+        }
+
+        if (id > 0 && workshopId != "WorkshopIds") {
+                $.ajax({
+                //contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: '@Url.Page("./Index", "LoadPersonel")',
+                headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                    data: { "id": id, "workshopId": workshopId },
+
+                    success: function (response) {
+                        var items2 = [];
+                        $.each(response, function (key, val) {
+                            items2.push({ id: key, vall: val });
+
+                        });
+                    if (items2[8].vall == "")
+                        $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ',"ابتدا تاریخ شروع به کار را در بخش پرسنل <br/>برای این شخص و کارگاه مورد نظر ایجاد نموده و سپس اقدام به ایجاد قرارداد نمایید");
+                    document.getElementById("FatherName").innerHTML = items2[1].vall;
+                    document.getElementById("PersonnelNationalCode").innerHTML = items2[2].vall;
+                    document.getElementById("PersonnelIdNumber").innerHTML = items2[3].vall;
+                    document.getElementById("PersonnelDateOfBirth").innerHTML = items2[4].vall;
+                    document.getElementById("PersonnelState").innerHTML = items2[5].vall;
+                    document.getElementById("PersonnelCity").innerHTML = items2[6].vall;
+                    document.getElementById("PersonnelAddress").innerHTML = items2[7].vall;
+                    document.getElementById("getWorkDate").value = items2[8].vall;
+                    document.getElementById("getWorkDateDisable").value = items2[8].vall;
+                    document.getElementById("getWorkDateHide").value = items2[8].vall;
+
+
+                    },
+                    failure: function (response) {
+                        console.log(5, response);
+
+                    }
+                });
+        }
+
+
+
+
+
+
+
+        //for (var b = 0; b < yearlyList.length; b++) {
+
+        //    document.getElementById("yearlySalary").value = yearlyList[1].Id;
+
+        //}
+
+
+    }
+
+
+</script>
+
+<script>
+    function removeR() {
+
+        $('div.r').remove();
+        $('span.n').remove();
+    }
+</script>
+
+
+
+
+
+

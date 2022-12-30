@@ -1,4 +1,5 @@
-﻿using Company.Domain.BillAgg;
+﻿using System.Security.Policy;
+using Company.Domain.BillAgg;
 using Company.Domain.Board;
 using Company.Domain.BoardType;
 using Company.Domain.ChapterAgg;
@@ -17,6 +18,8 @@ using Company.Domain.FileTitle;
 using Company.Domain.HolidayAgg;
 using Company.Domain.HolidayItemAgg;
 using Company.Domain.JobAgg;
+using Company.Domain.LeaveAgg;
+using Company.Domain.LeftWorkAgg;
 using Company.Domain.MandatoryHoursAgg;
 using Company.Domain.MasterPenaltyTitle;
 using Company.Domain.MasterPetition;
@@ -40,6 +43,7 @@ using Company.Domain.YearlySalaryItemsAgg;
 using Company.Domain.YearlysSalaryTitleAgg;
 using CompanyManagment.EFCore.Mapping;
 using Microsoft.EntityFrameworkCore;
+using Evidence = Company.Domain.Evidence.Evidence;
 
 namespace CompanyManagment.EFCore
 {
@@ -72,6 +76,8 @@ namespace CompanyManagment.EFCore
         public DbSet<FileState> FileStates { get; set; }
         public DbSet<FileAlert> FileAlerts { get; set; }
         //-------Main-Project----------------------------
+        public DbSet<Leave> LeaveList { get; set; }
+        public DbSet<LeftWork> LeftWorkList { get; set; }
         public DbSet<WorkshopAccount> WorkshopAccounts { get; set; }
         public DbSet<WorkingHoursItems> WorkingHoursItemsSet { get; set; }
         public DbSet<WorkingHours> WorkingHoursSet { get; set; }

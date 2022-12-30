@@ -1,4 +1,6 @@
-﻿using Company.Domain.WorkshopAgg;
+﻿using System;
+using Company.Domain.empolyerAgg;
+using Company.Domain.WorkshopAgg;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -30,11 +32,15 @@ namespace CompanyManagment.EFCore.Mapping
             //builder.HasOne(x => x.Employer)
             //    .WithMany(x => x.Workshops)
             //    .HasForeignKey(x => x.EmployerId);
+            builder.HasMany(x => x.LeftWorks)
+                .WithOne(x => x.Workshop)
+                .HasForeignKey(x => x.WorkshopId);
 
             builder.HasMany(x => x.Contracts2)
                 .WithOne(x => x.Workshop)
                 .HasForeignKey(x => x.WorkshopIds)
                 .OnDelete(DeleteBehavior.NoAction);
+
 
 
 

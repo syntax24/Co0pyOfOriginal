@@ -1,4 +1,6 @@
-﻿namespace _0_Framework.Application
+﻿using System;
+
+namespace _0_Framework.Application
 {
             
     public class OperationResult2

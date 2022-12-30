@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using AccountManagement.Application.Contracts.Account;
 using CompanyManagment.App.Contracts.Employer;
 
 namespace CompanyManagment.App.Contracts.Workshop
@@ -42,7 +43,7 @@ namespace CompanyManagment.App.Contracts.Workshop
         public List<EmployerViewModel> Employers { get; set; }
         public List<long> EmployerIdList { get; set; }
 
-     
+        public List<AccountViewModel> AccountsList { get; set; }
         public List<long> AccountIdsList { get; set; }
 
     }

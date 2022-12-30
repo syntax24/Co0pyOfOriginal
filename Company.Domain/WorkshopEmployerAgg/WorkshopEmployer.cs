@@ -1,4 +1,10 @@
-﻿using Company.Domain.empolyerAgg;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using _0_Framework.Domain;
+using Company.Domain.empolyerAgg;
 using Company.Domain.WorkshopAgg;
 
 namespace Company.Domain.WorkshopEmployerAgg

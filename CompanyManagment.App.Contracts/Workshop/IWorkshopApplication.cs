@@ -12,16 +12,19 @@ namespace CompanyManagment.App.Contracts.Workshop
         EditWorkshop GetDetails(long id);
         List<WorkshopViewModel> GetWorkshop();
         List<WorkshopViewModel> GetWorkshopAccount();
+      
 
         List<WorkshopViewModel> Search(WorkshopSearchModel searchModel);
 
         OperationResult Active(long id);
         OperationResult DeActive(long id);
-       
 
+        WorkshopViewModel GetWorkshopInfo(long id);
         OperationResult Err();
 
         OperationResult ExistErr();
+
+
 
 
     }

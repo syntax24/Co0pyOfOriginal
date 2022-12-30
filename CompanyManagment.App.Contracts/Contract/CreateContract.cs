@@ -6,6 +6,7 @@ using CompanyManagment.App.Contracts.Employer;
 using CompanyManagment.App.Contracts.Job;
 using CompanyManagment.App.Contracts.Workshop;
 using CompanyManagment.App.Contracts.YearlySalary;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CompanyManagment.App.Contracts.Contract
 {
@@ -140,6 +141,9 @@ namespace CompanyManagment.App.Contracts.Contract
         public List<ContractViweModel> Contracts { get; set; }
         public List<WorkshopViewModel> Workshops { get; set; }
         public List<EmployerViewModel> Employers { get; set; }
+        public SelectList EmployeeSelectList { get; set; }
+        public SelectList WorkshopNameSelectList { get; set; }
+        public SelectList WorkshopCodeSelectList { get; set; }
         public List<EmployeeViewModel> Employees { get; set; }
         public List<YearlySalaryViewModel> YearlySalaries { get; set; }
 
