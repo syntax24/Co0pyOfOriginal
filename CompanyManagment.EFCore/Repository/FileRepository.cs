@@ -78,7 +78,7 @@ namespace CompanyManagment.EFCore.Repository
                 query = query.Where(x => x.Status == searchModel.Status);
             }
 
-            return query.OrderByDescending(x => x.Id).ToList();
+            return query.OrderByDescending(x => x.ArchiveNo).ToList();
         }
      
         public long FindLastArchiveNumber()

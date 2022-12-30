@@ -1,4 +1,5 @@
 ﻿@page
+@using CompanyManagment.App.Contracts.File1
 @model ServiceHost.Areas.Admin.Pages.Company.FilePage.IndexModel
 @{
     //string colaps = "in";
@@ -75,6 +76,12 @@
         font-size: 14.5px !important;
         top: 2px !important;
         position: relative;
+    }
+    .wrapped {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 60px;
     }
     </style>
 
@@ -241,7 +248,7 @@
                                         background = "background-color : #eb7070;";
                                     }
 
-                                    <tr>
+                                    <tr style="@(item.Status == FileEnums.DEACTIVE ? "background-color: rgba(255, 165, 0, 0.42)" : "")">
 
                                         <td> 
                                             <p>@i</p>    
@@ -260,12 +267,12 @@
                                                     <tbody>
                                                         <tr>
                                                             <td style="border-top: 0">
-                                                                <p> @item.ReqesterFullname</p>
+                                                                <p class="wrapped"> @item.ReqesterFullname</p>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                <p> @item.SummonedFullname</p>
+                                                                <p class="wrapped"> @item.SummonedFullname</p>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -296,7 +303,7 @@
                                             <p>@item.DiagnosisBoard.DisputeResolutionPetitionDate</p>    
                                         </td>
                                         <td class="p-0">
-                                            @if (item.DiagnosisBoard.Id != 0)
+                                            @if (item.DiagnosisBoard.Id != 0&& item.FirstDiagnosisPS.Id != 0)
                                             {
                                                 <table class="table m-0" style="background: transparent">
                                                     <tbody>
@@ -363,7 +370,7 @@
                                             </a>  
                                         </td>
                                         <td class="p-0">
-                                            @if (item.DiagnosisBoard.Id != 0)
+                                            @if (item.DiagnosisBoard.Id != 0 && item.LastDiagnosisPS.Id != 0)
                                             {
                                                 <table class="table m-0" style="background: transparent">
                                                     <tbody>
@@ -426,7 +433,7 @@
                                             <p>@item.DisputeResolutionBoard.DisputeResolutionPetitionDate</p>    
                                         </td>
                                         <td class="p-0">
-                                            @if (item.DisputeResolutionBoard.Id != 0)
+                                            @if (item.DisputeResolutionBoard.Id != 0 && item.FirstDisputeResolutionPS.Id != 0)
                                             {
                                                 <table class="table m-0" style="background: transparent">
                                                     <tbody>
@@ -490,7 +497,7 @@
                                             </a>  
                                         </td>
                                         <td class="p-0">
-                                            @if (item.DisputeResolutionBoard.Id != 0)
+                                            @if (item.DisputeResolutionBoard.Id != 0 && item.LastDisputeResolutionPS.Id != 0)
                                             {
                                                 <table class="table m-0" style="background: transparent">
                                                     <tbody>

@@ -1,4 +1,5 @@
 ﻿using _0_Framework.Domain;
+using System.Collections.Generic;
 
 namespace Company.Domain.Contact2Agg
 {

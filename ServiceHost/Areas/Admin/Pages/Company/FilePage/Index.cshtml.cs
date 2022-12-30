@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using _0_Framework_b.Application;
 using CompanyManagment.App.Contracts.Board;
+using CompanyManagment.App.Contracts.Contact2;
 using CompanyManagment.App.Contracts.Evidence;
 using CompanyManagment.App.Contracts.EvidenceDetail;
 using CompanyManagment.App.Contracts.File1;
@@ -42,6 +43,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
         private readonly IEvidenceDetailApplication _evidenceDetailApplication;
         private readonly IFileTitleApplication _fileTitleApplication;
         private readonly IFileTimingApplication _fileTimingApplication;
+        private readonly IContactApplication2 _contactApplication;
 
 
         public IndexModel(
@@ -57,7 +59,8 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             IEvidenceApplication evidenceApplication,
             IEvidenceDetailApplication evidenceDetailApplication,
             IFileTitleApplication fileTitleApplication,
-            IFileTimingApplication fileTimingApplication
+            IFileTimingApplication fileTimingApplication,
+            IContactApplication2 contactApplication
          )
         {
             _fileApplication = fileApplication;
@@ -73,6 +76,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             _evidenceDetailApplication = evidenceDetailApplication;
             _fileTitleApplication = fileTitleApplication;
             _fileTimingApplication = fileTimingApplication;
+            _contactApplication = contactApplication;
         }
 
         public void OnGet(FileSearchModel fileSearchModel)
@@ -141,12 +145,13 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
         public IActionResult OnGetCreateFile()
         {
             var archiveNo = _fileApplication.FindLastArchiveNumber();
-            
+
             var createFile = new CreateFile
             {
                 ArchiveNo = archiveNo + 1,
                 Employees = _fileApplication.GetAllEmploees(false),
-                Employers = _fileApplication.GetAllEmployers(false)
+                Employers = _fileApplication.GetAllEmployers(false),
+                Contacts = _contactApplication.GetAllContact()
             };
 
 
@@ -178,6 +183,9 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             { 
                 var PsSearchModel = new ProceedingSessionSearchModel { Board_Id = diagnosisBoard.Id };
                 diagnosisPS = _proceedingSessionApplication.Search(PsSearchModel);
+
+                if (diagnosisPS.Count == 0)
+                    diagnosisPS.Add(new EditProceedingSession());
             }
             //diagnosisPS =
             //    diagnosisPS.Count != 0
@@ -195,6 +203,9 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
             {
                 var PsSearchModel = new ProceedingSessionSearchModel { Board_Id = disputeResolutionBoard.Id };
                 disputeResolutionPS = _proceedingSessionApplication.Search(PsSearchModel);
+
+                if (disputeResolutionPS.Count == 0)
+                    disputeResolutionPS.Add(new EditProceedingSession());
             }
             //disputeResolutionPS =
             //    disputeResolutionPS.Count != 0
@@ -241,11 +252,12 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
 
                 if (!result.IsSuccedded)
                     return new JsonResult(result);
-
-                result = _proceedingSessionApplication.CreateProceedingSessions(
-                    command.createDiagnosisPS,
-                    result.EntityId
-                );
+                
+                if(command.createDiagnosisPS != null)
+                    result = _proceedingSessionApplication.CreateProceedingSessions(
+                        command.createDiagnosisPS,
+                        result.EntityId
+                    );
 
                 if (!result.IsSuccedded)
                     return new JsonResult(result);
@@ -270,10 +282,11 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
                 if (!result.IsSuccedded)
                     return new JsonResult(result);
 
-                result = _proceedingSessionApplication.CreateProceedingSessions(
-                    command.createDisputeResolutionPS,
-                    result.EntityId
-                );
+                if (command.createDisputeResolutionPS != null)
+                    result = _proceedingSessionApplication.CreateProceedingSessions(
+                        command.createDisputeResolutionPS,
+                        result.EntityId
+                    );
 
                 if (!result.IsSuccedded)
                     return new JsonResult(result);
@@ -564,7 +577,14 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
         }
         public JsonResult OnGetGetFileTitles(string type)
         {
-            var fileTitlesList = _fileTitleApplication.Search(new FileTitleSearchModel { Type = type }).Select(x => x.Title).ToList();
+            var fileTitlesList = new List<string>();
+
+            if (type == "contact")
+                fileTitlesList = _contactApplication.GetAllContact().Select(x => x.NameContact).ToList();
+
+            else
+                fileTitlesList = _fileTitleApplication.Search(new FileTitleSearchModel { Type = type }).Select(x => x.Title).ToList();
+           
 
             return new JsonResult(fileTitlesList);
         }

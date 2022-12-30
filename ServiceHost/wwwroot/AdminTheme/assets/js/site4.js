@@ -538,7 +538,7 @@ function InsertTime(id) {
 //}
 
 function validDate(inputField) {
-
+    
     var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
         arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
         fixNumbers = function (str) {
@@ -553,8 +553,9 @@ function validDate(inputField) {
     let getdate;
 
     inputField.value == undefined ? getdate = inputField : getdate = inputField.value;
-
-    if (getdate == '') return validCheck = true;
+    //console.log(1, getdate)
+    if (getdate == '')
+        return validCheck = true;
 
     var m1, m2;
     var y1, y2, y3, y4;
@@ -636,6 +637,8 @@ function validDate(inputField) {
 
 function CompareDates(date, activeStartDate = true, activeEndDate = true) {
 
+    if(date.val() == '')
+        return;
     
     var dates = $('.date');
     var i = 0;
@@ -670,7 +673,8 @@ function CompareDates(date, activeStartDate = true, activeEndDate = true) {
         middle = middleDate.val().split('/').join("");
         end = endDate.val().split('/').join("");
 
-        console.log(activeStartDate, startDate.val(), middleDate.val())
+        //console.log(activeStartDate, startDate.val(), middleDate.val(), validDate(endDate.val()))
+        //console.log(activeStartDate, startDate.val(), middleDate.val())
 
         //if (activeStartDate && (startDate.val() == '' && middleDate.val() == '')) {
         //    $(endDate).css('backgroundColor', '#fff').removeClass('invalidDate');
@@ -769,14 +773,20 @@ function CompareDates(date, activeStartDate = true, activeEndDate = true) {
 }
 
 
-function removeRow(tag, sortId = '') {
+function removeRow(tag, sortId = '', className) {
 
     $(tag).parent().remove();
 
-    if (sortId != '') {
+    var unit = $(tag).parent().find('input').length
 
+    sortPSInputs(sortId, className, unit)
+
+    if (sortId != '')
         sortPS(sortId);
-    }
+
+    else
+        SumRemainingAmounts();
+
 }
 
 
@@ -784,11 +794,59 @@ function sortPS(id) {
 
     const turns = ['اول', 'دوم', 'سوم', 'چهارم', 'پنجم', 'ششم', 'هفتم', 'هشتم', 'نهم', 'دهم']
     var PSCount = ($("#" + id + " .proceedingSession").length - 1) / 2;
-    var PS = $("#" + id + " .dateLabel");
+    var PSLabel = $("#" + id + " .dateLabel");
 
     for (var i = 0; i < PSCount; i++) {
 
-        $(PS[i]).html('تاریخ نوبت ' + turns[i] + ' رسیدگی')
+        $(PSLabel[i]).html('تاریخ نوبت ' + turns[i] + ' رسیدگی')
+    }
+}
+
+function sortPSInputs(id, className, unit) {
+
+    var PSInput = $("#" + id + " ." + className + " input");
+
+    for (var i = 0; i < PSInput.length; i++) {
+
+        var split_0 = $(PSInput[i]).attr('name').split('[')
+        var split_1 = split_0[0]
+        var split_2 = split_0[1]
+        var split_2 = split_2.split(']')
+        var split_2 = split_2[1]
+
+        var split_00 = $(PSInput[i]).attr('id').split('_')
+        var split_11 = split_00[0]
+        var split_22 = split_00[3]
+
+        $(PSInput[i]).attr('name', split_1 + "[" + Math.floor(i / unit) + "]" + split_2)
+        $(PSInput[i]).next('span').attr('name', split_1 + "[" + Math.floor(i / unit) + "]" + split_2)
+        $(PSInput[i]).next('span').attr('data-valmsg-for', split_1 + "[" + Math.floor(i / unit) + "]" + split_2)
+
+        $(PSInput[i]).attr('id', split_11 + "_" + Math.floor(i / unit) + "__" + split_22)
+        $(PSInput[i]).prev('label').attr('for', split_11 + "_" + Math.floor(i / unit) + "__" + split_22)
+    }
+
+    var PSTextarea = $("#" + id + " ." + className + " textarea");
+
+    for (var i = 0; i < PSTextarea.length; i++) {
+
+        var split_0 = $(PSTextarea[i]).attr('name').split('[')
+        var split_1 = split_0[0]
+        var split_2 = split_0[1]
+        var split_2 = split_2.split(']')
+        var split_2 = split_2[1]
+
+        var split_00 = $(PSTextarea[i]).attr('id').split('_')
+        var split_11 = split_00[0]
+        var split_22 = split_00[3]
+
+        $(PSTextarea[i]).attr('name', split_1 + "[" + i + "]" + split_2)
+        $(PSTextarea[i]).next('span').attr('name', split_1 + "[" + i + "]" + split_2)
+        $(PSTextarea[i]).next('span').attr('data-valmsg-for', split_1 + "[" + i + "]" + split_2)
+
+        $(PSTextarea[i]).attr('id', split_11 + "_" + i + "__" + split_22)
+        $(PSTextarea[i]).prev('label').attr('for', split_11 + "_" + i + "__" + split_22)
+
     }
 }
 

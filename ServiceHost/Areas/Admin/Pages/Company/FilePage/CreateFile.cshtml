@@ -68,7 +68,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="ProceederReference" class="control-label"> مرجع رسیدگی کننده </label>
-                                <input type="text" class="form-control" asp-for="ProceederReference">
+                                <input type="text" class="form-control" asp-for="ProceederReference" onfocus="getSugesstedTitles(this, 'contact')">
                                 <span asp-validation-for="ProceederReference" class="error"></span>
                             </div>
                         </div>

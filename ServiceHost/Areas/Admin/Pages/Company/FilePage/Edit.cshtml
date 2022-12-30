@@ -51,14 +51,14 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="ArchiveNo" class="control-label">  شماره بایگانی </label>
-                                <input type="text" class="form-control" asp-for="ArchiveNo" onfocusout="CheckArchiveNo()">
+                                <input type="text" class="form-control" asp-for="ArchiveNo" onfocusout="CheckArchiveNo(@Model.ArchiveNo)">
                                 <span asp-validation-for="ArchiveNo" class="error"></span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="ProceederReference" class="control-label"> مرجع رسیدگی کننده </label>
-                                <input type="text" class="form-control" asp-for="ProceederReference">
+                                <input type="text" class="form-control" asp-for="ProceederReference" onfocus="getSugesstedTitles(this, 'contact')">
                                 <span asp-validation-for="ProceederReference" class="error"></span>
                             </div>
                         </div>
@@ -175,9 +175,13 @@
                                         <span asp-validation-for="createDiagnosisPS[i].Time" class="error"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-2" onclick="removeRow(this, 'diagnosis');">
-                                    <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 28px; cursor: pointer;"></i>
-                                </div>
+
+                                @if (i != 0)
+                                {
+                                    <div class="col-md-2" onclick="removeRow(this, 'diagnosis', 'proceedingSession');">
+                                        <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 28px; cursor: pointer;"></i>
+                                    </div>
+                                }
                             </div>
                         }
 
@@ -261,9 +265,13 @@
                                         <span asp-validation-for="createDisputeResolutionPS[i].Time" class="error"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-2" onclick="removeRow(this, 'disputeResolution');">
-                                    <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 28px; cursor: pointer;"></i>
-                                </div>
+
+                                @if (i != 0)
+                                {
+                                    <div class="col-md-2" onclick="removeRow(this, 'disputeResolution', 'proceedingSession');">
+                                        <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 28px; cursor: pointer;"></i>
+                                    </div>
+                                }
                             </div>
                         }
                         <div class="col-xs-12 proceedingSession"></div>
@@ -484,8 +492,8 @@
 
     function addNewFormDiagnosisPS(boardType) {
 
-        var DiagnosisPSCounter = ($("#diagnosis .proceedingSession").length - 1) / 2;
-               
+        var DiagnosisPSCounter = $("#diagnosis input[name$='.Date']").length;
+        
         if (DiagnosisPSCounter >= 9)
             return;
 
@@ -493,7 +501,7 @@
 
         const label = 'تاریخ نوبت ' + turns[DiagnosisPSCounter] + ' رسیدگی';
          
-        const html = `<div class="row">
+        const html = `<div class="d-flex">
                         <div class="col-md-5 proceedingSession">
                             <div class="form-group">
                                 <label class="control-label dateLabel" for="createDiagnosisPS_${DiagnosisPSCounter}__Date"> ${label} </label>
@@ -512,13 +520,13 @@
                                 data-valmsg-replace="true"></span>
                             </div>
                         </div>
-                        <div class="col-md-2" onclick="removeRow(this, 'diagnosis');">
+                        <div class="col-md-2" onclick="removeRow(this, 'diagnosis', 'proceedingSession');">
                             <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 28px; cursor: pointer;"></i>
                         </div>
                     </div>`
                         
         $(html).insertBefore("#" + boardType + " .addProceedingSessionFormButton");
-        
+
         const prevId = DiagnosisPSCounter - 1;
         //const minDate = $(`#createDiagnosisPS_${prevId}__Date`).val();
         
@@ -557,8 +565,8 @@
     
     function addNewFormDisputeResolutionPS(boardType) 
     {
-        var DisputeResolutionPSCounter = ($("#disputeResolution .proceedingSession").length - 1) / 2;
-        
+        var DisputeResolutionPSCounter = $("#disputeResolution input[name$='.Date']").length
+        console.log(DisputeResolutionPSCounter) 
         if (DisputeResolutionPSCounter >= 9)
             return;
 
@@ -568,7 +576,7 @@
 
         const label = 'تاریخ نوبت ' + turns[DisputeResolutionPSCounter] + ' رسیدگی';
         
-        const html = `<div class="row">
+        const html = `<div class="d-flex">
                         <div class="col-md-5 proceedingSession">
                             <div class="form-group">
                                 <label class="control-label dateLabel" for="createDisputeResolutionPS_${DisputeResolutionPSCounter}__Date"> ${label} </label>
@@ -589,7 +597,7 @@
                                 data-valmsg-replace="true"></span>
                             </div>
                         </div>
-                        <div class="col-md-2" onclick="removeRow(this, 'disputeResolution');">
+                        <div class="col-md-2" onclick="removeRow(this, 'disputeResolution', 'proceedingSession');">
                             <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 28px; cursor: pointer;"></i>
                         </div>
                     </div>`
@@ -645,28 +653,63 @@
 
     }
     
-    function CheckArchiveNo(){
+    //function CheckArchiveNo(){
+    //    const archiveNo = document.getElementById("ArchiveNo").value;
+    //    //console.log(archiveNo);
+        
+    //    $.ajax({
+    //        type: "GET",
+    //        //url: "/Admin/File/FilePage/Index?handler=CheckUniqueArchiveNo",
+    //        url: '@Url.Page("./Index", "CheckUniqueArchiveNo")',
+    //        //beforeSend: function (xhr) {
+    //        //    xhr.setRequestHeader("XSRF-TOKEN",
+    //        //        $('input:hidden[name="__RequestVerificationToken"]').val());
+    //        //},
+    //        data: JSON.stringify({
+    //            id: parseInt(archiveNo)
+    //        }),
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: "json",
+    //        success: function (response) {
+    //            console.log(response);
+    //        },
+    //        failure: function (response) {
+    //            alert(response);
+    //        }
+    //    });
+
+    //}
+
+    function CheckArchiveNo(preValue) {
+
         const archiveNo = document.getElementById("ArchiveNo").value;
-        //console.log(archiveNo);
+
+        if (archiveNo == "" || preValue == archiveNo) 
+            return;
         
         $.ajax({
-            type: "GET",
-            //url: "/Admin/File/FilePage/Index?handler=CheckUniqueArchiveNo",
+            //contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
             url: '@Url.Page("./Index", "CheckUniqueArchiveNo")',
-            //beforeSend: function (xhr) {
-            //    xhr.setRequestHeader("XSRF-TOKEN",
-            //        $('input:hidden[name="__RequestVerificationToken"]').val());
-            //},
-            data: JSON.stringify({
-                id: parseInt(archiveNo)
-            }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
+            headers: { "RequestVerificationToken": $('@Html.AntiForgeryToken()').val() },
+            data: { "archiveNo" : archiveNo },
+
             success: function (response) {
                 console.log(response);
+                if (response.stat == false) {
+
+                    $("button[type=submit]").attr('disabled', true)
+                    $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', response.message);
+                    //swal("", response.message, "error");
+                }
+                else {
+                    $("button[type=submit]").attr('disabled', false)
+                }
             },
             failure: function (response) {
-                alert(response);
+                console.log(5, response)
+                alert("خطایی رخ داده است. لطفا با مدیر سیستم تماس بگیرید");
             }
         });
 
@@ -683,82 +726,82 @@
 
 </Script>
 <script>
-    function validDate(inputField) {
+    //function validDate(inputField) {
 
-        var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
-            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
-            fixNumbers = function (str) {
-                if (typeof str === 'string') {
-                    for (var i = 0; i < 10; i++) {
-                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
-                    }
-                }
-                return str;
-            };
-        let getdate = inputField.value;
+    //    var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+    //        arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+    //        fixNumbers = function (str) {
+    //            if (typeof str === 'string') {
+    //                for (var i = 0; i < 10; i++) {
+    //                    str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+    //                }
+    //            }
+    //            return str;
+    //        };
+    //    let getdate = inputField.value;
 
-        var m1, m2;
-        var y1, y2, y3, y4;
-        var d1, d2;
-        var s1, s2;
-        for (var i = 0; i < getdate.length; i++) {
-            if (i === 0) {
-                y1 = fixNumbers(getdate[i]);
-            }
-            if (i === 1) {
-                y2 = fixNumbers(getdate[i]);
-            }
-            if (i === 2) {
-                y3 = fixNumbers(getdate[i]);
-            }
-            if (i === 3) {
-                y4 = fixNumbers(getdate[i]);
-            }
-            if (i === 4) {
-                s1 = fixNumbers(getdate[i]);
-            }
-            if (i === 5) {
-                m1 = fixNumbers(getdate[i]);
-            }
-            if (i === 6) {
-                m2 = fixNumbers(getdate[i]);
-            }
-            if (i === 7) {
-                s2 = fixNumbers(getdate[i]);
-            }
-            if (i === 8) {
-                d1 = fixNumbers(getdate[i]);
-            }
-            if (i === 9) {
-                d2 = fixNumbers(getdate[i]);
-            }
+    //    var m1, m2;
+    //    var y1, y2, y3, y4;
+    //    var d1, d2;
+    //    var s1, s2;
+    //    for (var i = 0; i < getdate.length; i++) {
+    //        if (i === 0) {
+    //            y1 = fixNumbers(getdate[i]);
+    //        }
+    //        if (i === 1) {
+    //            y2 = fixNumbers(getdate[i]);
+    //        }
+    //        if (i === 2) {
+    //            y3 = fixNumbers(getdate[i]);
+    //        }
+    //        if (i === 3) {
+    //            y4 = fixNumbers(getdate[i]);
+    //        }
+    //        if (i === 4) {
+    //            s1 = fixNumbers(getdate[i]);
+    //        }
+    //        if (i === 5) {
+    //            m1 = fixNumbers(getdate[i]);
+    //        }
+    //        if (i === 6) {
+    //            m2 = fixNumbers(getdate[i]);
+    //        }
+    //        if (i === 7) {
+    //            s2 = fixNumbers(getdate[i]);
+    //        }
+    //        if (i === 8) {
+    //            d1 = fixNumbers(getdate[i]);
+    //        }
+    //        if (i === 9) {
+    //            d2 = fixNumbers(getdate[i]);
+    //        }
 
-        }
-        var yRes = y1 + y2 + y3 + y4;
-        var year = parseInt(yRes);
-        var mRes = m1 + m2;
-        var month = parseInt(mRes);
-        var dRes = d1 + d2;
-        var day = parseInt(dRes);
-        var FixResult = yRes + s1 + mRes + s2 + dRes;
-
-
-        var isValid = /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(FixResult);
+    //    }
+    //    var yRes = y1 + y2 + y3 + y4;
+    //    var year = parseInt(yRes);
+    //    var mRes = m1 + m2;
+    //    var month = parseInt(mRes);
+    //    var dRes = d1 + d2;
+    //    var day = parseInt(dRes);
+    //    var FixResult = yRes + s1 + mRes + s2 + dRes;
 
 
-        if (isValid) {
-            inputField.style.backgroundColor = '#a6e9a6';
-            $("button[type=submit]").attr('disabled', false);
-            validCheck = true;
+    //    var isValid = /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(FixResult);
 
-        } else {
-            inputField.style.backgroundColor = '#f94c4c';
-            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را بصورت صحیح وارد کنید");
-            $("button[type=submit]").attr('disabled', true)
-            validCheck = false;
 
-        }
-        return validCheck;
+    //    if (isValid) {
+    //        inputField.style.backgroundColor = '#a6e9a6';
+    //        $("button[type=submit]").attr('disabled', false);
+    //        validCheck = true;
 
-    }
+    //    } else {
+    //        inputField.style.backgroundColor = '#f94c4c';
+    //        $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را بصورت صحیح وارد کنید");
+    //        $("button[type=submit]").attr('disabled', true)
+    //        validCheck = false;
+
+    //    }
+    //    return validCheck;
+
+    //}
 </script>

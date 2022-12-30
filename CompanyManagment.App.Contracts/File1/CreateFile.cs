@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using CompanyManagment.App.Contracts.Contact2;
 using CompanyManagment.App.Contracts.Employee;
 using CompanyManagment.App.Contracts.Employer;
 
@@ -7,6 +8,11 @@ namespace CompanyManagment.App.Contracts.File1
 {
     public class CreateFile
     {
+        public CreateFile() 
+        {
+            Contacts = new List<Contact2ViewModel>();
+        }
+
         [Required(ErrorMessage = "فیلد الزامی است")]
         [Range(0, int.MaxValue, ErrorMessage = "لطفا عدد وارد کنید")]
         public long ArchiveNo { get; set; }
@@ -39,6 +45,7 @@ namespace CompanyManagment.App.Contracts.File1
 
 
         public string Description { get; set; }
+        public List<Contact2ViewModel> Contacts { get; set; }
         public List<EmployeeViewModel> Employees { get; set; }
         public List<EmployerViewModel> Employers { get; set; }
     }

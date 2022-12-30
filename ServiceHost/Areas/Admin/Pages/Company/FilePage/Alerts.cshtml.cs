@@ -32,7 +32,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
 
         public void OnGet(FileAlertSearchModel searchModel)
         {
-            var files = _fileApplication.Search(new FileSearchModel { ArchiveNo = searchModel.ArchiveNo, FileClass = searchModel.FileClass});
+            var files = _fileApplication.Search(new FileSearchModel { ArchiveNo = searchModel.ArchiveNo, FileClass = searchModel.FileClass, Status = FileEnums.ACTIVE });
 
             viewModels = _fileAlertApplication.GetFilesAlerts(files);
 

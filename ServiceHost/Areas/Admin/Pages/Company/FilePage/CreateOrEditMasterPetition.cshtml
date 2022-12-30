@@ -175,7 +175,7 @@
                                     </div>
                                     @if (i != 0)
                                     {
-                                        <div class="col-md-1" onclick="removeRow(this);">
+                                        <div class="col-md-1" onclick="removeRow(this, 'penaltyTitles', 'penaltyTitles');">
                                             <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 4px cursor: pointer;"></i>
                                         </div>
                                     }
@@ -256,7 +256,7 @@
                                     </div>
                                     @if (i != 0)
                                     {
-                                        <div class="col-md-1" onclick="removeRow(this);">
+                                        <div class="col-md-1" onclick="removeRow(this, 'recordVerification', 'recordVerification');">
                                             <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 4px cursor: pointer;"></i>
                                         </div>
                                     }
@@ -330,11 +330,12 @@
 </script>
 <script>
     
-    var penaltyTitleCounter = @Model.CreateMasterPenaltyTitle.Count  - 1;
-    var workhistoryCounter = @Model.CreateMasterWorkHistory.Count - 1;
+    //var penaltyTitleCounter = @Model.CreateMasterPenaltyTitle.Count  - 1;
+    //var workhistoryCounter = @Model.CreateMasterWorkHistory.Count - 1;
 
     function addNewFormWorkhistory(flag) {
 
+        var workhistoryCounter = $("#recordVerification input[name$='.WorkingHoursPerDay']").length
         //var content = $("#" + dataType + " ." + dataType);
         ////var cn = $(content[i]).clone(true);
 
@@ -347,7 +348,7 @@
         //$(content[3]).clone().insertBefore("#" + dataType + " ." + flag);
         //$(content[4]).clone().insertBefore("#" + dataType + " ." + flag);
         
-        workhistoryCounter++;
+        //workhistoryCounter++;
         
         const html = `<div class="d-flex">
                         <div class="col-md-2 recordVerification">
@@ -387,7 +388,7 @@
                                 <span class="error field-validation-valid" data-valmsg-for="CreateMasterWorkHistory[${workhistoryCounter}].Description" data-valmsg-replace="true"></span>
                             </div>
                         </div>
-                        <div class="col-md-1" onclick="removeRow(this);">
+                        <div class="col-md-1" onclick="removeRow(this, 'recordVerification', 'recordVerification');">
                             <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 4px; cursor: pointer;"></i>
                         </div>
                     </div>`;
@@ -428,7 +429,8 @@
     
     function addNewFormPenaltyTitles(flag) {
 
-        penaltyTitleCounter++;
+        var penaltyTitleCounter = $("#penaltyTitles input[name$='.Title']").length
+        //penaltyTitleCounter++;
         
         const html = `<div class="d-flex">
                         <div class="col-md-2 penaltyTitles">
@@ -476,7 +478,7 @@
                                 <span class="error field-validation-valid" data-valmsg-for="CreateMasterPenaltyTitle[${penaltyTitleCounter}].RemainingAmount" data-valmsg-replace="true"></span>
                             </div>
                         </div>
-                        <div class="col-md-1" onclick="removeRow(this);">
+                        <div class="col-md-1" onclick="removeRow(this, 'penaltyTitles', 'penaltyTitles');">
                             <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 4px; cursor: pointer;"></i>
                         </div>
                     </div>`;

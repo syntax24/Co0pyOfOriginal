@@ -144,7 +144,7 @@
                                                 <span asp-validation-for="CreateEvidenceDetail[i].ToDate" class="error"></span>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 recordVerification">
+                                        <div class="col-md-3 evideceDetails">
                                         <div class="form-group">
                                             @if (i == 0)
                                             {
@@ -158,7 +158,7 @@
                                     
                                     @if (i != 0)
                                     {
-                                        <div class="col-md-1" onclick="removeRow(this);">
+                                        <div class="col-md-1" onclick="removeRow(this, 'evideceDetails', 'evideceDetails');">
                                             <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 4px cursor: pointer;"></i>
                                         </div>
                                     }
@@ -204,7 +204,7 @@
         //CreateDatePicker('#PetitionIssuanceDate', `#NotificationPetitionDate`);
 
         //var i = 0;
-        //$(".recordVerification").each(function() {
+        //$(".evideceDetails").each(function() {
         //    CreateDatePicker(`#CreateMasterWorkHistory_${i}__FromDate`, `#CreateMasterWorkHistory_${i}__ToDate`)
 
         //    i++;
@@ -230,11 +230,13 @@
 </script>
 <script>
     
-    var evideceDetailCounter = @Model.CreateEvidenceDetail.Count  - 1;
+    //var evideceDetailCounter = @Model.CreateEvidenceDetail.Count  - 1;
     
     function addNewFormEvidenceDetail(flag) {
 
-        evideceDetailCounter++;
+        var evideceDetailCounter = $("#evideceDetails input[name$='.Title']").length
+
+        //evideceDetailCounter++;
         
         const html = `<div class="d-flex">
                         <div class="col-md-3 evideceDetails">
@@ -268,12 +270,13 @@
                             </div>
                         </div>
                         <div class="col-md-3 evideceDetails">
-                            <div class="form-group">
-                                <textarea class="form-control" asp-for="CreateEvidenceDetail[i].Description"></textarea>
-                                <span asp-validation-for="CreateEvidenceDetail[i].Description" class="error"></span>
+                        <div class="form-group">
+                                <!-- <label class="control-label" for="CreateEvidenceDetail_${evideceDetailCounter}__Description"> توضیحات </label> -->
+                                <textarea class="form-control" id="CreateEvidenceDetail_${evideceDetailCounter}__Description" name="CreateEvidenceDetail[${evideceDetailCounter}].Description"></textarea>
+                                <span class="error field-validation-valid" data-valmsg-for="CreateEvidenceDetail[${evideceDetailCounter}].Description" data-valmsg-replace="true"></span>
                             </div>
                         </div>
-                        <div class="col-md-1" onclick="removeRow(this);">
+                        <div class="col-md-1" onclick="removeRow(this, 'evideceDetails', 'evideceDetails');">
                             <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 4px; cursor: pointer;"></i>
                         </div>
                     </div>`;

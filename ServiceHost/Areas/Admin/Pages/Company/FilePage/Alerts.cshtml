@@ -187,7 +187,7 @@
                                 @{ var i = 1; }
                                 @foreach (var item in Model.viewModels)
                                 {
-                                    <tr style="@(item.IsExpired ? "background-color: #eb7070" : "")">
+                                    <tr style="@(item.IsExpired ? "background-color: #eb7070b0" : "")">
                                         <td> 
                                             <p>@i</p>    
                                         </td>
@@ -211,6 +211,14 @@
                                             <a class="btn btn-primary btn-rounded waves-effect waves-light" onclick="SetAdditionalDeadline(@item.File_Id, @item.FileState_Id, 2)">2 روز</a>
                                             <a class="btn btn-primary btn-rounded waves-effect waves-light" onclick="SetAdditionalDeadline(@item.File_Id, @item.FileState_Id, 5)">5 روز</a>
                                             <a class="btn btn-primary btn-rounded waves-effect waves-light" onclick="SetAdditionalDeadline(@item.File_Id, @item.FileState_Id, 10)">10 روز</a>
+                                            <div style="float: left">
+                                                <a class="btn btn-warning ionRad" href="#showmodal=@Url.Page("/Company/FilePage/Index", "EditFile", new { Id = item.File_Id })">
+                                                    <i class="fa fa-edit ionSize"></i>
+                                                </a>
+                                                <a title="غیرفعال کردن پرونده" class="btn btn-danger ionRad" onclick="setFileStatus(@item.File_Id)">
+                                                    <i class="ion-briefcase ionSize"></i>
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                     i++;
@@ -376,6 +384,47 @@
             $("#searchModel_ArchiveNo").val("").trigger('change');
             $("#searchModel_FileClass").val("").trigger('change');
             return;
+        }
+
+        function setFileStatus(id) { 
+
+            swal({
+                title: "",
+                text: "آیا انجام این کار اطمینان دارید؟",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "بله",
+                cancelButtonText: "خیر",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            }, function (isConfirm) {
+                if (isConfirm) {
+                  
+                    $.ajax({
+                        dataType: 'json',
+                        type: 'POST',
+                        url: '@Url.Page("./Index", "SetFileStatus")',
+                        headers: { "RequestVerificationToken": $('@Html.AntiForgeryToken()').val() },
+                        data: { "id" : id },
+
+                        success: function (response) {
+                            console.log(response);
+                            $.Notification.autoHideNotify('success', 'top center', 'پیام سیستم ', response.message);
+                            setTimeout(function() { 
+                            
+                                location.reload();
+                            }, 1200)
+                
+                        },
+                        failure: function (response) {
+                            console.log(5, response)
+                            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', response.message);
+                        }
+                    });
+                    
+                }
+            });
         }
 
     </script>

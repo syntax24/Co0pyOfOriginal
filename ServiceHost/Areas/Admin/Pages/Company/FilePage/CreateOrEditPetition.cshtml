@@ -4,7 +4,18 @@
         /* .modal-dialog {
             width: 94% !important;
         }*/
-
+        datalist {
+          position: absolute;
+          background-color: white;
+          border: 1px solid blue;
+          border-radius: 0 0 5px 5px;
+          border-top: none;
+          font-family: sans-serif;
+          width: 350px;
+          padding: 5px;
+          max-height: 10rem;
+          overflow-y: auto
+        }
         .select2-container {
             width: 100% !important;
         }
@@ -208,7 +219,7 @@
                                     </div>
                                     @if (i != 0)
                                     {
-                                        <div class="col-md-1" onclick="removeRow(this);">
+                                        <div class="col-md-1" onclick="removeRow(this, 'penaltyTitles', 'penaltyTitles');">
                                             <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 4px cursor: pointer;"></i>
                                         </div>
                                     }
@@ -289,7 +300,7 @@
                                     </div>
                                     @if (i != 0)
                                     {
-                                        <div class="col-md-1" onclick="removeRow(this);">
+                                        <div class="col-md-1" onclick="removeRow(this, 'recordVerification', 'recordVerification');">
                                             <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 4px cursor: pointer;"></i>
                                         </div>
                                     }
@@ -359,9 +370,11 @@
 <script>
     
     var penaltyTitleCounter = @Model.CreatePenaltyTitle.Count  - 1;
-    var workhistoryCounter = @Model.CreateWorkHistory.Count - 1;
+    //var  = @Model.CreateWorkHistory.Count - 1;
 
     function addNewFormWorkhistory(flag) {
+
+        var workhistoryCounter = $("#recordVerification input[name$='.WorkingHoursPerDay']").length
 
         //var content = $("#" + dataType + " ." + dataType);
         ////var cn = $(content[i]).clone(true);
@@ -375,7 +388,7 @@
         //$(content[3]).clone().insertBefore("#" + dataType + " ." + flag);
         //$(content[4]).clone().insertBefore("#" + dataType + " ." + flag);
         
-        workhistoryCounter++;
+        //workhistoryCounter++;
         
         const html = `<div class="d-flex">
                         <div class="col-md-2 recordVerification">
@@ -415,7 +428,7 @@
                                 <span class="error field-validation-valid" data-valmsg-for="CreateWorkHistory[${workhistoryCounter}].Description" data-valmsg-replace="true"></span>
                             </div>
                         </div>
-                        <div class="col-md-1" onclick="removeRow(this);">
+                        <div class="col-md-1" onclick="removeRow(this, 'recordVerification', 'recordVerification');">
                             <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 4px; cursor: pointer;"></i>
                         </div>
                     </div>`;
@@ -456,13 +469,14 @@
     
     function addNewFormPenaltyTitles(flag) {
 
-        penaltyTitleCounter++;
+        var penaltyTitleCounter = $("#penaltyTitles input[name$='.Title']").length
+        //penaltyTitleCounter++;
         
         const html = `<div class="d-flex">
                         <div class="col-md-2 penaltyTitles">
                             <div class="form-group">
                                 <!-- <label class="control-label" for="CreatePenaltyTitle_${penaltyTitleCounter}__Title"> عنوان </label> -->
-                                <input type="text" class="form-control" id="CreatePenaltyTitle_${penaltyTitleCounter}__Title" name="CreatePenaltyTitle[${penaltyTitleCounter}].Title" value="">
+                                <input type="text" class="form-control" id="CreatePenaltyTitle_${penaltyTitleCounter}__Title" name="CreatePenaltyTitle[${penaltyTitleCounter}].Title" value="" onfocus="getSugesstedTitles(this, 'petition')">
                                 <span class="error field-validation-valid" data-valmsg-for="CreatePenaltyTitle[${penaltyTitleCounter}].Title" data-valmsg-replace="true"></span>
                             </div>
                         </div>
@@ -504,7 +518,7 @@
                                 <span class="error field-validation-valid" data-valmsg-for="CreatePenaltyTitle[${penaltyTitleCounter}].RemainingAmount" data-valmsg-replace="true"></span>
                             </div>
                         </div>
-                        <div class="col-md-1" onclick="removeRow(this);">
+                        <div class="col-md-1" onclick="removeRow(this, 'penaltyTitles', 'penaltyTitles');">
                             <i class="fa fa-minus-circle fa-2x" style="color: red; position: absolute; top: 4px; cursor: pointer;"></i>
                         </div>
                     </div>`;

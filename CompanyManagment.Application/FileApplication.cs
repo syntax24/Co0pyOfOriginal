@@ -224,8 +224,13 @@ namespace CompanyManagment.Application
             var lastDiagnosisProceedingSession = new EditProceedingSession();
             if (diagnosisProceedingSessionList.Count != 0)
             {
-                firstDiagnosisProceedingSession = diagnosisProceedingSessionList.First();
-                lastDiagnosisProceedingSession = diagnosisProceedingSessionList.Last();
+                if(diagnosisProceedingSessionList.Count == 1)
+                    firstDiagnosisProceedingSession = diagnosisProceedingSessionList.First();
+                else
+                {
+                    firstDiagnosisProceedingSession = diagnosisProceedingSessionList.First();
+                    lastDiagnosisProceedingSession = diagnosisProceedingSessionList.Last();
+                }
             }
 
             var diagnosisPetition =
@@ -247,10 +252,15 @@ namespace CompanyManagment.Application
             var lastDisputeResolutionProceedingSession = new EditProceedingSession();
             if (disputeResolutionProceedingSessionList.Count != 0)
             {
-                firstDisputeResolutionProceedingSession =
-                    disputeResolutionProceedingSessionList.First();
-                lastDisputeResolutionProceedingSession =
-                    disputeResolutionProceedingSessionList.Last();
+                if (disputeResolutionProceedingSessionList.Count == 1)
+                    firstDisputeResolutionProceedingSession = disputeResolutionProceedingSessionList.First();
+                else
+                {
+                    firstDisputeResolutionProceedingSession =
+                        disputeResolutionProceedingSessionList.First();
+                    lastDisputeResolutionProceedingSession =
+                        disputeResolutionProceedingSessionList.Last();
+                }
             }
 
             var disputeResolutionPetition =
