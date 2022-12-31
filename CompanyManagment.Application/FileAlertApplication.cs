@@ -86,12 +86,12 @@ namespace CompanyManagment.Application
             foreach (var item in files)
             {
                 var file = _fileApplication.GetFileDetails(item);
-                file.State = _fileApplication.GetFileState(file);
+                file.State = _fileStateApplication.GetFileState(file);
 
                 if (file.State == 0)
                     continue;
 
-                file.StateDate = _fileApplication.GetFileStateDate(file);
+                file.StateDate = _fileStateApplication.GetFileStateDate(file);
                 var today = DateTime.Now.Date;
 
                 var fileAlerts = Search(new FileAlertSearchModel { File_Id = file.Id, FileState_Id = file.State });
@@ -164,13 +164,13 @@ namespace CompanyManagment.Application
             switch (additionalDeadline)
             {
                 case 2:
-                    return (int) FileAlertEnums.Maximum_2_DaysExtension;
+                    return FileAlertEnums.MAX_2_DAYSEXTENSION;
 
                 case 5:
-                    return (int) FileAlertEnums.Maximum_5_DaysExtension;
+                    return FileAlertEnums.MAX_5_DAYSEXTENSION;
 
                 case 10:
-                    return (int) FileAlertEnums.Maximum_10_DaysExtension;
+                    return FileAlertEnums.MAX_10_DAYSEXTENSION;
 
             }
 

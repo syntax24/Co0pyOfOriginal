@@ -553,7 +553,7 @@ function validDate(inputField) {
     let getdate;
 
     inputField.value == undefined ? getdate = inputField : getdate = inputField.value;
-    //console.log(1, getdate)
+    
     if (getdate == '')
         return validCheck = true;
 
@@ -616,7 +616,7 @@ function validDate(inputField) {
     else {
 
         if (isValid) {
-            //inputField.style.backgroundColor = '#a6e9a6';
+            inputField.style.backgroundColor = '#fff';
             //$("button[type=submit]").attr('disabled', false);
             validCheck = true;
 
@@ -656,10 +656,21 @@ function CompareDates(date, activeStartDate = true, activeEndDate = true) {
     startDate = (i - 1 >= 0 && activeStartDate) ? $(dates[i - 1]) : $('<input id="nullDate" value="1300/01/01" hidden/>');
     middleDate = $(dates[i])
     endDate = (dates[i + 1] != undefined && activeEndDate) ? $(dates[i + 1]) : $('<input id="nullDate" value="1600/01/01" hidden/>');
+    //startDate = (i - 1 >= 0 && activeStartDate) ? $(dates[i - 1]) : null;
+    //middleDate = $(dates[i])
+    //endDate = (dates[i + 1] != undefined && activeEndDate) ? $(dates[i + 1]) : null;
 
-    //console.log(startDate)
-    //console.log(middleDate)
-    //console.log(endDate)
+    if (startDate.val() == "")
+        startDate = $('<input id="nullDate" value="1300/01/01" hidden/>');
+
+    if (endDate.val() == "")
+        endDate = $('<input id="nullDate" value="1600/01/01" hidden/>')
+
+    console.log(startDate.val())
+    console.log(middleDate.val())
+    console.log(endDate.val())
+
+    
     //console.log(startDate.val())
     //console.log(middleDate.val())
     //console.log(endDate.val())
@@ -673,7 +684,7 @@ function CompareDates(date, activeStartDate = true, activeEndDate = true) {
         middle = middleDate.val().split('/').join("");
         end = endDate.val().split('/').join("");
 
-        //console.log(activeStartDate, startDate.val(), middleDate.val(), validDate(endDate.val()))
+        console.log(startDate.val(), middleDate.val(), endDate.val())
         //console.log(activeStartDate, startDate.val(), middleDate.val())
 
         //if (activeStartDate && (startDate.val() == '' && middleDate.val() == '')) {

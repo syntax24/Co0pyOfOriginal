@@ -15,17 +15,20 @@ namespace CompanyManagment.Application
     {
         private readonly IProceedingSessionRepository _proceedingSessionRepository;
         private readonly IFileRepository _fileRepository;
+        private readonly IFileApplication _fileApplication;
         private readonly IBoardApplication _boardApplication;
 
         public ProceedingSessionApplication(
             IProceedingSessionRepository proceedingSessionRepository,
             IBoardApplication boardApplication,
-            IFileRepository fileRepository
+            IFileRepository fileRepository,
+            IFileApplication fileApplication
             )
         {
             _proceedingSessionRepository = proceedingSessionRepository;
             _fileRepository = fileRepository;
             _boardApplication = boardApplication;
+            _fileApplication = fileApplication;
         }
 
         public OperationResult Create(CreateProceedingSession command)
@@ -148,6 +151,7 @@ namespace CompanyManagment.Application
                     continue;
 
                 var file = _fileRepository.Search(new FileSearchModel { Id = board.File_Id }).FirstOrDefault();
+                file = _fileApplication.GetFileDetails(file);
 
                 if (files.Where(x => x.Id == file.Id).Any())
                 {

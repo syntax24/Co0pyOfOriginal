@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _0_Framework_b.Application;
 using Company.Domain.File1;
+using Company.Domain.ProceedingSession;
 using CompanyManagment.App.Contracts.Board;
 using CompanyManagment.App.Contracts.Employee;
 using CompanyManagment.App.Contracts.Employer;
@@ -23,7 +24,7 @@ namespace CompanyManagment.Application
         private readonly IFileRepository _fileRepository;
         private readonly IBoardApplication _boardApplication;
         private readonly IPetitionApplication _petitionApplication;
-        private readonly IProceedingSessionApplication _proceedingSessionApplication;
+        private readonly IProceedingSessionRepository _proceedingSessionRepository;
         private readonly IMasterPetitionApplication _masterPetitionApplication;
         private readonly IEvidenceApplication _evidenceApplication;
         private readonly IWorkHistoryApplication _workHistoryApplication;
@@ -37,7 +38,7 @@ namespace CompanyManagment.Application
             IFileRepository fileRepository,
             IBoardApplication boardApplication,
             IPetitionApplication petitionApplication,
-            IProceedingSessionApplication proceedingSessionApplication,
+            IProceedingSessionRepository proceedingSessionRepository,
             IMasterPetitionApplication masterPetitionApplication,
             IEvidenceApplication evidenceApplication,
             IWorkHistoryApplication workHistoryApplication,
@@ -49,7 +50,7 @@ namespace CompanyManagment.Application
             _fileRepository = fileRepository;
             _boardApplication = boardApplication;
             _petitionApplication = petitionApplication;
-            _proceedingSessionApplication = proceedingSessionApplication;
+            _proceedingSessionRepository = proceedingSessionRepository;
             _masterPetitionApplication = masterPetitionApplication;
             _evidenceApplication = evidenceApplication;
             _workHistoryApplication = workHistoryApplication;
@@ -214,11 +215,11 @@ namespace CompanyManagment.Application
                 ?? new EditBoard();
 
             searchModel.diagnosisProceedingSession.Board_Id = diagnosisBoard.Id;
-            var diagnosisProceedingSessionList = _proceedingSessionApplication.Search(
+            var diagnosisProceedingSessionList = _proceedingSessionRepository.Search(
                 searchModel.diagnosisProceedingSession
             );
 
-            //var diagnosisPsListCount = _proceedingSessionApplication.Search(searchModel.diagnosisProceedingSession).Count();
+            //var diagnosisPsListCount = _proceedingSessionRepository.Search(searchModel.diagnosisProceedingSession).Count();
             var diagnosisPsListCount = diagnosisProceedingSessionList.Count();
             var firstDiagnosisProceedingSession = new EditProceedingSession();
             var lastDiagnosisProceedingSession = new EditProceedingSession();
@@ -243,7 +244,7 @@ namespace CompanyManagment.Application
                 ?? new EditBoard();
 
             searchModel.disputeResolutionProceedingSession.Board_Id = disputeResolutionBoard.Id;
-            var disputeResolutionProceedingSessionList = _proceedingSessionApplication.Search(
+            var disputeResolutionProceedingSessionList = _proceedingSessionRepository.Search(
                 searchModel.disputeResolutionProceedingSession
             );
 
@@ -305,62 +306,6 @@ namespace CompanyManagment.Application
             viewModel.OppositePersonFullName = GetFileOppositePersonFullName(viewModel.Id);
 
             return viewModel;
-        }
-
-        public int GetFileState(FileViewModel file)
-        {
-            if (file.FileClass == null || (file.FileClass != null && file.DiagnosisBoard.DisputeResolutionPetitionDate == null))
-                return 1;
-
-            if (file.HasMandate != 2 || (file.HasMandate == 2 && file.DiagnosisBoard.DisputeResolutionPetitionDate == null))
-                return 2;
-
-            if (file.DiagnosisBoard.DisputeResolutionPetitionDate != null && file.DiagnosisPsCount == 0)
-                return 3;
-
-            if (file.DiagnosisPsCount != 0 && (file.DiagnosisPetition == null || file.DiagnosisPetition.Id == 0))
-                return 4;
-
-            if ((file.DiagnosisPetition != null || file.DiagnosisPetition.Id != 0) && file.DisputeResolutionBoard.DisputeResolutionPetitionDate == null)
-                return 5;
-
-            if (file.DisputeResolutionBoard.DisputeResolutionPetitionDate != null && file.DisputeResolutionPsCount == 0)
-                return 6;
-
-            if (file.DisputeResolutionPetition == null || file.DisputeResolutionPetition.Id == 0)
-                return 7;
-
-            return 0;
-        }
-
-        public DateTime? GetFileStateDate(FileViewModel file)
-        {
-            switch (file.State)
-            {
-                case 1:
-                    return file.ClientVisitDate.ToGeorgianDateTime();
-
-                case 2:
-                    return file.ClientVisitDate.ToGeorgianDateTime();
-
-                case 3:
-                    return file.DiagnosisBoard.DisputeResolutionPetitionDate.ToGeorgianDateTime();
-
-                case 4:
-                    return file.LastDiagnosisPS.Date.ToGeorgianDateTime();
-
-                case 5:
-                    return file.DiagnosisPetition.NotificationPetitionDate.ToGeorgianDateTime();
-
-                case 6:
-                    return file.DisputeResolutionBoard.DisputeResolutionPetitionDate.ToGeorgianDateTime();
-
-                case 7:
-                    return file.LastDisputeResolutionPS.Date.ToGeorgianDateTime();
-
-                default:
-                    return null;
-            }
         }
 
         public bool FilterFileDetails(FileViewModel tempViewModel, FileSearchModel fileSearchModel)
@@ -432,7 +377,7 @@ namespace CompanyManagment.Application
             summary.DiagnosisMasterPetition.CreateMasterWorkHistory = _masterWorkHistoryApplication.Search(masterPetitionId);
 
             summary.File.createDiagnosisBoard = _boardApplication.GetDetails(id, 1) ?? new EditBoard();
-            summary.File.createDiagnosisPS = _proceedingSessionApplication.Search(new ProceedingSessionSearchModel { Board_Id = summary.File.createDiagnosisBoard != null ? summary.File.createDiagnosisBoard.Id : 0 });
+            summary.File.createDiagnosisPS = _proceedingSessionRepository.Search(new ProceedingSessionSearchModel { Board_Id = summary.File.createDiagnosisBoard != null ? summary.File.createDiagnosisBoard.Id : 0 });
 
             summary.File.createDiagnosisPetition = _petitionApplication.GetDetails(id, 1) ?? new EditPetition();
             var petitionId = summary.File.createDiagnosisPetition != null ? summary.File.createDiagnosisPetition.Id : 0;
@@ -447,7 +392,7 @@ namespace CompanyManagment.Application
             summary.DisputeResolutionMasterPetition.CreateMasterWorkHistory = _masterWorkHistoryApplication.Search(masterPetitionId);
 
             summary.File.createDisputeResolutionBoard = _boardApplication.GetDetails(id, 2) ?? new EditBoard();
-            summary.File.createDisputeResolutionPS = _proceedingSessionApplication.Search(new ProceedingSessionSearchModel { Board_Id = summary.File.createDisputeResolutionBoard != null ? summary.File.createDisputeResolutionBoard.Id : 0 });
+            summary.File.createDisputeResolutionPS = _proceedingSessionRepository.Search(new ProceedingSessionSearchModel { Board_Id = summary.File.createDisputeResolutionBoard != null ? summary.File.createDisputeResolutionBoard.Id : 0 });
 
             summary.File.createDisputeResolutionPetition = _petitionApplication.GetDetails(id, 2) ?? new EditPetition();
             petitionId = summary.File.createDisputeResolutionPetition != null ? summary.File.createDisputeResolutionPetition.Id : 0;

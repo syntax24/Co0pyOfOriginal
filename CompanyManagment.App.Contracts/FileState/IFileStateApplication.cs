@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _0_Framework_b.Application;
+using CompanyManagment.App.Contracts.File1;
 
 namespace CompanyManagment.App.Contracts.FileState
 {
@@ -10,5 +12,7 @@ namespace CompanyManagment.App.Contracts.FileState
         FileStateViewModel GetDetails(long id);
         //OperationResult Remove(long id);
         List<EditFileState> Search(FileStateSearchModel searchModel);
+        int GetFileState(FileViewModel file);
+        DateTime? GetFileStateDate(FileViewModel file);
     }
 }

@@ -39,8 +39,6 @@ namespace ServiceHost
             services.AddTransient<IFileUploader, FileUploader>();
             services.AddTransient<IAuthHelper, AuthHelper>();
 
-            services.AddTransient<IndexModel>();
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;

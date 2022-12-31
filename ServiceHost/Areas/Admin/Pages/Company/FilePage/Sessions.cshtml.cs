@@ -36,8 +36,6 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
         {
             viewModels = _proceedingSessionApplication.FilterSessions(searchModel);
 
-
-
             var files = _fileApplication.Search(new FileSearchModel ());
 
             if (this.searchModel == null)
@@ -63,7 +61,7 @@ namespace ServiceHost.Areas.Admin.Pages.Company.FilePage
         public JsonResult OnPostSetSessionStatus(long PsId, int status)
         {
 
-            var Ps = _proceedingSessionApplication.Search(new ProceedingSessionSearchModel { Id = PsId }).FirstOrDefault(); 
+            var Ps = _proceedingSessionApplication.Search(new ProceedingSessionSearchModel { Id = PsId, Status = 0 }).FirstOrDefault(); 
 
             Ps.Status = status;
 

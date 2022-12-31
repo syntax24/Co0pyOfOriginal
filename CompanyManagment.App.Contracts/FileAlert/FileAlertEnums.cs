@@ -1,11 +1,11 @@
 ﻿
 namespace CompanyManagment.App.Contracts.FileAlert
 {
-    public enum FileAlertEnums
+    public static class FileAlertEnums
     {
-        Maximum_2_DaysExtension = 5,
-        Maximum_5_DaysExtension = 2,
-        Maximum_10_DaysExtension = 1,
+        public const int MAX_2_DAYSEXTENSION = 5;
+        public const int MAX_5_DAYSEXTENSION = 2;
+        public const int MAX_10_DAYSEXTENSION = 1;
 
     }
 }

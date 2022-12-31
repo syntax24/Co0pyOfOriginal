@@ -14,8 +14,6 @@ namespace CompanyManagment.App.Contracts.File1
         FileSummary GetFileSummary(long id);
         FileViewModel GetFileDetails(FileViewModel file);
         FileViewModel GetFileDetailsByBoardId(long boardId);
-        int GetFileState(FileViewModel file);
-        DateTime? GetFileStateDate(FileViewModel file);
         List<FileViewModel> Search(FileSearchModel searchModel);
         FileViewModel GetLastArchiveNumber(FileSearchModel searchModel);
         bool FilterFileDetails(FileViewModel tempViewModel, FileSearchModel fileSearchModel);
