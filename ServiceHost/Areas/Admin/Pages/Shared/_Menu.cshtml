@@ -1,5 +1,6 @@
-﻿@*@using _0_Framework.Infrastructure*@
-
+﻿@using System.Reflection.Metadata
+@*@using _0_Framework.Infrastructure*@
+@inject _0_Framework.Application.IAuthHelper AuthHelper;
 @{
 
     <style>
@@ -7,17 +8,17 @@
             display: block !important;
         }
     </style>
-   
+    var currentAccout = AuthHelper.CurrentAccountInfo();
 }
 <div class="left side-menu">
     <div class="sidebar-inner slimscrollleft">
         <div class="user-details">
             <div class="pull-right">
-                <img src="~/ProductPictures/profilePhotos/2021-12-03-12-29-55-logo.png" alt="" class="thumb-md img-circle">
+                <img src="~/ProductPictures/@currentAccout.ProfilePhoto" alt="" class="thumb-md img-circle">
             </div>
             <div class="user-info">
                 <div class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">ادمین<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">@currentAccout.Fullname<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="javascript:void(0)"><i class="md md-face-unlock"></i> پروفایل<div class="ripple-wrapper"></div></a></li>
                         <li><a href="javascript:void(0)"><i class="md md-settings"></i> تنظیمات</a></li>
@@ -26,7 +27,7 @@
                     </ul>
                 </div>
 
-                <p class="text-muted m-0">developer</p>
+                <p class="text-muted m-0">@currentAccout.Role</p>
             </div>
         </div>
         <!--- Divider -->
@@ -39,29 +40,46 @@
 
                 <li class="has_sub" permission="100">
                     <a class="waves-effect"><i class="md md-group"></i><span>  بانک اطلاعات  </span><span class="pull-right"><i class="md md-add"></i></span></a>
-                
+                    <ul class="sdf1">
+                        <li permission="101"><a class="clik" asp-page="/Company/ContractingParties/Index"> طرف حساب </a></li>
+                        <li permission="102"><a class="clik" asp-page="/Company/Employers/Index">  کارفرما </a></li>
+                        <li permission="103"><a class="clik" asp-page="/Company/Workshops/Index"> کارگاه </a></li>
+                        <li permission="104"><a class="clik" asp-page="/Company/Employees/Index">  پرسنل </a></li>
+                        <li permission="105"><a class="clik">  معرف </a></li>
+                        
+
+
+                    </ul>
                 </li>
 
                 <li class="has_sub" permission="200">
                     <a class="waves-effect"><i class="md md-assignment"></i><span> قرارداد و تسویه </span><span class="pull-right"><i class="md md-add"></i></span></a>
-              
+                    <ul class="list-unstyled sdf2">
+                        <li permission="201"><a class="clik2" asp-page="/Company/Contracts/Index">قرارداد </a></li>
+
+                    </ul>
                 </li>
 
                 <li class="has_sub" permission="300">
                     <a class="waves-effect"><i class="md md-location-city"></i><span>بانک اطلاعات مدیریتی </span><span class="pull-right"><i class="md md-add"></i></span></a>
-                   
+                    <ul class="list-unstyled sdf3">
+                        <li permission="301"><a class="clik3" asp-page="/Company/YearlySalaryTitles/Index">  ایجاد عناوین مقادیر سالانه </a></li>
+                        <li permission="302"><a class="clik3" asp-page="/Company/YearlySalaries/Index"> مقادیر سالانه </a></li>
+                        <li permission="303"><a class="clik3" asp-page="/Company/Jobs/Index"> لیست مشاغل </a></li>
+                        <li permission="304"><a class="clik3" asp-page="/Company/Holidays/Index">  تعطیلات رسمی </a></li>
+                        <li permission="305"><a class="clik3" asp-page="/Company/MandatoryHours/Index">  ساعت موظفی </a></li>
+                        <li permission="306"><a class="clik3" asp-page="/Accounts/Account/Index"> مدیریت کاربران </a></li>
+                       
+                    </ul>
                 </li>
-               
-                <li class="has_sub" permission="500">
-                    <a class="waves-effect"><i class="fa fa-file-text-o"></i><span> پرونده  </span><span class="pull-right"><i class="md md-add"></i></span></a>
-                   
+                <li class="has_sub" permission="400">
+                    <a class="waves-effect"><i class="md md-assignment"></i><span> پرونده  </span><span class="pull-right"><i class="md md-add"></i></span></a>
                     <ul class="list-unstyled sdf4">
-                        <li><a class="clik4" asp-page="/Company/FilePage/Index" style="padding: 10px 94px 10px 0px;">  لیست پرونده ها</a></li>
+                        <li><a class="clik4" asp-page="/Company/FilePage/Index">لیست پرونده ها </a></li>
                         <li><a class="clik4" asp-page="/Company/FilePage/Alerts" style="padding: 10px 94px 10px 0px;">  گزارش ها</a></li>
                         <li><a class="clik4" asp-page="/Company/FilePage/Sessions" style="padding: 10px 94px 10px 0px;">  جلسات</a></li>
-                        <li><a class="clik4" asp-page="/Company/Contact2" style="padding: 10px 94px 10px 0px;">مخاطب </a></li>
+                        <li><a class="clik4 " asp-page="/Company/Contact2/Index"  style="padding: 10px 94px 10px 0px; ">مخاطب </a></li>
                     </ul>
-            
                 </li>
                 <li class="has_sub" permission="500">
                     <a class="waves-effect"><i class="fa fa-file-text-o"></i><span> مدیریت متن  </span><span class="pull-right"><i class="md md-add"></i></span></a>
