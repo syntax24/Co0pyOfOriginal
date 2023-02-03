@@ -9,10 +9,4 @@
     <ProjectReference Include="..\CompanyManagment.App.Contracts\CompanyManagment.App.Contracts.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="CrossJobGuildAgg\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CrossJobGuildAgg\" />
-  </ItemGroup>
 </Project>

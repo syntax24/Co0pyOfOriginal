@@ -42,9 +42,13 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Jobs
 
         }
 
+    
 
-
-        public IActionResult OnGetCreate => Partial("./Create");
+        public IActionResult OnGetCreate()
+        {
+  
+            return Partial("./Create");
+        }
 
 
         public IActionResult OnPostCreate(CreateJob command)

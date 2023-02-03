@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Pages\Company\NewFolder\NewFolder\" />
     <Folder Include="wwwroot\AdminTheme\static\img\" />
     <Folder Include="wwwroot\less\" />
   </ItemGroup>
