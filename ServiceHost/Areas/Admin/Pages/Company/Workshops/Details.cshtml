@@ -1,0 +1,274 @@
+﻿@using _0_Framework.Application
+@model CompanyManagment.App.Contracts.Workshop.EditWorkshop
+@{
+    <style>
+
+        #thh table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh th, td {
+            padding: 10px 20px;
+        }
+
+        #thh th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh td:nth-child(odd) {
+            border-left: 1px solid #fff;
+            width: 40%;
+            text-align: center;
+        }
+
+        #thh td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh th:nth-child(odd) {
+            border-left: 1px solid #fff;
+        }
+
+        #thh tr:nth-child(odd) {
+            background-color: #bed3ca;
+        }
+
+        #thh tr:nth-child(even) {
+            background-color: rgb(224, 227, 228);
+        }
+
+        #thh tr:hover {
+            background-color: rgb(108, 186, 250);
+        }
+
+        #thh2 table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh2 th, td {
+            padding: 10px 20px;
+        }
+
+        #thh2 th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh2 td:nth-child(odd) {
+            border-left: 1px solid #afafaf;
+            width: 50%;
+            text-align: center;
+        }
+
+        #thh2 td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh2 th:nth-child(odd) {
+            border-left: 1px solid #afafaf;
+        }
+
+        #thh2 tr:nth-child(odd) {
+            background-color: lightblue;
+        }
+
+        #thh2 tr:nth-child(even) {
+            background-color: rgb(224, 227, 228);
+        }
+
+        #thh2 tr:hover {
+            background-color: rgb(108, 186, 250);
+        }
+    </style>
+}
+<div class="modal-header" style="border-bottom: unset">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+</div>
+
+<form asp-page="./Index" asp-page-handler="Details"
+      method="post"
+      data-ajax="true"
+      data-callback=""
+      data-action="Refresh"
+      enctype="multipart/form-data">
+    <div class="modal-body">
+        <div class="row">
+            <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert;">
+                <legend style="margin-bottom: 5px;font-size: large;border-bottom: 0px;color: #505458;width: 128px;text-align: center;"> اطلاعات کارگاه</legend>
+
+                <table id="thh" style="height: 150px;width: 100%">
+                    <tr>
+                        <th>فیلد</th>
+                        <th>اطلاعات</th>
+
+                    </tr>
+
+                    <tr>
+                        <td>نام کارگاه</td>
+                        <td> @Model.WorkshopName &nbsp @if (Model.WorkshopSureName != null)
+                        {<span>(@Model.WorkshopSureName)</span>} </td>
+
+                    </tr>
+
+                    <tr>
+                        <td> شماره بایگانی </td>
+                        <td> @Model.ArchiveCode</td>
+
+                    </tr>
+
+                    <tr>
+                        <td> کد کارگاهی بیمه </td>
+                        <td> @Model.InsuranceCode</td>
+
+                    </tr>
+
+                    <tr>
+                        <td> نوع مالکیت </td>
+                        <td> @Model.TypeOfOwnership</td>
+
+                    </tr>
+
+                    <tr>
+                        <td> نام و نام خانوادگی نماینده </td>
+                        <td> @Model.AgentName</td>
+
+                    </tr>
+
+                    <tr>
+                        <td> شماره تلفن نماینده </td>
+                        <td> @Model.AgentPhone </td>
+
+                    </tr>
+
+
+
+
+                    <tr>
+                        <td>
+
+                            کارفرما
+
+
+                        </td>
+                        <td>
+
+                            @foreach (var n in @Model.Employers)
+                            {
+
+                                foreach (var e in @Model.EmployerIdList)
+                                {
+                                    if (e == n.Id)
+                                    {
+                                        <div>@n.FullName</div>
+                                    }
+
+                                }
+                            }
+
+                        </td>
+
+
+                    </tr>
+
+                    <tr>
+                        <td>  نحوه انجام امور بیمه ای  </td>
+                        <td> @Model.TypeOfInsuranceSend </td>
+
+                    </tr>
+                    <tr>
+                        <td>  مدت قرارداد </td>
+                        <td>
+                            @{ if (Model.ContractTerm == "1")
+                                {<sapn>1 ماهه</sapn>}
+                                else if (Model.ContractTerm == "2")
+                                {
+                                    <sapn>2 ماهه</sapn>}
+                                else if (Model.ContractTerm == "3")
+                                {
+                                    <sapn>3 ماهه</sapn>}
+                                else if (Model.ContractTerm == "6")
+                                {
+                                    <sapn>6 ماهه</sapn>}
+                                else if (Model.ContractTerm == "12")
+                                {
+                                    <sapn>1 ساله</sapn>}
+                                else
+                                {
+                                  <sapn> </sapn>
+                                }
+                            }
+
+                            
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>  نحوه انجام امور قرارداد  </td>
+                        <td>
+                            @{ if (Model.TypeOfContract == "a")
+                               {<sapn>قرارداد و تصفیه حساب بصورت استاندارد </sapn>}
+                               else if (Model.TypeOfContract == "b")
+                               {
+                        <sapn>قرارداد و تصفیه حساب بدون محاسبه سنوات</sapn>}
+                               else if (Model.TypeOfContract == "c")
+                               {
+                        <sapn> قرارداد و تصفیه حساب بدون محاسبه عیدی</sapn>}
+                               else if (Model.TypeOfContract == "d")
+                               {
+                        <sapn>قرارداد و تصفیه حساب بدون محاسبه عیدی و پاداش </sapn>}
+                               else
+                               {
+                                   <sapn> </sapn>
+                               }
+                            }
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>  نام استان  </td>
+                        <td> @Model.State </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>  نام شهر  </td>
+                        <td> @Model.City </td>
+
+                    </tr>
+                    <tr>
+                        <td>  آدرس  </td>
+                        <td> @Model.Address </td>
+
+                    </tr>
+
+
+
+
+
+                </table>
+
+
+
+
+
+            </fieldset>
+        </div>
+
+
+    </div>
+    <input type="hidden" asp-for="Id" value="@Model.Id" />
+
+    <div class="modal-footer" style="border-top: unset; padding-top: unset">
+
+
+        <button type="button" class="btn btn-warning btn-rounded waves-effect waves-light m-b-10" data-dismiss="modal">بستن فرم</button>
+    </div>
+</form>

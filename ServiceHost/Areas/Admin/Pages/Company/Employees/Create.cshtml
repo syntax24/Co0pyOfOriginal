@@ -1,0 +1,781 @@
+﻿@using _0_Framework.Application
+@model CompanyManagment.App.Contracts.Employee.CreateEmployee
+@{
+
+
+
+
+
+    <style>
+
+        #thh table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh th, td {
+            padding: 10px 20px;
+        }
+
+        #thh th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh td:nth-child(odd) {
+            border-left: 1px solid #fff;
+            width: 40%;
+            text-align: center;
+        }
+
+        #thh td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh th:nth-child(odd) {
+            border-left: 1px solid #fff;
+        }
+
+        #thh tr:nth-child(odd) {
+            background-color: #d7d7d7;
+        }
+
+        #thh tr:nth-child(even) {
+            background-color: rgb(224, 227, 228);
+        }
+
+
+
+        #thh2 table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh2 th, td {
+            padding: 10px 20px;
+        }
+
+        #thh2 th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh2 td:nth-child(odd) {
+            border-left: 1px solid #afafaf;
+            width: 50%;
+            text-align: center;
+        }
+
+        #thh2 td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh2 th:nth-child(odd) {
+            border-left: 1px solid #afafaf;
+        }
+
+        #thh2 tr:nth-child(odd) {
+            background-color: lightblue;
+        }
+
+        #thh2 tr:nth-child(even) {
+            background-color: rgb(224, 227, 228);
+        }
+
+        #thh2 tr:hover {
+            background-color: rgb(108, 186, 250);
+        }
+
+
+
+
+
+
+        .modal-dialog {
+            width: 90% !important;
+        }
+
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .modal-footer {
+            border-top: unset !important;
+        }
+
+        .modal .modal-dialog .modal-content .modal-footer {
+            padding-top: unset !important;
+        }
+
+        p {
+            direction: ltr !important;
+            text-align: right !important;
+        }
+
+        input[type=radio]:hover {
+            cursor: pointer;
+        }
+
+        .military {
+            display: none !important;
+        }
+
+        .items {
+            border: 1px solid #c7c7c7;
+            border-radius: 5px;
+            padding: 3px 30px 5px 18px;
+        }
+
+        .persianDateInput1 {
+            text-align: center !important;
+        }
+    </style>
+    <script>
+        $('input:radio[name="Gender"]').change(
+            function () {
+                if ($(this).is(':checked') && $(this).val() == 'زن') {
+                    $("#hid").css({ "visibility": "hidden" });
+                    $("._statusDDL").val('');
+                } else if ($(this).is(':checked') && $(this).val() == 'مرد') {
+                    $("#hid").css({ "visibility": "unset" });
+                    $("._statusDDL").val('مشمول');
+                }
+            });
+    </script>
+}
+
+
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+    <form asp-page="./Index" asp-page-handler="Create" id="employee" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="Refresh">
+        <div class="modal-body">
+            <div class="row">
+                <fieldset style="
+                             border: 1px solid #999797;
+                             border-radius: 10px;
+                             padding: revert;
+                         ">
+                    <legend style="margin-bottom: 5px;font-size: large;border-bottom: 0px;color: #505458;width: 150px;text-align: center;">  مشخصات پرسنل</legend>
+
+                    <div class="row" style="margin-top: -5px; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #e1dede">
+
+
+
+                        <div class="col-md-3" style="border-left: 1px solid #d3d1d1;">
+                            <fieldset style="border: 1px solid #878686; background-color: #e7e7e7; border-radius: 10px; padding: 15px 0 15px 0;">
+                                <div class="form-group">
+                                    <div class="col-md-4" style="margin-top: 3px">
+                                        جنسیت  <span style="color: red">*</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        مرد <input type="radio" value="مرد" asp-for="Gender">
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        زن <input type="radio" value="زن" asp-for="Gender">
+                                    </div>
+
+
+
+
+                                </div>
+                            </fieldset>
+                            <span asp-validation-for="Gender" class="error"></span>
+                        </div>
+                        <div class="col-md-4" style="border-left: 1px solid #d3d1d1;">
+                            <fieldset style="border: 1px solid #878686; background-color: #e7e7e7; border-radius: 10px; padding: 15px 0 15px 0;">
+                                <div class="form-group">
+                                    <div class="col-md-4" style="margin-top: 3px">
+                                        وضعیت تاهل <span style="color: red">*</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        متاهل <input type="radio" value="متاهل" asp-for="MaritalStatus">
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        مجرد <input type="radio" value="مجرد" asp-for="MaritalStatus">
+                                    </div>
+
+
+
+
+                                </div>
+                            </fieldset>
+                            <span asp-validation-for="MaritalStatus" class="error"></span>
+                        </div>
+                        <div class="col-md-3" style="border-left: 1px solid #d3d1d1;">
+                            <fieldset style="border: 1px solid #878686; background-color: #e7e7e7; border-radius: 10px; padding: 15px 0 15px 0;">
+                                <div class="form-group">
+                                    <div class="col-md-3 " style="margin-top: 3px">
+                                        ملیت
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span>ایرانی</span> <input type="radio" value="ایرانی" asp-for="Nationality" checked="checked">
+
+                                    </div>
+                                    <div class="col-md-5">
+                                        <span>غیر ایرانی</span> <input type="radio" value="غیرایرانی" asp-for="Nationality">
+                                    </div>
+
+
+
+
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col-md-2" style="margin-top: -10px;">
+                            <div class="form-group" id="hid">
+
+                                <label asp-for="MilitaryService" style="font-size: 10px"> وضعیت نظام وظیفه </label>
+                                <select id="val" class="form-control" asp-for="MilitaryService" style="background-color: #ededed; border-radius: 25px; border: 1px solid #bfbfbf;">
+                                    <option value="">  </option>
+                                    <option class="_statusDDL" value="مشمول"> مشمول  </option>
+                                    <option value="معاف"> معاف</option>
+                                    <option value="پایان خدمت"> پایان خدمت </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="FName" class="control-label">نام <span style="color: red">*</span></label>
+                                <input type="text" class="form-control" asp-for="FName">
+                                <span asp-validation-for="FName" class="error"></span>
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="LName" class="control-label">نام خانوادگی <span style="color: red">*</span></label>
+                                <input type="text" class="form-control" asp-for="LName">
+                                <span asp-validation-for="LName" class="error"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="FatherName" class="control-label"> نام پدر</label>
+                                <input type="text" class="form-control" asp-for="FatherName">
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="NationalCode" class="control-label">کد ملی <span style="color: red">*</span></label>
+                                <input type="text" class="form-control" asp-for="NationalCode">
+                                <span asp-validation-for="NationalCode" class="error"></span>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="IdNumber" class="control-label">شماره شناسنامه</label>
+                                <input type="text" class="form-control" asp-for="IdNumber">
+                                <span asp-validation-for="IdNumber" class="error"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="PlaceOfIssue" class="control-label"> محل صدور شناسنامه</label>
+                                <input type="text" class="form-control" asp-for="PlaceOfIssue">
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div>
+                                    <label asp-for="DateOfBirth" class="control-label">تاریخ تولد</label>
+                                    <input class="form-control persianDateInput" placeholder="مثال : 1399/01/01" asp-for="DateOfBirth" />
+
+                                    <span asp-validation-for="DateOfBirth" class="error"></span>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="DateOfIssue" class="control-label"> تاریخ صدور شناسنامه</label>
+                                <input class="form-control persianDateInput" placeholder="مثال : 1399/01/01" asp-for="DateOfIssue" />
+
+                                <span asp-validation-for="DateOfIssue" class="error"></span>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="LevelOfEducation" class="control-label"> سطح تحصیلات </label>
+                                <select class="form-control" asp-for="LevelOfEducation">
+                                    <option value=""> </option>
+                                    <option value="سیکل"> سیکل  </option>
+                                    <option value="دیپلم"> دیپلم</option>
+                                    <option value="فوق دیپلم">  فوق دیپلم </option>
+                                    <option value="لیسانس"> لیسانس</option>
+                                    <option value="فوق لیسانس"> فوق لیسانس</option>
+                                    <option value="دکتری"> دکتری</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="FieldOfStudy" class="control-label"> رشته تحصیلی </label>
+                                <input type="text" class="form-control" asp-for="FieldOfStudy">
+                                <span asp-validation-for="FieldOfStudy" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label asp-for="InsuranceCode" class="control-label"> شماره بیمه </label>
+                                <input style="background-color: #d4e9ff" type="text" class="form-control" asp-for="InsuranceCode">
+                                <span asp-validation-for="InsuranceCode" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label asp-for="InsuranceHistoryByYear" class="control-label" style="direction: ltr">(سال) سابقه کلی در بیمه </label>
+                                <input style="background-color: #d4e9ff" type="text" class="form-control" asp-for="InsuranceHistoryByYear">
+                                <span asp-validation-for="InsuranceHistoryByYear" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label asp-for="InsuranceHistoryByMonth" class="control-label" style="direction: ltr">(ماه) سابقه کلی در بیمه </label>
+                                <input style="background-color: #d4e9ff" type="text" class="form-control" asp-for="InsuranceHistoryByMonth">
+                                <span asp-validation-for="InsuranceHistoryByMonth" class="error"></span>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="BankCardNumber" class="control-label"> شماره کارت بانکی </label>
+                                <input type="text" class="form-control" asp-for="BankCardNumber">
+                                <span asp-validation-for="BankCardNumber" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="BankBranch" class="control-label">  شعبه بانک </label>
+                                <input type="text" class="form-control" asp-for="BankBranch">
+                                <span asp-validation-for="BankBranch" class="error"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group" dir="rtl">
+
+                                    <label asp-for="State" class="control-label"> نام استان</label>
+
+
+
+                                    <select class="form-control select-city" asp-for="State" name="state" onChange="iranwebsv(this.value);">
+                                        <option value="">انتخاب استان</option>
+                                        <option value="تهران"> تهران </option>
+                                        <option value="گیلان"> گیلان </option>
+                                        <option value="آذربایجان شرقی"> آذربایجان شرقی</option>
+                                        <option value="خوزستان"> خوزستان </option>
+                                        <option value="فارس"> فارس</option>
+                                        <option value="اصفهان"> اصفهان</option>
+                                        <option value="خراسان رضوی">خراسان رضوی </option>
+                                        <option value="قزوین"> قزوین</option>
+                                        <option value="سمنان"> سمنان </option>
+                                        <option value="قم"> قم</option>
+                                        <option value="مرکزی"> مرکزی</option>
+                                        <option value="زنجان"> زنجان</option>
+                                        <option value="مازندران"> مازندران</option>
+                                        <option value="گلستان"> گلستان</option>
+                                        <option value="اردبیل"> اردبیل </option>
+                                        <option value="آذربایجان غربی"> آذربایجان غربی</option>
+                                        <option value="همدان"> همدان </option>
+                                        <option value="کردستان"> کردستان </option>
+                                        <option value="کرمانشاه"> کرمانشاه </option>
+                                        <option value="لرستان"> لرستان</option>
+                                        <option value="بوشهر"> بوشهر</option>
+                                        <option value="کرمان"> کرمان</option>
+                                        <option value="هرمزگان"> هرمزگان</option>
+                                        <option value="چهارمحال و بختیاری"> چهارمحال و بختیاری</option>
+                                        <option value="یزد"> یزد</option>
+                                        <option value="سیستان و بلوچستان"> سیستان و بلوچستان</option>
+                                        <option value="ایلام"> ایلام</option>
+                                        <option value="کهگلویه و بویراحمد"> کهگلویه و بویراحمد</option>
+                                        <option value="خراسان شمالی"> خراسان شمالی</option>
+                                        <option value="خراسان جنوبی"> خراسان جنوبی</option>
+                                        <option value="البرز"> البرز</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group" dir="rtl">
+
+
+                                    <label class="control-label"> نام شهر</label>
+                                    <select class="form-control select-city" name="cityy" id="city">
+                                        <option value="" placeholder="انتخاب شهر"> </option>
+                                    </select>
+                                    <input type="hidden" value="" id="hide2" asp-for="City">
+                                </div>
+
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <table id="thh" style="height: 100px; width: 100%; margin-right: 10px;">
+                                <thead>
+                                    <tr>
+                                        <th> نام فرزند </th>
+                                        <th>تاریخ تولد</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tfoot id="item-list" class="project_images">
+
+                                    <tr>
+                                        <td class="col-md-6"><input type="text" asp-for="CreateEmployeChildrenList[0].FName" class="items" /></td>
+                                        <td class="col-md-6"><input asp-for="CreateEmployeChildrenList[0].DateOfBirth" class="items persianDateInput1" placeholder="مثال : 1399/01/01" /></td>
+
+                                    </tr>
+
+
+
+
+
+                                </tfoot>
+
+
+
+
+
+
+
+                            </table>
+                            <span class="add_project_file">
+                                <button id="add" type="button" class="btn btn-default btn-rounded waves-effect waves-light " style="margin-right: 10px; font-size: 12px;"><i class="fa fa-user-plus" style="padding-left: 3px; font-size: 12px;"></i>افزودن فرزند</button>
+                            </span>
+
+
+
+                            @*<span class="inputname">
+                                    Project Images:
+
+                                </span>
+
+                                <ul class="project_images">
+                                    <li><input name="upload_project_images[]" type="file" /></li>
+                                </ul>*@
+
+                        </div>
+
+                        <div class="col-md-6">
+
+
+
+
+                            <div class="row">
+                                <div class="form-group col-md-12" style="padding-left: 1.5%;">
+                                    @*<label asp-for="Address">آدرس</label>*@
+                                    <textarea class="form-control" asp-for="Address" placeholder="آدرس"></textarea>
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Phone" class="control-label"> شماره همراه </label>
+                                        <input type="text" class="form-control" asp-for="Phone">
+                                        <span asp-validation-for="Phone" class="error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="OfficePhone" class="control-label"> شماره ثابت </label>
+                                        <input type="text" class="form-control" asp-for="OfficePhone">
+                                        <span asp-validation-for="OfficePhone" class="error"></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+
+
+
+
+
+                </fieldset>
+                <fieldset style="border: 1px solid #999797;border-radius: 10px;padding: revert;">
+                    <legend style="margin-bottom: 5px;font-size: large;border-bottom: 0px;color: #505458;width: 150px;text-align: center;">  اطلاعات  سامانه ای ادارات </legend>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="MclsUserName" class="control-label">نام کاربری اداره کار</label>
+                                        <input style="background-color: #e0ffe0;" type="text" class="form-control" asp-for="MclsUserName">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="MclsPassword" class="control-label">رمز عبور اداره کار</label>
+                                        <input style="background-color: #e0ffe0;" type="text" class="form-control" asp-for="MclsPassword">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="EserviceUserName" class="control-label" style="direction: ltr">E Service  نام کاربری </label>
+                                        <input style="background-color: #e0ffe0;" type="text" class="form-control" asp-for="EserviceUserName">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="EservicePassword" class="control-label" style="direction: ltr">E Service  رمز عبور  </label>
+                                        <input style="background-color: #e0ffe0;" type="text" class="form-control" asp-for="EservicePassword">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="TaxOfficeUserName" class="control-label"> نام کاربری سامانه مالیات </label>
+                                        <input style="background-color: #e0ffe0;" type="text" class="form-control" asp-for="TaxOfficeUserName">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="TaxOfficepassword" class="control-label">  رمز عبور سامانه مالیات </label>
+                                        <input style="background-color: #e0ffe0;" type="text" class="form-control" asp-for="TaxOfficepassword">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="SanaUserName" class="control-label"> نام کاربری سامانه ثنا </label>
+                                        <input style="background-color: #e0ffe0;" type="text" class="form-control" asp-for="SanaUserName">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="SanaPassword" class="control-label">  رمز عبور سامانه ثنا </label>
+                                        <input style="background-color: #e0ffe0;" type="text" class="form-control" asp-for="SanaPassword">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </div>
+
+        </div>
+        @*<input type="hidden" asp-for="id" value="id"/>*@
+
+        <div class="modal-footer">
+
+            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" onclick="sum()">ذخیره</button>
+
+            <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+        </div>
+
+    </form>
+
+</div>
+
+
+
+<script language="javascript" src="~/AdminTheme/js/city.js"></script>
+<script>
+    function sum() {
+
+
+        var y = document.getElementById('city');
+        var City1 = y.options[y.selectedIndex].text;
+
+        document.getElementById('hide2').value = City1;
+
+
+
+
+    }
+</script>
+
+
+
+
+
+@*<script>
+        //$("#add").click(function (e) {
+        //    e.preventDefault();
+        //    var a = ($(".items").length) / 2;
+
+        //    var n = '<tr class="ss"> <td><input type="text" class="items" name="CreateEmployeChildrenList[' +
+        //        a +
+        //        '].FName" /></td>' +
+        //        '<td><input type="text" style="text-align: center !important;" class="items persianDateInput2" name="CreateEmployeChildrenList[' +
+        //        a +
+        //        '].DateOfBirth" /><a href="#" class="remove_items" style="padding-right:5px"><i style="color: red;" class="ion-close-circled"></i></a></td></tr>';
+
+
+        //    $("#item-list").append(n);
+
+
+        //    $('.persianDateInput2').persianDatepicker({
+        //        format: 'YYYY/MM/DD',
+        //        initialValueType: 'persian',
+        //        initialValue: false,
+
+        //        'position': [-270, 25],
+        //        autoClose: true
+        //    });
+
+        //});
+        //$(".remove_item").click(function (e) {
+        //    e.preventDefault();
+
+
+
+        //    $(this.ss).remove();;
+
+
+
+
+        //});
+        //$(".ss").on('click',
+        //    'remove_items',
+        //    function (e) {
+        //        e.preventDefault();
+        //        $(this).parent().remove();
+        //    });
+    </script>*@
+<script>
+    $('.persianDateInput1').persianDatepicker({
+        format: 'YYYY/MM/DD',
+        initialValueType: 'persian',
+        initialValue: false,
+
+        'position': [-270, 25],
+        autoClose: true,
+        inline: true,
+        calendar: {
+            persian: {
+                leapYearMode: 'astronomical'
+            }
+        }
+    });
+</script>
+
+
+
+<script>
+    $('.add_project_file').click(function (e) {
+        e.preventDefault();
+        var a = ($(".items").length) / 2;
+        $(".project_images").append(
+
+            '<tr>'
+            + '<td><input type="text" class="items" name="CreateEmployeChildrenList[' + a + '].FName" /></td>'
+            + '<td><input type="text" style="text-align: center !important;" class="items persianDateInput2" name="CreateEmployeChildrenList[' + a + '].DateOfBirth" /><a href="#" class="remove_project_file" style="padding-right:5px"><i style="color: red;" class="ion-close-circled"></i></a></td>'
+            + '</tr>');
+        $('.persianDateInput2').persianDatepicker({
+            format: 'YYYY/MM/DD',
+            initialValueType: 'persian',
+            initialValue: false,
+
+            'position': [-270, 25],
+            autoClose: true,
+            inline: true,
+            calendar: {
+                persian: {
+                    leapYearMode: 'astronomical'
+                }
+            }
+        });
+    });
+
+    // Remove parent of 'remove' link when link is clicked.
+    $('.project_images').on('click', '.remove_project_file', function (e) {
+        e.preventDefault();
+
+        $(this).closest('tr').remove();
+    });
+</script>
+
+
+
+
+
+@*<script src="~/lib/select2/js/select2.js"></script>
+    <script src="~/lib/select2/js/i18n/fa.js"></script>*@
+
+
+
+

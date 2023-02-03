@@ -1,0 +1,333 @@
+﻿@model CompanyManagment.App.Contracts.TextManager.CreateTextManager
+@{
+}
+@{
+    <style>
+        .modal-dialog {
+            width: 60% !important;
+        }
+
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .modal-footer {
+            border-top: unset !important;
+        }
+
+        .modal .modal-dialog .modal-content .modal-footer {
+            padding-top: unset !important;
+        }
+
+        p {
+            direction: ltr !important;
+            text-align: right !important;
+        }
+
+        input[type=radio]:hover {
+            cursor: pointer;
+        }
+
+        .error {
+            font-size: 14px !important;
+        }
+
+        textarea {
+            overflow-y: scroll;
+            resize: none; /* Remove this if you want the user to resize the textarea */
+        }
+    </style>
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <form asp-page="./Index" asp-page-handler="Create" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="Refresh"
+          enctype="multipart/form-data">
+        <div class="modal-body">
+
+
+            <div class="row">
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <legend style="top: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> تعریف متن  </legend>
+                    <div class="col-md-12" style="border: 1px solid burlywood;border-radius: 11px;margin-bottom: 5px;padding: 10px;">
+                        <div class="form-group">
+                            <label class="control-label">ماژول ها :</label>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="button-group-pills text-center" data-toggle="buttons">
+                                        @foreach (var item in Model.drpModule)
+                                        {
+                                            <label class="btn btn-default">
+                                                <input type="checkbox" name="ModuleIds" value="@item.Value">
+                                                <div>@item.Text</div>
+                                            </label>
+                                        }
+                                        <span asp-validation-for="ModuleIds" class="error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="OriginalTitle_Id" class="control-label">  عنوان: </label>
+                                <select class="form-control select-city" asp-for="OriginalTitle_Id" asp-items='@Model.OriginalTitleViewModels' id="originalTitle1">
+                                    <option value="-1"> عنوان را انتخاب کنید ... </option>
+                                </select>
+                                <span asp-validation-for="OriginalTitle_Id" class="error"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Subtitle_Id" class="control-label">  بخش: </label>
+                                <select class="form-control select-city" asp-for="Subtitle_Id" asp-items='@Model.SubtitleViewModels' id="subtitle1">
+                                    <option value="0"> بخش</option>
+                                </select>
+                                <span asp-validation-for="Subtitle_Id" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="NoteNumber" class="control-label">  فصل: </label>
+                                <select class="form-control select-city" asp-for="Chapter_Id" asp-items='@Model.ChapterViewModels' id="chapter1">
+                                    <option value="0"> فصل</option>
+                                </select>
+                                <span asp-validation-for="Chapter_Id" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label asp-for="NoteNumber" class="control-label">  ماده: </label>
+                                    <input type="text" class="form-control" asp-for="NoteNumber" placeholder="ماده">
+                                    <span asp-validation-for="NoteNumber" class="error"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="margin-bottom:20px;">
+                            <div class="form-group">
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label asp-for="NoteNumber" class="control-label">  موضوع: </label>
+                                    <input type="text" class="form-control" asp-for="SubjectTextManager" placeholder="موضوع">
+                                    <span asp-validation-for="SubjectTextManager" class="error"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 m-b-30">
+                            <div class="form-group">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label asp-for="NumberTextManager" class="control-label">  تاریخ: </label>
+                                    <input type="text" class="form-control" asp-for="DateTextManager" placeholder=" تاریخ" onkeyup="validDate1(this)" maxlength="10">
+                                    <span id="spanmsg"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <label asp-for="NumberTextManager" class="control-label">  شماره: </label>
+                                    <input type="text" class="form-control" asp-for="NumberTextManager" placeholder="شماره">
+                                    <span asp-validation-for="NumberTextManager" class="error"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                
+                                <textarea type="text" class="form-control" placeholder="نگارش متن" asp-for="Description" style=" height: 300px;"></textarea>
+                                <span asp-validation-for="Description" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea type="text" class="form-control" asp-for="Paragraph" placeholder="نگارش محشا /پی نوشت" style=" height: 100px;"></textarea>
+                                <span asp-validation-for="Paragraph" class="error"></span>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+                </fieldset>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+            <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+        </div>
+    </form>
+</div>
+<style>
+    .button-group-pills .btn {
+        border-radius: 20px;
+        line-height: 1.2;
+        margin-bottom: 15px;
+        margin-left: 10px;
+        border-color: #bbbbbb;
+        background-color: #FFF;
+        color: #14a4be;
+    }
+
+        .button-group-pills .btn.active {
+            border-color: #14a4be;
+            background-color: #14a4be;
+            color: #FFF;
+            box-shadow: none;
+        }
+
+        .button-group-pills .btn:hover {
+            border-color: #158b9f;
+            background-color: #158b9f;
+            color: #FFF;
+        }
+
+
+    button.multiselect.dropdown-toggle.btn.btn-default {
+        border: -3px solid !important;
+        border-color: black;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $("#originalTitle1").change(function () {
+            $("#subtitle1").empty();
+            $("#chapter1").empty();
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/Company/TextManager?handler=SubtitleList',
+                dataType: 'json',
+                data: { OriginalTitle_Id: $("#originalTitle1").val() },
+                success: function (result) {
+                    $("#subtitle1").append(' <option  value="' + -1 + '">' +
+                        "نام بخش را انتخاب کنید" + '</option>');
+                    $.each(result, function (i, result) {
+                        $("#subtitle1").append(' <option value="' + result.id + '">' +
+                            result.subtitle + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Error');
+                }
+            });
+            return false;
+        });
+        $("#subtitle1").change(function () {
+            $("#chapter1").empty();
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/Company/TextManager?handler=ChptereList',
+                dataType: 'json',
+                data: { Subtitle_Id: $("#subtitle1").val() },
+                success: function (results) {
+                    $("#chapter1").append(' <option value="' + -1 + '">' +
+                        "فصل را انتخاب کنید" + '</option>');
+                    $.each(results, function (i, result) {
+                        $("#chapter1").append(' <option value="' + result.value + '">' +
+                            result.text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('ffff');
+                }
+            });
+            return false;
+        });
+    });
+    function keyupphoneNo() {
+        /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(event.key) ? ($("#spanmsg").html("شماره تماس صحیح است"), $("#spanmsg").css({
+            color: "green"
+        }
+        )) : ($("#spanmsg").html("شماره تماس صحیح نیست"), $("#spanmsg").css({
+            color: "red"
+        }
+        )), 11 != $("#phoneNo").val().length && ($("#spanmsg").html("شماره تماس صحیح نیست"), $("#spanmsg").css({
+            color: "red"
+        }
+        ))
+    }
+    function validDate1(inputField) {
+        var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (var i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+        let getdate = inputField.value;
+        var m1, m2;
+        var y1, y2, y3, y4;
+        var d1, d2;
+        var s1, s2;
+        for (var i = 0; i < getdate.length; i++) {
+            if (i === 0) {
+                y1 = fixNumbers(getdate[i]);
+            }
+            if (i === 1) {
+                y2 = fixNumbers(getdate[i]);
+            }
+            if (i === 2) {
+                y3 = fixNumbers(getdate[i]);
+            }
+            if (i === 3) {
+                y4 = fixNumbers(getdate[i]);
+            }
+            if (i === 4) {
+                s1 = fixNumbers(getdate[i]);
+            }
+            if (i === 5) {
+                m1 = fixNumbers(getdate[i]);
+            }
+            if (i === 6) {
+                m2 = fixNumbers(getdate[i]);
+            }
+            if (i === 7) {
+                s2 = fixNumbers(getdate[i]);
+            }
+            if (i === 8) {
+                d1 = fixNumbers(getdate[i]);
+            }
+            if (i === 9) {
+                d2 = fixNumbers(getdate[i]);
+            }
+        }
+        var yRes = y1 + y2 + y3 + y4;
+        var year = parseInt(yRes);
+        var mRes = m1 + m2;
+        var month = parseInt(mRes);
+        var dRes = d1 + d2;
+        var day = parseInt(dRes);
+        var FixResult = yRes + s1 + mRes + s2 + dRes;
+        var isValid = /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(FixResult);
+        if (isValid) {
+            $("#spanmsg").empty();
+            validCheck = true;
+
+        } else {
+            $("#spanmsg").html("لطفا تاریخ را بصورت صحیح وارد کنید"), $("#spanmsg").css({
+                color: "red"
+            });
+
+            validCheck = false;
+
+        }
+        return validCheck;
+
+    }
+
+</script>
+
+
+

@@ -1,0 +1,121 @@
+﻿@model CompanyManagment.App.Contracts.Chapter.EditChapter
+@{
+}
+@{
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .modal-footer {
+            border-top: unset !important;
+        }
+
+        .modal .modal-dialog .modal-content .modal-footer {
+            padding-top: unset !important;
+        }
+
+        p {
+            direction: ltr !important;
+            text-align: right !important;
+        }
+        input[type=radio]:hover {
+            cursor: pointer;
+        }
+    </style>
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <form asp-page="./Index" asp-page-handler="Edit" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="Refresh"
+          enctype="multipart/form-data">
+        <div class="modal-body">
+            <div class="row">
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> ویرایش فصل  </legend>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+
+                                <select class="form-control select-city" asp-for="OriginalTitle_Id" asp-items='@Model.OriginalTitleViewModels' id="originalTitle1">
+                                    <option value="-1"> عنوان را انتخاب کنید ... </option>
+                                </select>
+                                <span asp-validation-for="OriginalTitle_Id" class="error"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+
+                                <select class="form-control select-city" asp-for="Subtitle_Id" asp-items='@Model.SubtitleViewModels' id="subtitle1">
+                                    <option value="0"> نام بخش را انتخاب کنید...</option>
+                                </select>
+                                <span asp-validation-for="Subtitle_Id" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" asp-for="Chapter">
+                                <span asp-validation-for="Chapter" class="error"></span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+            <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#originalTitle1").change(function () {
+            $("#subtitle1").empty();
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/Company/TextManager?handler=SubtitleList',
+                dataType: 'json',
+                data: { OriginalTitle_Id: $("#originalTitle1").val() },
+                success: function (result) {
+                    $("#subtitle1").append(' <option value="' + -1 + '">' +
+                        "نام بخش را انتخاب کنید" + '</option>');
+                    $.each(result, function (i, result) {
+                        $("#subtitle1").append(' <option value="' + result.id + '">' +
+                            result.subtitle + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Error');
+                }
+            });
+            return false;
+        });
+        //$("#StateList").change(function () {
+        //    $("#CityList").empty();
+        //    $.ajax({
+        //        type: 'GET',
+        //        url: '/AdminPanel/Cascade/LoadCity/',
+        //        dataType: 'json',
+        //        data: { StateId: $("#StateList").val() },
+        //        success: function (states) {
+        //            $("#CityList").append(' <option value="' + -1 + '">' +
+        //                "شهر را انتخاب کنید" + '</option>');
+        //            $.each(states, function (i, state) {
+        //                $("#CityList").append(' <option value="' + state.value + '">' +
+        //                    state.text + '</option>');
+        //            });
+        //        },
+        //        error: function (ex) {
+        //            alert('ffff');
+        //        }
+        //    });
+        //    return false;
+        //});
+    });
+</script>

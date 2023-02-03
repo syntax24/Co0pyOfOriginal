@@ -1,0 +1,372 @@
+﻿@using _0_Framework.Application
+@model CompanyManagment.App.Contracts.MandantoryHours.EditMandatoryHours
+@{
+    <link href="~/AdminTheme/amirb/jspc-peach.css" rel="stylesheet" />
+
+    @*<link href="~/lib/select2/css/select2.css" rel="stylesheet" />*@
+
+    <style>
+      /*  .modal-dialog {
+            width: 94% !important;
+        }*/
+        .select2-container {
+            width: 100% !important;
+        }
+        .modal-footer {
+            border-top: unset !important;
+        }
+
+        .modal .modal-dialog .modal-content .modal-footer {
+            padding-top: unset !important;
+        }
+        p{
+            direction: ltr !important;
+            text-align: right !important;
+        }
+
+        input[type=radio]:hover {
+            cursor:pointer;
+        }
+        label {
+            margin-top: 10px;
+            
+        }
+        .form-group {
+            text-align: center;
+        }
+        .form-control {
+            text-align: center;
+            direction: ltr;
+        }
+        hr {
+            margin-top: 0px;
+            border-top: 1px solid #9f9999;
+        }
+    </style>
+
+
+}
+
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+    <form asp-page="./Index" asp-page-handler="Edit" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="Refresh"
+          enctype="multipart/form-data">
+        <div class="modal-body">
+            <div class="row">
+
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 180px; text-align: center;">  ویرایش ساعت موظفی </legend>
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Year" class="control-label">  سال </label>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="Year">
+                                <span asp-validation-for="Year" class="error"></span>
+
+
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Farvardin" class="control-label"> فروردین </label>
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="Farvardin">
+                                <span asp-validation-for="Farvardin" class="error"></span>
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Ordibehesht" class="control-label"> اردیبهشت </label>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="Ordibehesht">
+                                <span asp-validation-for="Ordibehesht" class="error"></span>
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Khordad" class="control-label"> خرداد </label>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="Khordad">
+                                <span asp-validation-for="Khordad" class="error"></span>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Tir" class="control-label"> تیر </label>
+
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="Tir">
+                                <span asp-validation-for="Tir" class="error"></span>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Mordad" class="control-label"> مرداد </label>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="Mordad">
+                                <span asp-validation-for="Mordad" class="error"></span>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Shahrivar" class="control-label"> شهریور </label>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="Shahrivar">
+                                <span asp-validation-for="Shahrivar" class="error"></span>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Mehr" class="control-label"> مهر </label>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="Mehr">
+                                <span asp-validation-for="Mehr" class="error"></span>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Aban" class="control-label"> آبان </label>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="Aban">
+                                <span asp-validation-for="Aban" class="error"></span>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Azar" class="control-label"> آذر </label>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="Azar">
+                                <span asp-validation-for="Azar" class="error"></span>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Dey" class="control-label"> دی </label>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="Dey">
+                                <span asp-validation-for="Dey" class="error"></span>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Bahman" class="control-label"> بهمن </label>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="Bahman">
+                                <span asp-validation-for="Bahman" class="error"></span>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Esfand" class="control-label"> اسفند </label>
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="Esfand">
+                                <span asp-validation-for="Esfand" class="error"></span>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </fieldset>
+
+
+
+
+            </div>
+
+        </div>
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <div class="modal-footer">
+
+            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+
+            <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+        </div>
+
+    </form>
+
+</div>
+
+

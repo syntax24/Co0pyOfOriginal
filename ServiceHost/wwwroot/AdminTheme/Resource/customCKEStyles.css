@@ -1,0 +1,22 @@
+@font-face {
+    font-family: "Nazanin";
+    src: url('/js/PTextManager/ckeditor/Resource/Nazanin.ttf') format("truetype");
+}
+
+@font-face {
+    font-family: 'IRANSansWeb(FaNum)';
+    src: url("https://barnamenevisan.org/css/fonts/IRANSansWeb(FaNum).woff2") format('woff');
+}
+@font-face {
+    font-family: 'IRANYekanWebExtraBlack';
+    src: url('/AdminTheme/fonts/IRANYekanWebExtraBlack.eot');
+    src: url('/AdminTheme/fonts/IRANYekanWebExtraBlack.eot') format('embedded-opentype'), url('/fonts/IRANSansWeb.woff') format('woff'), url('/fonts/IRANSansWeb.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'IranSans';
+    src: url('/AdminTheme/fonts/iranyekanwebboldfanum.eot') format('embedded-opentype'), url('/AdminTheme/fonts/iranyekanwebboldfanum.woff') format('woff'), url('/AdminTheme/fonts/iranyekanwebboldfanum.ttf') format('truetype'), url('/AdminTheme/fonts/iranyekanwebboldfanum.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

@@ -1,0 +1,264 @@
+﻿@using _0_Framework.Application
+@model CompanyManagment.App.Contracts.YearlySalaryTitles.EditTitle
+@{
+
+
+    <style>
+        .aline {
+            text-align: center !important;
+            padding: 5px;
+        }
+
+
+
+
+
+        .modal-dialog {
+            width: 30% !important;
+        }
+
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .modal-footer {
+            border-top: unset !important;
+        }
+
+        .modal .modal-dialog .modal-content .modal-footer {
+            padding-top: unset !important;
+        }
+
+        p {
+            direction: ltr !important;
+            text-align: right !important;
+        }
+
+        input[type=radio]:hover {
+            cursor: pointer;
+        }
+
+        .military {
+            display: none !important;
+        }
+
+        .itemborder {
+            border: 1px solid #c7c7c7;
+            border-radius: 5px;
+            padding: 3px 30px 5px 18px;
+        }
+        .itemborder2 {
+            border: 1px solid #c7c7c7;
+            border-radius: 5px;
+            padding: 3px 30px 5px 18px;
+        }
+        .persianDateInput1 {
+            text-align: center !important;
+        }
+    </style>
+
+
+    int i = 0;
+
+}
+
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <body>
+        <form asp-page="./Index" asp-page-handler="Edit" autocomplete="off"
+              method="post"
+              data-ajax="true"
+              data-callback=""
+              data-action="Refresh">
+            <div class="modal-body">
+                <div class="row">
+                    <fieldset style="
+                                 border: 1px solid #999797;
+                                 border-radius: 10px;
+                                 padding: revert;
+                             ">
+                        <legend style="margin-bottom: 5px;font-size: large;border-bottom: 0px;color: #505458;width: 180px;text-align: center;">  عناوین مقادیر سالانه </legend>
+
+
+
+                        <div class="row">
+
+
+
+                            <div class="col-md-12 aline form-group" style="padding: unset !important; margin-bottom: 8px !important">
+                                <input type="text" class="items itemborder" />
+                                <input type="hidden" class="items" />
+                                <input type="hidden" class="items" />
+                                <input type="hidden" class="items" />
+                                <input type="hidden" class="items" />
+                                <input type="hidden" class="items" />
+                                <input type="hidden" class="items" />
+                            </div>
+
+                            <div class="col-md-12 aline form-group" style="padding: unset !important; margin-bottom: 1px !important">
+                                <span class="add_project_file">
+                                    <button id="add" type="button" class="btn btn-default btn-rounded waves-effect waves-light " style="margin-right: 10px; font-size: 12px;"><i class="fa fa-user-plus" style="padding-left: 3px; font-size: 12px;"></i>افزودن عنوان</button>
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <hr style="border-color: #999797" />
+
+
+                        <div class="row">
+
+                            <div class="col-md-12 aline">
+                                <span>مزد روزانه</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-12 aline">
+                                <span> کمک هزینه اقلام</span>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-12 aline">
+                                <span> کمک هزینه مسکن </span>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-12 aline">
+                                <span>پایه سنوات </span>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-12 aline">
+                                <span>مبلغ مزد ثابت </span>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-12 aline">
+                                <span>درصد مزد ثابت </span>
+                            </div>
+
+                        </div>
+                        @if (Model.Title7 != null)
+                        {
+                    <div class="row">
+
+                        <div class="col-md-12 aline">
+                            <input type="text" asp-for="Title7" class="items itemborder2 aline" />
+
+                        </div>
+                        <div class="col-md-12 aline">
+                            <span asp-validation-for="Title7" class="error"></span>
+                        </div>
+                        
+                    </div>
+                        }
+                        @if (Model.Title8 != null)
+                        {
+                            <div class="row">
+
+                                <div class="col-md-12 aline">
+                                    <input type="text" asp-for="Title8" class="items itemborder2 aline" />
+                                    
+                                </div>
+                                <div class="col-md-12 aline">
+                                    <span asp-validation-for="Title8" class="error"></span>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.Title9 != null)
+                        {
+                            <div class="row">
+
+                                <div class="col-md-12 aline">
+                                    <input type="text" asp-for="Title9" class="items itemborder2 aline" />
+                                   
+                                </div>
+                                <div class="col-md-12 aline">
+                                    <span asp-validation-for="Title9" class="error"></span>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.Title10 != null)
+                        {
+                            <div class="row">
+
+                                <div class="col-md-12 aline">
+                                    <input type="text" asp-for="Title10" class="items itemborder2 aline" />
+                                   
+                                </div>
+                                <div class="col-md-12 aline">
+                                    <span asp-validation-for="Title10" class="error"></span>
+                                </div>
+                            </div>
+                        }
+                        <div class="row project_images">
+
+                        </div>
+
+
+
+                    </fieldset>
+                </div>
+
+            </div>
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
+            <div class="modal-footer">
+
+                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ویرایش</button>
+
+                <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+            </div>
+
+        </form>
+    </body>
+
+</div>
+
+
+
+
+
+
+<script>
+    $('.add_project_file').click(function (e) {
+        e.preventDefault();
+        var title = $(".items").val();
+        var a = ($(".items").length) / 1;
+        $(".project_images").append(
+
+            ' <div class="row">'
+            + '<div class="col-md-12 aline">'
+            + '<span class="items"><a href="#" class="remove_project_file" style="padding-right:5px"><i style="color: red;" class="ion-close-circled"></i></a> ' + title + ' </span>'
+            + '<input type="hidden" value="' + title + '" name="Title' + a + '"/>'
+            + '</div>'
+            + '</div>');
+        $(".itemborder").val("");
+    });
+
+    // Remove parent of 'remove' link when link is clicked.
+    $('.project_images').on('click', '.remove_project_file', function (e) {
+        e.preventDefault();
+
+        $(this).closest('div.aline').remove();
+    });
+</script>
+
+
+
+
+
+

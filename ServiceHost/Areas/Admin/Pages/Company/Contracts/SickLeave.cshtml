@@ -1,0 +1,342 @@
+﻿@model CompanyManagment.App.Contracts.Leave.CreateLeave
+@{
+
+    int i = 1;
+
+
+}
+@{
+    <style>
+        .panel-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 0;
+            margin-top: 0;
+            padding: 5px 7px 5px 7px;
+        }
+
+        .rad {
+            border-radius: 8px !important;
+            /* padding: 10px; */
+            padding: 2px 5px 0px 5px;
+        }
+
+        .faSize {
+            font-size: 22px !important;
+        }
+    </style>
+
+    <link href="~/AdminTheme/assets/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+    <form asp-page="./Index" asp-page-handler="CreateSickLeave" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="ReloadSickLeave">
+        <div class="modal-body">
+            <div class="row">
+
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 150px; text-align: center;"> مرخصی استعلاجی </legend>
+                   
+
+                    <div class="row m-t-10">
+                        <div class="col-md-6">
+                            <div class="form-group m-b-0" dir="rtl">
+                                <label asp-for="StartLeave" class="control-label m-r-5">تاریخ شروع مرخصی</label>
+                                <input id="startLeave" dir="ltr" maxlength="10" style="text-align: center" class="form-control persianDateInputb" onchange="validDate(this);" asp-for="StartLeave" />
+
+                                <span asp-validation-for="StartLeave" class="error"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group m-b-0" dir="rtl">
+                                <label asp-for="EndLeave" class="control-label m-r-5">تاریخ پایان مرخصی</label>
+                                <input id="endLeave" dir="ltr" maxlength="10" style="text-align: center" class="form-control persianDateInputb" onchange="validDate(this);" asp-for="EndLeave" />
+
+                                <span asp-validation-for="EndLeave" class="error"></span>
+
+                            </div>
+                        </div>
+                      
+
+
+                    </div>
+
+
+
+
+
+                </fieldset>
+
+
+
+            </div>
+
+            <div class="row">
+
+
+
+                <div class="m-t-10">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> سوابق مرخصی استحقاقی </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-12 col-sm-12 col-xs-12">
+                                    <table id="datatable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+
+
+
+
+                                                <th style="font-size: 12px !important;text-align: center">#</th>
+
+                                                <th style="font-size: 12px !important; text-align: center"> تاریخ شروع</th>
+                                                <th style="font-size: 12px !important; text-align: center"> تاریخ پایان </th>
+                                            
+
+                                                <th style="font-size: 12px !important; width: 20%; text-align: center">عملیات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.LeaveSearch)
+                                            {
+
+
+                                                <tr>
+
+                                                    <td style="font-size: 12px !important; text-align: center">@i </td>
+                                                    <td style="font-family: 'IranText' !important; font-size: 12px !important; text-align: center">@item.StartLeave </td>
+
+
+
+
+                                                    <td style="font-family: 'IranText' !important; font-size: 12px !important; text-align: center">
+                                                        @item.EndLeave
+
+                                                    </td>
+                                                   
+
+                                                    @{
+                                                        i++;
+                                                    }
+                                                    <td>
+
+                                                        <a class="btn btn-warning pull-right m-rl-5 rad"
+                                                           href="#showmodal=@Url.Page("/Company/Contracts/Index", "EditSickLeave", new { Id = item.Id })">
+                                                            <i class="fa faSize fa-edit"></i>
+                                                        </a>
+
+
+                                                        <a href="#" class="btn btn-danger pull-right m-rl-5 fff rad RemoveLeftWork"><i class="fa faSize fa-trash"></i></a>
+                                                        <div style="display: none">
+                                                            <input type="hidden" name="LeftworkId" value="@item.Id" />
+                                                        </div>
+
+                                                    </td>
+
+                                                </tr>
+
+
+
+
+                                            }
+
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+        </div>
+
+        <input type="hidden" asp-for="EmployeeId" />
+        <input type="hidden" asp-for="WorkshopId" />
+        <div class="modal-footer">
+
+            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+
+            <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+        </div>
+
+    </form>
+
+
+
+
+    <form asp-page="./Index" asp-page-handler="RemoveSickLeave" autocomplete="off" id="sub"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="ReloadSickLeave">
+
+
+
+
+        <div style="display: none">
+            <input type="hidden" id="LeftId" name="id" />
+
+            <input type="hidden" asp-for="EmployeeId" />
+            <input type="hidden" asp-for="WorkshopId" />
+
+
+            @*<input type="hidden" asp-for="id" value="id"/>*@
+            <div class="modal-footer" style="margin-bottom: 10px">
+
+
+
+
+                <input type="submit" id="sendFinaly" form="sub" value="fine" name="fine" style="display: none" />
+
+
+            </div>
+        </div>
+
+
+
+
+    </form>
+
+
+</div>
+
+<script src="~/adminTheme/assets/datatables/jquery.dataTables.min.js"></script>
+<script src="~/adminTheme/assets/datatables/dataTables.bootstrap.js"></script>
+
+<script>
+
+    $('.RemoveLeftWork').on("click",
+        function () {
+            var id = $(this).closest("div").find("input[name='LeftworkId']").val();
+            $('#LeftId').val(id);
+
+
+
+            swal({
+                title: "آیا حذف این سابقه مرخصی اطمینان دارید؟",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "بله",
+                cancelButtonText: "خیر",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            }, function (isConfirm) {
+                if (isConfirm) {
+
+                    $('#sendFinaly').click();
+
+                }
+
+
+            });
+        });
+
+</script>
+
+<script>
+    function validDate(inputField) {
+
+        var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (var i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+        let getdate = inputField.value;
+
+        var m1, m2;
+        var y1, y2, y3, y4;
+        var d1, d2;
+        var s1, s2;
+        for (var i = 0; i < getdate.length; i++) {
+            if (i === 0) {
+                y1 = fixNumbers(getdate[i]);
+            }
+            if (i === 1) {
+                y2 = fixNumbers(getdate[i]);
+            }
+            if (i === 2) {
+                y3 = fixNumbers(getdate[i]);
+            }
+            if (i === 3) {
+                y4 = fixNumbers(getdate[i]);
+            }
+            if (i === 4) {
+                s1 = fixNumbers(getdate[i]);
+            }
+            if (i === 5) {
+                m1 = fixNumbers(getdate[i]);
+            }
+            if (i === 6) {
+                m2 = fixNumbers(getdate[i]);
+            }
+            if (i === 7) {
+                s2 = fixNumbers(getdate[i]);
+            }
+            if (i === 8) {
+                d1 = fixNumbers(getdate[i]);
+            }
+            if (i === 9) {
+                d2 = fixNumbers(getdate[i]);
+            }
+
+        }
+        var yRes = y1 + y2 + y3 + y4;
+        var year = parseInt(yRes);
+        var mRes = m1 + m2;
+        var month = parseInt(mRes);
+        var dRes = d1 + d2;
+        var day = parseInt(dRes);
+        var FixResult = yRes + s1 + mRes + s2 + dRes;
+
+
+        var isValid = /^([1][3-4][0-9][0-9][/])([0][1-9]|[1][0-2])([/])([0][1-9]|[1-2][0-9]|[3][0-1])$/.test(FixResult);
+
+
+        if (isValid) {
+            inputField.style.backgroundColor = '#a6e9a6';
+            $("button[type=submit]").attr('disabled', false);
+            validCheck = true;
+
+        } else {
+            inputField.style.backgroundColor = '#f94c4c';
+            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', "لطفا تاریخ را بصورت صحیح وارد کنید");
+            $("button[type=submit]").attr('disabled', true);
+            validCheck = false;
+
+        }
+        return validCheck;
+
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+
+            window.location.hash = "##";
+        }, 1000);
+    });
+</script>

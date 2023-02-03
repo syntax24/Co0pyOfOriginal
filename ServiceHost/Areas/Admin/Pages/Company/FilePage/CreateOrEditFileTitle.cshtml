@@ -1,0 +1,292 @@
+﻿@model CompanyManagment.App.Contracts.FileTitle.EditFileTitle
+@{
+    int i = 1;
+}
+
+<style>
+    .panel-title {
+        font-size: 14px;
+        text-transform: uppercase;
+        margin-bottom: 0;
+        margin-top: 0;
+        padding: 5px 7px 5px 7px;
+    }
+
+    .rad {
+        border-radius: 8px !important;
+        /* padding: 10px; */
+        padding: 2px 5px 0px 5px;
+    }
+
+    .faSize {
+        font-size: 18px !important;
+    }
+
+    ..tooltip-container {
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip2-container {
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip {
+            opacity: 0;
+            z-index: 99;
+            color: #fff;
+            width: 355px;
+            display: block;
+            font-size: 14px;
+            font-family: 'IranSans';
+            padding: 5px 10px;
+            border-radius: 3px;
+            text-align: center;
+            /*text-shadow: 1px 1px 2px #111;*/
+            background: #e67e22;
+            border: 1px solid #e67e22;
+            box-shadow: 0 0 3px rgba(0,0,0,0.5);
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+            -ms-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+            -webkit-transform: scale(0);
+            -moz-transform: scale(0);
+            -o-transform: scale(0);
+            -ms-transform: scale(0);
+            transform: scale(0);
+            position: absolute;
+            right: -75px;
+            bottom: 10px;
+        }
+
+        .tooltip:before, .tooltip:after {
+            content: '';
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #e67e22;
+            position: absolute;
+            bottom: -10px;
+            left: 70%;
+        }
+
+        .tooltip-container:hover .tooltip, a:hover .tooltip {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            -o-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+        }
+
+        .tooltip2 {
+            opacity: 0;
+            z-index: 99;
+            color: #fff;
+            width: 220px;
+            display: block;
+            font-size: 14px;
+            font-family: 'IranSans';
+            padding: 5px 10px;
+            border-radius: 3px;
+            text-align: center;
+            /*text-shadow: 1px 1px 2px #111;*/
+            background: #e67e22;
+            border: 1px solid #e67e22;
+            box-shadow: 0 0 3px rgba(0,0,0,0.5);
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+            -ms-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+            -webkit-transform: scale(0);
+            -moz-transform: scale(0);
+            -o-transform: scale(0);
+            -ms-transform: scale(0);
+            transform: scale(0);
+            position: absolute;
+            right: -90px;
+            bottom: 40px;
+        }
+
+        .tooltip2:before, .tooltip2:after {
+            content: '';
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #e67e22;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+        }
+
+        .tooltip2-container:hover .tooltip2, a:hover .tooltip2 {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            -o-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+        }
+</style>
+<link href="~/AdminTheme/assets/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+    <form asp-page="./Index" asp-page-handler="CreateOrEditFileTitle" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="ReloadFileTitle">
+        <input asp-for="Id" hidden>
+        <input asp-for="Type" hidden>
+        <div class="modal-body">
+            <div class="row">
+                <fieldset class="m-b-15" style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 170px; text-align: center;"> ثبت عناوین دادنامه </legend>
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            <div class="form-group m-b-0" dir="rtl">
+                                <input class="form-control persianDateInputb" asp-for="Title" />
+                                <span asp-validation-for="Title" class="error"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-1 tooltip-container">
+                            <i class="fa fa-question-circle fa-2x" aria-hidden="true" style="top: 2px; position: absolute; color: #6495ed;"></i>
+                            <span class="tooltip">
+                                شما در این قسمت میتوانید عنوانی که برای ثبت عناوین مورد استفاده قرار میگیرد را ثبت نمائید . توجه داشته باشید از ثبت عبارات مشابه خودداری فرمائید .
+                            </span>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="row">
+                <div class="m-t-15">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست عناوین </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-12 col-sm-12 col-xs-12">
+                                    <table id="datatable" class="table table-striped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th style="font-size: 12px !important;text-align: center">#</th>
+                                            <th style="font-size: 12px !important; text-align: center"> عناوین</th>
+                                            <th style="font-size: 12px !important; width: 20%; text-align: center">عملیات</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach (var item in Model.FileTitlesList)
+                                        {
+                                            <tr>
+                                                <td style="font-size: 12px !important; text-align: center">@i </td>
+                                                <td style="font-size: 12px !important; text-align: center">@item.Title </td>
+
+                                                @{
+                                                    i++;
+                                                }
+
+                                                <td style="text-align: center">
+                                                    <a class="btn btn-warning m-rl-5 rad" onclick="EditTitle(@item.Id, '@item.Title')">
+                                                        <i class="fa faSize fa-edit"></i>
+                                                    </a>
+                                                    <a  class="btn btn-danger m-rl-5 rad" onclick="removeFileTitle(@item.Id)">
+                                                        <i class="fa faSize fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       <div class="modal-footer">
+            <div style="float: left">
+                <a id="close" class="btn btn-default btn-rounded waves-effect waves-light" onmouseover="getUrl(this)">بستن</a>
+                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="~/adminTheme/assets/datatables/jquery.dataTables.min.js"></script>
+<script src="~/adminTheme/assets/datatables/dataTables.bootstrap.js"></script>
+<script>
+    $(document).ready(function() {
+
+        $('.modal-dialog').removeClass('modal-lg');
+    })
+
+    $('.modal').on('hidden.bs.modal', function() {
+        $('.modal-dialog').addClass('modal-lg');
+    });
+
+    function removeFileTitle(id) {
+
+            swal({
+                title: "آیا حذف عنوان اطمینان دارید؟",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "بله",
+                cancelButtonText: "خیر",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            }, function (isConfirm) {
+                if (isConfirm) {
+                  
+                    $.ajax({
+                        dataType: 'json',
+                        type: 'POST',
+                        url: '@Url.Page("./Index", "RemoveFileTitle")',
+                        headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                        data: { "id" : id },
+
+                        success: function (response) {
+                            $.Notification.autoHideNotify('success', 'top center', 'پیام سیستم ', response.message);
+
+                            setTimeout(function() {
+
+                                window.location.href = "#showmodal=/Admin/Company/FilePage?handler=CreateOrEditFileTitle&Type=" + $('#Type').val();
+                            }, 1200);
+                            window.location.hash = "##";
+                        },
+                        failure: function (response) {
+                            console.log(5, response)
+                            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', response.message);
+                        }
+                    });
+                    
+                } 
+
+
+            });
+    }
+   
+</script>
+
+<script>
+    function EditTitle(id, title) {
+
+        $('#Id').val(id)
+        $('#Title').val(title)
+    }
+</script>
+
+

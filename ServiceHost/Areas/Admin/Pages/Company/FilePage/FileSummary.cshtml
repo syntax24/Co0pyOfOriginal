@@ -1,0 +1,581 @@
+﻿@using _0_Framework.Application
+@using System.Security.Cryptography.X509Certificates
+@model CompanyManagment.App.Contracts.File1.FileSummary
+@{
+    string[] turns = {"اول", "دوم", "سوم", "چهارم", "پنجم", "ششم", "هفتم", "هشتم", "نهم", "دهم"};
+}
+<style>
+    .modal .modal-dialog .modal-content {
+        background-color: white !important;
+    }
+
+    .modal-dialog {
+        max-width: 100%;
+        width: 22.4cm;
+    }
+    /*  @@page {
+        size: 7in 9.25in;
+        margin: 27mm 16mm 27mm 16mm;
+    }*/
+    @@page {
+        size: A4;
+        margin: 0mm;
+        page-break-after: auto;
+    }
+
+    @@media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    .print:last-child {
+        page-break-after: auto !important;
+    }
+
+    @@media print {
+
+        body * {
+            visibility: hidden;
+            page-break-after: auto;
+              
+        }
+        html, body {
+            height: 100%;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden;
+    
+                
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+            page-break-after: auto;
+        }
+
+        footer {
+            page-break-after: auto;
+            display: none;
+        }
+
+        header {
+            display: none;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            page-break-after: auto;
+            top: 0;
+        }
+
+        .head {
+            background-color: #cccccc !important;
+            -webkit-print-color-adjust: exact;
+        }
+
+        .radio-info input[type="radio"]:checked + label::after {
+            background-color: black !important;
+            -webkit-print-color-adjust: exact;
+        }
+    }
+
+    .col-xs-4, .col-xs-3, .col-xs-9,
+    .col-xs-2, .col-xs-9, .col-xs-6,
+    .col-xs-8, .col-xs-5, .col-xs-7,
+    .col-xs-offset-1 {
+        float: right !important;
+    }
+
+    h5, h6 {
+        margin: 5px 0px !important;
+    }
+
+    body {
+        font-size: 11px;
+    }
+
+    .radio {
+        display: inline-block;
+        margin-top: -10px !important;
+    }
+
+        .radio input[type=radio] {
+            position: unset !important;
+        }
+
+    textarea.form-control {
+        height: 100px !important;
+    }
+
+    .fontBold {
+        font-family: IranYekanEXBold !important;
+    }
+
+    .fontNumber {
+        font-family: IranText !important;
+    }
+
+    .modal-body {
+        height: 99%;
+    }
+
+    .row {
+        margin-right: -10px !important;
+        margin-left: -10px !important;
+    }
+
+    fieldset {
+        border: 1px solid black;
+        padding: 10px;
+        border-radius: 10px;
+        margin: 10px;
+        
+    }
+
+    .print .btn {
+        background-color: #000;
+        border-color: #000;
+        color: #fff;
+        padding: 3px !important;
+        float: left !important;
+        font-size: small;
+    }
+
+    .print .title {
+        padding-top: 4px
+    }
+
+    .print .data {
+        border: 1px solid #000;
+        border-radius: 2em;
+        text-align: center;
+        padding: 2px;
+    }
+
+    .print .col-xs-auto.title {
+        padding: 4px 10px 0 10px !important
+    }
+
+</style>
+
+
+<div class="modal-header" style="border-bottom: unset">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+</div>
+
+@*<form asp-page="./Index" asp-page-handler="Details"
+      method="post"
+      data-ajax="true"
+      data-callback=""
+      data-action="Refresh"
+      enctype="multipart/form-data">*@
+    <div class="modal-body print" id="printThis" >
+        <div class="row">
+            <div class="col-md-12">
+                <fieldset style="margin: 3mm 5mm 0 5mm; padding: revert;">
+                    <div class="row m-t-5">
+                        <fieldset>
+                            <div class="row" style="padding-left: 10px;">
+                                <p class="col-xs-4 btn btn-rounded">مشخصات پرونده</p>
+                            </div>
+                            <div class="row" style="padding: 4px;">
+                               <p class="col-xs-3 title">شماره بایگانی داخلی : </p>
+                               <p class="col-xs-2 data" style="color: red">@Model.File.ArchiveNo</p>
+                            </div>
+                            <div class="row" style="padding: 4px;">
+                               <p class="col-xs-3">موکل : </p>
+                               <p class="col-xs-9">@Model.File.ClientFullName</p>
+                            </div>
+                            <div class="row" style="padding: 4px;">
+                               <p class="col-xs-3">طرف مقابل : </p>
+                               <p class="col-xs-9">@Model.File.OppositePersonFullName</p>
+                            </div>
+                            <div class="row" style="padding: 4px;">
+                               <p class="col-xs-3 title">کلاسه پرونده : </p>
+                               <p class="col-xs-2 data" style="color: red">@Model.File.FileClass</p>
+                            </div>
+                            <div class="row" style="padding: 4px;">
+                               <p class="col-xs-3">مرجع رسیدگی کننده : </p>
+                               <p class="col-xs-9">@Model.File.ProceederReference</p>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="row m-t-5">
+                        <fieldset>
+                            <div class="row" style="padding-left: 10px;">
+                                <p class="col-xs-4 btn btn-rounded">جلسات بدوی / تشخیص</p>
+                            </div>
+
+                            @if(Model.File.createDiagnosisBoard.DisputeResolutionPetitionDate != null)
+                            {
+                                <div class="row" style="padding: 4px;">
+                                   <p class="col-xs-3 title">تاریخ ثبت دادخواست : </p>
+                                   <p class="col-xs-2 data">@Model.File.createDiagnosisBoard.DisputeResolutionPetitionDate</p>
+                                </div>
+                            }
+
+                            @{ var i = 0; }
+                            @foreach(var item in Model.File.createDiagnosisPS)
+                            {
+                                <div class="row" style="padding: 4px;">
+                                   <p class="col-xs-3 title">تاریخ نوبت @turns[i] رسیدگی : </p>
+                                   <p class="col-xs-2 data">@item.Date</p>
+                            </div>
+
+                            i++;
+                        }
+
+                        </fieldset>
+                    </div>
+                    <div class="row m-t-5">
+                        <fieldset>
+                            <div class="row" style="padding-left: 10px;">
+                                <p class="col-xs-4 btn btn-rounded">کارشناسی</p>
+                            </div>
+
+                            @if(Model.DiagnosisMasterPetition.CreateMasterPenaltyTitle.Count != 0)
+                            {
+                                <p  style="margin: 15px 0">توضیحات : @Model.DiagnosisMasterPetition.Description</p>
+                                <p>جزئیات پرداخت : </p>
+                            }
+                            @foreach(var item in Model.DiagnosisMasterPetition.CreateMasterPenaltyTitle)
+                            {
+                                <p class="col-xs-auto title">@item.Title : </p>
+                                
+                                   
+                                   @if(item.Day != null)
+                                   {
+                                       <div class="" style="display: flex; padding: 4px 10px;">
+                                            <p class="col-xs-3 title">روز : </p>
+                                            <p class="col-xs-2 data">@item.Day</p>
+                                       </div>
+                                   }
+                                   else
+                                   {
+                                        <div class="" style="display: flex; padding: 4px 10px;">
+                                            <p class="col-xs-3 title">از تاریخ : </p>
+                                            <p class="col-xs-2 data">@item.FromDate</p>
+                                            <p class="col-xs-2 title" style="padding-right: 30px">الی</p>
+                                            <p class="col-xs-2 data">@item.ToDate</p>
+                                        </div>
+                                       
+                                   }
+
+                                   <div class="" style="display: flex; padding: 4px 10px;">
+                                        <p class="col-xs-3 title">علی الحساب پرداختی : </p>
+                                        <p class="col-xs-2 data">@(item.PaidAmount != null ? item.PaidAmount + " ریال" : "0 ریال")</p>
+                                        <p class="col-xs-2 title" style="padding-right: 30px">باقیمانده : </p>
+                                        <p class="col-xs-2 data">@(item.RemainingAmount != null ? item.RemainingAmount + " ریال" : "0 ریال")</p>
+                                    </div>
+
+                                i++;
+                            }
+
+                        <div class="col-xs-12" style="margin: 30px 1px; border-bottom: 0.2px solid #000"></div>
+                            
+                            @foreach(var item in Model.DiagnosisMasterPetition.CreateMasterWorkHistory)
+                            {
+                                
+                                <div class="row">
+                                    <p class="col-xs-3 title">احراز سابقه : </p>
+                                    <p class="col-xs-2 data">@item.FromDate</p>
+                                    <p class="col-xs-2 title" style="padding-right: 30px">الی</p>
+                                    <p class="col-xs-2 data">@item.ToDate</p>
+                                </div>
+                                <p>توضیحات : @item.Description</p>
+
+                                i++;
+                            }
+
+                        </fieldset>
+                    </div>
+                    <div class="row m-t-5">
+                        <fieldset style="background: #e4e2e3">
+                            <div class="row" style="padding-left: 10px;">
+                                <p class="col-xs-4 btn btn-rounded">دادنامه بدوی / تشخیص</p>
+                            </div>
+                            <p style="margin: 15px 0">توضیحات : @Model.File.createDiagnosisPetition.Description</p>
+                            <div class="row">
+                                <p class="col-xs-3 title">تاریخ صدور : </p>
+                                <p class="col-xs-2 data">@(Model.File.createDiagnosisPetition.PetitionIssuanceDate ?? "-")</p>
+                                <p class="col-xs-2 title" style="padding-right: 30px">تاریخ ابلاغ</p>
+                                <p class="col-xs-2 data">@(Model.File.createDiagnosisPetition.NotificationPetitionDate ?? "-")</p>
+                            </div>
+                            
+                            <p>جزئیات دادنامه : </p>
+                            @foreach(var item in Model.File.createDiagnosisPetition.CreatePenaltyTitle)
+                            {
+                                <p class="col-xs-auto title">@item.Title : </p>
+                                
+                                   
+                                   @if(item.Day != null)
+                                   {
+                                       <div class="" style="display: flex; padding: 4px 10px;">
+                                            <p class="col-xs-3 title">روز : </p>
+                                            <p class="col-xs-2 data">@item.Day</p>
+                                       </div>
+                                   }
+                                   else
+                                   {
+                                        <div class="" style="display: flex; padding: 4px 10px;">
+                                            <p class="col-xs-3 title">از تاریخ : </p>
+                                            <p class="col-xs-2 data">@item.FromDate</p>
+                                            <p class="col-xs-2 title" style="padding-right: 30px">الی</p>
+                                            <p class="col-xs-2 data">@item.ToDate</p>
+                                        </div>
+                                       
+                                   }
+
+                                   <div class="" style="display: flex; padding: 4px 10px;">
+                                        <p class="col-xs-3 title">علی الحساب پرداختی : </p>
+                                        <p class="col-xs-2 data">@(item.PaidAmount != null ? item.PaidAmount + " ریال" : "0 ریال")</p>
+                                        <p class="col-xs-2 title" style="padding-right: 30px">باقیمانده : </p>
+                                        <p class="col-xs-2 data">@(item.RemainingAmount != null ? item.RemainingAmount + " ریال" : "0 ریال")</p>
+                                    </div>
+                                i++;
+                            }
+
+                        <div class="row" style="margin-top: 20px">
+                             <div class="col-xs-12">
+                                <p class="col-xs-2 data diagnosisTotalPaidAmount" style="float: left !important">@(Model.File.createDiagnosisPetition.TotalPaidAmounts != null ? Model.File.createDiagnosisPetition.TotalPaidAmounts + " ریال" : "0 ریال")</p>
+                                <p class="col-xs-3 title" style="float: left !important">جمع مبالغ علی الحساب : </p>
+                            </div>
+                            <div class="col-xs-12">
+                                <p class="col-xs-2 data" style="float: left !important">@(Model.File.createDiagnosisPetition.TotalPenaltyTitles != null ? Model.File.createDiagnosisPetition.TotalPenaltyTitles + " ریال" : "0 ریال")</p>
+                                <p class="col-xs-3 title" style="float: left !important">جمع مبالغ باقیمانده : </p>
+                            </div>
+                            <div class="col-xs-12">
+                                <p class="col-xs-2 data" style="float: left !important">@(Model.File.createDiagnosisPetition.TotalPenalty != null ? Model.File.createDiagnosisPetition.TotalPenalty + " ریال" : "0 ریال")</p>
+                                <p class="col-xs-3 title" style="float: left !important">جمع نهایی دادنامه : </p>
+                            </div>
+                        </div>
+                           
+
+                            <div class="col-xs-12" style="margin: 30px 1px; border-bottom: 0.2px solid #000"></div>
+                            
+                            @foreach(var item in Model.File.createDiagnosisPetition.CreateWorkHistory)
+                            {
+                                <div class="row">
+                                    <p class="col-xs-3 title">احراز سابقه : </p>
+                                    <p class="col-xs-2 data">@item.FromDate</p>
+                                    <p class="col-xs-2 title" style="padding-right: 30px">الی</p>
+                                    <p class="col-xs-2 data">@item.ToDate</p>
+                                </div>
+                                <p>توضیحات : @item.Description</p>
+
+                                i++;
+                            }
+
+                        </fieldset>
+                    </div>
+                     <div class="row m-t-5">
+                        <fieldset>
+                            <div class="row" style="padding-left: 10px;">
+                                <p class="col-xs-4 btn btn-rounded">جلسات تجدیدنظر / حل اختلاف</p>
+                            </div>
+
+                            @if(Model.File.createDisputeResolutionBoard.DisputeResolutionPetitionDate != null)
+                            {
+                                <div class="row" style="padding: 4px;">
+                                   <p class="col-xs-3 title">تاریخ ثبت دادخواست : </p>
+                                   <p class="col-xs-2 data">@Model.File.createDisputeResolutionBoard.DisputeResolutionPetitionDate</p>
+                                </div>
+                            }
+
+                            @{ i = 0; }
+                            @foreach(var item in Model.File.createDisputeResolutionPS)
+                            {
+                                <div class="row" style="padding: 4px;">
+                                   <p class="col-xs-3 title">تاریخ نوبت @turns[i] رسیدگی : </p>
+                                   <p class="col-xs-2 data">@item.Date</p>
+                            </div>
+
+                            i++;
+                        }
+
+                        </fieldset>
+                    </div>
+                    <div class="row m-t-5">
+                        <fieldset>
+                            <div class="row" style="padding-left: 10px;">
+                                <p class="col-xs-4 btn btn-rounded">کارشناسی</p>
+                            </div>
+
+                            @if(Model.DisputeResolutionMasterPetition.CreateMasterPenaltyTitle.Count != 0)
+                            {
+                                <p style="margin: 15px 0">توضیحات : @Model.DisputeResolutionMasterPetition.Description</p>
+                                <p>جزئیات پرداخت : </p>
+                            }
+                            @foreach(var item in Model.DisputeResolutionMasterPetition.CreateMasterPenaltyTitle)
+                            {
+                                <p class="col-xs-auto title">@item.Title : </p>
+                                
+                                   
+                                   @if(item.Day != null)
+                                   {
+                                       <div class="" style="display: flex; padding: 4px 10px;">
+                                            <p class="col-xs-3 title">روز : </p>
+                                            <p class="col-xs-2 data">@item.Day</p>
+                                       </div>
+                                   }
+                                   else
+                                   {
+                                        <div class="" style="display: flex; padding: 4px 10px;">
+                                            <p class="col-xs-3 title">از تاریخ : </p>
+                                            <p class="col-xs-2 data">@item.FromDate</p>
+                                            <p class="col-xs-2 title" style="padding-right: 30px">الی</p>
+                                            <p class="col-xs-2 data">@item.ToDate</p>
+                                        </div>
+                                       
+                                   }
+
+                                   <div class="" style="display: flex; padding: 4px 10px;">
+                                        <p class="col-xs-3 title">علی الحساب پرداختی : </p>
+                                        <p class="col-xs-2 data">@(item.PaidAmount != null ? item.PaidAmount + " ریال" : "0 ریال")</p>
+                                        <p class="col-xs-2 title" style="padding-right: 30px">باقیمانده : </p>
+                                        <p class="col-xs-2 data">@(item.RemainingAmount != null ? item.RemainingAmount + " ریال" : "0 ریال")</p>
+                                    </div>
+
+                                i++;
+                            }
+
+                        <div class="col-xs-12" style="margin: 30px 1px; border-bottom: 0.2px solid #000"></div>
+                            
+                            @foreach(var item in Model.DisputeResolutionMasterPetition.CreateMasterWorkHistory)
+                            {
+                                
+                                <div class="row">
+                                    <p class="col-xs-3 title">احراز سابقه : </p>
+                                    <p class="col-xs-2 data">@item.FromDate</p>
+                                    <p class="col-xs-2 title" style="padding-right: 30px">الی</p>
+                                    <p class="col-xs-2 data">@item.ToDate</p>
+                                </div>
+                                <p>توضیحات : @item.Description</p>
+
+                                i++;
+                            }
+
+                        </fieldset>
+                    </div>
+                    <div class="row m-t-5">
+                        <fieldset style="background: #e4e2e3">
+                            <div class="row" style="padding-left: 10px;">
+                                <p class="col-xs-4 btn btn-rounded">دادنامه تجدید نظر / حل اختلاف</p>
+                            </div>
+                            <p style="margin: 15px 0">توضیحات : @Model.File.createDisputeResolutionPetition.Description</p>
+                            <div class="row">
+                                <p class="col-xs-3 title">تاریخ صدور : </p>
+                                <p class="col-xs-2 data">@(Model.File.createDisputeResolutionPetition.PetitionIssuanceDate ?? "-")</p>
+                                <p class="col-xs-2 title" style="padding-right: 30px">تاریخ ابلاغ</p>
+                                <p class="col-xs-2 data">@(Model.File.createDisputeResolutionPetition.NotificationPetitionDate ?? "-")</p>
+                            </div>
+                            
+                            <p>جزئیات دادنامه : </p>
+                            @foreach(var item in Model.File.createDisputeResolutionPetition.CreatePenaltyTitle)
+                            {
+                                <p class="col-xs-auto title">@item.Title : </p>
+                                
+                                   
+                                   @if(item.Day != null)
+                                   {
+                                       <div class="" style="display: flex; padding: 4px 10px;">
+                                            <p class="col-xs-3 title">روز : </p>
+                                            <p class="col-xs-2 data">@item.Day</p>
+                                       </div>
+                                   }
+                                   else
+                                   {
+                                        <div class="" style="display: flex; padding: 4px 10px;">
+                                            <p class="col-xs-3 title">از تاریخ : </p>
+                                            <p class="col-xs-2 data">@item.FromDate</p>
+                                            <p class="col-xs-2 title" style="padding-right: 30px">الی</p>
+                                            <p class="col-xs-2 data">@item.ToDate</p>
+                                        </div>
+                                       
+                                   }
+
+                                   <div class="" style="display: flex; padding: 4px 10px;">
+                                        <p class="col-xs-3 title">علی الحساب پرداختی : </p>
+                                        <p class="col-xs-2 data">@(item.PaidAmount != null ? item.PaidAmount + " ریال" : "0 ریال")</p>
+                                        <p class="col-xs-2 title" style="padding-right: 30px">باقیمانده : </p>
+                                        <p class="col-xs-2 data">@(item.RemainingAmount != null ? item.RemainingAmount + " ریال" : "0 ریال")</p>
+                                    </div>
+                                i++;
+                            }
+
+                        <div class="row" style="margin-top: 20px">
+                             <div class="col-xs-12">
+                                <p class="col-xs-2 data disputeResolutionTotalPaidAmount" style="float: left !important">@(Model.File.createDisputeResolutionPetition.TotalPaidAmounts != null ? Model.File.createDisputeResolutionPetition.TotalPaidAmounts + " ریال" : "0 ریال")</p>
+                                <p class="col-xs-3 title" style="float: left !important">جمع مبالغ علی الحساب : </p>
+                            </div>
+                            <div class="col-xs-12">
+                                <p class="col-xs-2 data" style="float: left !important">@(Model.File.createDisputeResolutionPetition.TotalPenaltyTitles != null ? Model.File.createDisputeResolutionPetition.TotalPenaltyTitles + " ریال" : "0 ریال")</p>
+                                <p class="col-xs-3 title" style="float: left !important">جمع مبالغ باقیمانده : </p>
+                            </div>
+                            <div class="col-xs-12">
+                                <p class="col-xs-2 data" style="float: left !important">@(Model.File.createDisputeResolutionPetition.TotalPenalty != null ? Model.File.createDisputeResolutionPetition.TotalPenalty + " ریال" : "0 ریال")</p>
+                                <p class="col-xs-3 title" style="float: left !important">جمع نهایی دادنامه : </p>
+                            </div>
+                        </div>
+                           
+
+                            <div class="col-xs-12" style="margin: 30px 1px; border-bottom: 0.2px solid #000"></div>
+                            
+                            @foreach(var item in Model.File.createDisputeResolutionPetition.CreateWorkHistory)
+                            {
+                                <div class="row">
+                                    <p class="col-xs-3 title">احراز سابقه : </p>
+                                    <p class="col-xs-2 data">@item.FromDate</p>
+                                    <p class="col-xs-2 title" style="padding-right: 30px">الی</p>
+                                    <p class="col-xs-2 data">@item.ToDate</p>
+                                </div>
+                                <p>توضیحات : @item.Description</p>
+
+                                i++;
+                            }
+
+                        </fieldset>
+                    </div>
+                </fieldset>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="modal-footer" style="border-top: unset; padding: 1px 15px 10px;">
+
+        <button type="button" class="btn btn-warning btn-rounded waves-effect waves-light m-b-10" data-dismiss="modal" style="float: left">بستن</button>
+        <button id="btnPrint" type="button" class="btn btn-success btn-rounded waves-effect waves-light" style="float: left">پرینت </button>
+    </div>
+@*</form>*@
+<script>
+    $(document).ready(function() {
+        $('.diagnosisTotalPaidAmount').html($('.diagnosisTotalPaidAmount').html().split(',').join("").toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
+    });
+</script>
+<script>
+
+    document.getElementById("btnPrint").onclick = function () {
+        printElement(document.getElementById("printThis"));
+    }
+
+    function printElement(elem) {
+        var domClone = elem.cloneNode(true);
+
+        var $printSection = document.getElementById("printSection");
+
+        if (!$printSection) {
+            $printSection = document.createElement("div");
+            $printSection.id = "printSection";
+            document.body.appendChild($printSection);
+        }
+
+        $printSection.innerHTML = "";
+        $printSection.appendChild(domClone);
+        window.print();
+    }
+</script>

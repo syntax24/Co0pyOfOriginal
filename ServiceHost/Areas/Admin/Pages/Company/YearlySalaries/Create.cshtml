@@ -1,0 +1,468 @@
+﻿@using _0_Framework.Application
+@model CompanyManagment.App.Contracts.YearlySalary.CreateYearlySalary
+@{
+
+
+
+
+
+    <style>
+
+        #thh table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh th, td {
+            padding: 10px 20px;
+        }
+
+        #thh th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh td:nth-child(odd) {
+            border-left: 1px solid #fff;
+            width: 40%;
+            text-align: center;
+        }
+
+        #thh td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh th:nth-child(odd) {
+            border-left: 1px solid #fff;
+        }
+
+        #thh tr:nth-child(odd) {
+            background-color: #d7d7d7;
+        }
+
+        #thh tr:nth-child(even) {
+            background-color: rgb(224, 227, 228);
+        }
+
+
+
+        #thh2 table {
+            width: 100%;
+            height: 150px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #thh2 th, td {
+            padding: 10px 20px;
+        }
+
+        #thh2 th {
+            background-color: #bdbdbd;
+            text-align: center;
+        }
+
+        #thh2 td:nth-child(odd) {
+            border-left: 1px solid #afafaf;
+            width: 50%;
+            text-align: center;
+        }
+
+        #thh2 td:nth-child(even) {
+            text-align: center;
+        }
+
+        #thh2 th:nth-child(odd) {
+            border-left: 1px solid #afafaf;
+        }
+
+        #thh2 tr:nth-child(odd) {
+            background-color: lightblue;
+        }
+
+        #thh2 tr:nth-child(even) {
+            background-color: rgb(224, 227, 228);
+        }
+
+        #thh2 tr:hover {
+            background-color: rgb(108, 186, 250);
+        }
+
+
+
+
+
+
+        .modal-dialog {
+            width: 50% !important;
+        }
+
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .modal-footer {
+            border-top: unset !important;
+        }
+
+        .modal .modal-dialog .modal-content .modal-footer {
+            padding-top: unset !important;
+        }
+
+        p {
+            direction: ltr !important;
+            text-align: right !important;
+        }
+
+        input[type=radio]:hover {
+            cursor: pointer;
+        }
+
+        .military {
+            display: none !important;
+        }
+
+        .items {
+            border: 1px solid #c7c7c7;
+            border-radius: 5px;
+            padding: 3px 30px 5px 18px;
+        }
+
+        .persianDateInput1 {
+            text-align: center !important;
+        }
+        .error {
+            z-index: 9999 !important;
+        }
+    </style>
+
+}
+
+
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+    <form asp-page="./Index" asp-page-handler="Create" id="employee" autocomplete="off"
+          method="post"
+          data-ajax="true"
+          data-callback=""
+          data-action="Refresh">
+        <div class="modal-body">
+            <div class="row">
+                <fieldset style="
+                                 border: 1px solid #999797;
+                                 border-radius: 10px;
+                                 padding: revert;
+                             ">
+                    <legend style="margin-bottom: 5px;font-size: large;border-bottom: 0px;color: #505458;width: 150px;text-align: center;"> مقادیر سالانه </legend>
+
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <span>مقادیر </span>
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label  class="control-label"> از تاریخ </label>
+                                <span  asp-validation-for="StartDate" class="error"></span>
+                                <input maxlength="10" type="text"  class="form-control persianDateInput" asp-for="StartDate">
+                       
+                              
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label  class="control-label"> تا تاریخ </label>
+                                <span asp-validation-for="EndDate" class="error"></span>
+                                <input maxlength="10" type="text"  class="form-control persianDateInput" asp-for="EndDate">
+                             
+                               
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <hr style="border-color: #999797" />
+
+
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <span>@Model.TitleViewModels[0]</span>
+                            <input value="@Model.TitleViewModels[0]" type="hidden" class="form-control" asp-for="CreateYearlyItemsList[0].ItemName">
+
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="CreateYearlyItemsList[0].ItemValue" placeholder=" ریال ">
+                                <span asp-validation-for="CreateYearlyItemsList[0].ItemValue" class="error"></span>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <span> @Model.TitleViewModels[1] </span>
+                            <input value="@Model.TitleViewModels[1]" type="hidden" class="form-control" asp-for="CreateYearlyItemsList[1].ItemName">
+
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="CreateYearlyItemsList[1].ItemValue" placeholder=" ریال ">
+                                <span asp-validation-for="CreateYearlyItemsList[1].ItemValue" class="error"></span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <span> @Model.TitleViewModels[2] </span>
+                            <input value="@Model.TitleViewModels[2]" type="hidden" class="form-control" asp-for="CreateYearlyItemsList[2].ItemName">
+
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="CreateYearlyItemsList[2].ItemValue" placeholder=" ریال ">
+                                <span asp-validation-for="CreateYearlyItemsList[2].ItemValue" class="error"></span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <span>@Model.TitleViewModels[3] </span>
+                            <input value="@Model.TitleViewModels[3]" type="hidden" class="form-control" asp-for="CreateYearlyItemsList[3].ItemName">
+
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="CreateYearlyItemsList[3].ItemValue" placeholder=" ریال ">
+                                <span asp-validation-for="CreateYearlyItemsList[3].ItemValue" class="error"></span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <span>@Model.TitleViewModels[4] </span>
+                            <input value="@Model.TitleViewModels[4]" type="hidden" class="form-control" asp-for="CreateYearlyItemsList[4].ItemName">
+
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="CreateYearlyItemsList[4].ItemValue" placeholder=" ریال ">
+                                <span asp-validation-for="CreateYearlyItemsList[4].ItemValue" class="error"></span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <span> @Model.TitleViewModels[5] </span>
+                            <input value="@Model.TitleViewModels[5]" type="hidden" class="form-control" asp-for="CreateYearlyItemsList[5].ItemName">
+                            <input value="Percentage" type="hidden" class="form-control" asp-for="CreateYearlyItemsList[5].ValueType">
+
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" asp-for="CreateYearlyItemsList[5].ItemValue">
+                                <span asp-validation-for="CreateYearlyItemsList[5].ItemValue" class="error"></span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (@Model.TitleViewModels[6] != null)
+                    {
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <span>@Model.TitleViewModels[6] </span>
+                                <input value="@Model.TitleViewModels[6]" type="hidden" class="form-control" asp-for="CreateYearlyItemsList[6].ItemName">
+
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="form-group">
+
+                                    <input type="text" class="form-control" asp-for="CreateYearlyItemsList[6].ItemValue" placeholder=" ریال ">
+                                    <span asp-validation-for="CreateYearlyItemsList[6].ItemValue" class="error"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+
+                    @if (@Model.TitleViewModels[7] != null)
+                    {
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <span>@Model.TitleViewModels[7] </span>
+                                <input value="@Model.TitleViewModels[7]" type="hidden" class="form-control" asp-for="CreateYearlyItemsList[7].ItemName">
+
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="form-group">
+
+                                    <input type="text" class="form-control" asp-for="CreateYearlyItemsList[7].ItemValue" placeholder=" ریال ">
+                                    <span asp-validation-for="CreateYearlyItemsList[7].ItemValue" class="error"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @if (@Model.TitleViewModels[8] != null)
+                    {
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <span>@Model.TitleViewModels[8] </span>
+                                <input value="@Model.TitleViewModels[8]" type="hidden" class="form-control" asp-for="CreateYearlyItemsList[8].ItemName">
+
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="form-group">
+
+                                    <input type="text" class="form-control" asp-for="CreateYearlyItemsList[8].ItemValue" placeholder=" ریال ">
+                                    <span asp-validation-for="CreateYearlyItemsList[8].ItemValue" class="error"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @if (@Model.TitleViewModels[9] != null)
+                    {
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <span>@Model.TitleViewModels[9] </span>
+                                <input value="@Model.TitleViewModels[9]" type="hidden" class="form-control" asp-for="CreateYearlyItemsList[9].ItemName">
+
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="form-group">
+
+                                    <input type="text" class="form-control" asp-for="CreateYearlyItemsList[9].ItemValue" placeholder=" ریال ">
+                                    <span asp-validation-for="CreateYearlyItemsList[9].ItemValue" class="error"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+
+                </fieldset>
+            </div>
+
+        </div>
+        @*<input type="hidden" asp-for="id" value="id"/>*@
+
+        <div class="modal-footer">
+
+            <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" onclick="sum()" >ذخیره</button>
+
+            <button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+        </div>
+
+    </form>
+
+</div>
+
+@*<script>
+    function sum() {
+
+
+        var y = document.getElementById('start').value;
+        var x = document.getElementById('end').value;
+        /*var City = y.options[y.selectedIndex].text;*/
+
+        document.getElementById('startb').value = y;
+        document.getElementById('endb').value = x;
+    
+
+
+    }
+</script>*@
+
+
+
+
+
+
+
+
+@*<script>
+    $('.add_project_file').click(function (e) {
+        e.preventDefault();
+        var a = ($(".items").length) / 2;
+        $(".project_images").append(
+
+            '<tr>'
+            + '<td><input type="text" class="items" name="CreateYearlyItemsList2[' + a + '].ItemName" /></td>'
+            + '<td><input type="text" class="items" name="CreateYearlyItemsList2[' + a + '].ItemValue" /><a href="#" class="remove_project_file" style="padding-right:5px"><i style="color: red;" class="ion-close-circled"></i></a></td>'
+            + '</tr>');
+
+    });
+
+    // Remove parent of 'remove' link when link is clicked.
+    $('.project_images').on('click', '.remove_project_file', function (e) {
+        e.preventDefault();
+
+        $(this).closest('tr').remove();
+    });
+</script>*@
+
+
+
+
+
+@*<script src="~/lib/select2/js/select2.js"></script>
+    <script src="~/lib/select2/js/i18n/fa.js"></script>*@
+
+
+
+

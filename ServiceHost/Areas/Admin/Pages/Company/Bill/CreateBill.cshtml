@@ -1,0 +1,187 @@
+﻿@page
+@model ServiceHost.Areas.Admin.Pages.Company.Bill.CreateBillModel
+<div class="container" style="width:90%">
+    <div style="text-align:center">
+        <h3> لایحه جدید</h3>
+    </div>
+    <br />
+    <form asp-page="./CreateBill" asp-page-handler="Create"
+          method="post">
+           <div class="row">
+            <div class="row">
+                <fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+                    <div class="row" style="margin: 10px 10px 10px 10px ">
+                        <br>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="CreateBill.Appointed" class="control-label">  انتخاب موکل: </label>
+
+                                <input id="Appointed_Id" asp-for="CreateBill.Appointed" class="form-control" placeholder="انتخاب موکل..." style="z-index: 0;" />
+                                <span class="alert-danger" asp-validation-for="CreateBill.Appointed"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="CreateBill.ProcessingStage" class="control-label">  مرحله رسیدگی: </label>
+                                <input id="ProcessingStage_Id" asp-for="CreateBill.ProcessingStage" class="form-control" placeholder="مرحله رسیدگی..." style="z-index: 0;" />
+                                <span class="alert-danger" asp-validation-for="CreateBill.ProcessingStage"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="CreateBill.Contact" class="control-label">  انتخاب مخاطب: </label>
+                                <input id="Contact_Id" asp-for="CreateBill.Contact" class="form-control" placeholder="انتخاب مخاطب..." style="z-index: 0;" />
+                                <span class="alert-danger" asp-validation-for="CreateBill.Contact"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="CreateBill.SubjectBill" class="control-label">  موضوع: </label>
+                                <input asp-for="CreateBill.SubjectBill" class="form-control" placeholder="موضوع..." />
+                                <span class="alert-danger" asp-validation-for="CreateBill.SubjectBill"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light" style="margin-right:20px">ذخیره</button>
+                    <a type="button" href="/Admin/Company/Bill" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">برگشت به لیست</a>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="CreateBill.Description" class="control-label">متن لایحه</label>
+                            <div>
+                                <a id="btnPopModal" href="#showmodal=/Admin/Company/Bill/Edit?handler=Search" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style="display:none"> جستجوی درج متن &nbsp;<i class="fa  fa-search" style="padding-left: 3px; font-size: 14px; color: white !important "></i> </a>
+                                <textarea id="Description" name="CreateBill.Description" asp-for="CreateBill.Description" class="form-control textarea1"></textarea>
+                                <span asp-validation-for="CreateBill.Description" class="text-danger"></span>
+                            </div>
+                            <style>
+                                #cke_376_bottom {
+                                    display: none !important
+                                }
+                            </style>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <br />
+        @*<input type="hidden" asp-for="CreateBill.Id" value="@Model.CreateBill.Id" />*@
+        <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+        <a type="button" href="/Admin/TextManagerViews/Bill" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">برگشت به لیست</a>
+    </form>
+</div>
+<link href="~/js/PTextManager/jquery-ui/jquery-ui.css" rel="stylesheet" />
+
+<style>
+    .cke_button__placeholder_icon {
+        background-position: 0 0px;
+        background-size: 57px;
+        width: 107px;
+        height: 16px;
+        background-size: 62px !important;
+        background-color: #4dcc84;
+        font-size: 13px;
+        border-radius: 13px;
+        padding: 9px;
+        margin: -8px;
+        border: 1px solid;
+    }
+
+        .cke_button__placeholder_icon::after {
+            content: url(/js/PTextManager/ckeditor/icon/b_search.png)"جستجوی متن";
+            font-weight: 900;
+        }
+
+    .cke_rtl .cke_toolbar_break {
+        clear: inherit;
+    }
+
+    .cke_rtl .cke_toolbar {
+        float: left;
+    }
+   
+</style>
+
+@section PanelScripts{
+    <script src="~/js/PTextManager/jquery-ui/jquery-ui.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#Appointed_Id').autocomplete({
+                source: '@Url.Page("Edit", "Appointed")'
+              });
+            $('#ProcessingStage_Id').autocomplete({
+                source: '@Url.Page("Edit", "ProcessingStage")'
+              });
+            $('#Contact_Id').autocomplete({
+                source: '@Url.Page("Edit", "Contact")'
+            });
+        });
+    </script>
+    <script src="~/AdminTheme/assets/js/site.js"></script>
+    <script src="~/js/PTextManager/ckeditor/ckeditor.js"></script>
+    <script src="~/js/PTextManager/ckeditor/textv01.js"></script>
+
+ 
+   
+}
+
+<style>
+    .ui-autocomplete {
+        list-style-type: none;
+        text-align: right;
+        margin-top: 10px;
+    }
+
+        .ui-autocomplete li {
+            font-family: "Web_Yekan";
+            background: white;
+            width: 420px;
+            margin-left: -40px;
+            box-sizing: border-box;
+        }
+
+            .ui-autocomplete li:hover {
+                color: #fc0;
+            }
+
+    #btn {
+        background: #4e74ff;
+        width: 100px;
+        height: 30px;
+        padding: 10px;
+        color: white;
+        font-family: "Web_Yekan";
+        cursor: pointer;
+        text-align: center;
+        line-height: 30px;
+    }
+
+    .ui-helper-hidden-accessible > div {
+        opacity: 0;
+    }
+
+    .ui-menu .ui-menu-item {
+        top: 392.317px;
+        left: 280.467px;
+        overflow: auto;
+        font-size: 10px !important;
+        text-align: right;
+        max-width: 453px;
+        text-overflow: ellipsis;
+        max-height: 121px;
+        border: 1px solid;
+        border-radius: 15px;
+        margin: 10px;
+        white-space: pre-line;
+        overflow-x: hidden;
+    }
+
+    .ui-widget.ui-widget-content {
+        border: 1px solid #863a3a;
+        max-height: 433px;
+        overflow: hidden;
+        overflow-y: scroll;
+        background: #cbdacf;
+    
+    }
+
+</style>

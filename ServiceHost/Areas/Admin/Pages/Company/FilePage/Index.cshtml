@@ -1,0 +1,777 @@
+﻿@page
+@using CompanyManagment.App.Contracts.File1
+@model ServiceHost.Areas.Admin.Pages.Company.FilePage.IndexModel
+@{
+    //string colaps = "in";
+    //string act = "active";
+    int i = 1;
+    
+    string[] turns = {"اول", "دوم", "سوم", "چهارم", "پنجم", "ششم", "هفتم", "هشتم", "نهم", "دهم"};
+    
+}
+
+@{
+    //Layout = "~/Pages/Shared/_Layout.cshtml";
+    Layout = "Shared/_AdminLayout";
+    ViewData["title"] = "پرونده ها";
+}
+<style>
+    .thh0 {
+        width: 8px !important;
+    }
+
+    .thh {
+        width: 40px !important;
+    }
+
+    .thh2 {
+        width: 130px !important;
+    }
+
+    .thhNastionalId {
+        width: 30px !important;
+    }
+
+    .inpt {
+        width: 100%;
+        border: 1px solid #c7c7c7;
+    }
+
+    .searchpanel {
+        background-color: #747272;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 34px;
+    }
+                 
+    table tbody tr {
+        height: 33.64px;
+    }
+                                                                                                
+    table.dataTable tbody > tr > td p {
+        font-size: 12px !important;
+        text-align: center !important;
+        vertical-align: middle;
+
+    }
+
+    table.table-bordered tbody td {
+        border-bottom-width: 1.5px;
+    }
+
+    table.dataTable thead > tr > th {
+        padding-left: 8px;
+        padding-right: 8px;
+        padding-top: 30px;
+        vertical-align: middle;
+    }
+
+    .ionRad {
+        border-radius: 8px !important;
+        padding: 1px 5px;
+    }
+
+    .ionSize {
+        font-size: 14.5px !important;
+        top: 2px !important;
+        position: relative;
+    }
+    .wrapped {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 60px;
+    }
+    </style>
+
+
+
+<div class="row">
+
+
+    <div class="row">
+        <div class="col-sm-12 m-r-10">
+            <p class="pull-right">
+                <a id="btnPopModal" href="#showmodal=@Url.Page("/Company/FilePage/Index", "CreateFile")" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-right: 10px "> <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> ایجاد پرونده جدید </a>
+            </p>
+            <p class="pull-left">
+                <a id="btnPopModal" href="#showmodal=@Url.Page("/Company/FilePage/Index", "CreateOrEditFileTiming")" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style=" background-color: #f5f5f5; border-color: #448bdb; font-family: 'Web_Yekan' !important; color: #448bdb !important; margin-left: 10px "> <i class="fa fa-calendar" style="padding-right: 3px; font-size: 14px; color: #448bdb !important "></i> زمانبندی </a>
+            </p>
+        </div>
+    </div>
+
+
+    <div class="col-sm-12">
+        <div class="panel-group panel-group-joined" id="accordion-test">
+
+            <div class="panel panel-default" style="border-radius: 15px !important;">
+                <div class="panel-heading" style="background-color: #545353 !important">
+                    <h4 class="panel-title" style="color: #edebeb !important; display: inline;">
+                        <a data-toggle="collapse" data-parent="#accordion-test" href="#collapseOne" class="collapsed" style="display: inline;">
+                            جستجوی پرونده ها
+                        </a>
+                    </h4>
+
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in ">
+                    <div class="panel-body" style="padding-top: 15px; padding-bottom: 15px;">
+                        @*===================================================================================================================*@
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form class="form-inline" role="form" method="GET" name="search-theme-form" id="search-theme-form" autocomplete="off">
+                                    <div class="form-group col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-2 pull-right m-b-15">
+                                                <select class="form-control select-city" asp-for="fileSearchModel.ArchiveNo" style="width: 100%">
+                                                    <option value="">شماره بایگانی</option>
+                                                    
+                                                    @foreach (var item in @Model.fileSearchModel.ArchiveNo_FileClass_UserIdList)
+                                                    {
+                                                        <option value="@item.ArchiveNo">@item.ArchiveNo</option>
+                                                    }
+
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-2 pull-right m-b-15">
+                                                <select class="form-control select-city" asp-for="fileSearchModel.FileClass" style="width: 100%">
+                                                    <option value="">کلاسه پرونده</option>
+                                                    
+                                                    @foreach (var item in @Model.fileSearchModel.ArchiveNo_FileClass_UserIdList)
+                                                    {
+                                                        <option value="@item.FileClass">@item.FileClass</option>
+                                                    }
+
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-2 pull-right m-b-15">
+                                                <select class="form-control select-city"  asp-for="fileSearchModel.UserId" style="width: 100%">
+                                                    <option value="0">اصیل دعوی</option>
+
+                                                    @foreach (var item in @Model.fileSearchModel.UsersList)
+                                                    {
+                                                        <option value="@item.Id">@item.FullName</option>
+                                                    }
+
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-3 pull-right m-b-15">
+                                                    <input class="form-control inpt" asp-for="fileSearchModel.diagnosisBoard.Branch" style="width: 100%" placeholder="شعبه رسیدگی هیات تشخیص">
+                                            </div>
+                                            <div class="col-sm-3 pull-right m-b-15">
+                                                    <input class="form-control inpt" asp-for="fileSearchModel.disputeResolutionBoard.Branch" style="width: 100%" placeholder="شعبه رسیدگی هیات حل اختلاف">
+                                            </div>
+                                           
+                                            <div class="col-sm-3 pull-right m-b-15">
+                                                <input class="form-control inpt" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: right" asp-for="fileSearchModel.diagnosisProceedingSession.FromDate" placeholder="تاریخ رسیدگی هیات تشخیص (از)">
+                                            </div>
+                                            <div class="col-sm-3 pull-right m-b-15">
+                                                <input class="form-control inpt" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: right" asp-for="fileSearchModel.diagnosisProceedingSession.ToDate" style="width: 100%" placeholder="تاریخ رسیدگی هیات تشخیص (تا)">
+                                            </div>
+                                            <div class="col-sm-3 pull-right m-b-15">
+                                                <input class="form-control inpt" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: right" asp-for="fileSearchModel.disputeResolutionProceedingSession.FromDate" placeholder="تاریخ رسیدگی هیات حل اختلاف (از)">
+                                            </div>
+                                            <div class="col-sm-3 pull-right m-b-15">
+                                                <input class="form-control inpt" dir="ltr" maxlength="10" onchange="validDate(this);" style="width: 100%; text-align: right" asp-for="fileSearchModel.disputeResolutionProceedingSession.ToDate" placeholder="تاریخ رسیدگی هیات حل اختلاف (تا)">
+                                            </div>
+                                            <div class="col-sm-2 pull-right m-b-15">
+                                                <select class="form-control select-city" asp-for="fileSearchModel.Status" style="width: 100%">
+                                                    <option value="2">فعال</option>
+                                                    <option value="1">غیرفعال</option>
+                                                    <option value="0">هردو</option>
+                                                </select>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div class="row" style="margin-top: 15px">
+
+
+                                            <div class="col-lg-9">
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; background-color: #950000; border-color: #950000; font-family: 'Web_Yekan' !important; margin-left: -3px"> <i class="fa fa-search" style="padding-left: 3px; font-size: 14px;"></i> جستجو</button>
+                                                <a class="btn btn-info btn-rounded waves-effect waves-light m-b-5" style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; background-color: #545353; border-color: #545353; font-family: 'Web_Yekan' !important;" asp-page="./Index">مشاهده همه</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست پرونده ها</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12 col-sm-12 col-xs-12">
+                        <table id="datatable" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+
+                                    <th style=" font-size: 10px; text-align: center"> بایگانی </th>
+                                    <th style=" font-size: 10px; text-align: center"> کلاسه پرونده </th>
+                                    <th style=" font-size: 10px; text-align: center"> حقیقی / حقوقی </th>
+                                    <th style=" font-size: 10px; text-align: center"> تاریخ ثبت دادخواست </th>
+                                    <th style=" font-size: 10px; text-align: center"> نوبت رسیدگی </th>
+                                    <th style=" font-size: 10px; text-align: center"> مدارک </th>
+                                    <th style=" font-size: 10px; text-align: center"> تحقیق </th>
+                                    <th style=" font-size: 10px; text-align: center"> نوبت رسیدگی </th>
+                                    <th style=" font-size: 10px; text-align: center"> دادنامه تشخیص </th>
+                                    <th style=" font-size: 10px; text-align: center"> تاریخ ثبت دادخواست </th>
+                                    <th style=" font-size: 10px; text-align: center"> نوبت رسیدگی </th>
+                                    <th style=" font-size: 10px; text-align: center"> مدارک </th>
+                                    <th style=" font-size: 10px; text-align: center"> تحقیق </th>
+                                    <th style=" font-size: 10px; text-align: center"> نوبت رسیدگی </th>
+                                    <th style=" font-size: 10px; text-align: center"> دادنامه حل اختلاف </th>
+                                    <th style=" font-size: 10px; text-align: center">عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model.viewModels)
+                                {
+                                    var background = "";
+                                    if (item.HasMandate == 1)
+                                    {
+                                        background = "background-color : #eb7070;";
+                                    }
+
+                                    <tr style="@(item.Status == FileEnums.DEACTIVE ? "background-color: rgba(255, 165, 0, 0.42)" : "")">
+
+                                        <td> 
+                                            <p>@i</p>    
+                                        </td>
+                                        <td style="@background"> 
+                                            <p>@item.ArchiveNo</p>    
+                                        </td>
+                                        <td style="@background">
+                                            <p>@item.FileClass</p>
+                                        </td>
+
+                                        @if (@item.Client == 1)
+                                        {
+                                            <td class="p-0" style="@background">
+                                                <table class="table m-0" style="background: transparent">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="border-top: 0">
+                                                                <p class="wrapped"> @item.ReqesterFullname</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <p class="wrapped"> @item.SummonedFullname</p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="p-0" style="@background">
+                                                <table class="table m-0" style="background: transparent">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="border-top: 0">
+                                                                <p> @item.SummonedFullname</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <p> @item.ReqesterFullname</p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table> 
+                                            </td>
+                                        }
+
+                                        <td> 
+                                            <p>@item.DiagnosisBoard.DisputeResolutionPetitionDate</p>    
+                                        </td>
+                                        <td class="p-0">
+                                            @if (item.DiagnosisBoard.Id != 0&& item.FirstDiagnosisPS.Id != 0)
+                                            {
+                                                <table class="table m-0" style="background: transparent">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="border-top: 0">
+                                                                <p> @item.FirstDiagnosisPS.Date</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <p>  نوبت اول </p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <p> @item.DiagnosisBoard.Branch - @item.DiagnosisBoard.BoardChairman </p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>      
+                                            }
+                                            else
+                                            {
+                                                <table class="table m-0" style="background: transparent">
+                                                    <tbody>
+                                                        <tr><td style="border-top: 0"></td></tr>
+                                                        <tr><td></td></tr>
+                                                        <tr><td></td></tr>
+                                                    </tbody>
+                                                </table>
+                                            }
+                                        </td>
+
+                                        <td style="font-size: 14px !important; text-align: center">
+
+                                            @{ var style = ""; }
+                                            @if(item.DiagnosisEvidenceId == 0)
+                                            {
+                                                style = "background-color: #fff; border-color: #009688; color: #009688 !important"; 
+                                            }
+                                            else
+                                            {
+                                                style = "background-color: #009688; border-color: #009688;";
+                                            }
+
+                                            <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditEvidence", new { fileId = @item.Id, boardTypeId = 1 })" onclick="setUrl(this)" style="@style">
+                                                <i class="fa fa-clipboard ionSize"></i>
+                                            </a>      
+                                        </td>
+                                        <td style="font-size: 14px !important; text-align: center">
+
+                                            
+                                            @if(item.DiagnosisMasterPetitionId == 0)
+                                            {
+                                                style = "background-color: #fff; border-color: #ff7700; color: #ff7700 !important"; 
+                                            }
+                                            else
+                                            {
+                                                style = "background-color: #ff7700; border-color: #ff7700;";
+                                            }
+
+                                            <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditMasterPetition", new { fileId = @item.Id, boardTypeId = 1 })" onclick="setUrl(this)" style="@style">
+                                                <i class="fa fa-search ionSize"></i>
+                                            </a>  
+                                        </td>
+                                        <td class="p-0">
+                                            @if (item.DiagnosisBoard.Id != 0 && item.LastDiagnosisPS.Id != 0)
+                                            {
+                                                <table class="table m-0" style="background: transparent">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="border-top: 0">
+                                                                <p> @item.LastDiagnosisPS.Date</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <p>  نوبت  @turns[item.DiagnosisPsCount] </p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <p> @item.DiagnosisBoard.Branch - @item.DiagnosisBoard.BoardChairman </p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            }
+                                            else
+                                            {
+                                                <table class="table m-0" style="background: transparent">
+                                                    <tbody>
+                                                        <tr><td style="border-top: 0"></td></tr>
+                                                        <tr><td></td></tr>
+                                                        <tr><td></td></tr>
+                                                    </tbody>
+                                                </table>
+                                            }
+                                        </td>
+                                        <td class="p-0" @(item.DiagnosisPetition.PetitionIssuanceDate != null ? "style=background-color:#448bdb" : "")>
+                                            <table class="table m-0" style="background: transparent">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="border-top: 0">
+                                                            <p> @item.DiagnosisPetition.PetitionIssuanceDate </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p> @item.DiagnosisPetition.TotalPenalty </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-0" style="text-align: center">
+                                                            @*@if(item.DiagnosisPetition.PetitionIssuanceDate != null)
+                                                            {*@
+                                                                <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditPetition", new { fileId = @item.Id, boardTypeId = 1 })" onclick="setUrl(this)" style="background-color: #00c1f3; border-color: #00c1f3;">
+                                                                    <i class="fa fa-file ionSize"></i>
+                                                                </a>
+                                                            @*}*@
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                        <td style="font-size: 14px !important; text-align: center"> 
+                                            <p>@item.DisputeResolutionBoard.DisputeResolutionPetitionDate</p>    
+                                        </td>
+                                        <td class="p-0">
+                                            @if (item.DisputeResolutionBoard.Id != 0 && item.FirstDisputeResolutionPS.Id != 0)
+                                            {
+                                                <table class="table m-0" style="background: transparent">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="border-top: 0">
+                                                                <p> @item.FirstDisputeResolutionPS.Date</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                 <p>  نوبت اول </p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <p> @item.DisputeResolutionBoard.Branch - @item.DisputeResolutionBoard.BoardChairman </p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            }
+                                            else
+                                            {
+                                                <table class="table m-0" style="background: transparent">
+                                                    <tbody>
+                                                        <tr><td style="border-top: 0"></td></tr>
+                                                        <tr><td></td></tr>
+                                                        <tr><td></td></tr>
+                                                    </tbody>
+                                                </table>
+                                            }
+                                        </td>
+                                        <td style="font-size: 14px !important; text-align: center">
+
+                                            @if(item.DisputeResolutionEvidenceId == 0)
+                                            {
+                                                style = "background-color: #fff; border-color: #009688; color: #009688 !important"; 
+                                            }
+                                            else
+                                            {
+                                                style = "background-color: #009688; border-color: #009688;";
+                                            }
+
+                                            <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditEvidence", new { fileId = @item.Id, boardTypeId = 2 })" onclick="setUrl(this)" style="@style">
+                                                <i class="fa fa-clipboard ionSize"></i>
+                                            </a>      
+                                        </td>
+                                        <td style="font-size: 14px !important; text-align: center">
+
+                                            @if(item.DisputeResolutionMasterPetitionId == 0)
+                                            {
+                                                style = "background-color: #fff; border-color: #ff7700; color: #ff7700 !important"; 
+                                            }
+                                            else
+                                            {
+                                                style = "background-color: #ff7700; border-color: #ff7700;";
+                                            }
+
+                                            <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditMasterPetition", new { fileId = @item.Id, boardTypeId = 2 })" onclick="setUrl(this)" style="@style">
+                                                <i class="fa fa-search ionSize"></i>
+                                            </a>  
+                                        </td>
+                                        <td class="p-0">
+                                            @if (item.DisputeResolutionBoard.Id != 0 && item.LastDisputeResolutionPS.Id != 0)
+                                            {
+                                                <table class="table m-0" style="background: transparent">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="border-top: 0">
+                                                                <p> @item.LastDisputeResolutionPS.Date</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <p>  نوبت @turns[item.DisputeResolutionPsCount] </p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <p> @item.DisputeResolutionBoard.Branch - @item.DisputeResolutionBoard.BoardChairman </p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            }
+                                            else
+                                            {
+                                                <table class="table m-0" style="background: transparent">
+                                                    <tbody>
+                                                        <tr><td style="border-top: 0"></td></tr>
+                                                        <tr><td></td></tr>
+                                                        <tr><td></td></tr>
+                                                    </tbody>
+                                                </table>
+                                            }
+                                        </td>
+                                        <td class="p-0" @(item.DisputeResolutionPetition.PetitionIssuanceDate != null ? "style=background-color:#448bdb" : "")>
+                                            <table class="table m-0" style="background: transparent">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="border-top: 0">
+                                                            <p> @item.DisputeResolutionPetition.PetitionIssuanceDate </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p> @item.DisputeResolutionPetition.TotalPenalty </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-0" style="text-align: center">
+                                                            @*@if(item.DisputeResolutionPetition.PetitionIssuanceDate != null)
+                                                            {*@
+                                                                <a class="btn btn-inverse ionRad" href="#showmodal=@Url.Page("./Index", "CreateOrEditPetition", new { fileId = @item.Id, boardTypeId = 2 })" onclick="setUrl(this)" style="background-color: #00c1f3; border-color: #00c1f3;">
+                                                                    <i class="fa fa-file ionSize"></i>
+                                                                </a>
+                                                            @*}*@
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+
+                                        @{
+                                            i++;
+                                        }
+
+                                        <td class="p-0">
+                                            <table class="table m-0" style="background: transparent">
+                                                <tbody style="text-align: center">
+                                                    <tr>
+                                                        <td class="p-0" style="border-top: 0">
+                                                            <a class="btn btn-warning ionRad" href="#showmodal=@Url.Page("/Company/FilePage/Index", "EditFile", new { Id = item.Id })">
+                                                                <i class="fa fa-edit ionSize"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-0">
+                                                            <a class="btn btn-success ionRad" href="#showmodal=@Url.Page("/Company/FilePage/Index", "FileSummary", new { Id = item.Id })">
+                                                                <i class="fa fa-file-text ionSize"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-0">
+                                                            @if(item.Status == 1)
+                                                            {
+                                                                style = "background-color: #fff; border-color: #ef5350; color: #ef5350 !important"; 
+                                                            }
+                                                            else
+                                                            {
+                                                                style = "background-color: #ef5350; border-color: #ef5350;";
+                                                            }
+                                                            <a title="@(item.Status == 1 ? "فعال کردن پرونده" : "غیرفعال کردن پرونده")" class="btn btn-danger ionRad" onclick="setFileStatus(@item.Id)" style="@style">
+                                                                <i class="ion-briefcase ionSize"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@section Script {
+    <script src="~/AdminTheme/assets/js/site4.js"></script>
+    <script src="~/adminTheme/assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/adminTheme/assets/datatables/dataTables.bootstrap.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('#datatable').dataTable({
+                "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
+            });
+
+            $('#datatable2').dataTable({
+                "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
+            });
+
+            var URL = "";
+
+        });
+
+        //CreateDatePicker('#fileSearchModel_diagnosisProceedingSession_FromDate');
+        //CreateDatePicker('#fileSearchModel_diagnosisProceedingSession_ToDate');
+        //CreateDatePicker('#fileSearchModel_disputeResolutionProceedingSession_FromDate');
+        //CreateDatePicker('#fileSearchModel_disputeResolutionProceedingSession_ToDate');
+
+    </script>
+
+    <script>
+
+        var listArray = [];
+
+        @foreach (var item in @Model.fileSearchModel.ArchiveNo_FileClass_UserIdList)
+        {
+                @:listArray.push({ ArchiveNo: @item.ArchiveNo, FileClass: "@item.FileClass", UserId: @item.UserId });
+                
+        }
+
+        $('#fileSearchModel_ArchiveNo').on('select2:select', function (e) {
+          loadDataByArchiveNo()
+        });
+
+        $('#fileSearchModel_FileClass').on('select2:select', function (e) {
+          loadDataByFileClass()
+        });
+        
+        $('#fileSearchModel_UserId').on('select2:select', function (e) {
+          loadDataByUserId()
+        });
+
+        function loadDataByArchiveNo() 
+        {
+            var archiveNo = $('#fileSearchModel_ArchiveNo').val();
+
+            if (archiveNo == "") {
+
+                $("#fileSearchModel_FileClass").val("").trigger('change');
+                $("#fileSearchModel_UserId").val(0).trigger('change');
+                return;
+            }
+                
+
+            for (var i = 0; i < listArray.length; i++) 
+            {
+                if (listArray[i].ArchiveNo == archiveNo) 
+                {
+                    $("#fileSearchModel_FileClass").val(listArray[i].FileClass).trigger('change');
+                    $("#fileSearchModel_UserId").val(listArray[i].UserId).trigger('change');
+                }
+            }
+        }
+        
+
+        function loadDataByFileClass() 
+        {
+            var fileClass = $('#fileSearchModel_FileClass').val();
+
+            if (fileClass == "") {
+
+                $("#fileSearchModel_ArchiveNo").val("").trigger('change');
+                $("#fileSearchModel_UserId").val(0).trigger('change');
+                return;
+            }
+
+            for (var i = 0; i < listArray.length; i++) 
+            {
+                if (listArray[i].FileClass == fileClass) 
+                {
+                    $("#fileSearchModel_ArchiveNo").val(listArray[i].ArchiveNo).trigger('change');
+                    $("#fileSearchModel_UserId").val(listArray[i].UserId).trigger('change');
+                }
+            }
+        }
+        
+        function loadDataByUserId() 
+        {
+            var userId = $('#fileSearchModel_UserId').val();
+
+            //if (userId == 0) {
+
+            //    $("#fileSearchModel_ArchiveNo").val("").trigger('change');
+            //    $("#fileSearchModel_FileClass").val("").trigger('change');
+            //    return;
+            //}
+
+            for (var i = 0; i < listArray.length; i++) 
+            {
+                if (listArray[i].UserId == userId) 
+                {
+                    $("#fileSearchModel_ArchiveNo").val(listArray[i].ArchiveNo).trigger('change');
+                    $("#fileSearchModel_FileClass").val(listArray[i].FileClass).trigger('change');
+                    return;
+                }
+            }
+
+            $("#fileSearchModel_ArchiveNo").val("").trigger('change');
+            $("#fileSearchModel_FileClass").val("").trigger('change');
+            return;
+        }
+
+        function setFileStatus(id) { 
+
+            swal({
+                title: "",
+                text: "آیا انجام این کار اطمینان دارید؟",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "بله",
+                cancelButtonText: "خیر",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            }, function (isConfirm) {
+                if (isConfirm) {
+                  
+                    $.ajax({
+                        dataType: 'json',
+                        type: 'POST',
+                        url: '@Url.Page("./Index", "SetFileStatus")',
+                        headers: { "RequestVerificationToken": $('@Html.AntiForgeryToken()').val() },
+                        data: { "id" : id },
+
+                        success: function (response) {
+                            console.log(response);
+                            $.Notification.autoHideNotify('success', 'top center', 'پیام سیستم ', response.message);
+                            setTimeout(function() { 
+                            
+                                location.reload();
+                            }, 1200)
+                
+                        },
+                        failure: function (response) {
+                            console.log(5, response)
+                            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', response.message);
+                        }
+                    });
+                    
+                }
+            });
+        }
+
+        
+
+    </script>
+}
