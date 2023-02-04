@@ -1,0 +1,272 @@
+﻿@page
+@model ServiceHost.Areas.Admin.Pages.Company.CrossJobGuild.IndexModel
+
+@{
+    int i = 1;
+}
+
+@{
+    Layout = "Shared/_AdminLayout";
+    ViewData["title"] = "مشاغل مقطوع";
+    var str_title = "صنف و درجه";
+    <style>
+        .thh0 {
+    width: 8px !important;
+    }
+
+        .thh {
+    width: 40px !important;
+    }
+
+        .thh2 {
+    width: 130px !important;
+    }
+
+        .thhNastionalId {
+    width: 30px !important;
+    }
+
+        .inpt {
+    width: 100%;
+    border: 1px solid #c7c7c7;
+        }
+
+        .searchpanel {
+        background-color: #747272;
+        }
+    </style>
+}
+
+                        
+
+<div class="row">
+
+
+    <div class="row">
+        <div class="col-sm-12 m-r-10">
+            <p class="pull-right">
+                <a id="btnPopModal" href="#showmodal=@Url.Page("/Company/CrossJobGuild/Index", "Create")" 
+                   class="btn btn-success btn-rounded waves-effect waves-light m-b-5" 
+                   style=" background-color: #f5f5f5; border-color: #0f9500; font-family: 'Web_Yekan' !important; color: #0f9500 !important; margin-right: 10px ">
+                <i class="fa fa-user-plus" style="padding-left: 3px; font-size: 14px; color: #0f9500 !important "></i> ایجاد مشاغل مقطوع جدید </a>
+            </p>
+        </div>
+    </div>
+
+
+    <div class="col-sm-12">
+        <div class="panel-group panel-group-joined" id="accordion-test">
+
+
+
+            <div class="panel panel-default" style="border-radius: 15px !important;">
+                <div class="panel-heading" style="background-color: #545353 !important">
+                    <h4 class="panel-title" style="color: #edebeb !important; display: inline;">
+                        <a data-toggle="collapse" data-parent="#accordion-test" href="#collapseOne" class="collapsed" style="display: inline;">
+                            جستجوی مشاغل
+                        </a>
+                    </h4>
+
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in ">
+                    <div class="panel-body" style="padding-top: 15px; padding-bottom: 15px;">
+                        @*===================================================================================================================*@
+
+                        <div class="row">
+
+                            <div class="col-sm-12">
+
+                                <form class="form-inline" role="form" method="get" name="search-theme-form" id="search-theme-form" autocomplete="off">
+                                    <div class="form-group col-sm-12">
+                                        <div class="row">
+                                            <div class="col-lg-3 pull-right">
+                                                <label class="sr-only" asp-for="searchModel.Year"></label>
+                                                <input class="form-control inpt" asp-for="searchModel.Year" placeholder="سال " style="width: 100%">
+                                            </div>
+                                            <div class="col-lg-3  pull-right">
+                                                <label class="sr-only" asp-for="searchModel.Title"></label>
+                                                <input class="form-control inpt" asp-for="searchModel.Title" placeholder="@str_title" style="width: 100%">
+                                            </div>
+                                            <div class="col-lg-3  pull-right">
+                                                <label class="sr-only" asp-for="searchModel.EconomicCode"></label>
+                                                <input class="form-control inpt" asp-for="searchModel.EconomicCode" placeholder="کد اقتصادی " style="width: 100%">
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 15px">
+
+
+                                            <div class="col-lg-9">
+
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light m-b-5" 
+                                                        style="border-bottom-left-radius: 0px; border-top-left-radius: 0px; background-color: #950000;
+                                                        border-color: #950000; font-family: 'Web_Yekan' !important; margin-left: -3px"> 
+                                                <i class="fa fa-search" style="padding-left: 3px; font-size: 14px;"></i> جستجو</button>
+                                                <a class="btn btn-info btn-rounded waves-effect waves-light m-b-5" 
+                                                   style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; background-color: #545353; 
+                                                    border-color: #545353; font-family: 'Web_Yekan' !important;" asp-page="./Index">مشاهده همه</a>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+                                </form>
+
+                            </div>
+
+
+                        </div>
+
+                        @*==================================================================personal=====*@
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-list" style="padding-left: 3px; font-size: 14px"></i> لیست مشاغل مقطوع</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12 col-sm-12 col-xs-12">
+                        <table id="datatable" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="font-size: 16px !important; width: 5% !important">#</th>
+                                    <th style="font-size: 16px !important; width: 5% !important; text-align: center"> سال</th>
+                                    <th style="font-size: 16px !important; text-align: center">  @str_title </th>
+                                    <th style="font-size: 16px !important; text-align: center">  شغل </th>
+                                    <th style="font-size: 16px !important; text-align: center">کد اقتصادی</th>
+                                    <th style="font-size: 16px !important; "></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.crossJobGuilds)
+                                {
+                                <tr>
+                                    <td style="font-size: 14px !important; text-align: center">@i </td>
+                                    <td style="font-size: 14px !important; text-align: center">@item.Year </td>
+                                    <td style="font-size: 14px !important; text-align: center">@item.Title </td>
+                                    <td style="font-size: 14px !important; text-align: center">
+                                        @{Model.GetCrossJobs(item.Id);
+                                            string str = " ";
+                                            foreach (var child in Model.crossJobs) {
+                                               str= str+"-"+ child.Title;
+                                            }
+                                            <span>@str.Substring(1)</span>
+                                        }
+                                    </td>
+
+                                    <td style="font-family: 'IranText' !important; font-size: 14px !important; text-align: center">
+                                        @item.EconomicCode
+                                    </td>
+                                    @{ i++; }
+                                <td>
+                                    <a class="btn btn-warning pull-left m-rl-5"
+                                       href="#showmodal=@Url.Page("./Index", "Edit", new {Id = item.Id})">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a class="btn btn-success  pull-left  m-rl-5" 
+                                       href="#showmodal=@Url.Page("./Index", "Details", new { Id = item.Id })">
+                                        <i class="fa fa-file-text ionSize"></i>
+                                    </a>
+                                    <a class="btn btn-danger ionRad pull-left  m-rl-5  " onclick="removeJob(@item.Id)">
+                                        <i class="fa fa-trash ionSize"></i>
+                                    </a>
+                                </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+ 
+
+@section Script {
+    <script src="~/AdminTheme/assets/js/site.js"></script>
+    <script src="~/adminTheme/assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/adminTheme/assets/datatables/dataTables.bootstrap.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datatable').dataTable({
+                "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
+            });
+        });
+
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#datatable2').dataTable(
+                {
+                    "lengthMenu": [[25, 10, 50, 100, -1], [25, 10, 50, 100, "All"]]
+                });
+        });
+          function removeJob(id) {
+
+            swal({
+                title: "آیا برای حذف اطمینان دارید؟",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "بله",
+                cancelButtonText: "خیر",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            }, function (isConfirm) {
+                if (isConfirm) {
+
+                    $.ajax({
+                        dataType: 'json',
+                        type: 'POST',
+                        url: '@Url.Page("./Index", "Remove")',
+                        headers: { "RequestVerificationToken": $('@Html.AntiForgeryToken()').val() },
+                        data: { "id" : id },
+
+                        success: function (response) {
+                            $.Notification.autoHideNotify('success', 'top center', 'پیام سیستم ', response.message);
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1200);
+                            window.location.hash = "##";
+                        },
+                        failure: function (response) {
+                            console.log(5, response)
+                            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', response.message);
+                        }
+                    });
+
+                }
+
+
+            });
+    }
+
+    </script>
+    
+
+
+
+}
+
+
+
+

@@ -6,6 +6,8 @@ using Company.Domain.ChapterAgg;
 using Company.Domain.Contact2Agg;
 using Company.Domain.ContarctingPartyAgg;
 using Company.Domain.ContractAgg;
+using Company.Domain.CrossJobAgg;
+using Company.Domain.CrossJobGuildAgg;
 using Company.Domain.EmployeeAgg;
 using Company.Domain.EmployeeChildrenAgg;
 using Company.Domain.empolyerAgg;
@@ -94,7 +96,10 @@ namespace CompanyManagment.EFCore
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Workshop> Workshops { get; set; }
         public DbSet<PersonalContractingParty> PersonalContractingParties { get; set; }
-      
+        //-------Cross-Job----------------------------
+        public DbSet<CrossJobGuild> CrossJobGuilds { get; set; }
+        public DbSet<CrossJob> CrossJobs { get; set; }
+
 
         public DbSet<Employer> Employers { get; set; }
 

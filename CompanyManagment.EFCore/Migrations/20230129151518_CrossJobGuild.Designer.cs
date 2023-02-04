@@ -4,14 +4,16 @@ using CompanyManagment.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CompanyManagment.EFCore.Migrations
 {
     [DbContext(typeof(CompanyContext))]
-    partial class CompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20230129151518_CrossJobGuild")]
+    partial class CrossJobGuild
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -367,9 +369,6 @@ namespace CompanyManagment.EFCore.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long>("EquivalentRialUnder")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ParentRowId")
                         .HasColumnType("bigint");
 
                     b.Property<double>("SalaryRatioOver")
@@ -768,7 +767,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 1L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 793, DateTimeKind.Local).AddTicks(5243),
+                            CreationDate = new DateTime(2023, 1, 29, 18, 45, 18, 168, DateTimeKind.Local).AddTicks(6392),
                             FileTiming_Id = 1L,
                             State = 1,
                             Title = "کلاسه پرونده ثبت نشده است"
@@ -776,7 +775,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 2L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(779),
+                            CreationDate = new DateTime(2023, 1, 29, 18, 45, 18, 171, DateTimeKind.Local).AddTicks(1730),
                             FileTiming_Id = 1L,
                             State = 2,
                             Title = "وکالت نامه پرونده ثبت نشده است"
@@ -784,7 +783,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 8L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(841),
+                            CreationDate = new DateTime(2023, 1, 29, 18, 45, 18, 171, DateTimeKind.Local).AddTicks(1756),
                             FileTiming_Id = 1L,
                             State = 8,
                             Title = "تاریخ ثبت دادخواست ثبت نشده است"
@@ -792,7 +791,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 3L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(846),
+                            CreationDate = new DateTime(2023, 1, 29, 18, 45, 18, 171, DateTimeKind.Local).AddTicks(1760),
                             FileTiming_Id = 2L,
                             State = 3,
                             Title = "دعوتنامه ای برای جلسات دادگاه تشخیص صادر نشده است"
@@ -800,7 +799,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 4L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(848),
+                            CreationDate = new DateTime(2023, 1, 29, 18, 45, 18, 171, DateTimeKind.Local).AddTicks(1762),
                             FileTiming_Id = 3L,
                             State = 4,
                             Title = "دعوتنامه جدید یا دادنامه تشخیص صادر نشده است"
@@ -808,7 +807,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 5L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(851),
+                            CreationDate = new DateTime(2023, 1, 29, 18, 45, 18, 171, DateTimeKind.Local).AddTicks(1764),
                             FileTiming_Id = 4L,
                             State = 5,
                             Title = "اعتراض برای پرونده ثبت نشده است"
@@ -816,7 +815,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 6L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(853),
+                            CreationDate = new DateTime(2023, 1, 29, 18, 45, 18, 171, DateTimeKind.Local).AddTicks(1767),
                             FileTiming_Id = 5L,
                             State = 6,
                             Title = "دعوتنامه ای برای جلسات دادگاه تجدیدنظر صادر نشده است"
@@ -824,7 +823,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 7L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(947),
+                            CreationDate = new DateTime(2023, 1, 29, 18, 45, 18, 171, DateTimeKind.Local).AddTicks(1769),
                             FileTiming_Id = 6L,
                             State = 7,
                             Title = "دعوتنامه جدید یا دادنامه تجدیدنظر صادر نشده است"
@@ -858,7 +857,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 1L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(7056),
+                            CreationDate = new DateTime(2023, 1, 29, 18, 45, 18, 172, DateTimeKind.Local).AddTicks(8340),
                             Deadline = 1,
                             Tips = "	پس از مراجعه موکل و ثبت اولیه پرونده در نرم افزار ، در صورتی که تا پایان زمان مندرج در کادر ، موکل پرونده را تعیین و تکلیف ننماید و شما قادر به ورود به پرونده نباشید ، نرم افزار به شما گزارش میدهد . ",
                             Title = "ثبت اولیه در سیستم"
@@ -866,7 +865,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 2L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(8307),
+                            CreationDate = new DateTime(2023, 1, 29, 18, 45, 18, 172, DateTimeKind.Local).AddTicks(9431),
                             Deadline = 1,
                             Tips = "	پس از ارائه دادخواست توسط شما یا موکل ، اگر تا پایان مهلت مندرج در این کادر ، دعوتنامه ای صادر نشده باشد ، نرم افزار به شما گزارش میدهد . ",
                             Title = "انتظار برای دریافت دعوتنامه اول"
@@ -874,7 +873,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 3L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(8329),
+                            CreationDate = new DateTime(2023, 1, 29, 18, 45, 18, 172, DateTimeKind.Local).AddTicks(9442),
                             Deadline = 1,
                             Tips = "	پس از شرکت در جلسه اول رسیدگی ، اگر تا پایان مهلت مندرج در کادر ، دعوتنامه جدید یا دادنامه صادر نشده باشد ، نرم افزار به شما گزارش میدهد . ",
                             Title = "انتظار برای دریافت دعوتنامه دوم به بعد یا دادنامه"
@@ -882,7 +881,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 4L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(8331),
+                            CreationDate = new DateTime(2023, 1, 29, 18, 45, 18, 172, DateTimeKind.Local).AddTicks(9444),
                             Deadline = 1,
                             Tips = "	پس از صدور دادنامه ، تا قبل از پایان مدت اعتراض مندرج در کادر ، اخطار مهلت اعتراض را نرم افزار به شما گزارش میدهد تا در فرصت مقرر اقدام به ثبت اعتراض نمائید . بدیهیست در صورت عدم ثبت اعتراض در مهلت مقرر دادنامه شما قطعی خواهد شد . ",
                             Title = "مهلت اعتراض به دادنامه"
@@ -890,7 +889,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 5L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(8334),
+                            CreationDate = new DateTime(2023, 1, 29, 18, 45, 18, 172, DateTimeKind.Local).AddTicks(9446),
                             Deadline = 1,
                             Tips = "پس از ثبت اعتراض ، در صورتی که تا پایان مهلت مندرج در کادر ، دعوتنامه ای برای شما صادر نگردد ، نرم افزار به شما گزارش میدهد . ",
                             Title = "انتظار برای دریافت دعوتنامه پس از اعتراض"
@@ -898,7 +897,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 6L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(8336),
+                            CreationDate = new DateTime(2023, 1, 29, 18, 45, 18, 172, DateTimeKind.Local).AddTicks(9448),
                             Deadline = 1,
                             Tips = "پس از شرکت در جلسه اول رسیدگی ، اگر تا پایان مهلت مندرج در کادر ، دعوتنامه جدید یا دادنامه صادر نشده باشد ، نرم افزار به شما گزارش میدهد .",
                             Title = "انتظار برای دریافت دعوتنامه دوم به بعد یا دادنامه"
