@@ -102,7 +102,7 @@
                         <thead style="background-color:#a9fcff">
                             <tr>
                                 <th style=" text-align: center; vertical-align: middle;" rowspan="2">#</th>
-                                <th style=" font-size: 20px; text-align: center; vertical-align: middle" rowspan="2" colspan="2"> مشاغل </th>
+                                <th style=" font-size: 20px; text-align: center; vertical-align: middle" rowspan="2" colspan="1"> مشاغل </th>
                                 <th style=" font-size: 20px; text-align: center; vertical-align: middle" colspan="2"> برای شهرهای کمتر از 500000 نفر </th>
                                 <th style=" font-size: 20px; text-align: center; vertical-align: middle" colspan="3"> برای شهرهای بیشتر از 500000 نفر </th>
                             </tr>
@@ -123,48 +123,21 @@
                                     1
                                 </td>
                                 @{
-                                    var idstr = "crossJobsList_" + i + "__TitleStr";// "textareacrossJobsList_" + i + "__Title";
-                                    var namestr = "crossJobsList[" + i + "].TitleStr"; 
-                                }
-                                <td style="font-size: 14px !important; text-align: center" class="crossJobssession">
-                                    <input type="text" class="form-control " id=@idstr name=@namestr>
-                                    <div class="form-group ">
-                                        <button type="button"
-                                                onclick="addToTitle(@i)"
-                                                class="btn btn-sm btn-success btn-rounded waves-effect waves-light ">
-                                            + افزودن
-                                        </button>
-                                    </div>
-                                    @*<div class="form-group ">
-                                        <button type="button"
-                                        onclick="selectedText(@i)"
-                                        class="btn btn-sm btn-success btn-rounded waves-effect waves-light ">
-                                        + افزودن
-                                        </button>
-                                        </div>*@
+                                    var idstr = "crossJobsList_" + i + "__TitleStr";
+                                    var namestr = "crossJobsList[" + i + "].TitleStr";
 
-                                </td>
-                                @{
                                     var h = "textareacrossJobsList_" + i + "__Title";
                                     var n = "textareacrossJobsList[" + i + "].Title";
 
+                                    var Listid = "crossJobsList_" + i + "__jobItems";
+                                    var ListName = "crossJobsList[" + i + "].jobItems";
+
                                 }
-                                <td style="font-size: 14px !important; text-align: center" class="crossJobssession">
-                                    <textarea disabled rows="3" cols="50" style="width:240px"
-                                              id=@h
-                                              name=@n class="form-control">
-
-                                    </textarea>
-
-                                    <input type="hidden" class="form-control " asp-for="crossJobsList[i].Title" style="width:240px;">
-                                    @*<div style="font-size: 14px !important; text-align: center; vertical-align: middle">
-                                            <div onclick="selectedText(@i)">
-                                                <i class="fa fa-minus-circle fa-2x" style="color: red;  cursor: pointer;"></i>
-                                            </div>
-                                        </div>*@
-                                    @*<textarea rows="4" cols="50" style="width:300px"
-                                        asp-for="crossJobsList[i].Title" class="form-control"></textarea>*@
-                                </td>
+                            <td style="font-size: 14px !important; text-align: right !important;width:240px !important;" class="crossJobssession">
+                                <select id=@Listid  name=@ListName asp-items="@Model.jobs" multiple="multiple" class="sel2">
+                                    <option value="0" disabled>شفل را انتخاب کنید</option>
+                                </select>
+                            </td>
                                 <td style="font-size: 14px !important; text-align: center" class="crossJobssession">
                                     <input type="text" class="form-control " asp-for="crossJobsList[i].SalaryRatioUnder" data-val="true" data-val-required="فیلد الزامی است">
                                     <span asp-validation-for="crossJobsList[i].SalaryRatioUnder" class="error"></span>
@@ -182,6 +155,9 @@
                                     <span asp-validation-for="crossJobsList[i].EquivalentRialOver" class="error"></span>
                                 </td>
                                 <td style="font-size: 14px !important; text-align: center">
+                                    <div class="removeRow" >
+                                        <i class="fa fa-minus-circle fa-2x" style="color: gray;  cursor: pointer;"></i>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -192,7 +168,6 @@
             </div>
 
         </div>
-        @*<input type="hidden" asp-for="id" value="id"/>*@
         <div class="modal-footer">
 
             <button type="submit" id="createButtom" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
@@ -202,16 +177,18 @@
     </form>
 
 </div>
-
+<script type="text/javascript">
+    $(function () {
+        $("#crossJobsList_0__jobItems").select2({
+            placeholder: "انتخاب کنید",
+            dir: "rtl",
+        });
+    });
+    $(function () {
+        $("#jobslst_10").select2();
+    });
+</script>
 <script>
-    function submit() {
-
-        //alert("Submitted");
-        //$("#createButtom").submit(function () {
-        //    console.log("hkjhgjkh");
-        //});
-    }
-
     $(document).ready(function () {
         $('.modal-dialog').addClass('modal-lg');
     })
@@ -232,15 +209,10 @@
                                 </div>
                             </div>`
 
-        $('#ecoList ').append(htmls);
+        $('#ecoList ').prepend(htmls);
     }
 
     function addrowTable() {
-        //className = "crossJobssession";
-        //var id = "datatableCreate";
-        //sortInputs(id, className, 5)
-
-
 
         var addNewCrossJobCounter = $("#datatableCreate input[name$='.SalaryRatioUnder']").length;
         console.log("Add row : " + addNewCrossJobCounter);
@@ -250,25 +222,12 @@
             <td style="font-size: 14px !important; text-align: center" class="order">
             ${addNewCrossJobCounter + 1}
             </td>
+
             <td style="font-size: 14px !important; text-align: center"  class="crossJobssession">
-                <input   type="text" class="form-control " id="crossJobsList_${addNewCrossJobCounter}__TitleStr" name="crossJobsList[${addNewCrossJobCounter}].TitleStr" >
-                <div class="form-group ">
-                <button type="button" onclick="addToTitle(${addNewCrossJobCounter})"
-                    class="btn btn-sm btn-success btn-rounded waves-effect waves-light ">+ افزودن
-                </button>
-                </div>
-            </td>
-            <td style="font-size: 14px !important; text-align: center"  class="crossJobssession">
-               <input  type="hidden" class="form-control " style="width:240px"  data-val="true" data-val-required="فیلد الزامی است"
-                   id="crossJobsList_${addNewCrossJobCounter}__Title" name="crossJobsList[${addNewCrossJobCounter}].Title">
-               <textarea disabled rows="3" cols="50" style="width:240px"
-                   id="textareacrossJobsList_${addNewCrossJobCounter}__Title" name="textareacrossJobsList[${addNewCrossJobCounter}].Title">
-               </textarea>
-               <div style="font-size: 14px !important; text-align: center; vertical-align: middle" hidden>
-                   <div  onclick="selectedText(${addNewCrossJobCounter})">
-                  <i class="fa fa-minus-circle fa-2x" style="color: red;  cursor: pointer;"></i>
-                   </div>
-               </div>
+
+               <select id="jobslst_${addNewCrossJobCounter}" name="crossJobsList[${addNewCrossJobCounter}].jobItems"  multiple="multiple" class="sel2">
+                   <option value="0" disabled>شفل را انتخاب کنید</option>
+               </select>
             </td>
             <td style="font-size: 14px !important; text-align: center" class="crossJobssession">
                 <input type="text" class="form-control "  data-val="true" data-val-required="فیلد الزامی است"
@@ -303,10 +262,41 @@
 
         $('#datatableCreate ').append(htmls);
 
-        //className = "crossJobssession";
-        //var id = "datatableCreate";
-        //sortInputs(id, className, 5)
+        select(addNewCrossJobCounter);
     }
+    var jobs;
+
+    function select(id) {
+        getJob(id);
+        $("#jobslst_" + id).select2({
+            placeholder: "انتخاب کنید",
+            dir: "rtl",
+        });
+    }
+
+    function getJob(id) {
+            $.ajax({
+                        dataType: 'json',
+                        type: 'Get',
+                        url: '@Url.Page("./Index", "Job")',
+                        headers: { "RequestVerificationToken": $('@Html.AntiForgeryToken()').val() },
+                        
+                success: function (response) {
+                    jobs = response;
+                    for (var i = 0; i < jobs.length; i++) {
+                        $("#jobslst_" + id).append(`<option value=` + jobs[i].id + `>` + jobs[i].jobName+`</option>`);
+                    }
+
+                        },
+                        failure: function (response) {
+                            console.log(5, response)
+                            $.Notification.autoHideNotify('error', 'top center', 'پیام سیستم ', response.message);
+                        }
+                    });
+    }
+
+
+
 
     function addToTitle(id) {
         var text = document.getElementById('crossJobsList_' + id + '__TitleStr').value;
@@ -316,7 +306,7 @@
         }
         $('#' + 'crossJobsList_' + id + '__Title').val($('#' + 'crossJobsList_' + id + '__Title').val() + '-' + text);
         var oldval = $('#' + 'crossJobsList_' + id + '__Title').val();
-            $('#' + 'textareacrossJobsList_' + id + '__Title').val(oldval.trim());
+        $('#' + 'textareacrossJobsList_' + id + '__Title').val(oldval.trim());
         document.getElementById('crossJobsList_' + id + '__TitleStr').value = '';
     }
 
@@ -368,18 +358,11 @@
 
     function replaceSelectedText(el, text) {
         var sel = getInputSelection(el), val = el.value;
-        //console.log(sel);
-        //console.log(val);
-        //console.log(val.slice(sel.start, sel.end));
         var selected = val.slice(sel.start, sel.end);
-        //console.log(val.slice(0, sel.start) + text + val.slice(sel.end));
         var arr = []; arr = val.split('-')
-        //console.log(arr);
         var str = "";
-        console.log(selected);
 
         for (var i = 0; i < arr.length; i++) {
-            console.log(arr[i]);
             if (arr[i] == selected) {
                 arr[i] = '';
             }
@@ -387,144 +370,83 @@
                 str += '-' + arr[i];
             }
         }
-        console.log(str);
         el.value = str;
-        //el.value = val.slice(0, sel.start) + text + val.slice(sel.end);
     }
 
     function selectedText(id) {
         var el = document.getElementById('textareacrossJobsList_' + id + '__Title');
         replaceSelectedText(el, "");
-        //$('#' + 'crossJobsList_' + id + '__Title').replaceSelectedText("NEW TEXT");
     }
     function removeRowCrossJob(className) {
 
         var list = document.getElementById(className);
         var lst = list.value;
-        console.log(lst);
         list.remove();
         var unit = $("#datatableCreate").parent().find('input').length;
-        //var unit = $(tag).parent().find('input').length;
-        console.log(unit);
 
-        //$(this).closest('tr').remove();
         $('td.order').text(function (i) {
-            console.log("order : " + i);
-
             return i + 1;
         });
-        //var addNewCrossJobCounter = $("#datatableCreate input[name$='.SalaryRatioUnder']").length;
-        //console.log("Add row : " + addNewCrossJobCounter);
-        //$('#textareacrossJobsList_' + i + '__Title').text(function (i) {
-        //    console.log("order : " + i);
-        //    return i + 1;
-        //});
         className = "crossJobssession";
         var id = "datatableCreate";// "crossJobsList";
-        sortInputs(id, className, 6)
-
-        //sortTitle(id);
-        //if (sortId != '')
-        //    sortPS(sortId);
-
-        //else
-        //    SumRemainingAmounts();
+        sortInputs(id, className, 5)
     }
 
     function sortInputs(id, className, unit) {
 
         var PSInput = $("#" + id + " ." + className + " input");
-        console.log(PSInput);
         for (var i = 0; i < PSInput.length; i++) {
 
-            //console.log($(PSInput[i]).attr('name'));
-            var split_0 = $(PSInput[i]).attr('name').split('[')
-            //console.log(split_0);
+            try {
+                var split_0 = $(PSInput[i]).attr('name').split('[')
 
-            var split_1 = split_0[0]
-            var split_2 = split_0[1]
-            var split_2 = split_2.split(']')
-            var split_2 = split_2[1]
+                var split_1 = split_0[0]
+                var split_2 = split_0[1]
+                var split_2 = split_2.split(']')
+                var split_2 = split_2[1]
 
+                var split_00 = $(PSInput[i]).attr('id').split('_')
+                var split_11 = split_00[0]
+                var split_22 = split_00[3]
 
+                $(PSInput[i]).attr('name', split_1 + "[" + Math.floor(i / unit) + "]" + split_2)
+                $(PSInput[i]).next('span').attr('name', split_1 + "[" + Math.floor(i / unit) + "]" + split_2)
+                $(PSInput[i]).next('span').attr('data-valmsg-for', split_1 + "[" + Math.floor(i / unit) + "]" + split_2)
 
-            var split_00 = $(PSInput[i]).attr('id').split('_')
-            var split_11 = split_00[0]
-            var split_22 = split_00[3]
+                $(PSInput[i]).attr('id', split_11 + "_" + Math.floor(i / unit) + "__" + split_22)
+                $(PSInput[i]).prev('label').attr('for', split_11 + "_" + Math.floor(i / unit) + "__" + split_22)
 
-            $(PSInput[i]).attr('name', split_1 + "[" + Math.floor(i / unit) + "]" + split_2)
-            $(PSInput[i]).next('span').attr('name', split_1 + "[" + Math.floor(i / unit) + "]" + split_2)
-            $(PSInput[i]).next('span').attr('data-valmsg-for', split_1 + "[" + Math.floor(i / unit) + "]" + split_2)
+            } catch (e) {
 
-            $(PSInput[i]).attr('id', split_11 + "_" + Math.floor(i / unit) + "__" + split_22)
-            $(PSInput[i]).prev('label').attr('for', split_11 + "_" + Math.floor(i / unit) + "__" + split_22)
-        }
-
-        var PSTextarea = $("#" + id + " ." + className + " textarea");
-        for (var i = 0; i < PSTextarea.length; i++) {
-            console.log($(PSInput[i]).attr('name'));
-            console.log($(PSInput[1]).attr('name'));
-
-            var split_0 = $(PSTextarea[i]).attr('name').split('[')
-            var split_1 = split_0[0]
-            var split_2 = split_0[1]
-            var split_2 = split_2.split(']')
-            var split_2 = split_2[1]
-            console.log("435");
-            console.log(split_0);
-            var split_00 = $(PSTextarea[i]).attr('id').split('_')
-            var split_11 = split_00[0]
-            var split_22 = split_00[3]
-            console.log("442");
-            console.log(split_00);
-            $(PSTextarea[i]).attr('name', split_1 + "[" + i + "]" + split_2)
-            $(PSTextarea[i]).next('span').attr('name', split_1 + "[" + i + "]" + split_2)
-            $(PSTextarea[i]).next('span').attr('data-valmsg-for', split_1 + "[" + i + "]" + split_2)
-
-            $(PSTextarea[i]).attr('id', split_11 + "_" + i + "__" + split_22)
-            $(PSTextarea[i]).prev('label').attr('for', split_11 + "_" + i + "__" + split_22)
+            }
 
         }
-
-
-
-
-
-        var PSButton = $("#" + id +  " button");
+        var PSButton = $("#" + id + " button");
         for (var i = 0; i < PSButton.length; i++) {
-            $(PSButton[i]).attr("onclick", "addToTitle("+i+")");
-        
+            $(PSButton[i]).attr("onclick", "addToTitle(" + i + ")");
+
         }
 
-        var PSTbody = $("#" + id +  " Tbody");
-        console.log(PSTbody);
+        var PSTbody = $("#" + id + " Tbody");
         for (var i = 0; i < PSTbody.length; i++) {
-            //console.log($(PSInput[i]).attr('name'));
-            //console.log($(PSInput[1]).attr('name'));
-            $(PSTbody[i]).attr("id", "datatableTbody_"+i);
+            $(PSTbody[i]).attr("id", "datatableTbody_" + i);
         }
+
+        var PSSelect2 = $(".sel2");
+        for (var i = 0; i < PSSelect2.length; i++) {
+            $(PSSelect2[i]).attr("id", "crossJobsList_" + i + "__jobItems");
+            $(PSSelect2[i]).attr("data-select2-id", "crossJobsList_" + i + "__jobItems");
+            $(PSSelect2[i]).attr("name", "crossJobsList[" + i + "].jobItems");
+        }
+
         var PSRemove = $("#" + id + " .removeRow");
-        console.log(PSRemove);
         for (var i = 0; i < PSRemove.length; i++) {
-            //console.log($(PSInput[i]).attr('name'));
-            //console.log("removeRowCrossJob('datatableTbody_" + i + "')"));
-            $(PSRemove[i]).attr("onclick", "removeRowCrossJob('datatableTbody_" + (i+1) + "')");
+            $(PSRemove[i]).attr("onclick", "removeRowCrossJob('datatableTbody_" + (i + 1) + "')");
         }
-      
+
     }
 
 
-    function sortTitle(id) {
-        id = "crossJobsList_Title_";
-
-        var PSCount = ($("#" + id + " .proceedingSession").length - 1) / 2;
-        var PSLabel = $("#" + id + " .dateLabel");
-
-        for (var i = 0; i < PSCount; i++) {
-
-            $(PSLabel[i]).html('تاریخ نوبت ' + turns[i] + ' رسیدگی')
-        }
-    }
     function validDate(inputField, id) {
 
         if (inputField.value != '') {
@@ -539,10 +461,7 @@
         }
 
     }
-    function validation() {
-        console.log("VAlidation");
-        return false;
-    }
+
 
 </script>
 

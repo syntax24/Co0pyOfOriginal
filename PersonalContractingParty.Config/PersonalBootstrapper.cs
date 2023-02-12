@@ -4,6 +4,7 @@ using Company.Domain.ChapterAgg;
 using Company.Domain.Contact2Agg;
 using Company.Domain.CrossJobAgg;
 using Company.Domain.CrossJobGuildAgg;
+using Company.Domain.CrossJobItemsAgg;
 using Company.Domain.Evidence;
 using Company.Domain.EvidenceDetail;
 using Company.Domain.File1;
@@ -27,6 +28,7 @@ using CompanyManagment.App.Contracts.Contact2;
 using CompanyManagment.App.Contracts.Contract;
 using CompanyManagment.App.Contracts.CrossJob;
 using CompanyManagment.App.Contracts.CrossJobGuild;
+using CompanyManagment.App.Contracts.CrossJobItems;
 using CompanyManagment.App.Contracts.Evidence;
 using CompanyManagment.App.Contracts.EvidenceDetail;
 using CompanyManagment.App.Contracts.File1;
@@ -132,6 +134,9 @@ namespace PersonalContractingParty.Config
 
             services.AddTransient<ICrossJobApplication, CrossJobApplication>();
             services.AddTransient<ICrossJobRepository, CrossJobRepository>();
+
+            services.AddTransient<ICrossJobItemsApplication, CrossJobItemsApplication>();
+            services.AddTransient<ICrossJobItemsRepository, CrossJobItemsRepository>();
 
             services.AddDbContext<CompanyContext>(x => x.UseSqlServer(connectionString));
         }

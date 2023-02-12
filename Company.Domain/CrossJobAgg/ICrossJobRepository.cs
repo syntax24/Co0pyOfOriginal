@@ -8,6 +8,7 @@ namespace Company.Domain.CrossJobAgg
 {
     public interface ICrossJobRepository : IRepository<long, CrossJob>
     {
+        long CreateBackId(CrossJob createCrossJob);
         List<CrossJobViewModel> GetCrossJob(long idGuild);
         EditCrossJob GetDetails(long id);
         List<CrossJobViewModel> Search(CrossJobSearchModel searchModel);

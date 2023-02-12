@@ -8,6 +8,8 @@ namespace CompanyManagment.App.Contracts.CrossJob
     public class EditCrossJob : CreateCrossJob
     {
         public long Id { get; set; }
+        //public List<long> SelectedValues { get; set; }
+
     }
 }
 

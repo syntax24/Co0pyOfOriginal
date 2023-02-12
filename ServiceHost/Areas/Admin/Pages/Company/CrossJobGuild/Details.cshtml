@@ -101,47 +101,51 @@
                                 <th style=" font-size: 15px; text-align: center; vertical-align: middle" colspan="2"> معادل ریالی </th>
                             </tr>
                         </thead>
+
                         @{
-                            var pri = Model.crossJobsList.Where(x => x.parentRowId == 0).ToList();
-
-                        }
-                        @for (int i = 0; i < pri.Count; i++)
-                        {
-                            var str = pri[i].Title + "";
-                            foreach (var item in Model.crossJobsList.Where(x => x.parentRowId == pri[i].Id).ToList())
+                            int i = 0;
+                            foreach (var cj in Model.crossJobsList)
                             {
-                                str += "-" + item.Title;
-                            }
-                            <tbody id="datatableTbody_@i">
-                                <tr id="datatableTr">
-                                    <td style="font-size: 14px !important; text-align: center">
+                                <tbody id="datatableTbody_@i">
+                                    <tr id="datatableTr">
+                                        <td style="font-size: 14px !important; text-align: center">
+                                            @{
+                                                var index = i + 1;
+                                            }
+                                            @index
+                                        </td>
                                         @{
-                                            var index = i + 1;
+                                            var str = " ";
+                                            foreach (var cjItem in Model.crossJobItemsList.Where(x => x.crossJobId == cj.Id).ToList())
+                                            {
+                                                str = str+ "-" + cjItem.job.JobName;
+                                                str = str.Trim();
+                                            }
                                         }
-                                        @index
-                                    </td>
-
-                                    <td style="font-size: 14px !important; text-align: center">
-                                        <textarea disabled rows="3" cols="50" style="width:240px"
-                                              class="form-control">@str</textarea>
-                                    </td>
-                                    <td style="font-size: 14px !important; text-align: center">
-                                        <input disabled type="text" class="form-control " asp-for="crossJobsListParent[i].SalaryRatioUnder">
-                                    </td>
-                                    <td style="font-size: 14px !important; text-align: center">
-                                        <input disabled type="text" class="form-control " asp-for="crossJobsListParent[i].EquivalentRialUnder">
-                                    </td>
-                                    <td style="font-size: 14px !important; text-align: center">
-                                        <input disabled type="text" class="form-control " asp-for="crossJobsListParent[i].SalaryRatioOver">
-                                    </td>
-                                    <td style="font-size: 14px !important; text-align: center">
-                                        <input disabled type="text" class="form-control " asp-for="crossJobsListParent[i].EquivalentRialOver">
-                                    </td>
-                                    <td style="font-size: 14px !important; text-align: center">
-                                    </td>
-                                </tr>
-                            </tbody>
+                                        <td style="font-size: 14px !important; text-align: center">
+                                            <textarea disabled rows="3" cols="50" style="width:240px"
+                                                      class="form-control">@str.Substring(1)</textarea>
+                                        </td>
+                                        <td style="font-size: 14px !important; text-align: center">
+                                            <input disabled type="text" class="form-control " asp-for="@cj.SalaryRatioUnder">
+                                        </td>
+                                        <td style="font-size: 14px !important; text-align: center">
+                                            <input disabled type="text" class="form-control " asp-for="@cj.EquivalentRialUnder">
+                                        </td>
+                                        <td style="font-size: 14px !important; text-align: center">
+                                            <input disabled type="text" class="form-control " asp-for="@cj.SalaryRatioOver">
+                                        </td>
+                                        <td style="font-size: 14px !important; text-align: center">
+                                            <input disabled type="text" class="form-control " asp-for="@cj.EquivalentRialOver">
+                                        </td>
+                                        <td style="font-size: 14px !important; text-align: center">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                i++;
+                            }
                         }
+
                     </table>
                 </fieldset>
             </div>

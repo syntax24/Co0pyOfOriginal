@@ -33,7 +33,6 @@ namespace ServiceHost.Areas.Admin.Pages.Company.Employees
 
 
 
-
         public IndexModel(IEmployeeApplication employeeApplication, IEmployeeChildrenApplication employeeChildrenApplication)
         {
             _employeeApplication = employeeApplication;

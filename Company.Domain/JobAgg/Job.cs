@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using _0_Framework.Domain;
+using Company.Domain.CrossJobAgg;
+using Company.Domain.CrossJobItemsAgg;
 using CompanyManagment.App.Contracts.Employer;
 using Contract = Company.Domain.ContractAgg.Contract;
 
@@ -21,6 +23,7 @@ namespace Company.Domain.JobAgg
         public string JobName { get; private set; }
         public string JobCode { get; private set; }
         public List<Contract> ContractsList { get; private set; }
+        public List<CrossJobItems> CrossJobItemsList { get; private set; }
 
         public Job()
         {

@@ -3,121 +3,162 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CompanyManagment.EFCore.Migrations
 {
-    public partial class AddParentRowIdToCrossJob : Migration
+    public partial class CrossJobItems : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<long>(
-                name: "ParentRowId",
-                table: "CrossJobs",
-                type: "bigint",
-                nullable: false,
-                defaultValue: 0L);
+            migrationBuilder.DropColumn(
+                name: "Title",
+                table: "CrossJobs");
+
+            migrationBuilder.CreateTable(
+                name: "CrossJobItems",
+                columns: table => new
+                {
+                    id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CrossJobId = table.Column<long>(type: "bigint", nullable: false),
+                    JobId = table.Column<long>(type: "bigint", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CrossJobItems", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_CrossJobItems_CrossJobs_CrossJobId",
+                        column: x => x.CrossJobId,
+                        principalTable: "CrossJobs",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CrossJobItems_Jobs_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Jobs",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.UpdateData(
                 table: "File_States",
                 keyColumn: "id",
                 keyValue: 1L,
                 column: "CreationDate",
-                value: new DateTime(2023, 2, 2, 10, 44, 8, 793, DateTimeKind.Local).AddTicks(5243));
+                value: new DateTime(2023, 2, 10, 20, 42, 36, 479, DateTimeKind.Local).AddTicks(7967));
 
             migrationBuilder.UpdateData(
                 table: "File_States",
                 keyColumn: "id",
                 keyValue: 2L,
                 column: "CreationDate",
-                value: new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(779));
+                value: new DateTime(2023, 2, 10, 20, 42, 36, 481, DateTimeKind.Local).AddTicks(8859));
 
             migrationBuilder.UpdateData(
                 table: "File_States",
                 keyColumn: "id",
                 keyValue: 3L,
                 column: "CreationDate",
-                value: new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(846));
+                value: new DateTime(2023, 2, 10, 20, 42, 36, 481, DateTimeKind.Local).AddTicks(8887));
 
             migrationBuilder.UpdateData(
                 table: "File_States",
                 keyColumn: "id",
                 keyValue: 4L,
                 column: "CreationDate",
-                value: new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(848));
+                value: new DateTime(2023, 2, 10, 20, 42, 36, 481, DateTimeKind.Local).AddTicks(8889));
 
             migrationBuilder.UpdateData(
                 table: "File_States",
                 keyColumn: "id",
                 keyValue: 5L,
                 column: "CreationDate",
-                value: new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(851));
+                value: new DateTime(2023, 2, 10, 20, 42, 36, 481, DateTimeKind.Local).AddTicks(8891));
 
             migrationBuilder.UpdateData(
                 table: "File_States",
                 keyColumn: "id",
                 keyValue: 6L,
                 column: "CreationDate",
-                value: new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(853));
+                value: new DateTime(2023, 2, 10, 20, 42, 36, 481, DateTimeKind.Local).AddTicks(8893));
 
             migrationBuilder.UpdateData(
                 table: "File_States",
                 keyColumn: "id",
                 keyValue: 7L,
                 column: "CreationDate",
-                value: new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(947));
+                value: new DateTime(2023, 2, 10, 20, 42, 36, 481, DateTimeKind.Local).AddTicks(8895));
 
             migrationBuilder.UpdateData(
                 table: "File_States",
                 keyColumn: "id",
                 keyValue: 8L,
                 column: "CreationDate",
-                value: new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(841));
+                value: new DateTime(2023, 2, 10, 20, 42, 36, 481, DateTimeKind.Local).AddTicks(8884));
 
             migrationBuilder.UpdateData(
                 table: "File_Timings",
                 keyColumn: "id",
                 keyValue: 1L,
                 column: "CreationDate",
-                value: new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(7056));
+                value: new DateTime(2023, 2, 10, 20, 42, 36, 483, DateTimeKind.Local).AddTicks(4040));
 
             migrationBuilder.UpdateData(
                 table: "File_Timings",
                 keyColumn: "id",
                 keyValue: 2L,
                 column: "CreationDate",
-                value: new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(8307));
+                value: new DateTime(2023, 2, 10, 20, 42, 36, 483, DateTimeKind.Local).AddTicks(4727));
 
             migrationBuilder.UpdateData(
                 table: "File_Timings",
                 keyColumn: "id",
                 keyValue: 3L,
                 column: "CreationDate",
-                value: new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(8329));
+                value: new DateTime(2023, 2, 10, 20, 42, 36, 483, DateTimeKind.Local).AddTicks(4739));
 
             migrationBuilder.UpdateData(
                 table: "File_Timings",
                 keyColumn: "id",
                 keyValue: 4L,
                 column: "CreationDate",
-                value: new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(8331));
+                value: new DateTime(2023, 2, 10, 20, 42, 36, 483, DateTimeKind.Local).AddTicks(4741));
 
             migrationBuilder.UpdateData(
                 table: "File_Timings",
                 keyColumn: "id",
                 keyValue: 5L,
                 column: "CreationDate",
-                value: new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(8334));
+                value: new DateTime(2023, 2, 10, 20, 42, 36, 483, DateTimeKind.Local).AddTicks(4743));
 
             migrationBuilder.UpdateData(
                 table: "File_Timings",
                 keyColumn: "id",
                 keyValue: 6L,
                 column: "CreationDate",
-                value: new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(8336));
+                value: new DateTime(2023, 2, 10, 20, 42, 36, 483, DateTimeKind.Local).AddTicks(4745));
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CrossJobItems_CrossJobId",
+                table: "CrossJobItems",
+                column: "CrossJobId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CrossJobItems_JobId",
+                table: "CrossJobItems",
+                column: "JobId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "ParentRowId",
-                table: "CrossJobs");
+            migrationBuilder.DropTable(
+                name: "CrossJobItems");
+
+            migrationBuilder.AddColumn<string>(
+                name: "Title",
+                table: "CrossJobs",
+                type: "nvarchar(255)",
+                maxLength: 255,
+                nullable: false,
+                defaultValue: "");
 
             migrationBuilder.UpdateData(
                 table: "File_States",

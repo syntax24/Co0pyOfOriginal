@@ -29,21 +29,34 @@ namespace CompanyManagment.Application
 
         public OperationResult Create(CreateCrossJob command)
         {
-            var ress = _context.CrossJobs.SingleOrDefault(x => x.Title == command.Title);
             var opration = new OperationResult();
             var crossjob = new CrossJob(
-                command.Title,
                 command.SalaryRatioUnder,
                 command.EquivalentRialUnder,
                 command.SalaryRatioOver,
                 command.EquivalentRialOver,
-                command.CrossJobGuildId,
-                command.parentRowId
+                command.CrossJobGuildId
                 );
 
             _crossJobRepository.Create(crossjob);
             _crossJobRepository.SaveChanges();
             return opration.Succcedded();
+
+        }
+        public OperationResult2 CreateBackId(CreateCrossJob command)
+        {
+            var opration = new OperationResult2();
+            var crossjob = new CrossJob(
+                command.SalaryRatioUnder,
+                command.EquivalentRialUnder,
+                command.SalaryRatioOver,
+                command.EquivalentRialOver,
+                command.CrossJobGuildId
+                );
+
+            opration.EntityId = _crossJobRepository.CreateBackId(crossjob);
+            _crossJobRepository.SaveChanges();
+            return opration.Succcedded(opration.EntityId);
 
         }
 
@@ -55,13 +68,11 @@ namespace CompanyManagment.Application
                 return opration.Failed("رکورد مورد نظر یافت نشد");
 
             crossJob.Edit(
-                command.Title,
                 command.SalaryRatioUnder,
                 command.EquivalentRialUnder,
                 command.SalaryRatioOver,
                 command.EquivalentRialOver,
-                command.CrossJobGuildId,
-                command.parentRowId
+                command.CrossJobGuildId
                 );
             _crossJobRepository.SaveChanges();
             return opration.Succcedded();

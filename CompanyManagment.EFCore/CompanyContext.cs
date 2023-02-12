@@ -8,6 +8,7 @@ using Company.Domain.ContarctingPartyAgg;
 using Company.Domain.ContractAgg;
 using Company.Domain.CrossJobAgg;
 using Company.Domain.CrossJobGuildAgg;
+using Company.Domain.CrossJobItemsAgg;
 using Company.Domain.EmployeeAgg;
 using Company.Domain.EmployeeChildrenAgg;
 using Company.Domain.empolyerAgg;
@@ -99,6 +100,7 @@ namespace CompanyManagment.EFCore
         //-------Cross-Job----------------------------
         public DbSet<CrossJobGuild> CrossJobGuilds { get; set; }
         public DbSet<CrossJob> CrossJobs { get; set; }
+        public DbSet<CrossJobItems> CrossJobItems { get; set; }
 
 
         public DbSet<Employer> Employers { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _0_Framework.Application;
 using CompanyManagment.App.Contracts.CrossJobGuild;
+using CompanyManagment.App.Contracts.Job;
 
 namespace CompanyManagment.App.Contracts.CrossJobGuild
 {
@@ -14,5 +15,7 @@ namespace CompanyManagment.App.Contracts.CrossJobGuild
         OperationResult Remove(long id);
         List<CrossJobGuildViewModel> GetCrossJobGuild();
         List<CrossJobGuildViewModel> Search(CrossJobGuildSearchModel searchModel);
+        List<JobViewModel> GetJob();
+
     }
 }

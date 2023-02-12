@@ -15,4 +15,14 @@
     <ProjectReference Include="..\_0_Framework\_0_Framework_b.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="CrossJobGuild\" />
+    <None Remove="CrossJob\" />
+    <None Remove="CrossJobItems\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CrossJobGuild\" />
+    <Folder Include="CrossJob\" />
+    <Folder Include="CrossJobItems\" />
+  </ItemGroup>
 </Project>

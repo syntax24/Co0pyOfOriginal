@@ -6,6 +6,7 @@ using _0_Framework.Application;
 using _0_Framework.InfraStructure;
 using Company.Domain.CrossJobGuildAgg;
 using CompanyManagment.App.Contracts.CrossJobGuild;
+using CompanyManagment.App.Contracts.Job;
 
 namespace CompanyManagment.EFCore.Repository
 {
@@ -74,6 +75,17 @@ namespace CompanyManagment.EFCore.Repository
         {
             var query = _context.CrossJobGuilds.Where(x => x.id == id).FirstOrDefault();
             Remove(query);
+        }
+        public List<JobViewModel> GetJob()
+        {
+            return _context.Jobs.Select(x => new JobViewModel
+            {
+                Id = x.id,
+                JobName = x.JobName,
+                JobCode = x.JobCode
+
+
+            }).ToList();
         }
 
     }

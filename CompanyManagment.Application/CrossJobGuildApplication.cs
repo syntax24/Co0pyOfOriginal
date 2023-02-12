@@ -6,6 +6,8 @@ using CompanyManagment.EFCore;
 using _0_Framework.Application;
 using CompanyManagment.App.Contracts.CrossJobGuild;
 using Company.Domain.CrossJobGuildAgg;
+using CompanyManagment.App.Contracts.Job;
+using Company.Domain.JobAgg;
 
 namespace CompanyManagment.Application
 {
@@ -36,11 +38,11 @@ namespace CompanyManagment.Application
 
             foreach (var it in command.crossJobsList)
             {
-                if (string.IsNullOrWhiteSpace(it.Title))
-                {
-                    return opration.Failed("نام شفل را وارد کنید");
-                }
-                if (it.SalaryRatioOver == 0 || it.SalaryRatioUnder ==0 || it.EquivalentRialOver ==0 || it.EquivalentRialUnder ==0)
+                //if (string.IsNullOrWhiteSpace(it.Title))
+                //{
+                //    return opration.Failed("نام شفل را وارد کنید");
+                //}
+                if (it.SalaryRatioOver == 0 || it.SalaryRatioUnder == 0 || it.EquivalentRialOver == 0 || it.EquivalentRialUnder == 0)
                 {
                     return opration.Failed("لطفا اطلاعات را کامل وارد کنید");
                 }
@@ -128,22 +130,70 @@ namespace CompanyManagment.Application
 
         public OperationResult Validation(CreateCrossJobGuild command)
         {
+            var arr = new List<long>();
+            
             var opration = new OperationResult();
             if (_CrossJobGuildRepository.Exists(x =>
                 x.Year == command.Year && x.Title == command.Title && x.EconomicCode == command.EconomicCode))
                 return opration.Failed("امکان ثبت رکورد تکراری وجود ندارد");
-
+            if (command.crossJobsList == null)
+            {
+                return opration.Failed("تمام سطرها را نمیتوانید حذف کنید");
+            }
             foreach (var it in command.crossJobsList)
             {
-                if (string.IsNullOrWhiteSpace(it.Title))
-                {
-                    return opration.Failed("نام شفل را وارد کنید");
-                }
+
+                //if (string.IsNullOrWhiteSpace(it.Title))
+                //{
+                //    return opration.Failed("نام شفل را وارد کنید");
+                //}
                 if (it.SalaryRatioOver == 0 || it.SalaryRatioUnder == 0 || it.EquivalentRialOver == 0 || it.EquivalentRialUnder == 0)
                 {
                     return opration.Failed("لطفا اطلاعات را کامل وارد کنید");
                 }
+                if (it.jobItems == null && it.SelectedValues == null)
+                {
+                    return opration.Failed("نام شغل نمیتواند خالی باشد");
+                }
+                if (it.jobItems != null)
+                {
+                    foreach (var val in it.jobItems)
+                    {
+                        arr.Add(val);
+                    }
+                    //    if( it.jobItems.Length == 0)
+                    //        return opration.Failed("لطفا اطلاعات را کامل وارد کنید");
+
+                }
+                if (it.SelectedValues != null)
+                {
+                    //    if (it.SelectedValues.Count == 0)
+                    //        return opration.Failed("لطفا اطلاعات را کامل وارد کنید");
+                    foreach (var val in it.SelectedValues)
+                    {
+                        arr.Add(val);
+                    }
+                }
             }
+
+
+            var d = new Dictionary<long, int>();
+            foreach (var res in arr)
+            {
+                if (d.ContainsKey(res))
+                    d[res]++;
+                else
+                    d[res] = 1;
+            }
+            foreach (var val in d)
+            {
+                if(val.Value > 1)
+                {
+                    return opration.Failed("یک یا چند شغل تکراری می باشد");
+
+                }
+            }
+
 
 
             if (command.Year == 0)
@@ -164,23 +214,66 @@ namespace CompanyManagment.Application
         public OperationResult ValidationEdit(EditCrossJobGuild command)
         {
             var opration = new OperationResult();
+            var arr = new List<long>();
+
             if (_CrossJobGuildRepository.Exists(x =>
                 x.Year == command.Year && x.Title == command.Title && x.EconomicCode == command.EconomicCode))
                 return opration.Failed("امکان ثبت رکورد تکراری وجود ندارد");
 
             foreach (var it in command.crossJobsList)
             {
-                if (string.IsNullOrWhiteSpace(it.Title))
-                {
-                    return opration.Failed("نام شفل را وارد کنید");
-                }
+                //if (string.IsNullOrWhiteSpace(it.Title))
+                //{
+                //    return opration.Failed("نام شفل را وارد کنید");
+                //}
                 if (it.SalaryRatioOver == 0 || it.SalaryRatioUnder == 0 || it.EquivalentRialOver == 0 || it.EquivalentRialUnder == 0)
                 {
                     return opration.Failed("لطفا اطلاعات را کامل وارد کنید");
                 }
+                if (it.jobItems == null && it.SelectedValues == null)
+                {
+                    return opration.Failed("نام شغل نمیتواند خالی باشد");
+                }
+
+                if (it.jobItems != null)
+                {
+                    foreach (var val in it.jobItems)
+                    {
+                        arr.Add(val);
+                    }
+                    //    if( it.jobItems.Length == 0)
+                    //        return opration.Failed("لطفا اطلاعات را کامل وارد کنید");
+
+                }
+                if (it.SelectedValues != null)
+                {
+                    //    if (it.SelectedValues.Count == 0)
+                    //        return opration.Failed("لطفا اطلاعات را کامل وارد کنید");
+                    foreach (var val in it.SelectedValues)
+                    {
+                        arr.Add(val);
+                    }
+                }
+
+
             }
 
+            var d = new Dictionary<long, int>();
+            foreach (var res in arr)
+            {
+                if (d.ContainsKey(res))
+                    d[res]++;
+                else
+                    d[res] = 1;
+            }
+            foreach (var val in d)
+            {
+                if (val.Value > 1)
+                {
+                    return opration.Failed("یک یا چند شغل تکراری می باشد");
 
+                }
+            }
             if (command.Year == 0)
             {
                 return opration.Failed("لطفا سال را وارد کنید");
@@ -197,6 +290,11 @@ namespace CompanyManagment.Application
 
         }
 
+        public List<JobViewModel> GetJob()
+        {
+            return _CrossJobGuildRepository.GetJob();
+
+        }
 
     }
 }

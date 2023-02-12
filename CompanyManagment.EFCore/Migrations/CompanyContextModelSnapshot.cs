@@ -369,19 +369,11 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Property<long>("EquivalentRialUnder")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("ParentRowId")
-                        .HasColumnType("bigint");
-
                     b.Property<double>("SalaryRatioOver")
                         .HasColumnType("float");
 
                     b.Property<double>("SalaryRatioUnder")
                         .HasColumnType("float");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("id");
 
@@ -416,6 +408,31 @@ namespace CompanyManagment.EFCore.Migrations
                     b.HasKey("id");
 
                     b.ToTable("CrossJobGuilds");
+                });
+
+            modelBuilder.Entity("Company.Domain.CrossJobItemsAgg.CrossJobItems", b =>
+                {
+                    b.Property<long>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CrossJobId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("JobId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("CrossJobId");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("CrossJobItems");
                 });
 
             modelBuilder.Entity("Company.Domain.EmployeeAgg.Employee", b =>
@@ -768,7 +785,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 1L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 793, DateTimeKind.Local).AddTicks(5243),
+                            CreationDate = new DateTime(2023, 2, 10, 20, 42, 36, 479, DateTimeKind.Local).AddTicks(7967),
                             FileTiming_Id = 1L,
                             State = 1,
                             Title = "کلاسه پرونده ثبت نشده است"
@@ -776,7 +793,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 2L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(779),
+                            CreationDate = new DateTime(2023, 2, 10, 20, 42, 36, 481, DateTimeKind.Local).AddTicks(8859),
                             FileTiming_Id = 1L,
                             State = 2,
                             Title = "وکالت نامه پرونده ثبت نشده است"
@@ -784,7 +801,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 8L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(841),
+                            CreationDate = new DateTime(2023, 2, 10, 20, 42, 36, 481, DateTimeKind.Local).AddTicks(8884),
                             FileTiming_Id = 1L,
                             State = 8,
                             Title = "تاریخ ثبت دادخواست ثبت نشده است"
@@ -792,7 +809,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 3L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(846),
+                            CreationDate = new DateTime(2023, 2, 10, 20, 42, 36, 481, DateTimeKind.Local).AddTicks(8887),
                             FileTiming_Id = 2L,
                             State = 3,
                             Title = "دعوتنامه ای برای جلسات دادگاه تشخیص صادر نشده است"
@@ -800,7 +817,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 4L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(848),
+                            CreationDate = new DateTime(2023, 2, 10, 20, 42, 36, 481, DateTimeKind.Local).AddTicks(8889),
                             FileTiming_Id = 3L,
                             State = 4,
                             Title = "دعوتنامه جدید یا دادنامه تشخیص صادر نشده است"
@@ -808,7 +825,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 5L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(851),
+                            CreationDate = new DateTime(2023, 2, 10, 20, 42, 36, 481, DateTimeKind.Local).AddTicks(8891),
                             FileTiming_Id = 4L,
                             State = 5,
                             Title = "اعتراض برای پرونده ثبت نشده است"
@@ -816,7 +833,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 6L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(853),
+                            CreationDate = new DateTime(2023, 2, 10, 20, 42, 36, 481, DateTimeKind.Local).AddTicks(8893),
                             FileTiming_Id = 5L,
                             State = 6,
                             Title = "دعوتنامه ای برای جلسات دادگاه تجدیدنظر صادر نشده است"
@@ -824,7 +841,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 7L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 801, DateTimeKind.Local).AddTicks(947),
+                            CreationDate = new DateTime(2023, 2, 10, 20, 42, 36, 481, DateTimeKind.Local).AddTicks(8895),
                             FileTiming_Id = 6L,
                             State = 7,
                             Title = "دعوتنامه جدید یا دادنامه تجدیدنظر صادر نشده است"
@@ -858,7 +875,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 1L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(7056),
+                            CreationDate = new DateTime(2023, 2, 10, 20, 42, 36, 483, DateTimeKind.Local).AddTicks(4040),
                             Deadline = 1,
                             Tips = "	پس از مراجعه موکل و ثبت اولیه پرونده در نرم افزار ، در صورتی که تا پایان زمان مندرج در کادر ، موکل پرونده را تعیین و تکلیف ننماید و شما قادر به ورود به پرونده نباشید ، نرم افزار به شما گزارش میدهد . ",
                             Title = "ثبت اولیه در سیستم"
@@ -866,7 +883,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 2L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(8307),
+                            CreationDate = new DateTime(2023, 2, 10, 20, 42, 36, 483, DateTimeKind.Local).AddTicks(4727),
                             Deadline = 1,
                             Tips = "	پس از ارائه دادخواست توسط شما یا موکل ، اگر تا پایان مهلت مندرج در این کادر ، دعوتنامه ای صادر نشده باشد ، نرم افزار به شما گزارش میدهد . ",
                             Title = "انتظار برای دریافت دعوتنامه اول"
@@ -874,7 +891,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 3L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(8329),
+                            CreationDate = new DateTime(2023, 2, 10, 20, 42, 36, 483, DateTimeKind.Local).AddTicks(4739),
                             Deadline = 1,
                             Tips = "	پس از شرکت در جلسه اول رسیدگی ، اگر تا پایان مهلت مندرج در کادر ، دعوتنامه جدید یا دادنامه صادر نشده باشد ، نرم افزار به شما گزارش میدهد . ",
                             Title = "انتظار برای دریافت دعوتنامه دوم به بعد یا دادنامه"
@@ -882,7 +899,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 4L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(8331),
+                            CreationDate = new DateTime(2023, 2, 10, 20, 42, 36, 483, DateTimeKind.Local).AddTicks(4741),
                             Deadline = 1,
                             Tips = "	پس از صدور دادنامه ، تا قبل از پایان مدت اعتراض مندرج در کادر ، اخطار مهلت اعتراض را نرم افزار به شما گزارش میدهد تا در فرصت مقرر اقدام به ثبت اعتراض نمائید . بدیهیست در صورت عدم ثبت اعتراض در مهلت مقرر دادنامه شما قطعی خواهد شد . ",
                             Title = "مهلت اعتراض به دادنامه"
@@ -890,7 +907,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 5L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(8334),
+                            CreationDate = new DateTime(2023, 2, 10, 20, 42, 36, 483, DateTimeKind.Local).AddTicks(4743),
                             Deadline = 1,
                             Tips = "پس از ثبت اعتراض ، در صورتی که تا پایان مهلت مندرج در کادر ، دعوتنامه ای برای شما صادر نگردد ، نرم افزار به شما گزارش میدهد . ",
                             Title = "انتظار برای دریافت دعوتنامه پس از اعتراض"
@@ -898,7 +915,7 @@ namespace CompanyManagment.EFCore.Migrations
                         new
                         {
                             id = 6L,
-                            CreationDate = new DateTime(2023, 2, 2, 10, 44, 8, 803, DateTimeKind.Local).AddTicks(8336),
+                            CreationDate = new DateTime(2023, 2, 10, 20, 42, 36, 483, DateTimeKind.Local).AddTicks(4745),
                             Deadline = 1,
                             Tips = "پس از شرکت در جلسه اول رسیدگی ، اگر تا پایان مهلت مندرج در کادر ، دعوتنامه جدید یا دادنامه صادر نشده باشد ، نرم افزار به شما گزارش میدهد .",
                             Title = "انتظار برای دریافت دعوتنامه دوم به بعد یا دادنامه"
@@ -2108,6 +2125,25 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Navigation("CrossJobGuild");
                 });
 
+            modelBuilder.Entity("Company.Domain.CrossJobItemsAgg.CrossJobItems", b =>
+                {
+                    b.HasOne("Company.Domain.CrossJobAgg.CrossJob", "CrossJob")
+                        .WithMany("CrossJobItemsList")
+                        .HasForeignKey("CrossJobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Company.Domain.JobAgg.Job", "Job")
+                        .WithMany("CrossJobItemsList")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CrossJob");
+
+                    b.Navigation("Job");
+                });
+
             modelBuilder.Entity("Company.Domain.EmployeeChildrenAgg.EmployeeChildren", b =>
                 {
                     b.HasOne("Company.Domain.EmployeeAgg.Employee", "Employee")
@@ -2451,6 +2487,11 @@ namespace CompanyManagment.EFCore.Migrations
                     b.Navigation("WorkingHoursList");
                 });
 
+            modelBuilder.Entity("Company.Domain.CrossJobAgg.CrossJob", b =>
+                {
+                    b.Navigation("CrossJobItemsList");
+                });
+
             modelBuilder.Entity("Company.Domain.CrossJobGuildAgg.CrossJobGuild", b =>
                 {
                     b.Navigation("CrossJobList");
@@ -2501,6 +2542,8 @@ namespace CompanyManagment.EFCore.Migrations
             modelBuilder.Entity("Company.Domain.JobAgg.Job", b =>
                 {
                     b.Navigation("ContractsList");
+
+                    b.Navigation("CrossJobItemsList");
                 });
 
             modelBuilder.Entity("Company.Domain.MandatoryHoursAgg.MandatoryHours", b =>

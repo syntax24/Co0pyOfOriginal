@@ -17,7 +17,7 @@ namespace CompanyManagment.EFCore.Mapping
             builder.ToTable("CrossJobs");
             builder.HasKey(x => x.id);
 
-            builder.Property(x => x.Title).HasMaxLength(255).IsRequired();
+            //builder.Property(x => x.Title).HasMaxLength(255).IsRequired();
             builder.Property(x => x.SalaryRatioOver).IsRequired();
             builder.Property(x => x.SalaryRatioUnder).IsRequired();
             builder.Property(x => x.EquivalentRialOver).IsRequired();
@@ -29,9 +29,11 @@ namespace CompanyManagment.EFCore.Mapping
                 .WithMany(x => x.CrossJobList)
                 .HasForeignKey(x => x.CrossJobGuildId);
 
+            //builder.HasOne(x => x.Job).WithMany(x => x.CrossJobList).HasForeignKey(x => x.JobId);
+
 
         }
 
-       
+
     }
 }
