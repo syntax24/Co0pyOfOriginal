@@ -1,0 +1,246 @@
+﻿@model CompanyManagment.App.Contracts.Task.EditTask
+@inject _0_Framework.Application.IAuthHelper AuthHelper;
+@{
+    var currentAccount = AuthHelper.CurrentAccountInfo();
+}
+@{
+	<style>
+					.Width--200 {
+						max-width: 300px;
+					}
+
+					.select2-container {
+						width: 100% !important;
+					}
+
+					.modal-footer {
+						border-top: unset !important;
+					}
+
+					.modal .modal-dialog .modal-content .modal-footer {
+						padding-top: unset !important;
+					}
+
+					p {
+						direction: ltr !important;
+						text-align: right !important;
+					}
+
+					input[type=radio]:hover {
+						cursor: pointer;
+					}
+
+					.error {
+						font-size: 14px !important;
+					}
+	</style>
+}
+<style>
+	.datemonth {
+		margin: auto;
+		margin-top: 12px;
+		background-color: #dcdcdc;
+		border-radius: 10px;
+		padding: 10px;
+	}
+	.textmonth {
+		color: #000;
+		text-align: right;
+	}
+
+	.rowmonth{
+		vertical-align: middle !important;
+		line-height: 36px;
+	}
+	.transparent-background {
+		background-color: rgba(255, 0, 0, 0);
+		border-color: rgba(255, 0, 0, 0);
+	}
+
+</style>
+
+
+<div class="modal-header" style="text-align:center">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+	<form asp-page="./Index" asp-page-handler="CreateOrEdit" id="taskForm" autocomplete="off" method="post" data-ajax="true" data-callback="" data-action="Refresh">
+        <input type="text" asp-for="Commander_Id" value="@currentAccount.Id" hidden>
+        <input type="text" asp-for="Id" value="@Model.Id" hidden>
+		<div class="modal-body">
+			<div class="row">
+				<fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+					<legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> ایجاد وظیفه  </legend>
+
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label"> انتخاب کاربر </label>
+
+								<select class="form-control select-city js-placeholder" asp-for="SeniorUser_Id">
+									<option value="">لطفا انتخاب کنید ...</option>
+									@foreach (var item in Model.SeniorUsers)
+									{
+										<option value="@item.Id">@item.Fullname</option>
+									}
+								</select>
+
+								<span asp-validation-for="SeniorUser_Id" class="error"></span>
+							</div>
+						</div>
+
+
+						<div class="col-md-12">
+							<label class="control-label" asp-for="Customer"> طرف وظیفه </label>
+							<div class="form-group">
+								<input type="text" class="form-control" asp-for="Customer" onfocusout="removeExtraData()">
+							</div>
+							<div class="form-group">
+								<select class="form-control select-city js-placeholder" asp-for="Customer_Id" onchange="removeExtraData()">
+									<option value="0">لطفا انتخاب کنید ...</option>
+									@foreach (var item in Model.Customers)
+									{
+										<option value="@item.Id">@item.FullName</option>
+									}
+								</select>
+							</div>
+						</div>
+
+						<div class="col-md-12">
+						</div>
+
+						<div class="col-md-12">
+							<div class="form-group">
+								<label asp-for="TaskTitle_Id" class="control-label">عنوان وظیفه</label>
+								<select class="form-control select-city" asp-for="TaskTitle_Id">
+									<option value="">لطفا انتخاب کنید ...</option>
+									@foreach (var item in Model.TaskTitles)
+									{
+										<option value="@item.Id">@item.Title</option>
+									}
+								</select>
+								<span asp-validation-for="TaskTitle_Id" class="error"></span>
+							</div>
+						</div>
+
+						<div class="col-md-12">
+							<div class="form-group">
+								<label asp-for="Description" class="control-label"> توضیحات </label>
+								<textarea class="form-control" asp-for="Description" style="width: 100%; max-width: 100% !important"></textarea>
+								<span asp-validation-for="Description" class="error"></span>
+							</div>
+						</div>
+
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label"> تاریخ: </label>
+								<input type="text" class="form-control date" dir="ltr" maxlength="10" onchange="validDate(this);" onfocusout="removeExtraData()" style="width: 100%; text-align: center" asp-for="TaskDate">
+								<span asp-validation-for="TaskDate" class="error"></span>
+							</div>
+							<a class="btn btn-success btn-rounded waves-effect waves-light" onclick="UpdateDate(9)" style="width: 47%;">امروز</a>
+							<a class="btn btn-success btn-rounded waves-effect waves-light" onclick="UpdateDate(0)" style="width: 47%;">فردا</a>
+							<a class="btn btn-success btn-rounded waves-effect waves-light m-t-5" onclick="UpdateDate(1)" style="width: 47%;">پس‌فردا</a>
+							<a class="btn btn-success btn-rounded waves-effect waves-light m-t-5" onclick="UpdateDate(2)" style="width: 47%;">اول هفته</a>
+							<a class="btn btn-success btn-rounded waves-effect waves-light m-t-5" onclick="UpdateDate(4)" style="width: 47%;">اواسط هفته</a>
+							<a class="btn btn-success btn-rounded waves-effect waves-light m-t-5" onclick="UpdateDate(3)" style="width: 47%;">اواخر هغته</a>
+
+							@if(!Model.IsEditMode)
+							{
+								<div class="datemonth">
+									<div class="input-group">
+										<span class="input-group-addon transparent-background" id="basic-addon2">از تاریخ</span>
+										<input type="text" class="form-control date" maxlength="10" onchange="validDate(this);" onfocusout="removeExtraData()" aria-describedby="basic-addon2" style="width: 100%; text-align: center; border-radius:10px;" asp-for="TaskFromDate">
+									</div>
+									<div class="input-group m-t-5">
+										<span class="input-group-addon transparent-background" id="basic-addon2">به مدت</span>
+										@*<input type="number" class="form-control date" maxlength="10" aria-describedby="basic-addon2" style="width: 100%; text-align: center; border-radius:10px;" asp-for="TaskDate">*@
+										<select class="form-control select-city" asp-for="TaskDuration">
+											@for (var i = 1; i <= 24; i++)
+											{
+												<option value="@i">@i</option>
+											}
+										</select>
+										<span class="input-group-addon transparent-background" id="basic-addon2">ماه</span>
+									</div>
+								</div>
+							}
+						</div>
+				</fieldset>
+			</div>
+		</div>
+
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+			<button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+		</div>
+	</form>
+</div>
+
+
+<script>
+	$(document).ready(function() {
+
+		$('.modal-dialog').addClass('modal-sm');
+	})
+
+	$('.modal').on('hidden.bs.modal', function() {
+		$('.modal-dialog').removeClass('modal-lg');
+
+
+	});
+
+
+	function UpdateDate(type = null) {
+		$.ajax({
+			dataType: 'json',
+			type: 'POST',
+			url: '@Url.Page("./Index", "Date")',
+			headers: { "RequestVerificationToken": $('@Html.AntiForgeryToken()').val() },
+			data: { "type": type },
+
+			success: function(response) {
+				$('#TaskDate').val(response.date);
+				$('#TaskDate').css('background-color', '#fff')
+				$('#taskForm button[type=submit]').attr('disabled', false)
+			},
+			failure: function(response) {
+
+			}
+		});
+	}
+
+	function removeExtraData() {
+
+        $('#TaskDate').focusout(function() {
+
+            if ($(this).val() != null || $(this).val() != 0) {
+
+                $('#TaskFromDate').val("")
+            }
+        })
+
+		$('#TaskFromDate').focusout(function() {
+
+            if ($(this).val() != null || $(this).val() != 0) {
+
+                $('#TaskDate').val("")
+            }
+        })
+		
+		$('#Customer').focusout(function() {
+
+            if ($(this).val() != null) {
+
+                $('#Customer_Id').val("").trigger('change')
+            }
+        })
+
+		$('#Customer_Id').change(function() {
+
+            if ($(this).val() != 0) {
+
+                $('#Customer').val("")
+            }
+        })
+    }
+
+</script>

@@ -5,13 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\Admin\Pages\Company\NewFolder\**" />
-    <Content Remove="Areas\Admin\Pages\Company\NewFolder\**" />
-    <EmbeddedResource Remove="Areas\Admin\Pages\Company\NewFolder\**" />
-    <None Remove="Areas\Admin\Pages\Company\NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AccountManagement.Configuration\AccountManagement.Configuration.csproj" />
     <ProjectReference Include="..\PersonalContractingParty.Config\PersonalContractingParty.Config.csproj" />
     <ProjectReference Include="..\_0_Framework\_0_Framework_b.csproj" />

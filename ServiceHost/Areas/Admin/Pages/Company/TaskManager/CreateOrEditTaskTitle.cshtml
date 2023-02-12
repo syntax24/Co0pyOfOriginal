@@ -1,0 +1,104 @@
+﻿@model CompanyManagment.App.Contracts.TaskTitle.EditTaskTitle
+@inject _0_Framework.Application.IAuthHelper AuthHelper;
+
+@{
+	<style>
+					.Width--200 {
+						max-width: 300px;
+					}
+
+					.select2-container {
+						width: 100% !important;
+					}
+
+					.modal-footer {
+						border-top: unset !important;
+					}
+
+					.modal .modal-dialog .modal-content .modal-footer {
+						padding-top: unset !important;
+					}
+
+					p {
+						direction: ltr !important;
+						text-align: right !important;
+					}
+
+					input[type=radio]:hover {
+						cursor: pointer;
+					}
+
+					.error {
+						font-size: 14px !important;
+					}
+	</style>
+}
+<style>
+	.datemonth {
+		margin: auto;
+		margin-top: 12px;
+		background-color: #dcdcdc;
+		border-radius: 10px;
+		padding: 10px;
+	}
+	.textmonth {
+		color: #000;
+		text-align: right;
+	}
+
+	.rowmonth{
+		vertical-align: middle !important;
+		line-height: 36px;
+	}
+	.transparent-background {
+		background-color: rgba(255, 0, 0, 0);
+		border-color: rgba(255, 0, 0, 0);
+	}
+
+</style>
+
+
+<div class="modal-header" style="text-align:center">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+	<form asp-page="./TaskTitle" asp-page-handler="CreateOrEditTaskTitle" id="taskForm" autocomplete="off" method="post" data-ajax="true" data-callback="" data-action="Refresh">
+        <input type="text" asp-for="Id" hidden>
+		<div class="modal-body">
+			<div class="row">
+				<fieldset style="border: 1px solid #999797; border-radius: 10px; padding: revert">
+					<legend style="margin-bottom: 5px; font-size: large; border-bottom: 0px; color: #505458; width: 140px; text-align: center;"> عنوان وظیفه جدید  </legend>
+
+					<div class="row">
+						<div class="col-md-12">
+							<label class="control-label" asp-for="Title"> عنوان وظیفه </label>
+							<div class="form-group">
+								<input type="text" class="form-control" asp-for="Title">
+								<span asp-validation-for="Title" class="error"></span>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-success btn-rounded waves-effect waves-light">ذخیره</button>
+			<button type="button" class="btn btn-default btn-rounded waves-effect waves-light m-b-5" data-dismiss="modal">بستن</button>
+		</div>
+	</form>
+</div>
+
+
+<script>
+	$(document).ready(function() {
+
+		$('.modal-dialog').addClass('modal-sm');
+	})
+
+	$('.modal').on('hidden.bs.modal', function() {
+		$('.modal-dialog').removeClass('modal-lg');
+
+
+	});
+
+</script>

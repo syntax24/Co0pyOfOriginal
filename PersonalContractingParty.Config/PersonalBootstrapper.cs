@@ -2,9 +2,6 @@
 using Company.Domain.Board;
 using Company.Domain.ChapterAgg;
 using Company.Domain.Contact2Agg;
-using Company.Domain.CrossJobAgg;
-using Company.Domain.CrossJobGuildAgg;
-using Company.Domain.CrossJobItemsAgg;
 using Company.Domain.Evidence;
 using Company.Domain.EvidenceDetail;
 using Company.Domain.File1;
@@ -21,14 +18,14 @@ using Company.Domain.PenaltyTitle;
 using Company.Domain.Petition;
 using Company.Domain.ProceedingSession;
 using Company.Domain.SubtitleAgg;
+using Company.Domain.Task;
+using Company.Domain.TaskStatus;
+using Company.Domain.TaskTitle;
 using Company.Domain.WorkHistory;
 using CompanyManagment.App.Contracts.Board;
 using CompanyManagment.App.Contracts.Chapter;
 using CompanyManagment.App.Contracts.Contact2;
 using CompanyManagment.App.Contracts.Contract;
-using CompanyManagment.App.Contracts.CrossJob;
-using CompanyManagment.App.Contracts.CrossJobGuild;
-using CompanyManagment.App.Contracts.CrossJobItems;
 using CompanyManagment.App.Contracts.Evidence;
 using CompanyManagment.App.Contracts.EvidenceDetail;
 using CompanyManagment.App.Contracts.File1;
@@ -45,6 +42,9 @@ using CompanyManagment.App.Contracts.PenaltyTitle;
 using CompanyManagment.App.Contracts.Petition;
 using CompanyManagment.App.Contracts.ProceedingSession;
 using CompanyManagment.App.Contracts.Subtitle;
+using CompanyManagment.App.Contracts.Task;
+using CompanyManagment.App.Contracts.TaskStatus;
+using CompanyManagment.App.Contracts.TaskTitle;
 using CompanyManagment.App.Contracts.TextManager;
 using CompanyManagment.App.Contracts.WorkHistory;
 using CompanyManagment.Application;
@@ -109,6 +109,17 @@ namespace PersonalContractingParty.Config
             services.AddTransient<IFileAlertApplication, FileAlertApplication>();
             services.AddTransient<IFileAlertRepository, FileAlertRepository>();
 
+            //----Task-Manager-Project---------------------------------
+
+            services.AddTransient<ITaskApplication, TaskApplication>();
+            services.AddTransient<ITaskRepository, TaskRepository>();
+            
+            services.AddTransient<ITaskStatusApplication, TaskStatusApplication>();
+            services.AddTransient<ITaskStatusRepository, TaskStatusRepository>();
+            
+            services.AddTransient<ITaskTitleApplication, TaskTitleApplication>();
+            services.AddTransient<ITaskTitleRepository, TaskTitleRepository>();
+
             //----Text-Manager-Project---------------------------------
             services.AddTransient<ISubtitleApplication, SubtitleAppliction>();
             services.AddTransient<ISubtitleRepozitory, SubtitleRepository>();
@@ -128,16 +139,6 @@ namespace PersonalContractingParty.Config
             services.AddTransient<IContactRepozitory2, ContactRepository2>();
             services.AddTransient<IChapterApplication, ChapterAppliction>();
             services.AddTransient<IChapterRepozitory, ChapterRepository>();
-
-            services.AddTransient<ICrossJobGuildApplication, CrossJobGuildApplication>();
-            services.AddTransient<ICrossJobGuildRepository, CrossJobGuildRepository>();
-
-            services.AddTransient<ICrossJobApplication, CrossJobApplication>();
-            services.AddTransient<ICrossJobRepository, CrossJobRepository>();
-
-            services.AddTransient<ICrossJobItemsApplication, CrossJobItemsApplication>();
-            services.AddTransient<ICrossJobItemsRepository, CrossJobItemsRepository>();
-
             services.AddDbContext<CompanyContext>(x => x.UseSqlServer(connectionString));
         }
     }

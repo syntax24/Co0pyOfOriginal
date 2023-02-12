@@ -22,10 +22,6 @@ namespace CompanyManagment.EFCore.Mapping
             builder.HasMany(x => x.ContractsList)
                 .WithOne(x => x.Job)
                 .HasForeignKey(x => x.JobTypeId);
-
-            builder.HasMany(x => x.CrossJobItemsList)
-                .WithOne(x => x.Job)
-                .HasForeignKey(x => x.JobId);
         }
     }
 }

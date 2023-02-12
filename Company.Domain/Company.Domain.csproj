@@ -5,20 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="NewFolder\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
-    <None Remove="NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\0_Framework\0_Framework.csproj" />
     <ProjectReference Include="..\CompanyManagment.App.Contracts\CompanyManagment.App.Contracts.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="CrossJobGuildAgg\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CrossJobGuildAgg\" />
-  </ItemGroup>
 </Project>

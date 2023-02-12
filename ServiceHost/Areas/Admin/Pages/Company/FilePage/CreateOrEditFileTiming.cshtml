@@ -19,115 +19,115 @@
         font-size: 18px !important;
     }
 
-    ..tooltip-container {
-            cursor: pointer;
-            position: relative;
-            display: inline-block;
-        }
+    .tooltip-container {
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+    }
 
-        .tooltip2-container {
-            cursor: pointer;
-            position: relative;
-            display: inline-block;
-        }
+    .tooltip2-container {
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+    }
 
-        .tooltip {
-            opacity: 0;
-            z-index: 99;
-            color: #fff;
-            width: 355px;
-            display: block;
-            font-size: 14px;
-            font-family: 'IranSans';
-            padding: 5px 10px;
-            border-radius: 3px;
-            text-align: center;
-            /*text-shadow: 1px 1px 2px #111;*/
-            background: #e67e22;
-            border: 1px solid #e67e22;
-            box-shadow: 0 0 3px rgba(0,0,0,0.5);
-            -webkit-transition: all .2s ease-in-out;
-            -moz-transition: all .2s ease-in-out;
-            -o-transition: all .2s ease-in-out;
-            -ms-transition: all .2s ease-in-out;
-            transition: all .2s ease-in-out;
-            -webkit-transform: scale(0);
-            -moz-transform: scale(0);
-            -o-transform: scale(0);
-            -ms-transform: scale(0);
-            transform: scale(0);
-            position: absolute;
-            right: -75px;
-            bottom: 10px;
-        }
+    .tooltip {
+        opacity: 0;
+        z-index: 99;
+        color: #fff;
+        width: 355px;
+        display: block;
+        font-size: 14px;
+        font-family: 'IranSans';
+        padding: 5px 10px;
+        border-radius: 3px;
+        text-align: center;
+        /*text-shadow: 1px 1px 2px #111;*/
+        background: #e67e22;
+        border: 1px solid #e67e22;
+        box-shadow: 0 0 3px rgba(0,0,0,0.5);
+        -webkit-transition: all .2s ease-in-out;
+        -moz-transition: all .2s ease-in-out;
+        -o-transition: all .2s ease-in-out;
+        -ms-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        -o-transform: scale(0);
+        -ms-transform: scale(0);
+        transform: scale(0);
+        position: absolute;
+        right: -75px;
+        bottom: 10px;
+    }
 
-        .tooltip:before, .tooltip:after {
-            content: '';
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 10px solid #e67e22;
-            position: absolute;
-            bottom: -10px;
-            left: 70%;
-        }
+    .tooltip:before, .tooltip:after {
+        content: '';
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #e67e22;
+        position: absolute;
+        bottom: -10px;
+        left: 70%;
+    }
 
-        .tooltip-container:hover .tooltip, a:hover .tooltip {
-            opacity: 1;
-            -webkit-transform: scale(1);
-            -moz-transform: scale(1);
-            -o-transform: scale(1);
-            -ms-transform: scale(1);
-            transform: scale(1);
-        }
+    .tooltip-container:hover .tooltip, a:hover .tooltip {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -o-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+    }
 
-        .tooltip2 {
-            opacity: 0;
-            z-index: 99;
-            color: #fff;
-            width: 220px;
-            display: block;
-            font-size: 14px;
-            font-family: 'IranSans';
-            padding: 5px 10px;
-            border-radius: 3px;
-            text-align: center;
-            /*text-shadow: 1px 1px 2px #111;*/
-            background: #e67e22;
-            border: 1px solid #e67e22;
-            box-shadow: 0 0 3px rgba(0,0,0,0.5);
-            -webkit-transition: all .2s ease-in-out;
-            -moz-transition: all .2s ease-in-out;
-            -o-transition: all .2s ease-in-out;
-            -ms-transition: all .2s ease-in-out;
-            transition: all .2s ease-in-out;
-            -webkit-transform: scale(0);
-            -moz-transform: scale(0);
-            -o-transform: scale(0);
-            -ms-transform: scale(0);
-            transform: scale(0);
-            position: absolute;
-            right: -90px;
-            bottom: 40px;
-        }
+    .tooltip2 {
+        opacity: 0;
+        z-index: 99;
+        color: #fff;
+        width: 220px;
+        display: block;
+        font-size: 14px;
+        font-family: 'IranSans';
+        padding: 5px 10px;
+        border-radius: 3px;
+        text-align: center;
+        /*text-shadow: 1px 1px 2px #111;*/
+        background: #e67e22;
+        border: 1px solid #e67e22;
+        box-shadow: 0 0 3px rgba(0,0,0,0.5);
+        -webkit-transition: all .2s ease-in-out;
+        -moz-transition: all .2s ease-in-out;
+        -o-transition: all .2s ease-in-out;
+        -ms-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        -o-transform: scale(0);
+        -ms-transform: scale(0);
+        transform: scale(0);
+        position: absolute;
+        right: -90px;
+        bottom: 40px;
+    }
 
-        .tooltip2:before, .tooltip2:after {
-            content: '';
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 10px solid #e67e22;
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-        }
+    .tooltip2:before, .tooltip2:after {
+        content: '';
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #e67e22;
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+    }
 
-        .tooltip2-container:hover .tooltip2, a:hover .tooltip2 {
-            opacity: 1;
-            -webkit-transform: scale(1);
-            -moz-transform: scale(1);
-            -o-transform: scale(1);
-            -ms-transform: scale(1);
-            transform: scale(1);
-        }
+    .tooltip2-container:hover .tooltip2, a:hover .tooltip2 {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -o-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+    }
 </style>
 <link href="~/AdminTheme/assets/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 
